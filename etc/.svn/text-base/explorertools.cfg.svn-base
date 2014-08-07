@@ -1,0 +1,56 @@
+#
+# Explorer tools config file
+# $Id$
+# $HeadURL$
+
+[Paths]
+basedir=/app/explorer
+# outputdir: Where to put the generated HTML files
+outputdir=%(basedir)s/output
+# datadir: Where to look for the explorer data files
+datadir=%(basedir)s/data
+# changelogdir: Where to put the changelog files
+changelogdir=%(basedir)s/changelog
+# Where the explorer tools executables are kept
+bindir=/usr/local/bin
+# Where hostinfo commands are installed
+hostinfodir=/usr/local/bin
+
+[Options]
+# Write a changelog for each host?
+changelog=False
+# If agedcare is true move old explorers to the old_explorers directory; 
+# if false delete them
+agedcare=True
+# Hostinfo - generate updates to hostinfo
+hostinfo=True
+# Oldage - how many days old an explorer is before it is ignored
+oldage=2000
+
+[Retention]
+# How many compressed/gzip'd/etc files to keep for a host
+retain_compressed=1
+# How many extracted explorers to keep for a host
+retain_dir=1
+
+[genfresh]
+# Maximum time to run in minutes
+maxtime=25
+# How many threads to run at once - more than three can really hammer a system
+maxthreads=3
+
+[explorer2hostinfo]
+# Whether to send email about updates or not
+emailupdates=False
+# Whether to do DNS lookups - can slow everything down
+dnslookups=False
+# Whether to update hostinfo based on what we find - if false it will just print out the commands
+blindfaith=False
+# Who to send updates to
+toaddr=dougal.scott@gmail.com
+# Who to send updates from
+fromaddr=Explorer2Hostinfo <dougal.scott@gmail.com>
+# Where to store the hostinfo cache
+cachepath=/tmp/.hostinfocache
+
+#EOF
