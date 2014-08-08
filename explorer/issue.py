@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-# 
+#
 # Script to provide an issue class for explorer analysis
 #
 # Written by Dougal Scott <dwagon@pobox.com>
@@ -8,48 +8,51 @@
 
 import sys
 
-################################################################################
+##########################################################################
+
+
 class Issue:
+
     def __init__(self, *args, **kwargs):
-        self.category=args[0]
+        self.category = args[0]
         try:
-            self.subcategory=args[1]
+            self.subcategory = args[1]
         except IndexError:
-            self.subcategory=''
+            self.subcategory = ''
 
         if 'text' in kwargs:
-            if type(kwargs['text'])==type([]):
-                self.text="\n".join(kwargs['text'])
-            elif type(kwargs['text'])!=type(''):
-                self.text=str(kwargs['text'])
+            if type(kwargs['text']) == type([]):
+                self.text = "\n".join(kwargs['text'])
+            elif type(kwargs['text']) != type(''):
+                self.text = str(kwargs['text'])
             else:
-                self.text=kwargs['text']
+                self.text = kwargs['text']
         else:
-            self.text=''
+            self.text = ''
 
         if 'obj' in kwargs:
-            self.obj=kwargs['obj']
+            self.obj = kwargs['obj']
         else:
-            self.obj=''
+            self.obj = ''
         if 'typ' in kwargs:
-            self.typ=kwargs['typ']
+            self.typ = kwargs['typ']
         else:
-            self.type='issue'
+            self.type = 'issue'
 
-    ############################################################################
+    ##########################################################################
     def isIssue(self):
-        if self.typ=='issue':
+        if self.typ == 'issue':
             return True
         return False
 
-    ############################################################################
+    ##########################################################################
     def isConcern(self):
-        if self.typ=='concern':
+        if self.typ == 'concern':
             return True
         return False
 
-    ############################################################################
+    ##########################################################################
     def __repr__(self):
         return "Issue %s:%s %s" % (self.category, self.subcategory, self.obj)
 
-#EOF
+# EOF

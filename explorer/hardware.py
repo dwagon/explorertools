@@ -10,7 +10,7 @@
 
 import sys
 
-hwmap={
+hwmap = {
     'apple_g3': ['g3_mac', 'apple macintosh g3'],
     'apple_g5': ['g5_mac'],
     'dell_gx110': ['optiplex gx110'],
@@ -48,12 +48,12 @@ hwmap={
     'hp_bl45p': ['proliant bl45p', 'bl45p', 'hp bl45p'],
     'hp_bl45p_g2': ['proliant bl45p g2'],
     'hp_bl460c': ['bl460c', 'proliant bl460c blade', 'bl460', 'bl 460 c', 'bl 460c', '460c', 'hp bl460c (4594870b21)'],
-    'hp_bl460c_g1': ['proliant bl460c g1', 'bl460c g1 e5450', 'bl460c g1', 'proliant bl460c g1',],
+    'hp_bl460c_g1': ['proliant bl460c g1', 'bl460c g1 e5450', 'bl460c g1', 'proliant bl460c g1', ],
     'hp_bl460c_g6': ['proliant bl460c g6', 'bl460c g6', ],
-    'hp_bl460c_g7': ['proliant bl460c g7', 'bl460c g7', 'proliant bl460 g7', 'bl460 g7', 'hp bl460c g7 e5640' ],
+    'hp_bl460c_g7': ['proliant bl460c g7', 'bl460c g7', 'proliant bl460 g7', 'bl460 g7', 'hp bl460c g7 e5640'],
     'hp_bl460c_g8': ['proliant bl460c g8', 'bl460c g8', 'proliant bl460 g8', 'bl460 g8'],
-    'hp_bl490c': ['bl490c',],
-    'hp_bl490c_g6': ['bl490c g6',],
+    'hp_bl490c': ['bl490c', ],
+    'hp_bl490c_g6': ['bl490c g6', ],
     'hp_bl490c_g7': ['bl490c g7', 'hp bl490c g7'],
     'hp_bl620c_g7': ['proliant bl620c g7', 'bl620g7'],
     'hp_dc7100': ['dc7100'],
@@ -73,7 +73,7 @@ hwmap={
     'hp_dl320_g8': ['hp dl 320 g8', 'dl320 g8', 'dl320g8'],
     'hp_dl340_g8': ['dl340e gen8'],
     'hp_dl360': ['compaq dl360', 'hp proliant dl360', 'cpq pro dl360', 'dl360', 'dl 360'],
-    'hp_dl360_g2': ['hp pro dl360 g2', 'dl360 g2', 'proliant dl360 g2',],
+    'hp_dl360_g2': ['hp pro dl360 g2', 'dl360 g2', 'proliant dl360 g2', ],
     'hp_dl360_g3': ['hp pro dl360 g3', 'dl360 g3', 'proliant dl360 g3'],
     'hp_dl360_g4': ['dl360 g4', 'hp proliant dl360 g4p', 'hp pro dl360 g4', 'compaq proliant dl360 g4', 'dl360r04 x3.4/800/1m/1g 1p', 'proliant dl360 g4p', 'dl360 g4p', 'proliant dl360 g4', 'hp dl360 g4', 'compaq dl360 g4', 'dl360g4', 'dl 360 g4p'],
     'hp_dl360_g5': ['hp dl360 g5', 'proliant dl360 g5', 'dl360 g5', 'dl360g5', 'dl360g5 5140 1f ap svr', 'dl360r05', 'proliant dl360 g5', 'dl 360 g5', 'proliant dl 360 g5', 'dl360 r05'],
@@ -104,15 +104,15 @@ hwmap={
     'hp_dl7000': ['cpq pro 7000'],
     'hp_dl800': ['cpq pro 800', 'proliant 800'],
     'hp_elite8000': ['hewlett-packard hp compaq 8000 elite sff pc', ],
-    'hp_gl360_g5': ['proliant gl360 g5',],
-    'hp_gl380_g5': ['proliant gl380 g5',],
-    'hp_ml110': ['ml110',],
-    'hp_ml110_g4': ['ml110 g4',],
+    'hp_gl360_g5': ['proliant gl360 g5', ],
+    'hp_gl380_g5': ['proliant gl380 g5', ],
+    'hp_ml110': ['ml110', ],
+    'hp_ml110_g4': ['ml110 g4', ],
     'hp_ml110_g7': ['ml110 g7', 'proliant ml110 g7'],
-    'hp_ml110_g8': ['ml110 g8',],
-    'hp_ml150': ['ml150',],
+    'hp_ml110_g8': ['ml110 g8', ],
+    'hp_ml150': ['ml150', ],
     'hp_ml310': ['ml310', 'ml310 t04'],
-    'hp_ml310_g1': ['proliant ml310 g1',],
+    'hp_ml310_g1': ['proliant ml310 g1', ],
     'hp_ml310_g2': ['ml310 g2'],
     'hp_ml310_g4': ['ml310 g4'],
     'hp_ml310_g4': ['proliant ml310 g4', 'ml310 g4'],
@@ -124,8 +124,8 @@ hwmap={
     'hp_ml350_g5': ['proliant ml350 g5', 'ml350 g5'],
     'hp_ml350_g6': ['proliant ml350 g6', 'ml350 g6', 'hp ml350 g6'],
     'hp_ml350_g8': ['proliant ml350 g8', 'ml350 g8', 'hp ml350 g8', 'ml350p g8', 'ml350g8'],
-    'hp_ml370': ['ml370',],
-    'hp_ml370_g5': ['proliant ml370 g5',],
+    'hp_ml370': ['ml370', ],
+    'hp_ml370_g5': ['proliant ml370 g5', ],
     'hp_ns1000': ['hp netserver lp1000r', "hp netserver 'lp100r", 'netserver lp 1000 r', 'hp netsvr lp1000r'],
     'hp_ns8500': ['net srv lxr 8500 p176683', 'hp netsvr lxr8500'],
     'hp_nse800': ['hp netsvr e800'],
@@ -137,9 +137,9 @@ hwmap={
     'ibm_7009': ['ibm 7009 c10'],
     'ibm_epro': ['ibm is epro 6204-101'],
     'ibm_h50': ['ibm enterprise h50', 'ibm 7026 h50'],
-    'ibm_hs20': ['ibm_bladecentre_hs20', 'ibm bladecentre hs20', 'ibm ibm bladecenter hs20 -[884311m]-', 'ibm bc hs20 8678-21x', 'ibm bc hs20 8832-m1x', 'ibm bc hs20 8843-11m', 'ibm bc hs20 8843-45m', 'ibm bc hs20 8832-21x', 'ibm bc hs20 8843-25m', 'ibm bc hs20 8843 35m', 'ibm hs20 8843-35m', '8832m1x', '884311m', '867821x', '884345m', '883221x', '8832l1x', '867841x', '884335m', 'ibm bladecenter hs20 -[884325m]-','ibm eserver bladecenter hs20 -[884311m]-', 'ibm bladecenter hs20 -[884335m]-', 'ibm bladecenter hs20 -[884345m]-', 'ibm eserver bladecenter hs20 -[884325m]-', 'ibm bladecenter hs20 -[884311m]-', 'ibm bc hs20 8832-l1x', 'ibm bc hs20 8832-31x', 'ibm bc hs20 8678-41x', 'ibm hs20 8843-45m', 'ibm hs20 mt-m8677-3xm', 'ibm blade center m/t-m8677-2xx' ],
+    'ibm_hs20': ['ibm_bladecentre_hs20', 'ibm bladecentre hs20', 'ibm ibm bladecenter hs20 -[884311m]-', 'ibm bc hs20 8678-21x', 'ibm bc hs20 8832-m1x', 'ibm bc hs20 8843-11m', 'ibm bc hs20 8843-45m', 'ibm bc hs20 8832-21x', 'ibm bc hs20 8843-25m', 'ibm bc hs20 8843 35m', 'ibm hs20 8843-35m', '8832m1x', '884311m', '867821x', '884345m', '883221x', '8832l1x', '867841x', '884335m', 'ibm bladecenter hs20 -[884325m]-', 'ibm eserver bladecenter hs20 -[884311m]-', 'ibm bladecenter hs20 -[884335m]-', 'ibm bladecenter hs20 -[884345m]-', 'ibm eserver bladecenter hs20 -[884325m]-', 'ibm bladecenter hs20 -[884311m]-', 'ibm bc hs20 8832-l1x', 'ibm bc hs20 8832-31x', 'ibm bc hs20 8678-41x', 'ibm hs20 8843-45m', 'ibm hs20 mt-m8677-3xm', 'ibm blade center m/t-m8677-2xx'],
     'ibm_hs21': ['ibm bc hs 21 8853-l6m', '8853l6m'],
-    'ibm_hs40': ['ibm bladecentre hs40','ibm bc hs40 8839-71x','ibm bc hs40 8839-51x', 'ibm - hs40', '883971x', 'ibm eserver bladecenter hs40 -[883951x]-', 'ibm eserver bladecenter hs40 -[883951x]-           01'],
+    'ibm_hs40': ['ibm bladecentre hs40', 'ibm bc hs40 8839-71x', 'ibm bc hs40 8839-51x', 'ibm - hs40', '883971x', 'ibm eserver bladecenter hs40 -[883951x]-', 'ibm eserver bladecenter hs40 -[883951x]-           01'],
     'ibm_mpro': ['ibm is mpro 6850-22a', 'ibm m pro', 'ibm intellistation mpro'],
     'ibm_nf4500': ['ibm netfinity 4500', 'ibm_nf_4500_8656-4ry', '4500r 6656-9ry', 'ibm nf 4500 8656-4ry'],
     'ibm_nf5500': ['ibm nf 5500 m20 8662-3ry'],
@@ -173,9 +173,9 @@ hwmap={
     'ibm_x346': ['ibm x 346 8840-25m', 'ibm x 346 8840-11m', 'ibm x 346 8840-21m', 'ibm x 346 8840-31m', 'ibm xseries 346', 'ibm_xseries_346', 'ibm x346', 'ibm x 346 8840-35m', 'ibm x 346 8840-45m', 'x346 m8840 35m', 'x346', 'x346-m8840-35m', 'ibm x series 346', 'ibm 346', 'x346 - 8840-25m', 'x346 - 8840-35m', 'x346 - 8840-d1m', 'x346 8840-d1m', 'x346 - 8840-11m', 'x346-8840-35m', 'x346 - 8840-45m', 'x346 8840-35m', 'x346 8840-35m', 'x346 m 8840-35m', 'x346 m 8840-45m', 'x346 m8840-45m', 'x346 8840-31m', 'x346 8840-25m', 'x346 8840-11m', 'eserver xseries 346 -[884025m]-', 'eserver xseries 346 -[884011m]-', 'eserver xseries 346 -[884031m]-',  'eserver xseries 346 -[884035m]-', 'eserver xseries 346 -[884045m]-', 'eserver xseries 346 -[884021m]-', 'ibm x346 8840-35m', 'ibm eserver xseries 346 -[884021m]-', 'ibm eserver xseries 346 -[884025m]-', 'ibm x 346 8840-d1m', 'ibm_x346', 'eserver xseries 346 -[8840d1m]-', 'ibm x346 mt-m8840-25m', 'ibm x346 mt-m8840-11m', 'ibm x346 mt-m8840-25n', 'ibm x346 mt-m8840-21m', 'ibm x346 mt-m8840-31m', 'ibm x346 mt-m8840-35m', 'ibm x346 m/t-m8670-m1x', 'x series 346'],
     'ibm_x3550': ['ibm 3550', 'ibm x3550 7978-g5m', 'ibm x3550 7978-51m', 'ibm x3550 7978-c2m', 'x3550 - 7978-71m', 'x3550 - 7978-g5m', 'x3550 - 7978-51m', 'ibm system x3550 -[797851m]-', 'ibm system x3550 -[7978g5m]-', 'ibm system x3550 -[7978c2m]-', 'ibm x 3550 7978-g5m', 'ibm x 3550 7978-71m', 'ibm x 3550 7978-51m', 'ibm system x3550 -[797871m]-', 'ibm x3550 mt-m7978-g5m', 'ibm x3550', 'ibm x3550 mt7978'],
     'ibm_x360': ['ibm xseries 360', 'ibm x360', 'x360', 'x360 8686-4rx', 'ibm x 360 8686-4rx', 'x series 360'],
-    'ibm_x365': ['x365', 'ibm xseries 365', 'x365', 'ibm x 365 8862-4rx', 'eserver xseries 365 -[88624rx]-' ],
-    'ibm_x3650': ['ibm xseries 3650', 'ibm x 3650 7979-51m', 'x3650', 'x3650 - 7979-71m', 'x3650 - 7979-51m', 'x3650 - 7979-b7m', 'x3650 m7979-51m', 'ibm system x3650 -[797971m]-', 'ibm x 3650 7979-7am', 'ibm x 3650 7979-71m', 'ibm x 3650 7979-41m', 'ibm x3650 mt-m7979-51m', 'ibm system x3650 -[7979b4m]-', 'system x 3650', 'system x3650 m2 -[7947yb5]-', 'system x3650 m2 -[7947yrq]-', 'system x3650 m2 -[7947yd9]-', 'system x3650 m3 -[7945ub7]-', 'ibm system x3650 -[7979c4m]-' ],
-    'ibm_x3655': ['ibm system x3655 -[79854am]-', 'ibm x3655 7985 - 4am', 'ibm x3655 mt79854am', 'ibm x3655 mt:79854am' ],
+    'ibm_x365': ['x365', 'ibm xseries 365', 'x365', 'ibm x 365 8862-4rx', 'eserver xseries 365 -[88624rx]-'],
+    'ibm_x3650': ['ibm xseries 3650', 'ibm x 3650 7979-51m', 'x3650', 'x3650 - 7979-71m', 'x3650 - 7979-51m', 'x3650 - 7979-b7m', 'x3650 m7979-51m', 'ibm system x3650 -[797971m]-', 'ibm x 3650 7979-7am', 'ibm x 3650 7979-71m', 'ibm x 3650 7979-41m', 'ibm x3650 mt-m7979-51m', 'ibm system x3650 -[7979b4m]-', 'system x 3650', 'system x3650 m2 -[7947yb5]-', 'system x3650 m2 -[7947yrq]-', 'system x3650 m2 -[7947yd9]-', 'system x3650 m3 -[7945ub7]-', 'ibm system x3650 -[7979c4m]-'],
+    'ibm_x3655': ['ibm system x3655 -[79854am]-', 'ibm x3655 7985 - 4am', 'ibm x3655 mt79854am', 'ibm x3655 mt:79854am'],
     'ibm_x366': ['ibm x366', 'x366', 'ibm xseries 366', 'ibm_xseries_366', 'ibm x 366 8863-1rm', 'x366 8863-1rm', 'ibm x366 mt-m8863-1rm'],
     'ibm_x3850': ['ibm xseries 3850', 'ibm x 3850 8863-45m', 'ibm x 3850 8863-4sm', 'ibm x 3850 8863-45n', 'ibm x 3850 8864-1rm'],
     'ibm_x440': ['x440 8687 - 3ry'],
@@ -185,10 +185,10 @@ hwmap={
     'ipex_p2': ['ipex p2 400', 'ipex pc p2 400', 'ipex p2 350'],
     'ipex_p3': ['ipex p3 866', 'ipex pc p3 866', 'ipex p3 667', 'ipex p3 800'],
     'ipex_unknown': ['ipex pc unknown', 'ipex pc'],
-    'nec_express5800': [ 'express5800' ],
-    'nec_express5800_110': [ 'express5800/110ef [n8100-808f]', 'express5800/110eg [n8100-856f]', 'nec express5800/110ge [n8100-1449f]'],
-    'nec_express5800_120': [ 'express5800/120lg [n8100-899f]', 'express5800/120lh [n8100-1076f]', 'express 5800/120lh [ n8100-1218f]', 'express 5800/120rd-1', 'express5800/120rd-1 [n8100-859f]', 'express5800/120rd-1 [n8100-870f]', 'express5800/120rd-1 [n8100-919f]', 'express5800/120re-2 [n8100-817]', 'express5800/120re-2 [n8100-818f]', 'express5800/120rf-2 [n8100-922f]', 'express5800/120rg-2 [n8100-953f]', 'nec express5800/120lf [n8100-782af]', 'nec express5800/120lg [n8100-866f]', 'nec express5800/120lg [n8100-899f]', 'nec express5800/120lh [n8100-1076f]', 'nec express5800/120lh [n8100-1132f]', 'nec express5800/120mf [n8100-903f]', 'nec express 5800/120rd-1', 'nec express5800/120rd-1 [n8100-859f]', 'nec express5800/120rd-1 [n8100-919f]', 'nec express5800/120rf-2 [n8100-922f]', 'nec express5800/120rg-2 [n8100-953f]', '5800/120rc-1', 'nex express5800/120re-1 [n8100-950f]', 'nec express5800/120rf-2 [n8100-863f]', 'nec express5800/120re-1 [n8100-950f]', 'nec express5800/120lh', 'nec express5800/120rd-1'],
-    'nec_express5800_140': [ 'express5800/140rc-4 [n8100-821f]',],
+    'nec_express5800': ['express5800'],
+    'nec_express5800_110': ['express5800/110ef [n8100-808f]', 'express5800/110eg [n8100-856f]', 'nec express5800/110ge [n8100-1449f]'],
+    'nec_express5800_120': ['express5800/120lg [n8100-899f]', 'express5800/120lh [n8100-1076f]', 'express 5800/120lh [ n8100-1218f]', 'express 5800/120rd-1', 'express5800/120rd-1 [n8100-859f]', 'express5800/120rd-1 [n8100-870f]', 'express5800/120rd-1 [n8100-919f]', 'express5800/120re-2 [n8100-817]', 'express5800/120re-2 [n8100-818f]', 'express5800/120rf-2 [n8100-922f]', 'express5800/120rg-2 [n8100-953f]', 'nec express5800/120lf [n8100-782af]', 'nec express5800/120lg [n8100-866f]', 'nec express5800/120lg [n8100-899f]', 'nec express5800/120lh [n8100-1076f]', 'nec express5800/120lh [n8100-1132f]', 'nec express5800/120mf [n8100-903f]', 'nec express 5800/120rd-1', 'nec express5800/120rd-1 [n8100-859f]', 'nec express5800/120rd-1 [n8100-919f]', 'nec express5800/120rf-2 [n8100-922f]', 'nec express5800/120rg-2 [n8100-953f]', '5800/120rc-1', 'nex express5800/120re-1 [n8100-950f]', 'nec express5800/120rf-2 [n8100-863f]', 'nec express5800/120re-1 [n8100-950f]', 'nec express5800/120lh', 'nec express5800/120rd-1'],
+    'nec_express5800_140': ['express5800/140rc-4 [n8100-821f]', ],
     'sun_10k': ['sun fire 10000', '10k', 'sun fire 10k', 'sun microsystems sun fire 10k', 'enterprise 10000', 'ultra-enterprise-10000'],
     'sun_12k': ['sun fire 12000', '12k', 'sun fire 12k', 'sun microsystems sun fire 12k'],
     'sun_15k': ['sun fire 15000', '15k', 'sun fire 15k', 'sunw,sun-fire-15000'],
@@ -219,23 +219,23 @@ hwmap={
     'sun_raqxtr': ['sun cobalt raq xtr', 'raq xtr', 'cobalt raq xtr'],
     'sun_sparc20': ['sun sparc20', 'sparcstation 20'],
     'sun_ss1000': ['sun sparcserver 1000e'],
-    'sun_t1': ['sun netra t 1120/1125', 't1120', 'sun netra t 1120', 'sun netra 1125', 'sun netra t 1125', 'sun netra t1 ac200', 'sun netra t1125', 'sun netra t1 105', 'sun netra t1 (105)', 'sun netra t105', 'sun netra t1', 'netra t1 200', 'netra t1', 'sun4u netra t 1120/1125', 'netra t 1120/1125', 'netra t1125' , 'sun microsystems sun netra t1', 'netra t1 ac 200', 'netra t1 ac200', 'netra t1 105', 'netra t1200', 'sunnetra t1200'],
+    'sun_t1': ['sun netra t 1120/1125', 't1120', 'sun netra t 1120', 'sun netra 1125', 'sun netra t 1125', 'sun netra t1 ac200', 'sun netra t1125', 'sun netra t1 105', 'sun netra t1 (105)', 'sun netra t105', 'sun netra t1', 'netra t1 200', 'netra t1', 'sun4u netra t 1120/1125', 'netra t 1120/1125', 'netra t1125', 'sun microsystems sun netra t1', 'netra t1 ac 200', 'netra t1 ac200', 'netra t1 105', 'netra t1200', 'sunnetra t1200'],
     'sun_t1000': ['sun4v sun fire t1000', 'sun fire t1000', 'sunfire t1000'],
-    'sun_t2000': ['sun4v sun fire t200','t2000','sunfire t2000','sun fire t2000', 'sun-fire-t200', 'sunw,sun-fire-t200', 'sunw,sun-fire-t2000', 'sun microsystems sunfire t2000', 'sun microsystems sun fire t2000', 'sunfire t200', 'sun fire t200', 'oracle corporation  sun4v sun fire t200'],
+    'sun_t2000': ['sun4v sun fire t200', 't2000', 'sunfire t2000', 'sun fire t2000', 'sun-fire-t200', 'sunw,sun-fire-t200', 'sunw,sun-fire-t2000', 'sun microsystems sunfire t2000', 'sun microsystems sun fire t2000', 'sunfire t200', 'sun fire t200', 'oracle corporation  sun4v sun fire t200'],
     'sun_t4_1': ['oracle corporation  sun4v sparc t4-1', 't4-1'],
     'sun_t4_4': ['oracle corporation  sun4v sparc t4-4', 't4-4'],
     'sun_t5220': ['sunfire t5220', 'sparc-enterprise-t5220', 'sunw,sparc-enterprise-t5220', 'sun4v sparc enterprise t5220', 'sun t5220', 'sparc enterprise t5220', 'sun microsystems sparc enterprise t5220', 'sun enterprise [tm] t5220', 't5220'],
     'sun_t6300': ['sun4v sun blade t6300 server module', 't6300', 'sunw,sun blade t6300', 'oracle corporation  sun4v sun blade t6300 server module', 'sunblade t6300'],
     'sun_t6320': ['sun4v sun blade t6320 server module', 't6320', 'sun blade t6320', 'sunfire t6320', 'sunfiret6320', 'sun-blade-t6320', 'sun t6320', 'tt6320', 'sun4v sun blade t6320 server module g2', 'sunw,sun-blade-t6320', 'oracle corporation  sun4v sun blade t6320 server module', 'sunw,sun blade t6320 server module', 'oracle corporation  sun4v sun blade t6320 server module g2', 'sunblade t6320'],
-    'sun_ultra1':['sun ultra 1 sbus', 'ultra 1', 'sun ultra enterprise1'],
+    'sun_ultra1': ['sun ultra 1 sbus', 'ultra 1', 'sun ultra enterprise1'],
     'sun_ultra10': ['sun ultra-10', 'ultra10', 'sun ultra 10/333', 'sun ultra 10', 'ultra 10'],
-    'sun_ultra2':['sun ultra 2', 'ultra enterprise 2', 'ultra 2', 'sun ultra 2 upa/sbus'],
+    'sun_ultra2': ['sun ultra 2', 'ultra enterprise 2', 'ultra 2', 'sun ultra 2 upa/sbus'],
     'sun_ultra20': ['sun ultra-20', 'ultra20'],
     'sun_ultra25': ['sun ultra-25', 'ultra25', 'sun ultra 25'],
     'sun_ultra45': ['sun ultra 45 workstation'],
     'sun_ultra5': ['sun ultra 5/270', 'ultra5', 'sun ultra 5/10', 'sun ultra 5', 'ultra 5', 'sun ultra 5/10 upa/pci'],
-    'sun_ultra60':['sun ultra 60', 'sunw,ultra-60', 'ultra 60'],
-    'sun_ultra80':['sun ultra 80', 'sunw,ultra-80', 'sun ultra 80 upa/pci', 'sunultra80'],
+    'sun_ultra60': ['sun ultra 60', 'sunw,ultra-60', 'ultra 60'],
+    'sun_ultra80': ['sun ultra 80', 'sunw,ultra-80', 'sun ultra 80 upa/pci', 'sunultra80'],
     'sun_v100': ['sun v100', 'sun fire v100', 'sun sunfire v100', 'sun fire v100 (650mhz)', 'sun fire v100 (500mhz)', 'sun fire v100 (550mhz)', 'sunfire v100', 'sun microsystems sun fire v100'],
     'sun_v120': ['sun v120', 'v120', 'sun fire v120', 'sun sunfire v120', 'sun microsystems sun fire v120', 'sunfire v120'],
     'sun_v125': ['sun v125', 'v125', 'sun fire v125', 'sun sunfire v125', 'sunfire v125', 'sun fire [tm] v125', 'v 125', 'sun-fire v125', 'oracle corporation   sun fire v125'],
@@ -250,16 +250,16 @@ hwmap={
     'sun_v445': ['sunfire v445', 'sun fire v445', 'v445', 'oracle corporation   sun fire v445'],
     'sun_v480': ['sun v480', 'v480', 'sun sunfire v480', 'sun fire v480', 'sun-fire-v480', 'sunfire v480', 'sun microsystems sun fire v480', 'sun v480r', 'sun fire 480r', '480r', 'sunfire 480r', 'sunw,sun-fire-480r', 'sunfire 480'],
     'sun_v490': ['sun v490', 'sun sunfire v490', 'sun fire v490', 'sun-fire-v490 (dual core)', 'v490', 'sunw,sun-fire-v490', 'sunfire v490', 'sun microsystems sun fire v490', 'sun fire v490 sparc iv+', 'oracle corporation   sun fire v490'],
-    'sun_v60x': ['sunfire v60x',],
+    'sun_v60x': ['sunfire v60x', ],
     'sun_v65x': ['sun v65x', 'v65x', 'sun fire v65x', 'sun sunfire v65x', 'sunfire v65x', 'sun fire(tm) v65 370-6035', 'sun microsystems lx65'],
     'sun_v880': ['sun fire 880', 'sun sunfire v880', 'sun v880', 'v880', 'sunfire v880', 'sun-fire-880', 'sun enterprise v880', 'sunw,sun-fire-880', 'sun microsystems sun fire v880'],
-    'sun_v890': ['sun v890', 'sun sunfire v890','sun fire v890', 'sun-fire-v890 (dual core)', 'sun-fire-v890', 'sunw,sun-fire-v890', 'sun microsystems sun fire v890', 'v890', 'oracle corporation   sun fire v890', 'sunfire v890'],
+    'sun_v890': ['sun v890', 'sun sunfire v890', 'sun fire v890', 'sun-fire-v890 (dual core)', 'sun-fire-v890', 'sunw,sun-fire-v890', 'sun microsystems sun fire v890', 'v890', 'oracle corporation   sun fire v890', 'sunfire v890'],
     'sun_x1': ['sun netra x1', 'netra x1', 'x1', 'sun microsystems sun netra x1', 'sun microsystems netra x1', 'sunnetra x1'],
     'sun_x2100': ['sun sunfire x2100', 'sun fire x2100', 'x2100', 'sunfire x2100'],
     'sun_x2100_m2': ['x2100 m2', 'sun fire x2100 m2', 'sun x2100 -m2', 'x2100m2', 'sunfire x2100 m2'],
     'sun_x2200': ['sun sunfire x2200', 'sun fire x2200'],
     'sun_x2200_m2': ['x2200 m2', 'sun fire x2200 m2', 'sun x2200 -m2', 'x2200m2', 'sunfire x2200 m2', 'sun fire x2200 m2 with quad core processor'],
-    'sun_x4100': ['sun_fire_x4100', 'sunfire x4100','sun x4100','sun v4100','sun sunfire x4100', 'sun galaxy 1', 'sun fire x4100 server', 'sun fire x4100', 'x4100', 'sun fire 4100x', 'sun x4100mt', 'sun x 4100', 'sun microsystems sun fire x4100'],
+    'sun_x4100': ['sun_fire_x4100', 'sunfire x4100', 'sun x4100', 'sun v4100', 'sun sunfire x4100', 'sun galaxy 1', 'sun fire x4100 server', 'sun fire x4100', 'x4100', 'sun fire 4100x', 'sun x4100mt', 'sun x 4100', 'sun microsystems sun fire x4100'],
     'sun_x4100_m2': ['sun fire x4100 m2', 'sun x4100 m2'],
     'sun_x4140': ['sun fire x4140', 'sun fire x4140 x64 server', 'sun 4140', 'sun x4140', 'sun microsystems sun fire x4140', 'sunfire x4140', 'sunfire x4140', 'x4140'],
     'sun_x4200': ['sun fire x4200', 'sun galaxy 2', 'sun sunfire x4200', 'sun x4200', 'sun fire x4200 server', 'x4200', 'sun microsystems sun fire x4200'],
@@ -268,7 +268,7 @@ hwmap={
     'sun_x4500': ['sun fire x4500', 'sun x4500', 'sunfire x4500'],
     'sun_x4600': ['sun x4600', 'x4600', 'sun sunfire x4600', 'sun galaxy 4', 'sun fire x4600', 'sun_fire_x4600_m2', 'sun fire x4600 m2', 'sunfire x4600', 'v4600', '4600', 'sun 4600 i86pc', 'sun microsystems sun fire x4600'],
     'sun_x6220': ['sun blade x6220 server module', 'sunblade x6220', 'x6220'],
-    'unknown_pc': ['soe_pc_acer', 'soe pc acer','spinridge_pc', 'acer_p4', 'acer_pc', 'spin ridge pc', 'dell?', 'acer p4', 'acer pc', 'desktop', 'pc clone', 'veriton 5600g', 'acer veriton 5600gt', 'compaq deskpro ep/sb series', 'deskpro ep series', 'deskpro'],
+    'unknown_pc': ['soe_pc_acer', 'soe pc acer', 'spinridge_pc', 'acer_p4', 'acer_pc', 'spin ridge pc', 'dell?', 'acer p4', 'acer pc', 'desktop', 'pc clone', 'veriton 5600g', 'acer veriton 5600gt', 'compaq deskpro ep/sb series', 'deskpro ep series', 'deskpro'],
     ('3com_ss500', 'router'): ['super stack ii 500'],
     ('alteon_184', 'loadbal'): ['alteon 184'],
     ('alteon_2208', 'console'): ['alteon 2208'],
@@ -337,35 +337,35 @@ hwmap={
     ('f5_3400', 'loadbal'): ['f5 3400'],
     ('f5_6400', 'loadbal'): ['f5 6400'],
     ('hds_vsp', 'storage'): ['vsp'],
-    ('hp_c7000','chassis'): ['hp c7000', 'c7000 g2', 'bladesystem c7000 enclosure'],
-    ('hp_d2700','storage'): ['d2700'],
-    ('hp_dat40','tape'): ['hp sstore dat 40'],
-    ('hp_dlt','tape'): ['hp 160/320gb sdlt'],
-    ('hp_msl5026','tape'): ['cpq stworks msl5026'],
-    ('hp_ns_storage12','storage'): ['hp netserver rack stor/12'],
-    ('hp_ra4100','storage'): ['cpq stworks ra4100r'],
-    ('hp_stworks_4314','storage'): ['cpq stworks 4314r'],
-    ('hp_stworks_4354','storage'): ['cpq stworks 4354'],
-    ('hp_stworks_tl891','tape'): ['cpq stworks tl891dlx', 'cpq stworks tl891'],
-    ('ibm_2104','storage'): ['ibm 2104 ds4'],
-    ('ibm_3581','tape'): ['ibm 3581 l38'],
-    ('ibm_3582','tape'): ['ibm 3582 l23'],
+    ('hp_c7000', 'chassis'): ['hp c7000', 'c7000 g2', 'bladesystem c7000 enclosure'],
+    ('hp_d2700', 'storage'): ['d2700'],
+    ('hp_dat40', 'tape'): ['hp sstore dat 40'],
+    ('hp_dlt', 'tape'): ['hp 160/320gb sdlt'],
+    ('hp_msl5026', 'tape'): ['cpq stworks msl5026'],
+    ('hp_ns_storage12', 'storage'): ['hp netserver rack stor/12'],
+    ('hp_ra4100', 'storage'): ['cpq stworks ra4100r'],
+    ('hp_stworks_4314', 'storage'): ['cpq stworks 4314r'],
+    ('hp_stworks_4354', 'storage'): ['cpq stworks 4354'],
+    ('hp_stworks_tl891', 'tape'): ['cpq stworks tl891dlx', 'cpq stworks tl891'],
+    ('ibm_2104', 'storage'): ['ibm 2104 ds4'],
+    ('ibm_3581', 'tape'): ['ibm 3581 l38'],
+    ('ibm_3582', 'tape'): ['ibm 3582 l23'],
     ('ibm_4560', 'tape'): ['ibm 4560 slx', 'ibm 4560-slx', 'mt/md 4560slx', 'ibm slx4560'],
-    ('ibm_4800','storage'): ['ibm ds4800 1815 84a'],
+    ('ibm_4800', 'storage'): ['ibm ds4800 1815 84a'],
     ('ibm_7310', 'console'): ['ibm 7310 cr2'],
     ('ibm_7315', 'console'): ['ibm 7315 cr2'],
-    ('ibm_8768','tape'): ['ibm 8768-fhx lto-3'],
+    ('ibm_8768', 'tape'): ['ibm 8768-fhx lto-3'],
     ('ibm_bladecentre', 'bladechassis'): ['ibm bladecentre enclosure', 'ibm bc encl 8677-1xx', 'ibm bc encl 8677-3xm', 'ibm bc encl 8677-2xx', '86773xm', '86771xx', '86773xu', 'bc 8677-2xx', 'blade center 8677-2xx', '8677-2xx', '8677-3xm', 'blade center 8677-3xm', '86772xx', 'ibm blade center m/t-m8677-3xm'],
-    ('ibm_ds4300','storage'): ['ibm ds4300 1722-60u', 'fastt600 - 1722-6ou', 'fast600 1722-60u'],
-    ('ibm_ds4700','storage'): ['ds4700','ibm ds4700 1814-70h'],
-    ('ibm_exp24','storage'): ['ibm 7031 d24'],
-    ('ibm_exp300','storage'): ['ibm exp 300 3531-1rx', 'exp_300', 'ibm exp 300', 'exp 300'],
-    ('ibm_exp400','storage'): ['ibm exp 400', 'exp_400', 'ibm exp 400 1733-1ru', 'ibm exp 400 1733-1rx', 'ibm exp400', 'ibm exp400 1733-1rx', 'ibm exp400 1733-2rx'],
-    ('ibm_exp500','storage'): ['exp500 - 3560 - iru', 'exp500 - 3560-iru', 'ibm 3560 1ru', 'ibm exp 500 3560-1ru'],
-    ('ibm_exp700','storage'): ['ibm exp 700', 'exp_700', 'exp700 - 1740 - iru', 'exp700 - 1740 - irx', 'exp700 - 1740-irx', 'exp700 17401rx', 'exp700 - 1740-1rx', 'exp700 1740-1rx', 'ibm exp 700 1740-1rx', 'ibm exp 700 1740-1ru', 'ibm exp700'],
-    ('ibm_exp710','storage'): ['ibm exp 710 1740-710', 'exp710 1740-710'],
-    ('ibm_exp810','storage'): ['ibm exp810 1812-81a'],
-    ('ibm_ts3100','tape'): ['storage 3573l3s','3573-l3s', 'ibm 3573 l2u', 'ibm 3573-l3s'],
+    ('ibm_ds4300', 'storage'): ['ibm ds4300 1722-60u', 'fastt600 - 1722-6ou', 'fast600 1722-60u'],
+    ('ibm_ds4700', 'storage'): ['ds4700', 'ibm ds4700 1814-70h'],
+    ('ibm_exp24', 'storage'): ['ibm 7031 d24'],
+    ('ibm_exp300', 'storage'): ['ibm exp 300 3531-1rx', 'exp_300', 'ibm exp 300', 'exp 300'],
+    ('ibm_exp400', 'storage'): ['ibm exp 400', 'exp_400', 'ibm exp 400 1733-1ru', 'ibm exp 400 1733-1rx', 'ibm exp400', 'ibm exp400 1733-1rx', 'ibm exp400 1733-2rx'],
+    ('ibm_exp500', 'storage'): ['exp500 - 3560 - iru', 'exp500 - 3560-iru', 'ibm 3560 1ru', 'ibm exp 500 3560-1ru'],
+    ('ibm_exp700', 'storage'): ['ibm exp 700', 'exp_700', 'exp700 - 1740 - iru', 'exp700 - 1740 - irx', 'exp700 - 1740-irx', 'exp700 17401rx', 'exp700 - 1740-1rx', 'exp700 1740-1rx', 'ibm exp 700 1740-1rx', 'ibm exp 700 1740-1ru', 'ibm exp700'],
+    ('ibm_exp710', 'storage'): ['ibm exp 710 1740-710', 'exp710 1740-710'],
+    ('ibm_exp810', 'storage'): ['ibm exp810 1812-81a'],
+    ('ibm_ts3100', 'tape'): ['storage 3573l3s', '3573-l3s', 'ibm 3573 l2u', 'ibm 3573-l3s'],
     ('juniper_ns2000', 'router'): ['netscreen 2000'],
     ('juniper_ns208', 'router'): ['netscreen 208', 'juniper networks netscreen 208'],
     ('juniper_ns4000', 'router'): ['netscreen sa-4000', 'juniper sa4000a', 'juniper networks sa4000a'],
@@ -383,7 +383,7 @@ hwmap={
     ('netapp_c1300', 'filer'): ['netapp c1300', 'network appliance c1300', 'c1300'],
     ('netapp_c2100', 'filer'): ['netapp c2100', 'net app c2100', 'netappliance c2100', 'network appliance c2100', 'netcache c2100'],
     ('netapp_c2300', 'filer'): ['netcache c2300'],
-    ('netapp_c3300','filer'): ['net app c3300', 'netapp c3300', 'network appliance c3300'],
+    ('netapp_c3300', 'filer'): ['net app c3300', 'netapp c3300', 'network appliance c3300'],
     ('netapp_fas2020', 'filer'): ['fas2020'],
     ('netapp_fas2040', 'filer'): ['fas2040'],
     ('netapp_fas250', 'filer'): ['netapp fas250', 'fas250'],
@@ -402,7 +402,7 @@ hwmap={
     ('sony_sd500', 'tape'): ['sny sdx s500c', 'sdx-s500c'],
     ('sun_6000', 'chassis'): ['sunblade 6000 chassis', '6000'],
     ('sun_a1000', 'storage'): ['sun storedge a1000', 'sun a1000'],
-    ('sun_a5000', 'storage'): ['sun a5000', 'sun microsystems enterprise network array' ],
+    ('sun_a5000', 'storage'): ['sun a5000', 'sun microsystems enterprise network array'],
     ('sun_a5100', 'storage'): ['sun a5100'],
     ('sun_a5200', 'storage'): ['sun a5200', 'sun microsystems storedge a5200'],
     ('sun_c4', 'tape'): ['storagetek c4', 'sun v890 - c4 tape drive'],
@@ -410,7 +410,7 @@ hwmap={
     ('sun_d220', 'storage'): ['sun d220', 'd220'],
     ('sun_d280', 'storage'): ['sun d280', 'd280'],
     ('sun_dlt', 'tape'): ['sun storedge [tm] sdlt 320', 'sg-xtapelto3-d-2', 'sldt-320'],
-    ('sun_dlt4000','tape'): ['sun_dlt_4000', 'sun dlt 4000'],
+    ('sun_dlt4000', 'tape'): ['sun_dlt_4000', 'sun dlt 4000'],
     ('sun_l1000', 'tape'): ['sun l1000'],
     ('sun_l180', 'tape'): ['sun l180', 'l180'],
     ('sun_l20', 'tape'): ['sun l20', 'storagetek l20'],
@@ -428,12 +428,12 @@ hwmap={
     ('sun_se3310', 'storage'): ['sun 3310', 'sun storedge 3310', 'storedge 3300'],
     ('sun_se3500', 'storage'): ['stor edge 3500'],
     ('sun_se3510', 'storage'): ['sun 3510', 'sun storedge 3510', 'storedge 3510'],
-    ('sun_se6130', 'storage'): ['se6130',],
+    ('sun_se6130', 'storage'): ['se6130', ],
     ('sun_se6140', 'storage'): ['sun 6140'],
     ('sun_storagetek6100', 'storage'): ['storage tek 6100'],
     ('sun_storagetek6540', 'storage'): ['storage tek 6540'],
     ('sun_t2540', 'storage'): ['t2540', ],
-    ('sun_t3', 'storage'): ['sun t3', 'sun t3+', 'se t3', 'sun t300', 'sun t300 storegetek','storedge t3'],
+    ('sun_t3', 'storage'): ['sun t3', 'sun t3+', 'se t3', 'sun t300', 'sun t300 storegetek', 'storedge t3'],
     ('sym_5220', 'appliance'): ['5220'],
     ('syn_rs408rp', 'storage'): ['rs408rp', 'rs408-rp'],
     ('trend_iwsa2500', 'appliance'): ['trend 2500 iwsa'],
@@ -441,41 +441,45 @@ hwmap={
 
 }
 
-################################################################################
+##########################################################################
+
+
 class UnknownHardware(Exception):
     pass
 
-################################################################################
+##########################################################################
+
+
 def getHardware(hwdesc):
     """ Return the type of hardware (server, tape, storage, etc) and the
         generic hardware name
     """
-    if type(hwdesc)==type(u''):
-        hwdesc=hwdesc.encode('latin-1')
-    if type(hwdesc)!=type(''):
+    if type(hwdesc) == type(u''):
+        hwdesc = hwdesc.encode('latin-1')
+    if type(hwdesc) != type(''):
         sys.stderr.write("Bad hardware: '%s'\n" % `hwdesc`)
         raise UnknownHardware, "Bad hardware specification: %s" % type(hwdesc)
-    hwdesc=hwdesc.lower().strip()
+    hwdesc = hwdesc.lower().strip()
     for k in hwmap:
-        if hwdesc==k or hwdesc in hwmap[k] or hwdesc.replace('_',' ') in hwmap[k]:
-            if type(k)==type((0,)):
-                hwtype=k[1]
-                hwname=k[0]
+        if hwdesc == k or hwdesc in hwmap[k] or hwdesc.replace('_', ' ') in hwmap[k]:
+            if type(k) == type((0,)):
+                hwtype = k[1]
+                hwname = k[0]
             else:
-                hwtype='server'
-                hwname=k
-            return hwtype,hwname
+                hwtype = 'server'
+                hwname = k
+            return hwtype, hwname
 
     raise UnknownHardware, hwdesc
 
-################################################################################
-if __name__=="__main__":
-    hwdesc=" ".join(sys.argv[1:])
+##########################################################################
+if __name__ == "__main__":
+    hwdesc = " ".join(sys.argv[1:])
     try:
-        t,n=getHardware(hwdesc)
+        t, n = getHardware(hwdesc)
     except UnknownHardware:
         print "No idea what '%s' is" % hwdesc
     else:
-        print "%s, %s" % (t,n)
+        print "%s, %s" % (t, n)
 
-#EOF
+# EOF

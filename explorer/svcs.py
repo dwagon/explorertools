@@ -1,5 +1,5 @@
 #!/usr/local/bin/python
-# 
+#
 # Script to understand svcs output for explorer analysis
 #
 # Written by Dougal Scott <dwagon@pobox.com>
@@ -8,38 +8,44 @@
 
 import explorerbase
 
-################################################################################
-# Svcs #########################################################################
-################################################################################
+##########################################################################
+# Svcs ###################################################################
+##########################################################################
+
+
 class Svcs(explorerbase.ExplorerBase):
+
     """Understand explorer output with respect to fma
     """
-    ############################################################################
+    ##########################################################################
+
     def __init__(self, config):
         explorerbase.ExplorerBase.__init__(self, config)
         if not self.exists('sysconfig/svcs-xv.out'):
             return
         self.parseSVCS()
 
-    ############################################################################
+    ##########################################################################
     def analyse(self):
         pass
 
-    ############################################################################
+    ##########################################################################
     def parseSVCS(self):
-        f=self.open('sysconfig/svcs-xv.out')
-        buf=[]
+        f = self.open('sysconfig/svcs-xv.out')
+        buf = []
         for line in f:
-            line=line.rstrip()
+            line = line.rstrip()
             if line.startswith('svc:'):
                 if buf:
-                    subcat=buf[0][buf[0].find('(')+1:buf[0].rfind(')')].replace(',','')
+                    subcat = buf[0][
+                        buf[0].find('(') + 1:buf[0].rfind(')')].replace(',', '')
                     self.addIssue(subcat, obj=buf[0], text=buf)
-                    buf=[]
+                    buf = []
             buf.append(line)
         if buf:
-            subcat=buf[0][buf[0].find('(')+1:buf[0].rfind(')')].replace(',','')
+            subcat = buf[0][
+                buf[0].find('(') + 1:buf[0].rfind(')')].replace(',', '')
             self.addIssue(subcat, obj=buf[0], text=buf)
         f.close()
 
-#EOF
+# EOF
