@@ -31,6 +31,7 @@ class Processor(explorerbase.ExplorerBase):
     def analyse(self):
         pass
 
+
 ##########################################################################
 # Processors #############################################################
 ##########################################################################
@@ -46,14 +47,15 @@ class Processors(explorerbase.ExplorerBase):
     ##########################################################################
     def parse(self):
         try:
-            if self.config['explorertype'] == 'solaris':
+            if self.config["explorertype"] == "solaris":
                 self.parseSolaris_psrinfo()
-            elif self.config['explorertype'] == 'linux':
+            elif self.config["explorertype"] == "linux":
                 self.parseLinux_cpuinfo()
             else:
-                self.Fatal("Processors - unknown explorertype %s" %
-                           self.config['explorertype'])
-        except UserWarning, err:
+                self.Fatal(
+                    "Processors - unknown explorertype %s" % self.config["explorertype"]
+                )
+        except UserWarning as err:
             self.Warning(err)
 
     ##########################################################################
@@ -64,19 +66,20 @@ class Processors(explorerbase.ExplorerBase):
 
     ##########################################################################
     def parseLinux_cpuinfo(self):
-        f = self.open('proc/cpuinfo')
+        f = self.open("proc/cpuinfo")
         for line in f:
-            if line.startswith('processor'):
+            if line.startswith("processor"):
                 cpunum = line.split()[-1]
                 cpu = Processor(self.config, cpunum)
                 self[cpunum] = cpu
-            if line.startswith('model name'):
-                cpu['proctype'] = line[line.find(':') + 1:].strip()
-            if line.startswith('cpu MHz'):
+            if line.startswith("model name"):
+                cpu["proctype"] = line[line.find(":") + 1 :].strip()
+            if line.startswith("cpu MHz"):
                 # Convert speed to a round number: 1500 rather than 1499.998
                 # MHz
-                cpu['speed'] = "%s" % int(
-                    math.ceil(float(line[line.find(':') + 1:].strip())))
+                cpu["speed"] = "%s" % int(
+                    math.ceil(float(line[line.find(":") + 1 :].strip()))
+                )
         f.close()
 
     ##########################################################################
@@ -88,20 +91,21 @@ class Processors(explorerbase.ExplorerBase):
           The sparc processor operates at 400 MHz,
                 and has a sparc floating point processor.
         """
-        f = self.open('sysconfig/psrinfo-v.out')
+        f = self.open("sysconfig/psrinfo-v.out")
         for line in f:
             line = line.strip()
-            m = re.search(
-                'Status of .*processor (?P<cpunum>\d+) as of: .*', line)
+            m = re.search("Status of .*processor (?P<cpunum>\d+) as of: .*", line)
             if m:
-                cpunum = int(m.group('cpunum'))
+                cpunum = int(m.group("cpunum"))
             cpu = Processor(self.config, cpunum)
             m = re.search(
-                'The (?P<proctype>.*) processor operates at (?P<speed>.*),', line)
+                "The (?P<proctype>.*) processor operates at (?P<speed>.*),", line
+            )
             if m:
-                cpu['proctype'] = m.group('proctype')
-                cpu['speed'] = m.group('speed')
+                cpu["proctype"] = m.group("proctype")
+                cpu["speed"] = m.group("speed")
                 self[cpunum] = cpu
         f.close()
+
 
 # EOF

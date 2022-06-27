@@ -1,4 +1,4 @@
-#!/usr/local/bin/python
+#!/usr/bin/env python3
 #
 # Script to understand filesystem details
 #
@@ -29,13 +29,15 @@ class Filesystem(explorerbase.ExplorerBase):
 
     ##########################################################################
     def analyse(self):
-        if not self['protected']:
+        if not self["protected"]:
             self.addIssue(
-                'unprotected', obj=self.name(), text="%s is not redundant" % self.name())
+                "unprotected", obj=self.name(), text="%s is not redundant" % self.name()
+            )
 
     ##########################################################################
     def getNotes(self):
-        return self['describer']
+        return self["describer"]
+
 
 ##########################################################################
 # Filesystems ############################################################
@@ -43,12 +45,11 @@ class Filesystem(explorerbase.ExplorerBase):
 
 
 class Filesystems(explorerbase.ExplorerBase):
-
     def __init__(self, config):
         explorerbase.ExplorerBase.__init__(self, config)
         self.st = storage.Storage(config)
         for fs in self.st.keys():
-            if '_type' in self.st[fs] and self.st[fs]['_type'] == 'filesystem':
+            if "_type" in self.st[fs] and self.st[fs]["_type"] == "filesystem":
                 self[fs] = Filesystem(config, fs, self.st[fs], self.st)
         self.analyse()
 
@@ -67,13 +68,14 @@ class Filesystems(explorerbase.ExplorerBase):
         used = 0
         capac = 0
         for mp in self.fsList():
-            if mp['fstype'] in ("zfs", "nfs"):
+            if mp["fstype"] in ("zfs", "nfs"):
                 continue
-            if 'kbytes' in mp:
-                capac += mp['kbytes']
-            if 'used' in mp:
-                used += mp['used']
+            if "kbytes" in mp:
+                capac += mp["kbytes"]
+            if "used" in mp:
+                used += mp["used"]
         return (used, capac)
+
 
 ##########################################################################
 # storageFilesystems #####################################################
@@ -82,8 +84,7 @@ class Filesystems(explorerbase.ExplorerBase):
 
 class storageFilesystems(explorerbase.ExplorerBase):
 
-    """Understand explorer output with respect to all filesystems and their ilk
-    """
+    """Understand explorer output with respect to all filesystems and their ilk"""
 
     ##########################################################################
 
@@ -94,7 +95,7 @@ class storageFilesystems(explorerbase.ExplorerBase):
 
     ##########################################################################
     def parse(self):
-        self['filesystems'] = set()
+        self["filesystems"] = set()
         self.parseMount()
         self.parseFstab()
         self.parseDf()
@@ -102,72 +103,92 @@ class storageFilesystems(explorerbase.ExplorerBase):
 
     ##########################################################################
     def parseDf(self):
-        """ Provide to the filesystem class:
-                device - device filesystem is mount on
-                kbytes - total capacity in kbytes
-                used - space used up in kbytes
-                avail - space left to use in kbytes
-                pct - % used
+        """Provide to the filesystem class:
+        device - device filesystem is mount on
+        kbytes - total capacity in kbytes
+        used - space used up in kbytes
+        avail - space left to use in kbytes
+        pct - % used
         """
 
-        if self.config['explorertype'] == 'solaris':
+        if self.config["explorertype"] == "solaris":
             dffile = None
-            for fname in ['disks/df-klZ.out', 'disks/df-kl.out', 'disks/df-k.out']:
+            for fname in ["disks/df-klZ.out", "disks/df-kl.out", "disks/df-k.out"]:
                 if self.exists(fname):
                     dffile = fname
                     break
             if not dffile:
                 self.Warning("No usable df file")
                 return
-        elif self.config['explorertype'] == 'linux':
-            dffile = 'df'
+        elif self.config["explorertype"] == "linux":
+            dffile = "df"
         else:
-            self.Fatal("parseDf - unsupported explorer type %s" %
-                       self.config['explorertype'])
+            self.Fatal(
+                "parseDf - unsupported explorer type %s" % self.config["explorertype"]
+            )
         self.parseDf_real(dffile)
 
     ##########################################################################
     def virtualCheck(self):
-        """ Go through all the filesystems and calculate whether they are virtual
+        """Go through all the filesystems and calculate whether they are virtual
         filesystems or not
         """
-        for fs in self['filesystems'].copy():
+        for fs in self["filesystems"].copy():
             if self.isVirtual(fs):
                 del self[fs]
-                self['filesystems'].remove(fs)
+                self["filesystems"].remove(fs)
             else:
-                self[fs]['description'] = 'Filesystem'
+                self[fs]["description"] = "Filesystem"
 
     ##########################################################################
     def isVirtual(self, fs):
         # mvfs - Multi Version File System - ClearCase
         # odm - Oracle Disk Manager
-        if 'fstype' not in self[fs]:
+        if "fstype" not in self[fs]:
             return False
-        if self[fs]['fstype'] in ('mntfs', 'proc', 'fd', 'devfs',
-                                  'objfs', 'ctfs', 'tmpfs', 'lofs', 'rpc_pipefs',
-                                  'devpts', 'usbfs', 'binfmt_misc', 'sysfs', 'sharefs',
-                                  'iso9660', 'usbdevfs', 'hsfs', 'oracleasmfs', 'shmfs',
-                                  'shm', 'mvfs', 'autofs', 'odm',
-                                  #'nfs', 'nfsd',
-                                  ):
+        if self[fs]["fstype"] in (
+            "mntfs",
+            "proc",
+            "fd",
+            "devfs",
+            "objfs",
+            "ctfs",
+            "tmpfs",
+            "lofs",
+            "rpc_pipefs",
+            "devpts",
+            "usbfs",
+            "binfmt_misc",
+            "sysfs",
+            "sharefs",
+            "iso9660",
+            "usbdevfs",
+            "hsfs",
+            "oracleasmfs",
+            "shmfs",
+            "shm",
+            "mvfs",
+            "autofs",
+            "odm",
+            #'nfs', 'nfsd',
+        ):
             return True
-        if '/libc_' in fs:
+        if "/libc_" in fs:
             return True
-        if 'device' in self[fs] and self[fs]['device'] == 'mnttab':
+        if "device" in self[fs] and self[fs]["device"] == "mnttab":
             return True
         return False
 
     ##########################################################################
     def dehumanise(self, str):
-        """ Convert a string generated by a -h option (e.g. 37M, 1.7G) into
+        """Convert a string generated by a -h option (e.g. 37M, 1.7G) into
         kbytes
         """
         num = float(str[:-1])
         units = str[-1]
-        if units == 'G':
+        if units == "G":
             return int(num * 1024 * 1024)
-        if units == 'M':
+        if units == "M":
             return int(num * 1024)
         self.Fatal("dehumanise - unknown units %s" % units)
 
@@ -176,11 +197,11 @@ class storageFilesystems(explorerbase.ExplorerBase):
         f = self.open(dffile)
         oldline = None
         for line in f:
-            if line.startswith('Filesystem'):
+            if line.startswith("Filesystem"):
                 continue
-            if line.startswith('/bin/df'):
+            if line.startswith("/bin/df"):
                 continue
-            if oldline and line.startswith(' '):
+            if oldline and line.startswith(" "):
                 line = "%s %s" % (oldline, line)
                 oldline = None
             bits = line.split()
@@ -191,95 +212,101 @@ class storageFilesystems(explorerbase.ExplorerBase):
             if mp not in self.data:
                 continue
             fs = self[mp]
-            if not 'device' in fs or not fs['device']:
-                fs['device'] = bits[0]
+            if not "device" in fs or not fs["device"]:
+                fs["device"] = bits[0]
             try:
-                fs['kbytes'] = int(bits[1])       # Capacity
+                fs["kbytes"] = int(bits[1])  # Capacity
             except ValueError:
-                fs['kbytes'] = self.dehumanise(bits[1])
+                fs["kbytes"] = self.dehumanise(bits[1])
             try:
-                fs['used'] = int(bits[2])  # K used
+                fs["used"] = int(bits[2])  # K used
             except ValueError:
-                fs['used'] = self.dehumanise(bits[2])
+                fs["used"] = self.dehumanise(bits[2])
             try:
-                fs['avail'] = int(bits[3])        # K available
+                fs["avail"] = int(bits[3])  # K available
             except ValueError:
-                fs['avail'] = self.dehumanise(bits[3])
+                fs["avail"] = self.dehumanise(bits[3])
 
-            fs['pct'] = bits[4]
+            fs["pct"] = bits[4]
         f.close()
 
     ##########################################################################
     def fsList(self):
-        return self['filesystems']
+        return self["filesystems"]
 
     ##########################################################################
     def parseMount(self):
-        """ Parse the mounted filesystems
+        """Parse the mounted filesystems
         Need to create new filesystems if found and set the following attributes
                 device - the physical device used
                 fstype - the type of filesystem (ufs, ext3, etc)
         """
-        if self.config['explorertype'] == 'solaris':
+        if self.config["explorertype"] == "solaris":
             self.parseSolaris_mount()
             self.parseSolaris_mnttab()
-        elif self.config['explorertype'] == 'linux':
+        elif self.config["explorertype"] == "linux":
             self.parseLinux_mount()
         else:
-            self.Fatal("parseMount - unsupported explorer type %s" %
-                       self.config['explorertype'])
+            self.Fatal(
+                "parseMount - unsupported explorer type %s"
+                % self.config["explorertype"]
+            )
 
     ##########################################################################
     def parseLinux_mount(self):
-        f = self.open('mount')
+        f = self.open("mount")
         for line in f:
             line = line.strip()
-            if line == '/bin/mount':
+            if line == "/bin/mount":
                 continue
             m = re.search(
-                '(?P<dev>\S+) on (?P<mp>\S+) type (?P<fstype>\S+) \((?P<opts>.*)\)', line)
-            mp = m.group('mp')
-            dev = self.sanitiseDevice(m.group('dev'))
+                "(?P<dev>\S+) on (?P<mp>\S+) type (?P<fstype>\S+) \((?P<opts>.*)\)",
+                line,
+            )
+            mp = m.group("mp")
+            dev = self.sanitiseDevice(m.group("dev"))
             self[mp] = storage.Storage.initialDict(
-                {'_type': 'filesystem', 'usepoint': '', '_origin': 'mount'})
-            self['filesystems'].add(mp)
-            self[mp]['fstype'] = m.group('fstype')
-            if self[mp]['fstype'] == 'nfs':
-                self[mp]['protected'] = True
-            self[mp]['device'] = dev
-            self[mp]['usepoint'] = dev
-            self[mp]['contains'].add(dev)
-            self[mp]['use'].add(mp)
-            self[mp]['opts'] = m.group('opts')
+                {"_type": "filesystem", "usepoint": "", "_origin": "mount"}
+            )
+            self["filesystems"].add(mp)
+            self[mp]["fstype"] = m.group("fstype")
+            if self[mp]["fstype"] == "nfs":
+                self[mp]["protected"] = True
+            self[mp]["device"] = dev
+            self[mp]["usepoint"] = dev
+            self[mp]["contains"].add(dev)
+            self[mp]["use"].add(mp)
+            self[mp]["opts"] = m.group("opts")
         f.close()
 
     ##########################################################################
     def parseSolaris_mnttab(self):
-        filename = 'etc/mnttab'
+        filename = "etc/mnttab"
         if not self.exists(filename):
             return
         f = self.open(filename)
         for line in f:
-            if ':vold' in line:
+            if ":vold" in line:
                 continue
             bits = line.split()
             mp = bits[1]
             if mp not in self:
                 self[mp] = storage.Storage.initialDict(
-                    {'_type': 'filesystem', '_origin': filename})
-                self['filesystems'].add(mp)
-                self[mp]['device'] = bits[0]
-            if 'fstype' not in self[mp] or not self[mp]['fstype']:
-                self[mp]['fstype'] = bits[2]
-            if self[mp]['fstype'] == 'nfs':
-                self[mp]['device'] = bits[0]
-                self[mp]['protected'] = 'NFS'
+                    {"_type": "filesystem", "_origin": filename}
+                )
+                self["filesystems"].add(mp)
+                self[mp]["device"] = bits[0]
+            if "fstype" not in self[mp] or not self[mp]["fstype"]:
+                self[mp]["fstype"] = bits[2]
+            if self[mp]["fstype"] == "nfs":
+                self[mp]["device"] = bits[0]
+                self[mp]["protected"] = "NFS"
         f.close()
 
     ##########################################################################
     def parseSolaris_mount(self):
         filename = None
-        for fname in ('disks/mount-v.out', 'disks/mount.out'):
+        for fname in ("disks/mount-v.out", "disks/mount.out"):
             if self.exists(fname):
                 filename = fname
                 break
@@ -288,55 +315,64 @@ class storageFilesystems(explorerbase.ExplorerBase):
             return
         f = self.open(filename)
         for line in f:
-            if line.find('zone=') >= 0:
+            if line.find("zone=") >= 0:
                 continue
             bits = line.split()
             # If the mount-v is unavailable, then this isn't what we want
-            if '-v' in filename:
+            if "-v" in filename:
                 mp = bits[2]
                 if mp not in self:
                     self[mp] = storage.Storage.initialDict(
-                        {'_type': 'filesystem', 'usepoint': '', '_origin': filename})
-                    self['filesystems'].add(mp)
+                        {"_type": "filesystem", "usepoint": "", "_origin": filename}
+                    )
+                    self["filesystems"].add(mp)
                 fs = self[mp]
-                fs['device'] = self.sanitiseDevice(bits[0])
-                fs['usepoint'] = fs['device']
-                fs['fstype'] = bits[4]
-                fs['contains'].add(fs['device'])
+                fs["device"] = self.sanitiseDevice(bits[0])
+                fs["usepoint"] = fs["device"]
+                fs["fstype"] = bits[4]
+                fs["contains"].add(fs["device"])
             else:
                 mp = bits[1]
                 if mp not in self:
                     self[mp] = storage.Storage.initialDict(
-                        {'_type': 'filesystem', 'usepoint': '', '_origin': filename, 'fstype': ''})
-                    self['filesystems'].add(mp)
+                        {
+                            "_type": "filesystem",
+                            "usepoint": "",
+                            "_origin": filename,
+                            "fstype": "",
+                        }
+                    )
+                    self["filesystems"].add(mp)
                 fs = self[mp]
-                fs['device'] = self.sanitiseDevice(bits[0])
-                fs['usepoint'] = fs['device']
-                fs['fstype'] = bits[2]
-                fs['contains'].add(fs['device'])
-                fs['use'].add(mp)
+                fs["device"] = self.sanitiseDevice(bits[0])
+                fs["usepoint"] = fs["device"]
+                fs["fstype"] = bits[2]
+                fs["contains"].add(fs["device"])
+                fs["use"].add(mp)
         f.close()
 
     ##########################################################################
     def parseFstab(self):
         try:
-            if self.config['explorertype'] == 'solaris':
+            if self.config["explorertype"] == "solaris":
                 self.parseSolaris_vfstab()
-            elif self.config['explorertype'] == 'linux':
+            elif self.config["explorertype"] == "linux":
                 self.parseLinux_fstab()
             else:
-                self.Fatal("parseFstab - unsupported explorer type %s" %
-                           self.config['explorertype'])
-        except UserWarning, err:
+                self.Fatal(
+                    "parseFstab - unsupported explorer type %s"
+                    % self.config["explorertype"]
+                )
+        except UserWarning as err:
             self.Warning(err)
 
     ##########################################################################
     def parseLinux_fstab(self):
         # TODO - currently ignored
-        f = self.open('etc/fstab')
+        f = self.open("etc/fstab")
         for line in f:
             line = line.strip()
-            if not line or line.startswith('#'):
+            if not line or line.startswith("#"):
                 continue
             bits = line.split()
             dev = bits[0]
@@ -345,7 +381,7 @@ class storageFilesystems(explorerbase.ExplorerBase):
             try:
                 opts = bits[3]
             except IndexError:
-                if fstype != 'nfs':
+                if fstype != "nfs":
                     self.Warning("Malformed fstab line: %s" % line)
         f.close()
 
@@ -355,66 +391,73 @@ class storageFilesystems(explorerbase.ExplorerBase):
         Analyse vfstab output
         Only do real filesystems, no swap
         """
-        f = self.open('etc/vfstab')
+        f = self.open("etc/vfstab")
         for line in f:
             line = line.rstrip()
-            if not line or line.startswith('#'):
+            if not line or line.startswith("#"):
                 continue
             bits = line.split()
             if len(bits) < 4:
                 self.Warning("Unhandled vfstab line: %s" % line)
                 continue
             mp = bits[2]
-            if mp == '-':
+            if mp == "-":
                 continue
             # Have seen this which causes problems
-            if mp.endswith('/') and mp != '/':
+            if mp.endswith("/") and mp != "/":
                 mp = mp[:-1]
-            if '/dsk/' in bits[1]:      # Should always be /rdsk/
+            if "/dsk/" in bits[1]:  # Should always be /rdsk/
                 self.addIssue(
-                    'vfstab', obj=mp, text="FSCK device misconfigured for %s" % mp)
+                    "vfstab", obj=mp, text="FSCK device misconfigured for %s" % mp
+                )
             if mp not in self:
                 self.addConcern(
-                    "vfstab", obj=mp, text="Mounted filesystem is not in vfstab")
+                    "vfstab", obj=mp, text="Mounted filesystem is not in vfstab"
+                )
                 self[mp] = storage.Storage.initialDict(
-                    {'_type': 'filesystem', '_origin': 'etc/vfstab'})
+                    {"_type": "filesystem", "_origin": "etc/vfstab"}
+                )
             fs = self[mp]
             newdev = self.sanitiseDevice(bits[0])
-            if 'device' in fs and fs['device'] != newdev:
-                self.addIssue("vfstab", obj=mp, text="Mounted device %s disagrees with vfstab device %s" % (
-                    fs['device'], newdev))
-            fs['device'] = self.sanitiseDevice(bits[0])
-            fs['usepoint'] = fs['device']
-            fs['use'].add(mp)
-            fs['contains'].add(fs['device'])
-            fs['fstype'] = bits[3]
-            self['filesystems'].add(mp)
+            if "device" in fs and fs["device"] != newdev:
+                self.addIssue(
+                    "vfstab",
+                    obj=mp,
+                    text="Mounted device %s disagrees with vfstab device %s"
+                    % (fs["device"], newdev),
+                )
+            fs["device"] = self.sanitiseDevice(bits[0])
+            fs["usepoint"] = fs["device"]
+            fs["use"].add(mp)
+            fs["contains"].add(fs["device"])
+            fs["fstype"] = bits[3]
+            self["filesystems"].add(mp)
             self[mp] = fs
         f.close()
 
     ##########################################################################
-        # TODO: Add code to add up filesystem size +  cap
-        # TODO: access zfs details to get userd + kbytes.
+    # TODO: Add code to add up filesystem size +  cap
+    # TODO: access zfs details to get userd + kbytes.
     def crossPopulate(self, data):
         # TODO - filesystems that we only know from the cluster resourcing
-        for cfs in self['clusterfs']:
+        for cfs in self["clusterfs"]:
             if cfs not in self:
                 self.Debug("Thinking about adding cluster fs=%s" % cfs)
-                #self[cfs]=storage.Storage.initialDict({'_type': 'filesystem', 'usepoint':'', 'cluster':True})
+                # self[cfs]=storage.Storage.initialDict({'_type': 'filesystem', 'usepoint':'', 'cluster':True})
             else:
-                self[cfs]['cluster'] = True
+                self[cfs]["cluster"] = True
         for fs in self.fsList():
-            for dev in data[fs]['devices']:
+            for dev in data[fs]["devices"]:
                 if dev in data:
-                    data[dev]['use'].add(fs)
+                    data[dev]["use"].add(fs)
 
                     # If the device is protected then the filesytem on it is
                     # also protected
-                    if 'protected' in data[dev]:
-                        data[fs]['protected'] = data[dev]['protected']
-                        #self.Warning("Filesystem %s is protected (%s) as it is on %s" % (fs, data[dev]['protected'], dev))
+                    if "protected" in data[dev]:
+                        data[fs]["protected"] = data[dev]["protected"]
+                        # self.Warning("Filesystem %s is protected (%s) as it is on %s" % (fs, data[dev]['protected'], dev))
                 else:
-                    self.Warning(
-                        "FS %s relies on non existant device %s" % (fs, dev))
+                    self.Warning("FS %s relies on non existant device %s" % (fs, dev))
+
 
 # EOF

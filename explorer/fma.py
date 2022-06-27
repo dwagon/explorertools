@@ -1,4 +1,4 @@
-#!/usr/local/bin/python
+#!/usr/bin/env python3
 #
 # Script to understand fma output for explorer analysis
 #
@@ -15,13 +15,13 @@ import explorerbase
 
 class Fma(explorerbase.ExplorerBase):
 
-    """Understand explorer output with respect to fma
-    """
+    """Understand explorer output with respect to fma"""
+
     ##########################################################################
 
     def __init__(self, config):
         explorerbase.ExplorerBase.__init__(self, config)
-        if not self.exists('fma/fmadm-config.out'):
+        if not self.exists("fma/fmadm-config.out"):
             return
         self.parseFmadm()
 
@@ -42,24 +42,24 @@ class Fma(explorerbase.ExplorerBase):
     #   degraded mem:///motherboard=0/chip=0/memory-controller=0/dimm=3/rank=0
     ##########################################################################
     def parseFmadm(self):
-        f = self.open('fma/fmadm-faulty-a.out')
-        buff = []         # Error excluding headers
+        f = self.open("fma/fmadm-faulty-a.out")
+        buff = []  # Error excluding headers
         headers = ""
         inline = False
         mode = None
 
         for line in f:
             line = line.rstrip()
-            if line.startswith('TIME'):
+            if line.startswith("TIME"):
                 headers = line
-                mode = 'TIME'
+                mode = "TIME"
                 continue
-            elif 'RESOURCE' in line:
+            elif "RESOURCE" in line:
                 headers = line
-                mode = 'RESOURCE'
+                mode = "RESOURCE"
                 continue
 
-            if '--------' in line:
+            if "--------" in line:
                 if buff:
                     self.addFma(buff, mode)
                     buff = []
@@ -71,10 +71,11 @@ class Fma(explorerbase.ExplorerBase):
 
     ##########################################################################
     def addFma(self, buff, mode):
-        if mode == 'TIME':
+        if mode == "TIME":
             subcat = buff[0].split()[-1].strip()
-        if mode == 'RESOURCE':
+        if mode == "RESOURCE":
             subcat = buff[0].split()[0].strip()
         self.addIssue(subcat, obj=buff[0], text=buff)
+
 
 # EOF

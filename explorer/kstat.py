@@ -19,8 +19,8 @@ import explorerbase
 
 class Chain(explorerbase.ExplorerBase):
 
-    """ All the kstat information for a single module:name pair
-    """
+    """All the kstat information for a single module:name pair"""
+
     ##########################################################################
 
     def __init__(self, config, module, name, instance):
@@ -33,16 +33,21 @@ class Chain(explorerbase.ExplorerBase):
 
     ##########################################################################
     def addVal(self, stat, val):
-        if stat == 'class':
+        if stat == "class":
             self.class_ = val
-        elif stat == 'snaptime':
+        elif stat == "snaptime":
             self.snaptime = val
         else:
             self[stat] = val
 
     ##########################################################################
     def __repr__(self):
-        return "<Chain: module=%s name=%s instance=%s class_=%s>" % (self.module, self.objname, self.instance, self.class_)
+        return "<Chain: module=%s name=%s instance=%s class_=%s>" % (
+            self.module,
+            self.objname,
+            self.instance,
+            self.class_,
+        )
 
     ##########################################################################
     def printLink(self):
@@ -51,6 +56,7 @@ class Chain(explorerbase.ExplorerBase):
             str += "%s=%s\n" % (k, self[k])
         return str
 
+
 ##########################################################################
 # Kstat ##################################################################
 ##########################################################################
@@ -58,8 +64,8 @@ class Chain(explorerbase.ExplorerBase):
 
 class Kstat(explorerbase.ExplorerBase):
 
-    """Understand explorer output with respect to kstat
-    """
+    """Understand explorer output with respect to kstat"""
+
     ##########################################################################
 
     def __init__(self, config):
@@ -68,27 +74,28 @@ class Kstat(explorerbase.ExplorerBase):
 
     ##########################################################################
     def parseKstat(self):
-        if not self.exists('netinfo/kstat-p.out'):
+        if not self.exists("netinfo/kstat-p.out"):
             return
-        f = self.open('netinfo/kstat-p.out')
+        f = self.open("netinfo/kstat-p.out")
         for line in f:
             line = line.strip()
-            try:        # Start of new instances don't have data
-                id, val = line.split('\t')
+            try:  # Start of new instances don't have data
+                id, val = line.split("\t")
             except ValueError:
                 continue
-            bits = id.split(':')
+            bits = id.split(":")
             module = bits[0]
             instance = bits[1]
             statistic = bits[-1]
-            name = ":".join(bits[2:-1])   # Sigh, so much for a clean concept
+            name = ":".join(bits[2:-1])  # Sigh, so much for a clean concept
             if module not in self:
                 self[module] = {}
             if name not in self[module]:
                 self[module][name] = {}
             if instance not in self[module][name]:
                 self[module][name][instance] = Chain(
-                    self.config, module, name, instance)
+                    self.config, module, name, instance
+                )
             self[module][name][instance].addVal(statistic, val)
 
         f.close()
@@ -110,13 +117,12 @@ class Kstat(explorerbase.ExplorerBase):
 
     ##########################################################################
     def instanceList(self, module, name):
-        """ Return the instances that belong to the
-        """
+        """Return the instances that belong to the"""
         return self[module][name].keys()
 
     ##########################################################################
     def classChains(self, class_, module=None):
-        """ Return all the chains that belong to the specified class_
+        """Return all the chains that belong to the specified class_
         module can legitimately be '' - so can't check for Falsehood
         """
         if module == None:
@@ -135,5 +141,6 @@ class Kstat(explorerbase.ExplorerBase):
     def chain(self, module, name, instance):
         c = self[module][name][instance]
         return c
+
 
 # EOF

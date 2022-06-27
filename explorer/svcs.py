@@ -15,13 +15,13 @@ import explorerbase
 
 class Svcs(explorerbase.ExplorerBase):
 
-    """Understand explorer output with respect to fma
-    """
+    """Understand explorer output with respect to fma"""
+
     ##########################################################################
 
     def __init__(self, config):
         explorerbase.ExplorerBase.__init__(self, config)
-        if not self.exists('sysconfig/svcs-xv.out'):
+        if not self.exists("sysconfig/svcs-xv.out"):
             return
         self.parseSVCS()
 
@@ -31,21 +31,22 @@ class Svcs(explorerbase.ExplorerBase):
 
     ##########################################################################
     def parseSVCS(self):
-        f = self.open('sysconfig/svcs-xv.out')
+        f = self.open("sysconfig/svcs-xv.out")
         buf = []
         for line in f:
             line = line.rstrip()
-            if line.startswith('svc:'):
+            if line.startswith("svc:"):
                 if buf:
-                    subcat = buf[0][
-                        buf[0].find('(') + 1:buf[0].rfind(')')].replace(',', '')
+                    subcat = buf[0][buf[0].find("(") + 1 : buf[0].rfind(")")].replace(
+                        ",", ""
+                    )
                     self.addIssue(subcat, obj=buf[0], text=buf)
                     buf = []
             buf.append(line)
         if buf:
-            subcat = buf[0][
-                buf[0].find('(') + 1:buf[0].rfind(')')].replace(',', '')
+            subcat = buf[0][buf[0].find("(") + 1 : buf[0].rfind(")")].replace(",", "")
             self.addIssue(subcat, obj=buf[0], text=buf)
         f.close()
+
 
 # EOF
