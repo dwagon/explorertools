@@ -279,7 +279,6 @@ hwmap = {
         "proliant ml310 g1",
     ],
     "hp_ml310_g2": ["ml310 g2"],
-    "hp_ml310_g4": ["ml310 g4"],
     "hp_ml310_g4": ["proliant ml310 g4", "ml310 g4"],
     "hp_ml310_g5": ["proliant ml310 g5", "ml310 g5"],
     "hp_ml350": ["cpq pro ml350", "proliant ml350", "ml350", "ml350 t"],

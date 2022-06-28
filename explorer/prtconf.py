@@ -1,24 +1,20 @@
-#!/usr/local/bin/python
-#
+"""
 # Script to analyse prtconf -vD from explorers
-#
+"""
 # Written by Dougal Scott <dwagon@pobox.com>
 # $Id: prtconf.py 2393 2012-06-01 06:38:17Z dougals $
 # $HeadURL: http://svn/ops/unix/explorer/trunk/explorer/prtconf.py $
 
-import os
-import sys
-import getopt
 import re
 import explorerbase
 import kstat
 
 verbflag = 0
 
+
 ##########################################################################
-
-
 class Driver(explorerbase.ExplorerBase):
+    """ TODO """
     def __init__(self, config, drivername):
         explorerbase.ExplorerBase.__init__(self, config)
         self.objname = drivername
@@ -28,6 +24,7 @@ class Driver(explorerbase.ExplorerBase):
 
     ##########################################################################
     def analyseLines(self):
+        """ TODO """
         for mode in self.lines.keys():
             self.analyse(mode)
         self["vendor"] = ""
@@ -40,10 +37,11 @@ class Driver(explorerbase.ExplorerBase):
 
     ##########################################################################
     def getName(self, line):
+        """ TODO """
         for reg in (
-            "name='(?P<name>.*)'",
-            "name=(?P<name>.*)",
-            "name \<(?P<name>.*?)\>",
+            r"name='(?P<name>.*)'",
+            r"name=(?P<name>.*)",
+            r"name \<(?P<name>.*?)\>",
         ):
             m = re.search(reg, line)
             if m:
@@ -54,6 +52,7 @@ class Driver(explorerbase.ExplorerBase):
 
     ##########################################################################
     def getValue(self, line):
+        """ TODO """
         for reg in (
             "value='(?P<value>.*)'",
             "value=(?P<value>.*)",
@@ -67,6 +66,7 @@ class Driver(explorerbase.ExplorerBase):
 
     ##########################################################################
     def analyse(self, mode):
+        """ TODO """
         name = ""
         value = ""
         for line in self.lines[mode]:
@@ -83,25 +83,30 @@ class Driver(explorerbase.ExplorerBase):
 
     ##########################################################################
     def addParent(self, blob):
+        """ TODO """
         self.parent = blob
 
     ##########################################################################
     def removeChild(self, blob):
+        """ TODO """
         self.children.remove(blob)
 
     ##########################################################################
     def addChild(self, blob):
+        """ TODO """
         self.children.append(blob)
         blob.addParent(self)
 
     ##########################################################################
     def isTape(self):
+        """ TODO """
         if self.name().startswith("st"):
             return True
         return False
 
     ##########################################################################
     def isDisk(self):
+        """ TODO """
         if self.name().startswith("sd"):
             return True
         if self.name().startswith("ssd"):
@@ -119,6 +124,7 @@ class Driver(explorerbase.ExplorerBase):
 
     ##########################################################################
     def addLine(self, line, mode):
+        """ TODO """
         if mode not in self.lines:
             self.lines[mode] = []
         self.lines[mode].append(line.strip())
@@ -127,9 +133,8 @@ class Driver(explorerbase.ExplorerBase):
 ##########################################################################
 # Prtconf ################################################################
 ##########################################################################
-
-
 class Prtconf(explorerbase.ExplorerBase):
+    """ TODO """
     def __init__(self, config):
         explorerbase.ExplorerBase.__init__(self, config)
         self["_rootblob"] = None
@@ -153,6 +158,7 @@ class Prtconf(explorerbase.ExplorerBase):
 
     ##########################################################################
     def parsePrtconf_vp(self):
+        """ TODO """
         filename = "sysconfig/prtconf-vp.out"
         if not self.exists(filename):
             return
@@ -170,6 +176,7 @@ class Prtconf(explorerbase.ExplorerBase):
 
     ##########################################################################
     def parseAliases(self, buff):
+        """ TODO """
         for line in buff:
             if "Node" in line:
                 continue
@@ -178,6 +185,7 @@ class Prtconf(explorerbase.ExplorerBase):
 
     ##########################################################################
     def analyse(self):
+        """ TODO """
         pass
 
     ##########################################################################
@@ -198,6 +206,7 @@ class Prtconf(explorerbase.ExplorerBase):
 
     ##########################################################################
     def getKstats(self):
+        """ TODO """
         k = kstat.Kstat(self.config)
         for link in k.classChains("disk"):
             self["_kstat_disks"].append(link.name())
@@ -206,6 +215,7 @@ class Prtconf(explorerbase.ExplorerBase):
 
     ##########################################################################
     def analyseEnclosures(self):
+        """ TODO """
         tmpdrivers = self.values()
         for devname, blob in self.items():
             if devname.startswith("_"):
@@ -228,6 +238,7 @@ class Prtconf(explorerbase.ExplorerBase):
 
     ##########################################################################
     def display(self, blob=None, indent=0):
+        """ TODO """
         if not blob:
             blob = self["_rootblob"]
         print("%s%s" % (" " * indent * 4, blob.name()))
@@ -238,22 +249,23 @@ class Prtconf(explorerbase.ExplorerBase):
 
     ##########################################################################
     def addDriver(self, name):
+        """ TODO """
         d = Driver(self.config, name)
         self[name] = d
         return d
 
     ##########################################################################
     def parsePrtconf_vd(self):
+        """ TODO """
         f = self.open("sysconfig/prtconf-vD.out")
         self["_rootblob"] = self.addDriver("root")
         indentblob = {0: self["_rootblob"]}
-        oldindent = 0
         currblob = self["_rootblob"]
         mode = ""
 
         for line in f:
             m = re.match(
-                "(?P<indent>\s*)(?P<module>\S+), instance #(?P<instance>\d+) \(driver name: (?P<driver>\S+)\)",
+                r"(?P<indent>\s*)(?P<module>\S+), instance #(?P<instance>\d+) \(driver name: (?P<driver>\S+)\)",
                 line,
             )
             if m:
@@ -265,7 +277,6 @@ class Prtconf(explorerbase.ExplorerBase):
                 )
                 indentblob[indent - 1].addChild(currblob)
                 indentblob[indent] = currblob
-                oldindent = indent
                 continue
             if "System software properties" in line:
                 mode = "system"

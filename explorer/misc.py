@@ -1,30 +1,23 @@
 #!/usr/local/bin/python
-#
+"""
 # Script to understand misc details
-#
+"""
 # Written by Dougal Scott <dwagon@pobox.com>
 # $Id: misc.py 2398 2012-06-04 02:00:57Z dougals $
 # $HeadURL: http://svn/ops/unix/explorer/trunk/explorer/misc.py $
 
-import os
-import sys
-import getopt
 import re
 import time
-import explorer
 import explorerbase
+
 
 ##########################################################################
 # miscDetails ############################################################
 ##########################################################################
-
-
 class miscDetails(explorerbase.ExplorerBase):
-
     """Class to represent misc details extracted from an explorer"""
 
     ##########################################################################
-
     def __init__(self, config):
         explorerbase.ExplorerBase.__init__(self, config)
         self.config = config
@@ -32,6 +25,7 @@ class miscDetails(explorerbase.ExplorerBase):
 
     ##########################################################################
     def parse(self):
+        """ TODO """
         self.parseExplorer()
 
     ##########################################################################
@@ -64,6 +58,7 @@ class miscDetails(explorerbase.ExplorerBase):
 
     ##########################################################################
     def parseExplorer(self):
+        """ TODO """
         self.getExplorerVersion()
         if self.config["explorertype"] == "solaris":
             self.getEeprom()
@@ -82,6 +77,7 @@ class miscDetails(explorerbase.ExplorerBase):
 
     ##########################################################################
     def getModules(self):
+        """ TODO """
         fname = "sysconfig/modinfo-c.out"
         self["modules"] = []
         if not self.exists(fname):
@@ -137,6 +133,7 @@ class miscDetails(explorerbase.ExplorerBase):
 
     ##########################################################################
     def parseFcinfo_stanza(self, buffer):
+        """ TODO """
         if not buffer:
             return
         data = {}
@@ -196,6 +193,7 @@ class miscDetails(explorerbase.ExplorerBase):
 
     ##########################################################################
     def getSolarisNetListeners(self):
+        """ TODO """
         filename = "netinfo/netstat-an.out"
         if not self.exists(filename):
             self.Warning("%s doesn't exist" % filename)
@@ -270,6 +268,7 @@ class miscDetails(explorerbase.ExplorerBase):
 
     ##########################################################################
     def analyse(self):
+        """ TODO """
         if (
             "eeprom" in self
             and "auto-boot?" in self["eeprom"]
@@ -279,6 +278,7 @@ class miscDetails(explorerbase.ExplorerBase):
 
     ##########################################################################
     def getProcesses(self):
+        """ TODO """
         processes = {}
         mode = None
         if self.config["explorertype"] == "solaris":
@@ -291,7 +291,7 @@ class miscDetails(explorerbase.ExplorerBase):
             else:
                 self.Warning("No usable ps output")
                 return
-            psreg = re.compile(".* \d+:\d\d (.*)$")
+            psreg = re.compile(r".* \d+:\d\d (.*)$")
             for line in f:
                 line = line.strip()
                 p = {}
@@ -335,6 +335,7 @@ class miscDetails(explorerbase.ExplorerBase):
 
     ##########################################################################
     def getPatches(self):
+        """ TODO """
         self["patches"] = {}
         if self.config["explorertype"] == "solaris":
             filename = "patch+pkg/patch_date.out"
@@ -368,6 +369,7 @@ class miscDetails(explorerbase.ExplorerBase):
 
     ##########################################################################
     def getPackages(self):
+        """ TODO """
         self["packages"] = {}
         if self.config["explorertype"] == "solaris":
             if not self.exists("patch+pkg/pkginfo-l.out"):
@@ -378,9 +380,9 @@ class miscDetails(explorerbase.ExplorerBase):
                 if self.lineSkipper(line, start=["Long pkg", "====="]):
                     continue
                 if line.startswith("PKGINST:"):
-                    package = line[line.find(":") + 1 :].strip()
+                    package = line[line.find(":") + 1:].strip()
                 if line.startswith("VERSION:"):
-                    version = line[line.find(":") + 1 :].strip()
+                    version = line[line.find(":") + 1:].strip()
                     self["packages"][package] = version
             f.close()
         elif self.config["explorertype"] == "linux":
@@ -422,6 +424,7 @@ class miscDetails(explorerbase.ExplorerBase):
 
     ##########################################################################
     def getSerial(self):
+        """ TODO """
         if self.config["explorertype"] == "solaris":
             if self.getIpmiSerial():
                 return
@@ -445,7 +448,7 @@ class miscDetails(explorerbase.ExplorerBase):
         f = self.open("hardware.py")
         for line in f:
             if "asset" in line:
-                m = re.search("\(system: (?P<system>\S+)\)", line.strip())
+                m = re.search(r"\(system: (?P<system>\S+)\)", line.strip())
                 if m:
                     sn = m.group("system")
                     if sn.lower() not in ("xxxxxxx", "serial#"):
@@ -529,7 +532,7 @@ class miscDetails(explorerbase.ExplorerBase):
         0111apo- or other things before them
         """
         if "-" in sn:
-            sn = sn[sn.find("-") + 1 :]
+            sn = sn[sn.find("-") + 1:]
         return sn.strip()
 
     ##########################################################################
@@ -604,11 +607,11 @@ class miscDetails(explorerbase.ExplorerBase):
             f = self.open("README")
             line = f.readline()
             f.close()
-            m = re.search("\(Version (?P<version>.*)\)", line)
+            m = re.search(r"\(Version (?P<version>.*)\)", line)
             if m:
                 self["explorerversion"] = m.group("version").lower()
             else:
-                m = re.search("Version (?P<version>\S+)\s", line)
+                m = re.search(r"Version (?P<version>\S+)\s", line)
                 if m:
                     self["explorerversion"] = m.group("version").lower()
         elif self.config["explorertype"] == "linux":

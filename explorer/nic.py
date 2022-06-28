@@ -1,16 +1,12 @@
 #!/usr/local/bin/python
-#
+"""
 # Script to understand network card details
-#
+"""
 # Written by Dougal Scott <dwagon@pobox.com>
 # $Id: nic.py 4430 2013-02-27 07:38:20Z dougals $
 # $HeadURL: http://svn/ops/unix/explorer/trunk/explorer/nic.py $
 
-import os
-import sys
-import getopt
 import re
-import explorer
 import explorerbase
 import kstat
 
@@ -18,15 +14,14 @@ verbflag = 0
 
 _cidrmap = {}
 
+
 ##########################################################################
 # Nic ####################################################################
 ##########################################################################
-
-
 class Nic(explorerbase.ExplorerBase):
     ##########################################################################
-
     def __init__(self, config, nicname, dev, inst):
+        """ TODO """
         explorerbase.ExplorerBase.__init__(self, config)
         self.objname = nicname
         self["interfaces"] = {}
@@ -43,6 +38,7 @@ class Nic(explorerbase.ExplorerBase):
 
     ##########################################################################
     def parse_Linux(self):
+        """ TODO """
         try:
             self.parseLinux_ethtool()
         except UserWarning as err:
@@ -51,6 +47,7 @@ class Nic(explorerbase.ExplorerBase):
 
     ##########################################################################
     def parse_Solaris(self):
+        """ TODO """
         self.parseNdd()
 
     ##########################################################################
@@ -60,13 +57,14 @@ class Nic(explorerbase.ExplorerBase):
         for line in f:
             line = line.strip()
             if "Duplex:" in line and "Unknown" not in line:
-                self["link_duplex"] = line[line.find(":") + 1 :].lower().strip()
+                self["link_duplex"] = line[line.find(":") + 1:].lower().strip()
             if "Speed" in line and "Unknown" not in line:
-                self["link_speed"] = line[line.find(":") + 1 :].lower()
+                self["link_speed"] = line[line.find(":") + 1:].lower()
         f.close()
 
     ##########################################################################
     def post(self):
+        """ TODO """
         if "used" not in self:
             self["used"] = False
         for iface in self["interfaces"]:
@@ -79,6 +77,7 @@ class Nic(explorerbase.ExplorerBase):
 
     ##########################################################################
     def analyse(self):
+        """ TODO """
         if "used" in self and not self["used"]:
             return
         if "half" in self["link_duplex"] and "normal" not in self["link_duplex"]:
@@ -123,11 +122,13 @@ class Nic(explorerbase.ExplorerBase):
 
     ##########################################################################
     def getLinkStatus(self):
+        """ TODO """
         if "ndd_link_status" in self:
             self["link_status"] = {"0": "down", "1": "up"}[self["ndd_link_status"]]
 
     ##########################################################################
     def getLinkSpeed(self):
+        """ TODO """
         if "ndd_link_speed" in self:
             if self["ndd_link_speed"] == "1000":
                 self["link_speed"] = 1000
@@ -167,6 +168,7 @@ class Nic(explorerbase.ExplorerBase):
 
     ##########################################################################
     def getLinkDuplex(self):
+        """ TODO """
         if "ndd_link_mode" in self:
             if self["ndd_link_mode"] == "0":
                 self["link_duplex"] = "half"
@@ -279,6 +281,7 @@ class Nic(explorerbase.ExplorerBase):
 
     ##########################################################################
     def addInterface(self, ifname):
+        """ TODO """
         self["interfaces"][ifname] = {
             "flags": "",
         }
@@ -286,6 +289,7 @@ class Nic(explorerbase.ExplorerBase):
 
     ##########################################################################
     def isVirtual(self):
+        """ TODO """
         if ":" in self.objname:
             return True
         if "vlan" in self:
@@ -336,11 +340,8 @@ class Nic(explorerbase.ExplorerBase):
 ##########################################################################
 # Nics ###################################################################
 ##########################################################################
-
-
 class Nics(explorerbase.ExplorerBase):
     ##########################################################################
-
     def __init__(self, config):
         explorerbase.ExplorerBase.__init__(self, config)
         self.parseIfconfig()
@@ -534,7 +535,7 @@ class Nics(explorerbase.ExplorerBase):
             return
         line = data[0]
         ifname = line.split()[0]
-        m = re.match("(?P<fulldevice>(?P<dev>\D+)(?P<inst>\d*))", ifname)
+        m = re.match(r"(?P<fulldevice>(?P<dev>\D+)(?P<inst>\d*))", ifname)
         nicname = m.group("fulldevice")
         if nicname not in self:
             self[nicname] = Nic(self.config, nicname, m.group("dev"), m.group("inst"))
@@ -550,7 +551,7 @@ class Nics(explorerbase.ExplorerBase):
         nicobj = self[nicname].addInterface(ifname)
         for line in data:
             m = re.search(
-                "inet addr:(?P<ipaddr>.*?)\s+Bcast:(?P<broadcast>.*?)\s+Mask:(?P<mask>.*)",
+                r"inet addr:(?P<ipaddr>.*?)\s+Bcast:(?P<broadcast>.*?)\s+Mask:(?P<mask>.*)",
                 line,
             )
             if m:

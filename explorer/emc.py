@@ -1,50 +1,50 @@
 #!/usr/bin/env python
-#
-# Script to understand emc drive details
-#
+"""
+Script to understand emc drive details
+"""
 # Written by Dougal Scott <dwagon@pobox.com>
 # $Id: emc.py 2393 2012-06-01 06:38:17Z dougals $
 # $HeadURL: http://svn/ops/unix/explorer/trunk/explorer/emc.py $
 
-import os
-import sys
-import getopt
 import explorerbase
 import storage
+
 
 ##########################################################################
 # EmcSlice ###############################################################
 ##########################################################################
-
-
 class EmcSlice(explorerbase.ExplorerBase):
-    def __init__(self, config, slice, data, alldata):
-        self.objname = slice
+    def __init__(self, config, slic, data, alldata):
+        """ TODO """
+        self.objname = slic
         explorerbase.ExplorerBase.__init__(self, config)
         self.data = data
         self.alldata = alldata
 
     ##########################################################################
     def isBackupSlice(self):
+        """ TODO """
         return False
 
     ##########################################################################
     def getSectors(self):
+        """ TODO """
         return None, None, None
 
     ##########################################################################
     def getNotes(self):
+        """ TODO """
         return " "
-        return self["describer"]
+        # return self["describer"]
 
 
 ##########################################################################
 # EmcDisk ################################################################
 ##########################################################################
-
-
 class EmcDisk(explorerbase.ExplorerBase):
+    """ EMC Disk """
     def __init__(self, config, disk, data, alldata):
+        """ TODO """
         self.objname = disk
         explorerbase.ExplorerBase.__init__(self, config)
         self.data = data
@@ -52,10 +52,12 @@ class EmcDisk(explorerbase.ExplorerBase):
 
     ##########################################################################
     def unusedDisk(self):
+        """ TODO """
         return self["unused"]
 
     ##########################################################################
     def sliceList(self):
+        """ TODO """
         slices = sorted(self["slices"])
         return [self[s] for s in slices]
 
@@ -63,10 +65,10 @@ class EmcDisk(explorerbase.ExplorerBase):
 ##########################################################################
 # EmcDisks ###############################################################
 ##########################################################################
-
-
 class EmcDisks(explorerbase.ExplorerBase):
+    """ EMC Disks """
     def __init__(self, config):
+        """ TODO """
         explorerbase.ExplorerBase.__init__(self, config)
         self.st = storage.Storage(config)
         for objname, obj in self.st.items():
@@ -80,6 +82,7 @@ class EmcDisks(explorerbase.ExplorerBase):
 
     ##########################################################################
     def diskList(self):
+        """ TODO """
         disks = sorted(self.keys())
         return [self[d] for d in disks]
 
@@ -87,10 +90,7 @@ class EmcDisks(explorerbase.ExplorerBase):
 ##########################################################################
 # storageEmc #############################################################
 ##########################################################################
-
-
 class storageEmc(explorerbase.ExplorerBase):
-
     """Class to represent all EMC arrays within a system based on data from
     Explorers
     """
@@ -98,6 +98,7 @@ class storageEmc(explorerbase.ExplorerBase):
     ##########################################################################
 
     def __init__(self, config, data={}):
+        """ TODO """
         explorerbase.ExplorerBase.__init__(self, config)
         self.data = data
         self.paths = {}
@@ -105,6 +106,7 @@ class storageEmc(explorerbase.ExplorerBase):
 
     ##########################################################################
     def parse(self):
+        """ TODO """
         self["emcdisks"] = set()
         try:
             if self.config["explorertype"] == "solaris":
@@ -126,11 +128,11 @@ class storageEmc(explorerbase.ExplorerBase):
                 data[disk]["unused"] = False
                 continue
             used = False
-            for slice in data[disk]["slices"]:
+            for slic in data[disk]["slices"]:
                 # Boot Partition always exists
-                if data[slice]["slicenum"] in ("8", "i"):
+                if data[slic]["slicenum"] in ("8", "i"):
                     continue
-                if data[slice]["use"]:
+                if data[slic]["use"]:
                     used = True
                     break
             if not used:
@@ -140,11 +142,13 @@ class storageEmc(explorerbase.ExplorerBase):
 
     ##########################################################################
     def parse_Linux(self):
+        """ TODO """
         self.parse_Linux_partitions()
         self.parseLinux_fdisk(self.parse_Linux_fdisk_chunk)
 
     ##########################################################################
     def parse_Linux_partitions(self):
+        """ TODO """
         filename = "proc/partitions"
         f = self.open(filename)
         for line in f:
@@ -158,10 +162,12 @@ class storageEmc(explorerbase.ExplorerBase):
 
     ##########################################################################
     def parse_Linux_fdisk_chunk(self, lines):
+        """ TODO """
         pass
 
     ##########################################################################
     def parse_Solaris(self):
+        """ TODO """
         self.parse_Solaris_emc()
         self.parse_Solaris_mnttab()
         self.parse_Solaris_swap()
@@ -169,6 +175,7 @@ class storageEmc(explorerbase.ExplorerBase):
 
     ##########################################################################
     def parse_Solaris_vxvm(self):
+        """ TODO """
         filename = "disks/vxvm/vxdisk-list.out"
         if not self.exists(filename):
             return
@@ -211,6 +218,7 @@ class storageEmc(explorerbase.ExplorerBase):
 
     ##########################################################################
     def addEmcSlice(self, device, origin=""):
+        """ TODO """
         emcslice = self.sanitiseDevice(device)
         if emcslice not in self or self[emcslice]["_type"] != "emcslice":
             emcdisk = emcslice[:-1]
@@ -233,6 +241,7 @@ class storageEmc(explorerbase.ExplorerBase):
 
     ##########################################################################
     def addEmcDisk(self, disk, origin=""):
+        """ TODO """
         self[disk] = storage.Storage.initialDict(
             {
                 "_type": "emcdisk",
@@ -304,42 +313,43 @@ class storageEmc(explorerbase.ExplorerBase):
 
     ##########################################################################
     def describer(self, obj, data):
+        """ TODO """
         pass
 
     ##########################################################################
     def protectionCheck(self):
         """If a disk from the drivemap is listed as protected, then
         mark it as such"""
-
         # TODO
-        pass
 
     ##########################################################################
     def diskList(self):
+        """ TODO """
         return sorted(self["emcdisks"])
 
     ##########################################################################
     def crossPopulate(self, data):
+        """ TODO """
         # Look for partitions that live on disks that are EMC Power'd
         for obj in data.copy():
-            if type(data[obj]) == type(""):
+            if isinstance(data[obj], str):
                 continue
 
             if "disk" in data[obj] and data[obj]["disk"] in self.paths:
                 disk = data[obj]["disk"]
                 data[disk]["emc"] = True
-                slice = obj[-1]
-                if slice == "8":  # Boot partition - ignorable
+                slic = obj[-1]
+                if slic == "8":  # Boot partition - ignorable
                     continue
                 emcdisk = self.paths[disk]
-                emcslice = emcdisk + chr(int(slice) + ord("a"))
+                emcslice = emcdisk + chr(int(slic) + ord("a"))
                 if emcslice not in self:
                     self[emcslice] = storage.Storage.initialDict(
                         {
                             "_type": "emcslice",
                             "description": "EMC Slice",
                             "partof": set([emcdisk]),
-                            "slicenum": chr(int(slice) + ord("a")),
+                            "slicenum": chr(int(slic) + ord("a")),
                         }
                     )
                     self[emcdisk]["slices"].add(emcslice)

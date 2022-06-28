@@ -1,29 +1,23 @@
 #!/usr/local/bin/python
-#
-# Script to understand kstat output
-#
+"""
+Script to understand kstat output
+"""
 # Written by Dougal Scott <dwagon@pobox.com>
 # $Id: kstat.py 2393 2012-06-01 06:38:17Z dougals $
 # $HeadURL: http://svn/ops/unix/explorer/trunk/explorer/kstat.py $
 
-import os
-import sys
-import getopt
-import re
 import explorerbase
+
 
 ##########################################################################
 # Chain ##################################################################
 ##########################################################################
-
-
 class Chain(explorerbase.ExplorerBase):
-
     """All the kstat information for a single module:name pair"""
 
     ##########################################################################
-
     def __init__(self, config, module, name, instance):
+        """ TODO """
         explorerbase.ExplorerBase.__init__(self, config)
         self.module = module
         self.objname = name
@@ -33,6 +27,7 @@ class Chain(explorerbase.ExplorerBase):
 
     ##########################################################################
     def addVal(self, stat, val):
+        """ TODO """
         if stat == "class":
             self.class_ = val
         elif stat == "snaptime":
@@ -51,29 +46,28 @@ class Chain(explorerbase.ExplorerBase):
 
     ##########################################################################
     def printLink(self):
-        str = ""
+        """ TODO """
+        strg = ""
         for k in sorted(self.data.keys()):
-            str += "%s=%s\n" % (k, self[k])
-        return str
+            strg += "%s=%s\n" % (k, self[k])
+        return strg
 
 
 ##########################################################################
 # Kstat ##################################################################
 ##########################################################################
-
-
 class Kstat(explorerbase.ExplorerBase):
-
     """Understand explorer output with respect to kstat"""
 
     ##########################################################################
-
     def __init__(self, config):
+        """ TODO """
         explorerbase.ExplorerBase.__init__(self, config)
         self.parseKstat()
 
     ##########################################################################
     def parseKstat(self):
+        """ TODO """
         if not self.exists("netinfo/kstat-p.out"):
             return
         f = self.open("netinfo/kstat-p.out")
@@ -102,12 +96,14 @@ class Kstat(explorerbase.ExplorerBase):
 
     ##########################################################################
     def moduleList(self):
+        """ TODO """
         return sorted(self.keys())
 
     ##########################################################################
     def nameList(self, module=None):
+        """ TODO """
         names = []
-        if module == None:
+        if module is None:
             modlist = self.moduleList()
         else:
             modlist = [module]
@@ -125,7 +121,7 @@ class Kstat(explorerbase.ExplorerBase):
         """Return all the chains that belong to the specified class_
         module can legitimately be '' - so can't check for Falsehood
         """
-        if module == None:
+        if module is None:
             modlist = self.moduleList()
         else:
             modlist = [module]
@@ -139,6 +135,7 @@ class Kstat(explorerbase.ExplorerBase):
 
     ##########################################################################
     def chain(self, module, name, instance):
+        """ TODO """
         c = self[module][name][instance]
         return c
 

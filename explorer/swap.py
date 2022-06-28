@@ -6,18 +6,13 @@
 # $Id: swap.py 2393 2012-06-01 06:38:17Z dougals $
 # $HeadURL: http://svn/ops/unix/explorer/trunk/explorer/swap.py $
 
-import os
-import sys
-import getopt
-import re
 import explorerbase
 import storage
+
 
 ##########################################################################
 # SwapThing ##############################################################
 ##########################################################################
-
-
 class SwapThing(explorerbase.ExplorerBase):
     def __init__(self, config, swapvol, data, alldata):
         self.objname = swapvol
@@ -38,8 +33,6 @@ class SwapThing(explorerbase.ExplorerBase):
 ##########################################################################
 # Swap ###################################################################
 ##########################################################################
-
-
 class Swap(explorerbase.ExplorerBase):
     def __init__(self, config):
         explorerbase.ExplorerBase.__init__(self, config)
@@ -63,14 +56,9 @@ class Swap(explorerbase.ExplorerBase):
 ##########################################################################
 # storageSwap ############################################################
 ##########################################################################
-
-
 class storageSwap(explorerbase.ExplorerBase):
-
     """Understand explorer output with respect to swap"""
-
     ##########################################################################
-
     def __init__(self, config, data={}):
         explorerbase.ExplorerBase.__init__(self, config)
         self.data = data

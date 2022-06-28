@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
-#
-# Script to understand fma output for explorer analysis
-#
+"""
+Script to understand fma output for explorer analysis
+"""
 # Written by Dougal Scott <dwagon@pobox.com>
 # $Id: fma.py 2393 2012-06-01 06:38:17Z dougals $
 # $HeadURL: http://svn/ops/unix/explorer/trunk/explorer/fma.py $
@@ -14,11 +14,9 @@ import explorerbase
 
 
 class Fma(explorerbase.ExplorerBase):
-
     """Understand explorer output with respect to fma"""
 
     ##########################################################################
-
     def __init__(self, config):
         explorerbase.ExplorerBase.__init__(self, config)
         if not self.exists("fma/fmadm-config.out"):
@@ -27,7 +25,7 @@ class Fma(explorerbase.ExplorerBase):
 
     ##########################################################################
     def analyse(self):
-        pass
+        """ TODO """
 
     ##########################################################################
     # --------------- ------------------------------------  -------------- ---
@@ -42,20 +40,17 @@ class Fma(explorerbase.ExplorerBase):
     #   degraded mem:///motherboard=0/chip=0/memory-controller=0/dimm=3/rank=0
     ##########################################################################
     def parseFmadm(self):
+        """ TODO """
         f = self.open("fma/fmadm-faulty-a.out")
         buff = []  # Error excluding headers
-        headers = ""
-        inline = False
         mode = None
 
         for line in f:
             line = line.rstrip()
             if line.startswith("TIME"):
-                headers = line
                 mode = "TIME"
                 continue
             elif "RESOURCE" in line:
-                headers = line
                 mode = "RESOURCE"
                 continue
 
@@ -71,6 +66,7 @@ class Fma(explorerbase.ExplorerBase):
 
     ##########################################################################
     def addFma(self, buff, mode):
+        """ TODO """
         if mode == "TIME":
             subcat = buff[0].split()[-1].strip()
         if mode == "RESOURCE":

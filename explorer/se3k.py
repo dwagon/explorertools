@@ -7,20 +7,16 @@
 # $HeadURL: http://svn/ops/unix/explorer/trunk/explorer/se3k.py $
 
 import os
-import sys
-import getopt
 import re
 import string
 import explorerbase
 
+
 ##########################################################################
 # storedge ###############################################################
 ##########################################################################
-
-
 class Storedge(explorerbase.ExplorerBase):
     ##########################################################################
-
     def __init__(self, config, arrayname):
         explorerbase.ExplorerBase.__init__(self, config)
         self.objname = arrayname
@@ -102,8 +98,8 @@ class Storedge(explorerbase.ExplorerBase):
                             obj="%s %s" % (self.name(), component),
                             text="Component %s has status %s" % (component, status),
                         )
-            except:
-                self.Warning("Parser failure on %s: %s" % (fname, line))
+            except Exception as exc:
+                self.Warning("Parser failure on %s: %s: %s" % (fname, line, str(exc)))
                 raise
 
     ##########################################################################
@@ -171,7 +167,7 @@ class Storedge(explorerbase.ExplorerBase):
     ##########################################################################
     def getDetails(self, line):
         m = re.search(
-            "sccli: selected device /dev/(rdsk|es)/(?P<device>\S+) \[(?P<hardware>.*) (?P<serial>SN#.*)\]",
+            r"sccli: selected device /dev/(rdsk|es)/(?P<device>\S+) \[(?P<hardware>.*) (?P<serial>SN#.*)\]",
             line,
         )
         if m:

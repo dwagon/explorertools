@@ -1,7 +1,7 @@
 #!/usr/bin/env python
-#
-# Script to understand disk details
-#
+"""
+Script to understand disk details
+"""
 # Written by Dougal Scott <dwagon@pobox.com>
 # $Id: disks.py 3034 2012-10-01 07:15:12Z dougals $
 # $HeadURL: http://svn/ops/unix/explorer/trunk/explorer/disks.py $
@@ -12,49 +12,53 @@ import explorerbase
 import drivemap
 import storage
 
+
 ##########################################################################
 # Slice ##################################################################
 ##########################################################################
-
-
 class Slice(explorerbase.ExplorerBase):
-    def __init__(self, config, slice, data, alldata):
-        self.objname = slice
+    """ Slice of a disk """
+    def __init__(self, config, slic, data, alldata):
+        self.objname = slic
         explorerbase.ExplorerBase.__init__(self, config)
         self.data = data
         self.alldata = alldata
 
     ##########################################################################
     def __repr__(self):
+        """ TODO """
         return "<Slice %s %s>" % (self.name(), self.data)
 
     ##########################################################################
     def getCylinders(self):
+        """ TODO """
         if "first_cylinder" not in self:
             return None, None, None
         return self["first_cylinder"], self["last_cylinder"], self["cylinder_count"]
 
     ##########################################################################
     def getSectors(self):
+        """ TODO """
         if "first_sector" not in self:
             return None, None, None
         return self["first_sector"], self["last_sector"], self["sector_count"]
 
     ##########################################################################
     def isBackupSlice(self):
+        """ TODO """
         return self["backup_slice"]
 
     ##########################################################################
     def getNotes(self):
+        """ TODO """
         return self["describer"]
 
 
 ##########################################################################
 # Disk ###################################################################
 ##########################################################################
-
-
 class Disk(explorerbase.ExplorerBase):
+    """ TODO """
     def __init__(self, config, disk, data, alldata):
         self.objname = disk
         explorerbase.ExplorerBase.__init__(self, config)
@@ -63,10 +67,12 @@ class Disk(explorerbase.ExplorerBase):
 
     ##########################################################################
     def __repr__(self):
+        """ TODO """
         return "<Disk %s %s>" % (self.name(), self.data)
 
     ##########################################################################
     def unusedDisk(self):
+        """ TODO """
         return self["unused"]
 
     ##########################################################################
@@ -88,27 +94,27 @@ class Disk(explorerbase.ExplorerBase):
             return []
         cylindermap = []
         diskcylinders = self["accessible cylinders"]
-        for slice in self.sliceList():
-            if "first_cylinder" not in slice:
+        for slic in self.sliceList():
+            if "first_cylinder" not in slic:
                 continue
-            if slice.isBackupSlice():
+            if slic.isBackupSlice():
                 continue
-            slicenum = slice["slicenum"]
-            fs = int(slice["first_cylinder"])
-            ls = int(slice["last_cylinder"])
-            sc = int(slice["cylinder_count"])
+            slicenum = slic["slicenum"]
+            fs = int(slic["first_cylinder"])
+            ls = int(slic["last_cylinder"])
+            sc = int(slic["cylinder_count"])
             cylindermap.append((fs, ls, sc, slicenum))
         cylindermap.sort()
         oldend = self["first_cylinder"] - 1
         lastcylinder = 0
         fullmap = []
         for bits in cylindermap:
-            first, last, count, slice = bits
+            first, last, count, slic = bits
             if first != oldend + 1:
                 fullmap.append((oldend + 1, first - 1, first - oldend, "unalloc"))
             oldend = last
             lastcylinder = last
-            fullmap.append((first, last, count, slice[-2:]))
+            fullmap.append((first, last, count, slic[-2:]))
         # Work out if there is unallocated space at the end
         if lastcylinder and diskcylinders and lastcylinder != diskcylinders:
             fullmap.append(
@@ -123,11 +129,13 @@ class Disk(explorerbase.ExplorerBase):
 
     ##########################################################################
     def sliceList(self):
+        """ TODO """
         slices = sorted(self["slices"])
         return [self[s] for s in slices]
 
     ##########################################################################
     def analyse(self):
+        """ TODO """
         # Check for errors
         if "predfail" in self and self["predfail"] != "0":
             self.addIssue(
@@ -206,9 +214,8 @@ class Disk(explorerbase.ExplorerBase):
 ##########################################################################
 # Disks ##################################################################
 ##########################################################################
-
-
 class Disks(explorerbase.ExplorerBase):
+    """ Disks """
     def __init__(self, config):
         explorerbase.ExplorerBase.__init__(self, config)
         self.st = storage.Storage(config)
@@ -220,10 +227,12 @@ class Disks(explorerbase.ExplorerBase):
 
     ##########################################################################
     def diskList(self):
+        """ TODO """
         return self.values()
 
     ##########################################################################
     def analyse(self):
+        """ TODO """
         for d in self.diskList():
             d.analyse()
             self.inheritIssues(d)
@@ -270,7 +279,6 @@ class Disks(explorerbase.ExplorerBase):
                 continue
             if line.startswith("Controller"):
                 mode = "controller"
-                controller = line.split(":")[-1]
                 volume = None
             if mode == "controller":
                 if line.startswith("Volume:"):
@@ -287,10 +295,10 @@ class Disks(explorerbase.ExplorerBase):
                                 "_origin": filename,
                             }
                         )
-                    numdisks[volume] = numdisks.get(volume, 0) + 1
-                    if numdisks[volume] > 1:
-                        # By default the volume name is the disk name - stupid
-                        self[volume]["protected"] = "Internal HW Raid"
+#                    numdisks[volume] = numdisks.get(volume, 0) + 1
+#                    if numdisks[volume] > 1:
+#                        # By default the volume name is the disk name - stupid
+#                        self[volume]["protected"] = "Internal HW Raid"
             else:
                 bits = line.split()
                 if len(bits) == 5:
@@ -326,6 +334,7 @@ class Disks(explorerbase.ExplorerBase):
 
     ##########################################################################
     def raidCheck(self, line, spot, label):
+        """ TODO """
         if line.split()[spot] != "OK":
             return label
         return ""
@@ -341,6 +350,7 @@ class Disks(explorerbase.ExplorerBase):
 
     ##########################################################################
     def analyseLuxDisplay(self, luxf):
+        """ TODO """
         f = self.open(luxf)
         for line in f:
             line = line.strip()
@@ -363,16 +373,12 @@ class Disks(explorerbase.ExplorerBase):
 ##########################################################################
 # storageDisks ###########################################################
 ##########################################################################
-
-
 class storageDisks(explorerbase.ExplorerBase):
-
     """Class to represent all disks within a system based on data from
     Explorers
     """
 
     ##########################################################################
-
     def __init__(self, config, data={}):
         explorerbase.ExplorerBase.__init__(self, config)
         self.data = data
@@ -382,6 +388,7 @@ class storageDisks(explorerbase.ExplorerBase):
 
     ##########################################################################
     def parse(self):
+        """ TODO """
         self["disks"] = set()
         try:
             if self.config["explorertype"] == "solaris":
@@ -394,6 +401,7 @@ class storageDisks(explorerbase.ExplorerBase):
 
     ##########################################################################
     def parse_Linux(self):
+        """ TODO """
         self["_uuidmap"] = {}
         self["_labelmap"] = {}
         self.parseLinux_blkid()
@@ -423,12 +431,12 @@ class storageDisks(explorerbase.ExplorerBase):
             bits = line.split()
             device = self.sanitiseDevice(bits[0])
             for i in (-1, -2):
-                m = re.match("(?P<size>\d+\.\d\d)(?P<sizeunits>[GM])", bits[i])
-                if m:
-                    size = float(m.group("size"))
-                    if m.group("sizeunits") == "M":
+                matchobj = re.match(r"(?P<size>\d+\.\d\d)(?P<sizeunits>[GM])", bits[i])
+                if matchobj:
+                    size = float(matchobj.group("size"))
+                    if matchobj.group("sizeunits") == "M":
                         size *= 1024
-                    elif m.group("sizeunits") == "G":
+                    elif matchobj.group("sizeunits") == "G":
                         size *= 1024 * 1024
                     if device in self:
                         self[device]["size"] = size
@@ -437,6 +445,7 @@ class storageDisks(explorerbase.ExplorerBase):
 
     ##########################################################################
     def parseLinux_multipath(self):
+        """ TODO """
         # This looks like it was explicitly designed to be unparseable by a computer
         # databases (360a9800057396d4e4a5a623454317175) dm-5 NETAPP,LUN
         # [size=200G][features=1 queue_if_no_path][hwhandler=0][rw]
@@ -461,7 +470,7 @@ class storageDisks(explorerbase.ExplorerBase):
                 continue
             if mode:
                 data += line
-            if mode and line[0] not in "\ ":
+            if mode and line[0] not in r"\ ":
                 mode = False
                 self.parseLinux_multipath_stanza(data)
                 data = ""
@@ -472,6 +481,7 @@ class storageDisks(explorerbase.ExplorerBase):
 
     ##########################################################################
     def parseLinux_multipath_stanza(self, buffer):
+        """ TODO """
         name = "mpath_%s" % buffer.splitlines()[0].split()[0]
         if name not in self:
             self[name] = storage.Storage.initialDict(
@@ -486,7 +496,7 @@ class storageDisks(explorerbase.ExplorerBase):
         for line in buffer.splitlines():
             if line[0] == " ":
                 m = re.search(
-                    ".*_ \d+:\d+:\d+:\d+\s+(?P<disk>\S+)\s+\d+:\d+\s+.*", line
+                    r".*_ \d+:\d+:\d+:\d+\s+(?P<disk>\S+)\s+\d+:\d+\s+.*", line
                 )
                 if m:
                     subdisks.add(m.group("disk"))
@@ -497,6 +507,7 @@ class storageDisks(explorerbase.ExplorerBase):
 
     ##########################################################################
     def parseLinux_hardwarepy_chunk(self, buff, class_):
+        """ TODO """
         if class_ == "HD":
             if buff.get("bus", "none") == "USB":
                 return
@@ -535,6 +546,7 @@ class storageDisks(explorerbase.ExplorerBase):
 
     ##########################################################################
     def parse_Solaris(self):
+        """ TODO """
         self.parseSolaris_format()
         if not self["disks"]:
             self.alternativeParseFormat()
@@ -551,6 +563,7 @@ class storageDisks(explorerbase.ExplorerBase):
 
     ##########################################################################
     def parseDisk(self, disk):
+        """ TODO """
         self.parsePrtvtoc(disk)
 
     ##########################################################################
@@ -686,7 +699,6 @@ class storageDisks(explorerbase.ExplorerBase):
                 continue
             if line.startswith("Controller"):
                 mode = "controller"
-                controller = line.split(":")[-1]
                 volume = None
             if mode == "controller":
                 if line.startswith("Volume:"):
@@ -840,8 +852,8 @@ class storageDisks(explorerbase.ExplorerBase):
             line = line.strip()
             if line.startswith("/devices"):
                 path = line
-                m = re.search("/devices(?P<ctrl>.*)/([^/]*)", path)
-                ctrl = m.group("ctrl")
+                matchobj = re.search(r"/devices(?P<ctrl>.*)/([^/]*)", path)
+                ctrl = matchobj.group("ctrl")
             if line.startswith("Vendor:"):
                 vendor = line.split(":")[1].strip()
             if line.startswith("Product:"):
@@ -860,11 +872,11 @@ class storageDisks(explorerbase.ExplorerBase):
         f = self.open("etc/path_to_inst")
         self.devlist = {}
         for line in f:
-            m = re.search('"(?P<path>.*)" (?P<devnum>\S+) "(?P<devtype>.*)"', line)
-            if m:
+            matchobj = re.search(r'"(?P<path>.*)" (?P<devnum>\S+) "(?P<devtype>.*)"', line)
+            if matchobj:
                 self.devlist[
-                    "%s%s" % (m.group("devtype"), m.group("devnum"))
-                ] = m.group("path")
+                    "%s%s" % (matchobj.group("devtype"), matchobj.group("devnum"))
+                ] = matchobj.group("path")
         f.close()
 
     ##########################################################################
@@ -950,13 +962,13 @@ class storageDisks(explorerbase.ExplorerBase):
 
             diskname = ""
             for diskfmt in [
-                "(?P<disk>[hs]d[a-z]{1,2})$",
-                "cciss/(?P<disk>c\dd\d)$",
-                "ida/(?P<disk>c\dd\d)$",
+                r"(?P<disk>[hs]d[a-z]{1,2})$",
+                r"cciss/(?P<disk>c\dd\d)$",
+                r"ida/(?P<disk>c\dd\d)$",
             ]:
-                m = re.match(diskfmt, part)
-                if m:
-                    diskname = m.group("disk")
+                rm = re.match(diskfmt, part)
+                if rm:
+                    diskname = rm.group("disk")
                     break
             if diskname:
                 self[diskname] = storage.Storage.initialDict(
@@ -974,7 +986,7 @@ class storageDisks(explorerbase.ExplorerBase):
 
             # Check to see if it matches known virtual disks
             isVirt = False
-            for virtfmt in ["md\d", "dm-\d", "lvm.", "loop\d"]:
+            for virtfmt in [r"md\d", r"dm-\d", "lvm.", r"loop\d"]:
                 if re.match(virtfmt, part):
                     isVirt = True
                     break
@@ -983,10 +995,10 @@ class storageDisks(explorerbase.ExplorerBase):
 
             matchob = None
             for partfmt in [
-                "(?P<slicehandle>(?P<disk>[hs]d[a-z]{1,2})(?P<slice>\d))",
-                "cciss/(?P<slicehandle>(?P<disk>c\dd\d)(?P<slice>p\d))",
-                "(?P<slicehandle>(?P<disk>emcpower)(?P<slice>\S))",
-                "ida/(?P<slicehandle>(?P<disk>c\dd\d)(?P<slice>p\d))",
+                r"(?P<slicehandle>(?P<disk>[hs]d[a-z]{1,2})(?P<slice>\d))",
+                r"cciss/(?P<slicehandle>(?P<disk>c\dd\d)(?P<slice>p\d))",
+                r"(?P<slicehandle>(?P<disk>emcpower)(?P<slice>\S))",
+                r"ida/(?P<slicehandle>(?P<disk>c\dd\d)(?P<slice>p\d))",
             ]:
                 matchob = re.match(partfmt, part)
                 if matchob:
@@ -1031,11 +1043,11 @@ class storageDisks(explorerbase.ExplorerBase):
             ):
                 continue
             if line.startswith("Disk"):
-                m = re.search(
-                    "Disk (?P<device>/dev/.*): (?P<size>.*), (?P<bytes>\d+) bytes", line
+                matchobj = re.search(
+                    r"Disk (?P<device>/dev/.*): (?P<size>.*), (?P<bytes>\d+) bytes", line
                 )
-                if m:
-                    disk = self.sanitiseDevice(m.group("device"))
+                if matchobj:
+                    disk = self.sanitiseDevice(matchobj.group("device"))
                     if disk not in self:
                         self[disk] = storage.Storage.initialDict(
                             {
@@ -1048,11 +1060,11 @@ class storageDisks(explorerbase.ExplorerBase):
                             }
                         )
                         self["disks"].add(disk)
-                    self[disk]["size"] = m.group("size")
-                    self[disk]["bytes"] = m.group("bytes")
+                    self[disk]["size"] = matchobj.group("size")
+                    self[disk]["bytes"] = matchobj.group("bytes")
                     continue
                 n = re.search(
-                    "Disk (?P<device>/dev/.*): (?P<heads>\d+) heads, (?P<sectors>\d+) sectors, (?P<cylinders>\d+) cylinders",
+                    r"Disk (?P<device>/dev/.*): (?P<heads>\d+) heads, (?P<sectors>\d+) sectors, (?P<cylinders>\d+) cylinders",
                     line,
                 )
                 if n:
@@ -1068,7 +1080,7 @@ class storageDisks(explorerbase.ExplorerBase):
                     continue
 
             m = re.search(
-                "(?P<heads>\d+) heads, (?P<sectors>\d+) sectors/track, (?P<cylinders>\d+) cylinders",
+                r"(?P<heads>\d+) heads, (?P<sectors>\d+) sectors/track, (?P<cylinders>\d+) cylinders",
                 line,
             )
             if m:
@@ -1081,14 +1093,14 @@ class storageDisks(explorerbase.ExplorerBase):
                 continue
 
             m = re.search(
-                "Units = cylinders of (?P<facta>\d+) \* (?P<factb>\d+) = (?P<cylinder_size>\d+) bytes",
+                r"Units = cylinders of (?P<facta>\d+) \* (?P<factb>\d+) = (?P<cylinder_size>\d+) bytes",
                 line,
             )
             if m:
                 self[disk]["cylinder_size"] = int(m.group("cylinder_size"))
                 continue
 
-            m = re.search("Units = cylinders of (?P<facta>\d+) \* (?P<factb>\d+)", line)
+            m = re.search(r"Units = cylinders of (?P<facta>\d+) \* (?P<factb>\d+)", line)
             if m:
                 self[disk]["cylinder_size"] = int(m.group("facta")) * int(
                     m.group("factb")
@@ -1096,7 +1108,7 @@ class storageDisks(explorerbase.ExplorerBase):
                 continue
 
             m = re.search(
-                "(?P<device>/dev/.*?)\s+(?P<boot>\*?)\s+(?P<start>\d+)\s+(?P<end>\d+)\s+(?P<blocks>\d+)\+?\s+(?P<id>..)\s+(?P<system>.*)",
+                r"(?P<device>/dev/.*?)\s+(?P<boot>\*?)\s+(?P<start>\d+)\s+(?P<end>\d+)\s+(?P<blocks>\d+)\+?\s+(?P<id>..)\s+(?P<system>.*)",
                 line,
             )
             if m:
@@ -1138,7 +1150,7 @@ class storageDisks(explorerbase.ExplorerBase):
         f = self.open("disks/format.out")
         for line in f:
             line = line.strip()
-            m = re.search("\d+. (?P<disk>\S+) <(?P<details>.*)>", line)
+            m = re.search(r"\d+. (?P<disk>\S+) <(?P<details>.*)>", line)
             if m:
                 disk = m.group("disk")
                 if "emcpower" in disk:
@@ -1191,7 +1203,7 @@ class storageDisks(explorerbase.ExplorerBase):
         for disk in self.diskList():
             try:
                 self.crossPopulateDisk(data, disk)
-            except:
+            except Exception:
                 self.Warning("Failed to crossPopulateDisk: %s" % disk)
                 raise
 
@@ -1300,7 +1312,7 @@ class storageDisks(explorerbase.ExplorerBase):
             if not line:
                 continue
             m = re.match(
-                "(?P<device>\S+)\s*Soft Errors: (?P<softerrors>\d+) Hard Errors: (?P<harderrors>\d+) Transport Errors: (?P<transerrors>\d+)",
+                r"(?P<device>\S+)\s*Soft Errors: (?P<softerrors>\d+) Hard Errors: (?P<harderrors>\d+) Transport Errors: (?P<transerrors>\d+)",
                 line,
             )
             if m:
@@ -1309,7 +1321,7 @@ class storageDisks(explorerbase.ExplorerBase):
                 datadev[dev].update(m.groupdict())
                 continue
             m = re.match(
-                "Vendor: (?P<vendor>.*?)\s+Product: (?P<product>.*?)\s+Revision: (?P<revision>.*) Serial No:\s*(?P<serial>.+?)",
+                r"Vendor: (?P<vendor>.*?)\s+Product: (?P<product>.*?)\s+Revision: (?P<revision>.*) Serial No:\s*(?P<serial>.+?)",
                 line,
             )
             if m:
@@ -1318,43 +1330,43 @@ class storageDisks(explorerbase.ExplorerBase):
             # Same as above but with no serial to prevent overwriting a serial
             # from elserwhere
             m = re.match(
-                "Vendor: (?P<vendor>.*?)\s+Product: (?P<product>.*?)\s+Revision: (?P<revision>.*) Serial No:\s*",
+                r"Vendor: (?P<vendor>.*?)\s+Product: (?P<product>.*?)\s+Revision: (?P<revision>.*) Serial No:\s*",
                 line,
             )
             if m:
                 datadev[dev].update(m.groupdict())
                 continue
             m = re.match(
-                "Model: (?P<model>.*) Revision: (?P<revision>.*) Serial No: (?P<serial>.*)",
+                r"Model: (?P<model>.*) Revision: (?P<revision>.*) Serial No: (?P<serial>.*)",
                 line,
             )
             if m:
                 datadev[dev].update(m.groupdict())
                 continue
-            m = re.match("Size: (?P<size>\S+) <(?P<bytes>-?\d+) bytes>", line)
+            m = re.match(r"Size: (?P<size>\S+) <(?P<bytes>-?\d+) bytes>", line)
             if m:
                 datadev[dev].update(m.groupdict())
                 continue
             m = re.match(
-                "Media Error: (?P<mediaerror>\d+) Device Not Ready: (?P<devnotready>\d+)\s+No Device: (?P<nodev>\d+) Recoverable: (?P<recoverable>\d+)",
+                r"Media Error: (?P<mediaerror>\d+) Device Not Ready: (?P<devnotready>\d+)\s+No Device: (?P<nodev>\d+) Recoverable: (?P<recoverable>\d+)",
                 line,
             )
             if m:
                 datadev[dev].update(m.groupdict())
                 continue
             m = re.match(
-                "Illegal Request: (?P<illreq>\d+) Predictive Failure Analysis: (?P<predfail>\d+)",
+                r"Illegal Request: (?P<illreq>\d+) Predictive Failure Analysis: (?P<predfail>\d+)",
                 line,
             )
             if m:
                 datadev[dev].update(m.groupdict())
                 continue
-            m = re.match("Illegal Request: (?P<illreq>\d+)", line)
+            m = re.match(r"Illegal Request: (?P<illreq>\d+)", line)
             if m:
                 datadev[dev].update(m.groupdict())
                 continue
             m = re.match(
-                "RPM: (?P<rpm>\d+) Heads: (?P<heads>\d+) Size: (?P<size>\S+) <(?P<bytes>-?\d+) bytes>",
+                r"RPM: (?P<rpm>\d+) Heads: (?P<heads>\d+) Size: (?P<size>\S+) <(?P<bytes>-?\d+) bytes>",
                 line,
             )
             if m:
@@ -1390,7 +1402,6 @@ class storageDisks(explorerbase.ExplorerBase):
         debugstr = ""
         if "emcpowerpath" in data[slice]:
             str += "EMC PowerPath %s" % data[slice]["emcpowerpath"]
-        oldlev = -1
         metadbcount = 0
         softparcount = 0
         for lev, partof in tmp:

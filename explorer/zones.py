@@ -6,20 +6,15 @@
 # $Id: zones.py 2393 2012-06-01 06:38:17Z dougals $
 # $HeadURL: http://svn/ops/unix/explorer/trunk/explorer/zones.py $
 
-import os
-import sys
-import getopt
 import re
 import explorerbase
+
 
 ##########################################################################
 # Zone ###################################################################
 ##########################################################################
-
-
 class Zone(explorerbase.ExplorerBase):
     ##########################################################################
-
     def __init__(self, config, zonename):
         explorerbase.ExplorerBase.__init__(self, config)
         self.objname = zonename
@@ -40,7 +35,7 @@ class Zone(explorerbase.ExplorerBase):
         f = self.open(ifc)
         for line in f:
             if "inet" in line:
-                m = re.search("inet (?P<ipaddr>\S+) n", line)
+                m = re.search(r"inet (?P<ipaddr>\S+) n", line)
                 if m:
                     if "127.0.0.1" != m.group("ipaddr"):
                         self["ipaddrs"].append(m.group("ipaddr"))
@@ -69,8 +64,8 @@ class Zone(explorerbase.ExplorerBase):
         for line in f:
             line = line.strip()
             if line.startswith("set address"):
-                m = re.search("set address=(?P<ipaddr>[0-9\.]*)(.*)", line)
-                if not "ipaddr" in self:
+                m = re.search(r"set address=(?P<ipaddr>[0-9\.]*)(.*)", line)
+                if "ipaddr" not in self:
                     self["ipaddr"] = []
                 self["ipaddr"].append(m.group("ipaddr"))
             if line.startswith("set physical"):
@@ -83,14 +78,10 @@ class Zone(explorerbase.ExplorerBase):
 ##########################################################################
 # Zones ##################################################################
 ##########################################################################
-
-
 class Zones(explorerbase.ExplorerBase):
-
     """Understand explorer output with respect to zones"""
 
     ##########################################################################
-
     def __init__(self, config):
         explorerbase.ExplorerBase.__init__(self, config)
         if not self.exists("zones"):

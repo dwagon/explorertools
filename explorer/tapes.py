@@ -7,19 +7,14 @@
 # $HeadURL: http://svn/ops/unix/explorer/trunk/explorer/tapes.py $
 
 import os
-import sys
-import getopt
-import re
 import explorerbase
+
 
 ##########################################################################
 # Tapedrive ##############################################################
 ##########################################################################
-
-
 class Tapedrive(explorerbase.ExplorerBase):
     ##########################################################################
-
     def __init__(self, config, tapename):
         explorerbase.ExplorerBase.__init__(self, config)
         self.objname = tapename
@@ -48,14 +43,10 @@ class Tapedrive(explorerbase.ExplorerBase):
 ##########################################################################
 # Tapes ##################################################################
 ##########################################################################
-
-
 class Tapes(explorerbase.ExplorerBase):
-
     """Understand explorer output with respect to tape drives"""
 
     ##########################################################################
-
     def __init__(self, config):
         explorerbase.ExplorerBase.__init__(self, config)
         if not self.exists("tapes"):

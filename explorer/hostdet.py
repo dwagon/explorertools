@@ -1,35 +1,30 @@
 #!/usr/bin/env python3
-#
-# Script to understand host details
-#
+"""
+Script to understand host details
+"""
 # Written by Dougal Scott <dwagon@pobox.com>
 # $Id: hostdet.py 3035 2012-10-01 07:19:27Z dougals $
 # $HeadURL: http://svn/ops/unix/explorer/trunk/explorer/hostdet.py $
 
-import os
-import sys
-import getopt
 import re
 import explorerbase
 import hardware
 
+
 ##########################################################################
 # Host ###################################################################
 ##########################################################################
-
-
 class Host(explorerbase.ExplorerBase):
-
     """Understand explorer output with respect to details about hosts"""
 
     ##########################################################################
-
     def __init__(self, config):
         explorerbase.ExplorerBase.__init__(self, config)
         self.parse()
 
     ##########################################################################
     def parse(self):
+        """ TODO """
         self["osrev"] = ""
         self.parseUname()
         self.parseRam()
@@ -41,6 +36,7 @@ class Host(explorerbase.ExplorerBase):
 
     ##########################################################################
     def parseRelease(self):
+        """ TODO """
         if self.config["explorertype"] == "solaris":
             if not self.exists("etc/release"):
                 self["osrelease"] = ""
@@ -58,6 +54,7 @@ class Host(explorerbase.ExplorerBase):
 
     ##########################################################################
     def parseReboot(self):
+        """ TODO """
         if self.config["explorertype"] != "solaris":
             return
         try:
@@ -70,10 +67,12 @@ class Host(explorerbase.ExplorerBase):
 
     ##########################################################################
     def analyse(self):
+        """ TODO """
         pass
 
     ##########################################################################
     def parseUptime(self):
+        """ TODO """
         self["uptime"] = "unknown"
         try:
             if self.config["explorertype"] == "solaris":
@@ -82,7 +81,7 @@ class Host(explorerbase.ExplorerBase):
                 f = self.open("uptime")
             for line in f:
                 line = line.strip()
-                m = re.search(".* up (?P<uptime>.*),\s+\d+ user.*", line)
+                m = re.search(r".* up (?P<uptime>.*),\s+\d+ user.*", line)
                 if m:
                     self["uptime"] = m.group("uptime")
             f.close()
@@ -91,6 +90,7 @@ class Host(explorerbase.ExplorerBase):
 
     ##########################################################################
     def parseSolaris_sysdef(self):
+        """ TODO """
         if self.config["explorertype"] != "solaris":
             return
         try:
@@ -110,7 +110,7 @@ class Host(explorerbase.ExplorerBase):
     def shortHwdesc(self, fulldesc):
         """Convert the full, rather wordy, description to a more terse version"""
         if "(" in fulldesc:
-            fulldesc = re.sub("(.*)\(.*?\)(.*)", r"\1\2", fulldesc)
+            fulldesc = re.sub(r"(.*)\(.*?\)(.*)", r"\1\2", fulldesc)
         hwdesc = fulldesc.strip()
         hwdesc = hwdesc.replace("Sun Microsystems, Inc.", "")
         hwdesc = hwdesc.replace("oracle corporation", "")
@@ -122,6 +122,7 @@ class Host(explorerbase.ExplorerBase):
 
     ##########################################################################
     def parseLinux_hardwarepy(self):
+        """ TODO """
         f = self.open("hardware.py")
         for line in f:
             line = line.strip()
@@ -135,6 +136,7 @@ class Host(explorerbase.ExplorerBase):
 
     ##########################################################################
     def parseLinux_dmidecode(self):
+        """ TODO """
         data = []
         f = self.open("dmidecode")
         for line in f:
@@ -159,13 +161,14 @@ class Host(explorerbase.ExplorerBase):
 
     ##########################################################################
     def parseLinux(self):
+        """ TODO """
         try:
             self.parseLinux_dmidecode()
-        except UserWarning as err:
+        except UserWarning:
             pass
         try:
             self.parseLinux_hardwarepy()
-        except UserWarning as err:
+        except UserWarning:
             pass
 
     ##########################################################################
@@ -231,6 +234,7 @@ class Host(explorerbase.ExplorerBase):
 
     ##########################################################################
     def parseSmbios(self):
+        """ TODO """
         if self["hardware"]:
             return
         f = self.open("sysconfig/smbios.out")
@@ -244,6 +248,7 @@ class Host(explorerbase.ExplorerBase):
 
     ##########################################################################
     def parseUnameHW(self):
+        """ TODO """
         if self["hardware"]:
             return
         f = self.open("sysconfig/uname-a.out")
@@ -257,6 +262,7 @@ class Host(explorerbase.ExplorerBase):
 
     ##########################################################################
     def parseIpmitool(self):
+        """ TODO """
         if self["hardware"]:
             return
         f = self.open("ipmi/ipmitool_fru.out")
@@ -280,6 +286,7 @@ class Host(explorerbase.ExplorerBase):
 
     ##########################################################################
     def parseShowplatform(self):
+        """ TODO """
         if self["hardware"]:
             return
         f = self.open("Tx000/showplatform_-v")
@@ -293,6 +300,7 @@ class Host(explorerbase.ExplorerBase):
 
     ##########################################################################
     def parseShowhost(self):
+        """ TODO """
         f = self.open("Tx000/showhost")
         for line in f:
             line = line.strip()
@@ -306,8 +314,9 @@ class Host(explorerbase.ExplorerBase):
 
     ##########################################################################
     def parsePrtdiag(self):
+        """ TODO """
         f = self.open("sysconfig/prtdiag-v.out")
-        datestr = "\d{4}/\d{2}/\d{2} \d{2}:\d{2}"
+        datestr = r"\d{4}/\d{2}/\d{2} \d{2}:\d{2}"
         for line in f:
             line = line.strip()
             if line.startswith("Memory Size"):
@@ -323,7 +332,7 @@ class Host(explorerbase.ExplorerBase):
                 self["hwdesc"] = hwdesc.replace(" ", "_")
             if "OBP" in line:
                 m = re.search(
-                    "(?P<obp>OBP\s+\S+) %s\s+(?P<post>POST\s+\S+) %s"
+                    r"(?P<obp>OBP\s+\S+) %s\s+(?P<post>POST\s+\S+) %s"
                     % (datestr, datestr),
                     line,
                 )
@@ -331,7 +340,7 @@ class Host(explorerbase.ExplorerBase):
                     self["obp"] = m.group("obp")
                     self["post"] = m.group("post")
                 else:
-                    m = re.search("(?P<obp>OBP \S+) %s" % datestr, line)
+                    m = re.search(r"(?P<obp>OBP \S+) %s" % datestr, line)
                     if m:
                         self["obp"] = m.group("obp")
             if line.startswith("BIOS Configuration"):
@@ -340,6 +349,7 @@ class Host(explorerbase.ExplorerBase):
 
     ##########################################################################
     def parseRam(self):
+        """ TODO """
         try:
             if self.config["explorertype"] == "solaris":
                 self["os"] = "solaris"
@@ -411,6 +421,7 @@ class Host(explorerbase.ExplorerBase):
 
     ##########################################################################
     def getHardware(self, hwdesc):
+        """ TODO """
         hwdesc = hwdesc.replace("IBM IBM", "IBM")
         hwdesc = hwdesc.replace("sun4u", "")
         if hwdesc.startswith('"') or hwdesc.startswith("'"):

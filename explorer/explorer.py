@@ -1,8 +1,9 @@
 #!/usr/bin/env python3
-#
-# Class to make reading explorers easier
-# This should encapulate all of the other explorer details
-#
+"""
+Class to make reading explorers easier
+This should encapulate all of the other explorer details
+"""
+
 # Written by Dougal Scott <dwagon@pobox.com>
 # $Id: explorer.py 2393 2012-06-01 06:38:17Z dougals $
 # $HeadURL: http://svn/ops/unix/explorer/trunk/explorer/explorer.py $
@@ -42,15 +43,15 @@ debugFlag = False
 
 explorereg = [
     (
-        "explorer.(?P<hostid>[a-f0-9]{8}).(?P<hostname>.*)-(?P<timedate>(?P<date>\d{4}.\d\d.\d\d).(?P<time>\d\d.\d\d))",
+        r"explorer.(?P<hostid>[a-f0-9]{8}).(?P<hostname>.*)-(?P<timedate>(?P<date>\d{4}.\d\d.\d\d).(?P<time>\d\d.\d\d))",
         "solaris",
     ),
     (
-        "sosreport-(?P<hostname>.*)-(?P<timedate>(?P<date>\d{4}.\d{2}.\d{2}).(?P<time>\d{2}.\d{2}))",
+        r"sosreport-(?P<hostname>.*)-(?P<timedate>(?P<date>\d{4}.\d{2}.\d{2}).(?P<time>\d{2}.\d{2}))",
         "linux",
     ),
     (
-        "sosreport-(?P<hostname>.*?)(?P<timedate>(?P<date>\d{8})(?P<time>\d{4}))\d{2}-\w+",
+        r"sosreport-(?P<hostname>.*?)(?P<timedate>(?P<date>\d{8})(?P<time>\d{4}))\d{2}-\w+",
         "linux",
     ),
     #    ("sosreport\.(?P<hostname>.*?)\.(?P<timedate>(?P<date>\d{8})(?P<time>\d{4}))\D", "linux"),
@@ -61,11 +62,10 @@ explorereg = [
     #    ("(?P<hostname>.*?)\.(?P<timedate>(?P<date>\d{8})(?P<time>\d{4}))\d{2}-\w+", "linux"),
 ]
 
+
 ##########################################################################
 # Explorer ###############################################################
 ##########################################################################
-
-
 class Explorer(object):
     def __init__(self, hostpath):
         self.rootpath = options["datadir"]
@@ -94,11 +94,9 @@ class Explorer(object):
 
     ##########################################################################
     def getHostname(self, hostpath):
-        found = False
         for reg, ostype in explorereg:
             m = re.match(reg, os.path.basename(hostpath))
             if m:
-                found = True
                 self.explorertype = ostype
                 self.reg = reg
                 host = m.group("hostname")
@@ -195,8 +193,6 @@ class Explorer(object):
 
 
 ##########################################################################
-
-
 def readConfig(cfg=None):
     """Read the config file
     The name of the file can be specified in this order:
@@ -204,7 +200,6 @@ def readConfig(cfg=None):
      * Using the EXPLORERTOOLS environment variable
      * /app/explorer/etc/explorertools.cfg
     """
-
     import ConfigParser
 
     global options
@@ -258,15 +253,11 @@ def readConfig(cfg=None):
 
 
 ############################################################################
-
-
 def Fatal(msg):
     reporter.Fatal(msg)
 
 
 ############################################################################
-
-
 def allExplorers(reg=""):
     """Return a list of all explorer hosts that match the reg; by default all hosts
     Only return the latest explorer per host
@@ -306,8 +297,6 @@ def allExplorers(reg=""):
 
 
 ##########################################################################
-
-
 def main(arg):
     allexp = allExplorers(arg)
     for host in allexp:
@@ -324,7 +313,6 @@ if __name__ == "__main__":
         opts, args = getopt.getopt(sys.argv[1:], "vc:", ["cfg="])
     except getopt.GetoptError as err:
         sys.stderr.write("Error: %s\n" % str(err))
-        usage()
         sys.exit(1)
 
     for o, a in opts:

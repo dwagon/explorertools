@@ -16,15 +16,12 @@ tmpfile = tempfile.TemporaryFile()
 fromaddr = "explorer-analysis"
 toaddr = ["dougal.scott@tollgroup.com"]
 
+
 ##########################################################################
-
-
 class complaintHandler(object):
-
     """Decorator to make sure that any complaints, tracebacks etc. get captured
     and sent off to the appropriate authorities
     """
-
     def __init__(self, fn):
         self.fn = fn
         self.fd = tmpfile
@@ -59,13 +56,11 @@ class complaintHandler(object):
             server = smtplib.SMTP("localhost")
             server.sendmail(fromaddr, toaddr, data)
             server.quit()
-        except:
+        except Exception:
             pass
 
 
 ##########################################################################
-
-
 def Log(msg, fd=sys.stderr):
     fd.write("%s\n" % msg)
     tmpfile.write("%s %s\n" % (sys.argv[0], msg))

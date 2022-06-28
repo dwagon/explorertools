@@ -1,26 +1,21 @@
 #!/usr/bin/env python3
-#
-# Script to understand filesystem details
-#
+"""
+Script to understand filesystem details
+"""
 # Written by Dougal Scott <dwagon@pobox.com>
 # $Id: filesys.py 4431 2013-02-27 07:38:45Z dougals $
 # $HeadURL: http://svn/ops/unix/explorer/trunk/explorer/filesys.py $
 
-import os
-import sys
-import getopt
 import re
 import explorerbase
 import storage
 
+
 ##########################################################################
 # Filesystem #############################################################
 ##########################################################################
-
-
 class Filesystem(explorerbase.ExplorerBase):
     ##########################################################################
-
     def __init__(self, config, fs, data, alldata):
         self.objname = fs
         explorerbase.ExplorerBase.__init__(self, config)
@@ -42,8 +37,6 @@ class Filesystem(explorerbase.ExplorerBase):
 ##########################################################################
 # Filesystems ############################################################
 ##########################################################################
-
-
 class Filesystems(explorerbase.ExplorerBase):
     def __init__(self, config):
         explorerbase.ExplorerBase.__init__(self, config)
@@ -80,14 +73,10 @@ class Filesystems(explorerbase.ExplorerBase):
 ##########################################################################
 # storageFilesystems #####################################################
 ##########################################################################
-
-
 class storageFilesystems(explorerbase.ExplorerBase):
-
     """Understand explorer output with respect to all filesystems and their ilk"""
 
     ##########################################################################
-
     def __init__(self, config, data={}):
         explorerbase.ExplorerBase.__init__(self, config)
         self.data = data
@@ -170,7 +159,7 @@ class storageFilesystems(explorerbase.ExplorerBase):
             "mvfs",
             "autofs",
             "odm",
-            #'nfs', 'nfsd',
+            # 'nfs', 'nfsd',
         ):
             return True
         if "/libc_" in fs:
@@ -260,7 +249,7 @@ class storageFilesystems(explorerbase.ExplorerBase):
             if line == "/bin/mount":
                 continue
             m = re.search(
-                "(?P<dev>\S+) on (?P<mp>\S+) type (?P<fstype>\S+) \((?P<opts>.*)\)",
+                r"(?P<dev>\S+) on (?P<mp>\S+) type (?P<fstype>\S+) \((?P<opts>.*)\)",
                 line,
             )
             mp = m.group("mp")

@@ -1,5 +1,4 @@
-#
-# Cards for prtdiag analysis
+""" Cards for prtdiag analysis """
 # Written by Dougal Scott <dwagon@pobox.com>
 # $Id: cardmap.py 2393 2012-06-01 06:38:17Z dougals $
 # $HeadURL: http://svn/ops/unix/explorer/trunk/explorer/cardmap.py $
@@ -8,8 +7,8 @@
 ##########################################################################
 ##########################################################################
 cards = {
-    #'SUNW,qsi-cheerio': { 'fake': True },
-    #'fibre-channel': { 'iocard':'Unknown Fibre channel', 'option': 'SG-XPC1FC-QF2', 'part': '375-3102'},
+    # 'SUNW,qsi-cheerio': { 'fake': True },
+    # 'fibre-channel': { 'iocard':'Unknown Fibre channel', 'option': 'SG-XPC1FC-QF2', 'part': '375-3102'},
     "375-3181": {
         "iocard": "XVR-100 Graphics Accelerator (64MB)",
         "part": "375-3181",

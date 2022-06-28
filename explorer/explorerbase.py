@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
-#
-# Class to make reading explorers easier
-#
+"""
+Class to make reading explorers easier
+"""
 # Written by Dougal Scott <dwagon@pobox.com>
 # $Id: explorerbase.py 4380 2013-02-22 02:53:51Z dougals $
 # $HeadURL: http://svn/ops/unix/explorer/trunk/explorer/explorerbase.py $
@@ -18,19 +18,16 @@ import reporter
 verbFlag = False
 debugFlag = False
 
+
 ##########################################################################
 # ExplorerBase ###########################################################
 ##########################################################################
-
-
 class ExplorerBase(object):
-
     """Base class for all other explorer classes to inherit form to give
     basic functionality
     """
 
     ##########################################################################
-
     def __init__(self, config):
         self.config = config
         self.hostname = config["hostname"]
@@ -101,8 +98,7 @@ class ExplorerBase(object):
         """Normalise the device names by removing as much path information
         as possible. e.g. /dev/dsk/c0t0d0s0 -> c0t0d0s0
         """
-        origdev = dev
-        m = re.match("/dev/md/(?P<diskset>\S+)/dsk/(?P<metadev>d\d+)", dev)
+        m = re.match(r"/dev/md/(?P<diskset>\S+)/dsk/(?P<metadev>d\d+)", dev)
         if m:
             dev = "%s/%s" % (m.group("diskset"), m.group("metadev"))
         dev = dev.replace("/dev/did/dsk/", "did/")  # Cluster
@@ -303,7 +299,7 @@ class ExplorerBase(object):
 
     ##########################################################################
     def prettyPrint(self, d=None, indent=0, fd=sys.stdout, keylist=[]):
-        if d == None and indent == 0:
+        if d is None and indent == 0:
             d = self.data
         keys = d.keys()
         keys.sort()
@@ -408,7 +404,7 @@ class ExplorerBase(object):
             if not line:
                 continue
             m = re.match(
-                "(?P<device>\S+)\s*Soft Errors: (?P<softerrors>\d+) Hard Errors: (?P<harderrors>\d+) Transport Errors: (?P<transerrors>\d+)",
+                r"(?P<device>\S+)\s*Soft Errors: (?P<softerrors>\d+) Hard Errors: (?P<harderrors>\d+) Transport Errors: (?P<transerrors>\d+)",
                 line,
             )
             if m:
@@ -417,7 +413,7 @@ class ExplorerBase(object):
                 datadev[dev].update(m.groupdict())
                 continue
             m = re.match(
-                "Vendor: (?P<vendor>.*?)\s+Product: (?P<product>.*?)\s+Revision: (?P<revision>.*) Serial No:(?P<serial>.*)",
+                r"Vendor: (?P<vendor>.*?)\s+Product: (?P<product>.*?)\s+Revision: (?P<revision>.*) Serial No:(?P<serial>.*)",
                 line,
             )
             if m:
@@ -425,55 +421,55 @@ class ExplorerBase(object):
                 continue
             # system info version
             m = re.match(
-                "^(?P<vendor>.*?)\s+Product: (?P<product>.*?)\s+Revision: (?P<revision>.*) Serial No:(?P<serial>.*)",
+                r"^(?P<vendor>.*?)\s+Product: (?P<product>.*?)\s+Revision: (?P<revision>.*) Serial No:(?P<serial>.*)",
                 line,
             )
             if m:
                 datadev[dev].update(m.groupdict())
                 continue
             m = re.match(
-                "Model: (?P<model>.*) Revision: (?P<revision>.*) Serial No: (?P<serial>.*)",
+                r"Model: (?P<model>.*) Revision: (?P<revision>.*) Serial No: (?P<serial>.*)",
                 line,
             )
             if m:
                 datadev[dev].update(m.groupdict())
                 continue
-            m = re.match("Size: (?P<size>\S+) <(?P<bytes>-?\d+) bytes>", line)
+            m = re.match(r"Size: (?P<size>\S+) <(?P<bytes>-?\d+) bytes>", line)
             if m:
                 datadev[dev].update(m.groupdict())
                 continue
             # system info version
-            m = re.match("^(?P<size>\S+) <(?P<bytes>-?\d+) bytes>", line)
+            m = re.match(r"^(?P<size>\S+) <(?P<bytes>-?\d+) bytes>", line)
             if m:
                 datadev[dev].update(m.groupdict())
                 continue
             m = re.match(
-                "Media Error: (?P<mediaerror>\d+) Device Not Ready: (?P<devnotready>\d+)\s+No Device: (?P<nodev>\d+) Recoverable: (?P<recoverable>\d+)",
+                r"Media Error: (?P<mediaerror>\d+) Device Not Ready: (?P<devnotready>\d+)\s+No Device: (?P<nodev>\d+) Recoverable: (?P<recoverable>\d+)",
                 line,
             )
             if m:
                 datadev[dev].update(m.groupdict())
                 continue
             m = re.match(
-                "Illegal Request: (?P<illreq>\d+) Predictive Failure Analysis: (?P<predfail>\d+)",
+                r"Illegal Request: (?P<illreq>\d+) Predictive Failure Analysis: (?P<predfail>\d+)",
                 line,
             )
             if m:
                 datadev[dev].update(m.groupdict())
                 continue
-            m = re.match("Illegal Request: (?P<illreq>\d+)", line)
+            m = re.match(r"Illegal Request: (?P<illreq>\d+)", line)
             if m:
                 datadev[dev].update(m.groupdict())
                 continue
             m = re.match(
-                "RPM: (?P<rpm>\d+) Heads: (?P<heads>\d+) Size: (?P<size>\S+) <(?P<bytes>-?\d+) bytes>",
+                r"RPM: (?P<rpm>\d+) Heads: (?P<heads>\d+) Size: (?P<size>\S+) <(?P<bytes>-?\d+) bytes>",
                 line,
             )
             if m:
                 datadev[dev].update(m.groupdict())
                 continue
             # system info version
-            m = re.match("^(?P<disk>c\d+t\d+d\d+)$", line)
+            m = re.match(r"^(?P<disk>c\d+t\d+d\d+)$", line)
             if m:
                 dev = m.group("disk")
                 datadev[dev] = {}

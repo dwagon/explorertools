@@ -9,7 +9,6 @@
 
 import os
 import sys
-import getopt
 import string
 import re
 import explorerbase
@@ -17,11 +16,10 @@ import storage
 
 verbFlag = 0
 
+
 ##########################################################################
 # Metadev ################################################################
 ##########################################################################
-
-
 class Metadev(explorerbase.ExplorerBase):
     def __init__(self, config, metadev, data, alldata):
         self.objname = metadev
@@ -80,8 +78,6 @@ class Metadev(explorerbase.ExplorerBase):
 ##########################################################################
 # Volmanager #############################################################
 ##########################################################################
-
-
 class Volmanager(explorerbase.ExplorerBase):
     def __init__(self, config):
         explorerbase.ExplorerBase.__init__(self, config)
@@ -213,16 +209,12 @@ class Volmanager(explorerbase.ExplorerBase):
 ##########################################################################
 # storageVolmanager ######################################################
 ##########################################################################
-
-
 class storageVolmanager(explorerbase.ExplorerBase):
-
     """Representation of everything disksuite volume manager based on data
     from explorers
     """
 
     ##########################################################################
-
     def __init__(self, config, data={}):
         explorerbase.ExplorerBase.__init__(self, config)
         self.data = data
@@ -309,7 +301,7 @@ class storageVolmanager(explorerbase.ExplorerBase):
     ##########################################################################
     def crossPopulateDid(self, data):
         """Tell the disks which did they belong to if they do"""
-        if not "_didmap" in self:
+        if "_didmap" not in self:
             return
         for did in data["_didmap"]:
             for disk in data["_didmap"][did]:
@@ -700,8 +692,8 @@ class storageVolmanager(explorerbase.ExplorerBase):
         for filename in files:
             try:
                 self.parseMetaDb(filename)
-            except:
-                self.Warning("Failure on parseMetaDb(filename=%s)" % filename)
+            except Exception as exc:
+                self.Warning("Failure on parseMetaDb(filename=%s) %s" % (filename, str(exc)))
                 raise
         self.crossMatch()
 
@@ -711,7 +703,7 @@ class storageVolmanager(explorerbase.ExplorerBase):
         if it doesn't belong to any
         """
         f = os.path.basename(filename)
-        m = re.match("(?P<cmd>.*)\.(?P<diskset>.*)\.out", f)
+        m = re.match(r"(?P<cmd>.*)\.(?P<diskset>.*)\.out", f)
         if m:
             return m.group("diskset")
         else:

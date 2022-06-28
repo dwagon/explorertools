@@ -7,9 +7,6 @@
 # $Id: vxvm.py 2393 2012-06-01 06:38:17Z dougals $
 # $HeadURL: http://svn/ops/unix/explorer/trunk/explorer/vxvm.py $
 
-import os
-import sys
-import getopt
 import re
 import explorerbase
 import storage
@@ -177,7 +174,7 @@ class storageVxvm(explorerbase.ExplorerBase):
             if line.startswith("hostid:"):
                 hostid = line.split()[-1]
             if line.startswith("group:"):
-                m = re.search(".*name=(?P<name>\S*) id=.*", line)
+                m = re.search(r".*name=(?P<name>\S*) id=.*", line)
                 if m:
                     group = m.group("name")
                 else:

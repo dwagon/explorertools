@@ -6,9 +6,6 @@
 # $Id: zfs.py 2393 2012-06-01 06:38:17Z dougals $
 # $HeadURL: http://svn/ops/unix/explorer/trunk/explorer/zfs.py $
 
-import os
-import sys
-import getopt
 import re
 import explorerbase
 import storage
@@ -163,13 +160,13 @@ class storageZfs(explorerbase.ExplorerBase):
                 except IndexError:
                     pass
             # Full disk
-            m = re.search("\s+(?P<device>c\d+t[A-F\d]+d\d+)\s", line)
+            m = re.search(r"\s+(?P<device>c\d+t[A-F\d]+d\d+)\s", line)
             if m:
                 self[pool]["devices"].add(m.group("device"))
                 self[pool]["contains"].add(m.group("device"))
                 continue
             # Slice of a disk
-            m = re.search("\s+(?P<device>c\d+t[A-F\d]+d\d+s\d+)\s", line)
+            m = re.search(r"\s+(?P<device>c\d+t[A-F\d]+d\d+s\d+)\s", line)
             if m:
                 self[pool]["devices"].add(m.group("device"))
                 self[pool]["contains"].add(m.group("device"))

@@ -11,9 +11,7 @@
 #  a) add a line to Prtdiag.parse() to detect it from the first line in prtdiag output
 #  b) create a function to analyse the contents - see others for examples
 
-import os
 import sys
-import getopt
 import re
 
 sys.path.append("/app/explorer/lib/python/site-packages")
@@ -31,6 +29,7 @@ verbflag = False
 class IoCard(explorerbase.ExplorerBase):
     ##########################################################################
     def __init__(self, config, **kwargs):
+        """ TODO """
         explorerbase.ExplorerBase.__init__(self, config)
         for arg, val in kwargs.items():
             try:
@@ -48,14 +47,17 @@ class IoCard(explorerbase.ExplorerBase):
 
     ##########################################################################
     def __repr__(self):
+        """ TODO """
         return "<IoCard: %s>" % self["iocard"]
 
     ##########################################################################
     def analyse(self):
+        """ TODO """
         pass
 
     ##########################################################################
     def cardDetails(self, model):
+        """ TODO """
         if model == "":
             return ""
         if model == "isa":
@@ -89,6 +91,7 @@ class Prtdiag(explorerbase.ExplorerBase):
 
     ######################################################################
     def __init__(self, config):
+        """ TODO """
         explorerbase.ExplorerBase.__init__(self, config)
         self.badmode = False
         self.buffer = []
@@ -114,31 +117,33 @@ class Prtdiag(explorerbase.ExplorerBase):
 
     ##########################################################################
     def parseLinux(self, hardware):
+        """ TODO """
         try:
             self.parseLinux_dmidecode()
-        except UserWarning as err:
+        except UserWarning:
             pass
         try:
             self.parseLinux_hardwarepy(self.parseLinux_hardwarepy_chunk)
-        except UserWarning as err:
+        except UserWarning:
             pass
         try:
             self.parseLinux_scsi()
-        except UserWarning as err:
+        except UserWarning:
             pass
         try:
             self.parseLinux_ide()
-        except UserWarning as err:
+        except UserWarning:
             pass
         try:
             self.parseLinux_lspci()
-        except UserWarning as err:
+        except UserWarning:
             pass
 
         self.pciCards(hardware)
 
     ##########################################################################
     def pciCards(self, hardware):
+        """ TODO """
         pass
 
     ##########################################################################
@@ -305,7 +310,6 @@ class Prtdiag(explorerbase.ExplorerBase):
         # 8086 = Intel
         "8086:0326": {"desc": "APIC Interrupt Controller A", "fake": True},
         "8086:0327": {"desc": "APIC Interrupt Controller B", "fake": True},
-        "8086:0329": {"desc": "PCI Express-to-PCI Bridge A", "fake": True},
         "8086:0329": {"desc": "PCI Express-to-PCI Bridge B", "fake": True},
         "8086:032a": {"desc": "PCI Express-to-PCI Bridge B", "fake": True},
         "8086:0330": {"desc": "I/O Processor (A-Segment Bridge)", "fake": True},
@@ -400,7 +404,7 @@ class Prtdiag(explorerbase.ExplorerBase):
         filename = "lspci"
         """ 00:00.0 Class 0600: 1166:0014 (rev 33)"""
         reg = re.compile(
-            "\d\d:\d\d.\d Class (?P<class>[0-f]{4}): (?P<pciid>[0-f]{4}:[0-f]{4}).*"
+            r"\d\d:\d\d.\d Class (?P<class>[0-f]{4}): (?P<pciid>[0-f]{4}:[0-f]{4}).*"
         )
 
         f = self.open(filename)
@@ -421,6 +425,7 @@ class Prtdiag(explorerbase.ExplorerBase):
 
     ##########################################################################
     def parseLinux_hardwarepy_chunk(self, buff, class_):
+        """ TODO """
         if class_ == "HD":
             if buff.get("bus", "none") == "USB":
                 return
@@ -477,6 +482,7 @@ class Prtdiag(explorerbase.ExplorerBase):
 
     ##########################################################################
     def parseLinux_ide(self):
+        """ TODO """
         files = self.glob("proc/ide/*/*/model")
         for f in files:
             mf = self.open(f)
@@ -485,6 +491,7 @@ class Prtdiag(explorerbase.ExplorerBase):
 
     ##########################################################################
     def parseLinux_scsi(self):
+        """ TODO """
         buff = []
         f = self.open("proc/scsi/scsi")
         for line in f:
@@ -498,6 +505,7 @@ class Prtdiag(explorerbase.ExplorerBase):
 
     ##########################################################################
     def addDrive(self, model):
+        """ TODO """
         if model in drivemap.drivemap:
             desc = drivemap.drivemap[model].get("desc", None)
             qty = drivemap.drivemap[model].get("qty", 1)
@@ -512,16 +520,17 @@ class Prtdiag(explorerbase.ExplorerBase):
 
     ##########################################################################
     def parseLinux_scsi_chunk(self, buff):
+        """ TODO """
         # First check to see if we are talking about a real disk
         for line in buff:
             if "Type:" in line:
-                m = re.search("Type:\s+(?P<type>.*?)\s+", line)
+                m = re.search(r"Type:\s+(?P<type>.*?)\s+", line)
                 if m.group("type") in ("Direct-Access", "Enclosure", "Processor"):
                     return
 
         for line in buff:
             if "Model:" in line:
-                m = re.search("Model: (?P<model>.*)\s+Rev", line)
+                m = re.search(r"Model: (?P<model>.*)\s+Rev", line)
                 model = m.group("model").strip()
                 if model.startswith('"') and model.endswith('"'):
                     model = model[1:-1]
@@ -529,6 +538,7 @@ class Prtdiag(explorerbase.ExplorerBase):
 
     ##########################################################################
     def parseLinux_dmidecode(self):
+        """ TODO """
         f = self.open("dmidecode")
         data = []
         for line in f:
@@ -544,11 +554,13 @@ class Prtdiag(explorerbase.ExplorerBase):
 
     ##########################################################################
     def dmiline(self, line):
-        data = line[line.find(":") + 1 :].strip()
+        """ TODO """
+        data = line[line.find(":") + 1:].strip()
         return data
 
     ##########################################################################
     def parseDmiBundle(self, data):
+        """ TODO """
         if "System Information" in data:
             for line in data:
                 if "Product Name" in line:
@@ -730,6 +742,7 @@ class Prtdiag(explorerbase.ExplorerBase):
 
     ##########################################################################
     def analyse(self):
+        """ TODO """
         for loc in self.allCardLocations():
             for card in self[loc]:
                 card.analyse()
@@ -762,6 +775,7 @@ class Prtdiag(explorerbase.ExplorerBase):
 
     ##########################################################################
     def allCardLocations(self):
+        """ TODO """
         return [loc for loc in self.keys() if loc.startswith("loc_")]
 
     ##########################################################################
@@ -779,6 +793,7 @@ class Prtdiag(explorerbase.ExplorerBase):
 
     ##########################################################################
     def parse(self):
+        """ TODO """
         hardwareParser = {
             "ibm_hs20": self.ibm_hs20,
             "sun_4800": self.sun_4800,
@@ -944,6 +959,7 @@ class Prtdiag(explorerbase.ExplorerBase):
 
     ##########################################################################
     def getLoc(self, **kwargs):
+        """ TODO """
         locstr = "loc_"
         if "board" in kwargs:
             locstr += "Board=%s " % kwargs["board"]
@@ -957,6 +973,7 @@ class Prtdiag(explorerbase.ExplorerBase):
 
     ##########################################################################
     def sun_v20z(self):
+        """ TODO """
         ipmi = self.parseIpmi()
         for i in ipmi:
             if "mem" in i and "memvrm" not in i:
@@ -995,6 +1012,7 @@ class Prtdiag(explorerbase.ExplorerBase):
 
     ##########################################################################
     def sun_v40z(self):
+        """ TODO """
         memMap = {
             "1GB DDR333 (PC2700) ECC": {
                 "option": "X9252A",
@@ -1064,6 +1082,7 @@ class Prtdiag(explorerbase.ExplorerBase):
 
     ##########################################################################
     def sun_t6300(self):
+        """ TODO """
         mode = "unknown"
         envmodeDict = {
             #           'temp': ('System Temperatures','',''),
@@ -1145,6 +1164,7 @@ class Prtdiag(explorerbase.ExplorerBase):
 
     ##########################################################################
     def sun_t6320(self):
+        """ TODO """
         mode = "unknown"
         envmodeDict = {
             #           'temp': ('System Temperatures','',''),
@@ -1254,6 +1274,7 @@ class Prtdiag(explorerbase.ExplorerBase):
 
     ##########################################################################
     def sun_t5220(self):
+        """ TODO """
         mode = "unknown"
         envmodeDict = {
             "temp": ("System Temperatures", "", ""),
@@ -1345,6 +1366,7 @@ class Prtdiag(explorerbase.ExplorerBase):
 
     ##########################################################################
     def generic_tx000_showfru(self, label="unknown", memMap={}):
+        """ TODO """
         numdimm = 0
         if self.exists("Tx000/showfru"):
             f = self.open("Tx000/showfru")
@@ -1471,6 +1493,7 @@ class Prtdiag(explorerbase.ExplorerBase):
 
     ##########################################################################
     def sun_4800(self):
+        """ TODO """
         modeDict = {
             "cpu": ("", "== CPUs ==", "", self.parseCpu),
             "mem": ("", "== Memory Configuration ==", "", self.parseMem),
@@ -1520,6 +1543,7 @@ class Prtdiag(explorerbase.ExplorerBase):
 
     ##########################################################################
     def sun_15k(self):
+        """ TODO """
         modeDict = {
             "cpu": ("", "== CPUs ==", "", self.parseCpu),
             "iocards": ("", "== IO Cards ==", "", self.parseIo),
@@ -1558,6 +1582,7 @@ class Prtdiag(explorerbase.ExplorerBase):
 
     ##########################################################################
     def sun_25k(self):
+        """ TODO """
         modeDict = {
             "cpu": ("", "== CPUs ==", "", self.parseCpu),
             "iocards": ("", "== IO Cards ==", "", self.parseIo),
@@ -1581,6 +1606,7 @@ class Prtdiag(explorerbase.ExplorerBase):
 
     ##########################################################################
     def ibm_hs20(self):
+        """ TODO """
         # TODO
         # Currently nothing that I can see to extract, yet
         pass
@@ -1699,6 +1725,7 @@ class Prtdiag(explorerbase.ExplorerBase):
 
     ##########################################################################
     def sun_v125(self):
+        """ TODO """
         self["numslots"] = 1
         modeDict = {
             "cpu": ("", "== CPUs ==", "", self.parseCpu),
@@ -1729,6 +1756,7 @@ class Prtdiag(explorerbase.ExplorerBase):
 
     ##########################################################################
     def sun_v120(self):
+        """ TODO """
         self["numslots"] = 1
         modeDict = {
             "cpu": ("", "== CPUs ==", "", self.parseCpu),
@@ -1770,6 +1798,7 @@ class Prtdiag(explorerbase.ExplorerBase):
 
     ##########################################################################
     def sun_blade100(self):
+        """ TODO """
         self["numslots"] = 3
         modeDict = {
             "cpu": ("", "== CPUs ==", "", self.parseCpu),
@@ -1820,6 +1849,7 @@ class Prtdiag(explorerbase.ExplorerBase):
 
     ##########################################################################
     def sun_blade150(self):
+        """ TODO """
         # self['numslots']=3
         modeDict = {
             "cpu": ("", "== CPUs ==", "", self.parseCpu),
@@ -1862,6 +1892,7 @@ class Prtdiag(explorerbase.ExplorerBase):
 
     ##########################################################################
     def sun_blade1000(self):
+        """ TODO """
         self["numslots"] = 4
         modeDict = {
             "cpu": ("", "== CPUs ==", "", self.parseCpu),
@@ -1889,6 +1920,7 @@ class Prtdiag(explorerbase.ExplorerBase):
 
     ##########################################################################
     def sun_blade2000(self):
+        """ TODO """
         self["numslots"] = 4
         modeDict = {
             "cpu": ("", "== CPUs ==", "", self.parseCpu),
@@ -1916,6 +1948,7 @@ class Prtdiag(explorerbase.ExplorerBase):
 
     ##########################################################################
     def sun_t1000(self):
+        """ TODO """
         memMap = {
             "DDR2 SDRAM, 512 MB": {
                 "desc": "1GB (2 x 512MB DDR2)",
@@ -1948,6 +1981,7 @@ class Prtdiag(explorerbase.ExplorerBase):
 
     ##########################################################################
     def sun_t2000(self):
+        """ TODO """
         memMap = {
             "DDR2 SDRAM, 512 MB": {
                 "desc": "1GB (2 x 512MB DDR2)",
@@ -1972,6 +2006,7 @@ class Prtdiag(explorerbase.ExplorerBase):
 
     ##########################################################################
     def sun_t2000_tx000(self):
+        """ TODO """
         mode = "unknown"
         modeDict = {
             "temp": ("System Temperatures", "", ""),
@@ -2012,6 +2047,7 @@ class Prtdiag(explorerbase.ExplorerBase):
 
     ##########################################################################
     def sun_t2000_prtdiag(self):
+        """ TODO """
         mode = "unknown"
         self["numslots"] = 5
         modeDict = {
@@ -2053,6 +2089,7 @@ class Prtdiag(explorerbase.ExplorerBase):
 
     ##########################################################################
     def sun_v60(self):
+        """ TODO """
         mode = "unknown"
         numdimms = 0
         self["numslots"] = 3
@@ -2105,6 +2142,7 @@ class Prtdiag(explorerbase.ExplorerBase):
 
     ##########################################################################
     def sun_v100(self):
+        """ TODO """
         mode = "unknown"
         self["numslots"] = 0
         modeDict = {
@@ -2168,6 +2206,7 @@ class Prtdiag(explorerbase.ExplorerBase):
 
     ##########################################################################
     def sun_x1(self):
+        """ TODO """
         self["numslots"] = 0
         modeDict = {
             "cpu": ("", "== CPUs ==", "", self.parseCpu),
@@ -2210,6 +2249,7 @@ class Prtdiag(explorerbase.ExplorerBase):
 
     ##########################################################################
     def sun_e220r(self):
+        """ TODO """
         self["numslots"] = 4
         modeDict = {
             "cpu": ("", "== CPUs ==", "", self.parseCpu),
@@ -2245,6 +2285,7 @@ class Prtdiag(explorerbase.ExplorerBase):
 
     ##########################################################################
     def sun_e420r(self):
+        """ TODO """
         self["numslots"] = 4
         modeDict = {
             "cpu": ("", "== CPUs ==", "", self.parseCpu),
@@ -2272,6 +2313,7 @@ class Prtdiag(explorerbase.ExplorerBase):
 
     ##########################################################################
     def sun_t1(self):
+        """ TODO """
         self["numslots"] = 1
         modeDict = {
             "cpu": ("", "== CPUs ==", "", self.parseCpu),
@@ -2304,6 +2346,7 @@ class Prtdiag(explorerbase.ExplorerBase):
 
     ##########################################################################
     def sun_ultra1(self):
+        """ TODO """
         self["numslots"] = 3
         modeDict = {
             "cpu": ("", "== CPUs ==", "", self.parseCpu),
@@ -2328,6 +2371,7 @@ class Prtdiag(explorerbase.ExplorerBase):
 
     ##########################################################################
     def sun_ultra2(self):
+        """ TODO """
         self["numslots"] = 3
         modeDict = {
             "cpu": ("", "== CPUs ==", "", self.parseCpu),
@@ -2348,6 +2392,7 @@ class Prtdiag(explorerbase.ExplorerBase):
 
     ##########################################################################
     def sun_ultra5(self):
+        """ TODO """
         mode = "unknown"
         self["numslots"] = 3
         modeDict = {
@@ -2371,6 +2416,7 @@ class Prtdiag(explorerbase.ExplorerBase):
 
     ##########################################################################
     def sun_ultra80(self):
+        """ TODO """
         self["numslots"] = 4
         modeDict = {
             "cpu": ("", "== CPUs ==", "", self.parseCpu),
@@ -2391,6 +2437,7 @@ class Prtdiag(explorerbase.ExplorerBase):
 
     ##########################################################################
     def sun_ultra45(self):
+        """ TODO """
         # self['numslots']=4
         modeDict = {
             "cpu": ("", "== CPUs ==", "", self.parseCpu),
@@ -2407,6 +2454,7 @@ class Prtdiag(explorerbase.ExplorerBase):
 
     ##########################################################################
     def sun_ultra60(self):
+        """ TODO """
         self["numslots"] = 4
         modeDict = {
             "cpu": ("", "== CPUs ==", "", self.parseCpu),
@@ -2520,6 +2568,7 @@ class Prtdiag(explorerbase.ExplorerBase):
 
     ##########################################################################
     def sun_x4500(self):
+        """ TODO """
         mode = "unknown"
         self["numslots"] = 8
         modeDict = {
@@ -2609,6 +2658,7 @@ class Prtdiag(explorerbase.ExplorerBase):
 
     ##########################################################################
     def sun_x4600(self):
+        """ TODO """
         mode = "unknown"
         self["numslots"] = 8
         modeDict = {
@@ -2698,6 +2748,7 @@ class Prtdiag(explorerbase.ExplorerBase):
 
     ##########################################################################
     def sun_x4200(self):
+        """ TODO """
         mode = "unknown"
         numslots = 5
         modeDict = {
@@ -2769,6 +2820,7 @@ class Prtdiag(explorerbase.ExplorerBase):
 
     ##########################################################################
     def sun_x4140(self):
+        """ TODO """
         mode = "unknown"
         self["numslots"] = 3
         modeDict = {
@@ -2835,6 +2887,7 @@ class Prtdiag(explorerbase.ExplorerBase):
 
     ##########################################################################
     def sun_t4(self):
+        """ TODO """
         mode = "unknown"
         self["numslots"] = 0
         modeDict = {
@@ -2892,6 +2945,7 @@ class Prtdiag(explorerbase.ExplorerBase):
 
     ##########################################################################
     def sun_x6220(self):
+        """ TODO """
         mode = "unknown"
         self["numslots"] = 0
         modeDict = {
@@ -2944,6 +2998,7 @@ class Prtdiag(explorerbase.ExplorerBase):
 
     ##########################################################################
     def sun_x2100(self):
+        """ TODO """
         mode = "unknown"
         self["numslots"] = 2
         modeDict = {
@@ -3016,6 +3071,7 @@ class Prtdiag(explorerbase.ExplorerBase):
 
     ##########################################################################
     def sun_x2200(self):
+        """ TODO """
         mode = "unknown"
         self["numslots"] = 2
         modeDict = {
@@ -3095,6 +3151,7 @@ class Prtdiag(explorerbase.ExplorerBase):
 
     ##########################################################################
     def sun_x4100(self):
+        """ TODO """
         mode = "unknown"
         self["numslots"] = 2
         modeDict = {
@@ -3177,6 +3234,7 @@ class Prtdiag(explorerbase.ExplorerBase):
 
     ##########################################################################
     def sun_v480(self):
+        """ TODO """
         mode = "unknown"
         modeDict = {
             "cpu": ("", "== CPUs ==", "", self.parseCpu),
@@ -3258,6 +3316,7 @@ class Prtdiag(explorerbase.ExplorerBase):
 
     ##########################################################################
     def sun_280r(self):
+        """ TODO """
         mode = "unknown"
         self["numslots"] = 4
         modeDict = {
@@ -3341,6 +3400,7 @@ class Prtdiag(explorerbase.ExplorerBase):
 
     ##########################################################################
     def sun_v490(self):
+        """ TODO """
         mode = "unknown"
         self["numslots"] = 6
         intable = False
@@ -3974,6 +4034,7 @@ class Prtdiag(explorerbase.ExplorerBase):
 
     ##########################################################################
     def sun_v890(self):
+        """ TODO """
         mode = "unknown"
         self["numslots"] = 9
         modeDict = {
@@ -4079,6 +4140,7 @@ class Prtdiag(explorerbase.ExplorerBase):
 
     ##########################################################################
     def genericMem(self, data, memMap, label="Unknown", modulo=1):
+        """ TODO """
         if "mem" in data:
             for dimm in data["mem"]:
                 if dimm["dimmsize"] in memMap:
@@ -4108,6 +4170,7 @@ class Prtdiag(explorerbase.ExplorerBase):
 
     ##########################################################################
     def genericIo(self, data, ignoreslots=[]):
+        """ TODO """
         try:
             for io in data.get("iocards", []) + data.get("iodevs", []):
                 if io["slot"] not in ignoreslots:
@@ -4129,6 +4192,7 @@ class Prtdiag(explorerbase.ExplorerBase):
 
     ##########################################################################
     def genericCpu(self, data, cpuMap, label="Unknown", mode="speed", modulo=1):
+        """ TODO """
         if "cpu" not in data:
             return
 
@@ -4153,6 +4217,7 @@ class Prtdiag(explorerbase.ExplorerBase):
 
     ##########################################################################
     def sun_v880(self):
+        """ TODO """
         mode = "unknown"
         self["numslots"] = 9
         modeDict = {
@@ -4260,6 +4325,7 @@ class Prtdiag(explorerbase.ExplorerBase):
 
     ##########################################################################
     def sun_e2900(self):
+        """ TODO """
         mode = "unknown"
         modeDict = {
             "mem": ("", "== Memory Configuration ==", ""),
@@ -4321,6 +4387,7 @@ class Prtdiag(explorerbase.ExplorerBase):
 
     ##########################################################################
     def sun_v1280(self):
+        """ TODO """
         mode = "unknown"
         self["numslots"] = 6
         tmpline = ""
@@ -4427,6 +4494,7 @@ class Prtdiag(explorerbase.ExplorerBase):
 
     ##########################################################################
     def sun_e250(self):
+        """ TODO """
         mode = "unknown"
         self["numslots"] = 4
         modeDict = {
@@ -4503,6 +4571,7 @@ class Prtdiag(explorerbase.ExplorerBase):
 
     ##########################################################################
     def parseCpu(self, buff):
+        """ TODO """
         headers = []
         cpus = []
         inheaders = True
@@ -4832,6 +4901,7 @@ class Prtdiag(explorerbase.ExplorerBase):
 
     ##########################################################################
     def parseIo(self, buff):
+        """ TODO """
         iocards = []
         headers = []
         inheaders = True
@@ -5171,6 +5241,7 @@ class Prtdiag(explorerbase.ExplorerBase):
 
     ##########################################################################
     def parseMultilineIO(self, buff, headers):
+        """ TODO """
         iocards = []
         inheader = True
         tmpline = ""
@@ -5271,6 +5342,7 @@ class Prtdiag(explorerbase.ExplorerBase):
 
     ##########################################################################
     def parseMem(self, buff):
+        """ TODO """
         inheaders = True
         headers = []
         dimms = []
@@ -5539,6 +5611,7 @@ class Prtdiag(explorerbase.ExplorerBase):
 
     ##########################################################################
     def genericPrtdiag(self, modeDict):
+        """ TODO """
         mode = "unknown"
         oldmode = mode
         buff = []
@@ -5571,6 +5644,7 @@ class Prtdiag(explorerbase.ExplorerBase):
 
     ##########################################################################
     def sun_e450(self):
+        """ TODO """
         mode = "unknown"
         self["numslots"] = 10
         modeDict = {
@@ -5666,6 +5740,7 @@ class Prtdiag(explorerbase.ExplorerBase):
 
     ##########################################################################
     def addCard(self, loc, **kwargs):
+        """ TODO """
         c = IoCard(self.config, **kwargs)
         if loc in self:
             self[loc].append(c)
@@ -5674,7 +5749,7 @@ class Prtdiag(explorerbase.ExplorerBase):
 
     ##########################################################################
     def sun_e4500(self):
-        cardcount = 0
+        """ TODO """
         # numslots depends on the boards that are plugged in: sbus=3,
         # graphics=2, pci=2
         mode = "unknown"
@@ -5825,6 +5900,7 @@ class Prtdiag(explorerbase.ExplorerBase):
 
     ##########################################################################
     def sun_e6900(self):
+        """ TODO """
         modeDict = {
             "cpu": ("", "== CPUs ==", "", self.parseCpu),
             "mem": ("", "== Memory Configuration ==", "", self.parseMem),
@@ -5864,6 +5940,7 @@ class Prtdiag(explorerbase.ExplorerBase):
 
     ##########################################################################
     def parse_Solaris_prtfru(self):
+        """ TODO """
         filename = "fru/prtfru_-x.out"
         if not self.exists(filename):
             return
@@ -5872,10 +5949,10 @@ class Prtdiag(explorerbase.ExplorerBase):
 
     ##########################################################################
     def checkColumn(self, colnum, line):
+        """ TODO """
         bits = line.split()
-        if type(colnum) == type(1):
+        if isinstance(colnum, int):
             colnum = [colnum]
-        check = True
         for col in colnum:
             try:
                 if bits[col] in (

@@ -1,7 +1,5 @@
 #!/usr/bin/env python
-#
-# Script to understand cluster details
-#
+""" Script to understand cluster details"""
 # Written by Dougal Scott <dwagon@pobox.com>
 # $Id: cluster.py 2393 2012-06-01 06:38:17Z dougals $
 # $HeadURL: http://svn/ops/unix/explorer/trunk/explorer/cluster.py $
@@ -9,13 +7,11 @@
 import re
 import explorerbase
 
+
 ##########################################################################
 # Cluster ################################################################
 ##########################################################################
-
-
 class Cluster(explorerbase.ExplorerBase):
-
     """Understand explorer output with respect to clusters, both Sun
     and Veritas Clusters.
     Different Sun version have wildly different configurations
@@ -29,6 +25,7 @@ class Cluster(explorerbase.ExplorerBase):
 
     ##########################################################################
     def parse(self):
+        """ TODO """
         if self.parse_suncluster():
             self["clustertype"] = "sun"
             self["incluster"] = True
@@ -40,6 +37,7 @@ class Cluster(explorerbase.ExplorerBase):
 
     ##########################################################################
     def parse_vcscluster(self):
+        """ TODO """
         found = False
         filename = "sysconfig/modinfo.out"
         if not self.exists(filename):
@@ -52,26 +50,27 @@ class Cluster(explorerbase.ExplorerBase):
 
     ##########################################################################
     def parse_suncluster(self):
+        """ TODO """
         incluster = False
         self["nodes"] = []
         self["clusterfs"] = set()
         if self.exists("cluster/etc/opt/SUNWcluster/conf/ccd.database"):
-            self.parseCcd()
+            self.parse_ccd()
             incluster = True
         if self.exists("cluster/etc/cluster/ccr/infrastructure"):
-            self.parseInfrastructure()
+            self.parse_infrastructure()
             incluster = True
             self["clustertype"] = "sun"
         if self.exists("cluster/config/scrgadm-pvv.out"):
-            self.parseClusterFilesystems()
+            self.parse_cluster_filesystem()
         return incluster
 
     ##########################################################################
     def analyse(self):
-        pass
+        """ TODO """
 
     ##########################################################################
-    def parseClusterFilesystems(self):
+    def parse_cluster_filesystem(self):
         """Clusters mount filesystems from the cluster management as shared
         resources, not from vfstab
         """
@@ -84,27 +83,29 @@ class Cluster(explorerbase.ExplorerBase):
         f.close()
 
     ##########################################################################
-    def parseInfrastructure(self):
+    def parse_infrastructure(self):
+        """ TODO """
         f = self.open("cluster/etc/cluster/ccr/infrastructure")
         for line in f:
             if line.startswith("cluster.name"):
                 self["name"] = line.split()[-1]
 
-            m = re.match(r"cluster.nodes.\d+.name\s+(?P<name>\S+)", line.strip())
-            if m:
-                if m.group("name") != self.hostname:
-                    self["nodes"].append(m.group("name"))
+            matchobj = re.match(r"cluster.nodes.\d+.name\s+(?P<name>\S+)", line.strip())
+            if matchobj:
+                if matchobj.group("name") != self.hostname:
+                    self["nodes"].append(matchobj.group("name"))
 
-            m = re.match(
+            matchobj = re.match(
                 r"cluster.quorum_devices.\d+.properties.gdevname\s+(?P<gdevname>\S+)",
                 line.strip(),
             )
-            if m:
-                self["quorum"] = m.group("gdevname")
+            if matchobj:
+                self["quorum"] = matchobj.group("gdevname")
         f.close()
 
     ##########################################################################
-    def parseCcd(self):
+    def parse_ccd(self):
+        """ TODO """
         f = self.open("cluster/etc/opt/SUNWcluster/conf/ccd.database")
         for line in f:
             if line.startswith("LOGHOST:"):

@@ -10,9 +10,6 @@
 # $Id: storage.py 4380 2013-02-22 02:53:51Z dougals $
 # $HeadURL: http://svn/ops/unix/explorer/trunk/explorer/storage.py $
 
-import os
-import sys
-import getopt
 import explorerbase
 import disks
 import emc
@@ -37,11 +34,10 @@ verbFlag = False
 # contains - the elements that this element makes use of (e.g. a mirror
 # contains a submirror contains a slice)
 
+
 ##########################################################################
 # Storage ################################################################
 ##########################################################################
-
-
 class Storage(explorerbase.ExplorerBase):
     def __init__(self, config):
         explorerbase.ExplorerBase.__init__(self, config)
@@ -147,7 +143,7 @@ class Storage(explorerbase.ExplorerBase):
     ##########################################################################
     def genericList(self, types):
         ans = []
-        if type(types) != type([]):
+        if not isinstance(types, list):
             types = [types]
         for objname, obj in self.data.items():
             if "_type" not in obj:
@@ -291,7 +287,7 @@ class Storage(explorerbase.ExplorerBase):
                     "downRelations: objname=%s val=%s %s - %s"
                     % (objname, val, self[objname], str(err))
                 )
-            except:
+            except Exception:
                 self.Debug(
                     "downRelations: objname=%s val=%s %s"
                     % (objname, val, self[objname])
