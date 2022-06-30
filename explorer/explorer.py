@@ -38,8 +38,11 @@ import vxvm
 import zfs
 import zones
 
-verbFlag = False
-debugFlag = False
+
+OPTIONS = {
+        "verbFlag":  False,
+        "debugFlag":  False
+        }
 
 explorereg = [
     (
@@ -66,10 +69,11 @@ explorereg = [
 ##########################################################################
 # Explorer ###############################################################
 ##########################################################################
-class Explorer(object):
+class Explorer:
+    """ TODO """
     def __init__(self, hostpath):
-        self.rootpath = options["datadir"]
-        self.hostname = self.getHostname(hostpath)
+        self.rootpath = OPTIONS["datadir"]
+        self.hostname = self.get_hostname(hostpath)
         self.hostpath = hostpath
         self.picklepath = os.path.join(self.hostpath, ".pickle")
         self.config = {
@@ -77,7 +81,7 @@ class Explorer(object):
             "hostpath": hostpath,
             "picklepath": self.picklepath,
             "explorertype": self.explorertype,
-            "datadir": options["datadir"],
+            "datadir": OPTIONS["datadir"],
         }
         self.data = {}
         self.issues = []
@@ -86,24 +90,28 @@ class Explorer(object):
 
     ##########################################################################
     def __repr__(self):
-        return "<Explorer %s: %s>" % (self.hostname, self.data)
+        """ TODO """
+        return f"<Explorer {self.hostname}: {self.data}>"
 
     ##########################################################################
     def keys(self):
+        """ TODO """
         return self.data.keys()
 
     ##########################################################################
-    def getHostname(self, hostpath):
+    def get_hostname(self, hostpath):
+        """ TODO """
         for reg, ostype in explorereg:
-            m = re.match(reg, os.path.basename(hostpath))
-            if m:
+            matchobj = re.match(reg, os.path.basename(hostpath))
+            if matchobj:
                 self.explorertype = ostype
                 self.reg = reg
-                host = m.group("hostname")
+                host = matchobj.group("hostname")
                 if "." in host:
                     host = host[: host.find(".")]
                 return host
-        self.Fatal("Couldn't match %s against explorers" % hostpath)
+        self.Fatal(f"Couldn't match {hostpath} against explorers")
+        return ""
 
     ##########################################################################
     def __getitem__(self, key):
@@ -111,7 +119,8 @@ class Explorer(object):
 
     ##########################################################################
     def parse(self):
-        if self.loadPickle():
+        """ TODO """
+        if self.load_pickle():
             return
         self.data["explorer"] = misc.miscDetails(self.config)
         self.data["host"] = hostdet.Host(self.config)
@@ -132,12 +141,13 @@ class Explorer(object):
         self.data["fma"] = fma.Fma(self.config)
         self.data["svcs"] = svcs.Svcs(self.config)
         self.data["emc"] = emc.EmcDisks(self.config)
-        self.calcIssues()
-        self.calcParts()
-        self.savePickle()
+        self.calc_issues()
+        self.calc_parts()
+        self.save_pickle()
 
     ##########################################################################
-    def savePickle(self):
+    def save_pickle(self):
+        """ TODO """
         try:
             f = open(self.picklepath, "wb")
             blob = (self.data, self.issues, self.parts)
@@ -147,7 +157,8 @@ class Explorer(object):
             pass
 
     ##########################################################################
-    def loadPickle(self):
+    def load_pickle(self):
+        """ TODO """
         if not os.path.exists(self.picklepath):
             return False
         try:
@@ -156,36 +167,41 @@ class Explorer(object):
             (self.data, self.issues, self.parts) = blob
             f.close()
         except Exception as err:
-            self.Warning("loadPickle() Failed %s" % (str(err)))
+            self.Warning("load_pickle() Failed %s" % (str(err)))
             return False
         return True
 
     ##########################################################################
     def Warning(self, msg):
+        """ TODO """
         reporter.Warning(msg)
 
     ##########################################################################
     def Fatal(self, msg):
+        """ TODO """
         reporter.Fatal(msg)
 
     ##########################################################################
-    def calcParts(self):
+    def calc_parts(self):
+        """ TODO """
         for type_ in self.data.keys():
             if self.data[type_].parts:
                 self.parts.extend(self.data[type_].parts)
 
     ##########################################################################
-    def calcIssues(self):
+    def calc_issues(self):
+        """ TODO """
         for type_ in self.data.keys():
             if self.data[type_].issues:
                 self.issues.extend(self.data[type_].issues)
 
     ##########################################################################
     def getCollectionDate(self):
-        m = re.match(self.reg, os.path.basename(self.hostpath))
-        if m:
-            self.collectiondate = m.group("date")
-            self.collectiontime = m.group("time")
+        """ TODO """
+        matchobj = re.match(self.reg, os.path.basename(self.hostpath))
+        if matchobj:
+            self.collectiondate = matchobj.group("date")
+            self.collectiontime = matchobj.group("time")
         else:
             self.Warning("Couldn't get date from %s" % self.hostpath)
             return None, None
@@ -193,16 +209,15 @@ class Explorer(object):
 
 
 ##########################################################################
-def readConfig(cfg=None):
+def read_config(cfg=None):
     """Read the config file
     The name of the file can be specified in this order:
      * On the command line with the -c option
      * Using the EXPLORERTOOLS environment variable
      * /app/explorer/etc/explorertools.cfg
     """
-    import ConfigParser
+    import configparser
 
-    global options
     options = {}
     defaults = {
         # agedcare: Send old files to an old directory rather than delete
@@ -232,8 +247,8 @@ def readConfig(cfg=None):
         else:
             cfg = "/usr/local/etc/explorertools.cfg"
     if not os.path.exists(cfg):
-        Fatal("Couldn't read config file: %s" % cfg)
-    config = ConfigParser.ConfigParser(defaults)
+        Fatal(f"Couldn't read config file: {cfg}")
+    config = configparser.ConfigParser(defaults)
     config.read(cfg)
     options["configfile"] = os.path.realpath(cfg)
 
@@ -242,10 +257,10 @@ def readConfig(cfg=None):
     options["changelogdir"] = config.get("Paths", "changelogdir")
     options["bindir"] = config.get("Paths", "bindir")
     options["hostinfodir"] = config.get("Paths", "hostinfodir")
-    options["agedcare"] = config.getboolean("Options", "agedcare")
-    options["changelog"] = config.getboolean("Options", "changelog")
-    options["hostinfo"] = config.getboolean("Options", "hostinfo")
-    options["oldage"] = config.getint("Options", "oldage")
+    options["agedcare"] = config.getboolean("options", "agedcare")
+    options["changelog"] = config.getboolean("options", "changelog")
+    options["hostinfo"] = config.getboolean("options", "hostinfo")
+    options["oldage"] = config.getint("options", "oldage")
     options["retain_compressed"] = config.getint("Retention", "retain_compressed")
     options["retain_dir"] = config.getint("Retention", "retain_dir")
 
@@ -254,35 +269,36 @@ def readConfig(cfg=None):
 
 ############################################################################
 def Fatal(msg):
+    """ TODO """
     reporter.Fatal(msg)
 
 
 ############################################################################
-def allExplorers(reg=""):
+def all_explorers(reg=""):
     """Return a list of all explorer hosts that match the reg; by default all hosts
     Only return the latest explorer per host
     """
     hostlist = {}
-    globstr = os.path.join(options["datadir"], "*%s*" % reg)
+    globstr = os.path.join(OPTIONS["datadir"], "*%s*" % reg)
     files = [
-        f.replace("%s/" % options["datadir"], "")
+        f.replace("%s/" % OPTIONS["datadir"], "")
         for f in glob.glob(globstr)
         if os.path.splitext(f)[1] not in (".gz", ".bz2", ".md5")
     ]
     for fn in files:
-        fullfile = os.path.join(options["datadir"], fn)
+        fullfile = os.path.join(OPTIONS["datadir"], fn)
         for reg, ostype in explorereg:
-            m = re.match(reg, fn)
-            if m:
+            matchobj = re.match(reg, fn)
+            if matchobj:
                 break
-        if not m:
-            sys.stderr.write("allExplorers: Couldn't match %s against explorers\n" % fn)
+        if not matchobj:
+            sys.stderr.write("all_explorers: Couldn't match %s against explorers\n" % fn)
             continue
-        host = m.group("hostname")
+        host = matchobj.group("hostname")
         if "." in host:
             host = host[: host.find(".")]
         try:
-            d = m.group("date")
+            d = matchobj.group("date")
         # sosreport on linux doesn't have the date encoded :(
         except IndexError:
             d = time.strftime(
@@ -297,17 +313,8 @@ def allExplorers(reg=""):
 
 
 ##########################################################################
-def main(arg):
-    allexp = allExplorers(arg)
-    for host in allexp:
-        e = Explorer(allexp[host][-1])
-        print("Hostname=%s" % e.hostname)
-        print("Explorertype=%s" % e.explorertype)
-        print("Data=%s" % e.data)
-
-
-##########################################################################
-if __name__ == "__main__":
+def main():
+    """ TODO """
     cfgfile = None
     try:
         opts, args = getopt.getopt(sys.argv[1:], "vc:", ["cfg="])
@@ -317,18 +324,28 @@ if __name__ == "__main__":
 
     for o, a in opts:
         if o == "-v":
-            verbFlag = True
+            OPTIONS["verbFlag"] = True
         if o in ("-c", "--cfg"):
             cfgfile = a
 
-    global options
-    options = readConfig(cfgfile)
+    global OPTIONS
+    OPTIONS = read_config(cfgfile)
 
     if args:
         arg = args[0]
     else:
         arg = ""
 
-    main(arg)
+    allexp = all_explorers(arg)
+    for host in allexp:
+        e = Explorer(allexp[host][-1])
+        print(f"Hostname={e.hostname}")
+        print(f"Explorertype={e.explorertype}")
+        print(f"Data={e.data}")
+
+
+##########################################################################
+if __name__ == "__main__":
+    main()
 
 # EOF
