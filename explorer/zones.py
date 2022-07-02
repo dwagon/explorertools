@@ -1,7 +1,5 @@
-#!/usr/local/bin/python
-#
-# Script to understand zone details
-#
+""" Understand zone details"""
+
 # Written by Dougal Scott <dwagon@pobox.com>
 # $Id: zones.py 2393 2012-06-01 06:38:17Z dougals $
 # $HeadURL: http://svn/ops/unix/explorer/trunk/explorer/zones.py $
@@ -14,65 +12,69 @@ import explorerbase
 # Zone ###################################################################
 ##########################################################################
 class Zone(explorerbase.ExplorerBase):
+    """ TODO """
     ##########################################################################
     def __init__(self, config, zonename):
         explorerbase.ExplorerBase.__init__(self, config)
         self.objname = zonename
         self["zhostname"] = "unknown"
         try:
-            self.parseZoneCfg()
-            self.parseZoneSysconfig()
-            self.parseIfconfigs()
+            self.parse_zonecfg()
+            self.parse_zone_sysconfig()
+            self.parse_ifconfig()
         except UserWarning as err:
             self.Warning(err)
 
     ##########################################################################
-    def parseIfconfigs(self):
-        ifc = "zones/%s/sysconfig/ifconfig-a.out" % self.name()
+    def parse_ifconfig(self):
+        """ TODO """
+        ifc = f"zones/{self.name()}/sysconfig/ifconfig-a.out"
         if not self.exists(ifc):
             return
         self["ipaddrs"] = []
-        f = self.open(ifc)
-        for line in f:
+        infh = self.open(ifc)
+        for line in infh:
             if "inet" in line:
-                m = re.search(r"inet (?P<ipaddr>\S+) n", line)
-                if m:
-                    if "127.0.0.1" != m.group("ipaddr"):
-                        self["ipaddrs"].append(m.group("ipaddr"))
+                matchobj = re.search(r"inet (?P<ipaddr>\S+) n", line)
+                if matchobj:
+                    if "127.0.0.1" != matchobj.group("ipaddr"):
+                        self["ipaddrs"].append(matchobj.group("ipaddr"))
                 else:
-                    self.Warning("No match: %s" % line)
-        f.close()
+                    self.Warning(f"No match: {line}")
+        infh.close()
 
     ##########################################################################
-    def parseZoneSysconfig(self):
-        unam = "zones/%s/sysconfig/uname-a.out" % self.name()
+    def parse_zone_sysconfig(self):
+        """ TODO """
+        unam = f"zones/{self.name()}/sysconfig/uname-a.out"
         if self.exists(unam):
-            f = self.open(unam)
-            data = f.readline()
-            f.close()
+            infh = self.open(unam)
+            data = infh.readline()
+            infh.close()
             if data:
                 self["zhostname"] = data.split()[1]
                 return
 
     ##########################################################################
     def analyse(self):
-        pass
+        """ TODO """
 
     ##########################################################################
-    def parseZoneCfg(self):
-        f = self.open("sysconfig/zonecfg-z-%s-export.out" % self.name())
-        for line in f:
+    def parse_zonecfg(self):
+        """ TODO """
+        infh = self.open(f"sysconfig/zonecfg-z-{self.name()}-export.out")
+        for line in infh:
             line = line.strip()
             if line.startswith("set address"):
-                m = re.search(r"set address=(?P<ipaddr>[0-9\.]*)(.*)", line)
+                matchobj = re.search(r"set address=(?P<ipaddr>[0-9\.]*)(.*)", line)
                 if "ipaddr" not in self:
                     self["ipaddr"] = []
-                self["ipaddr"].append(m.group("ipaddr"))
+                self["ipaddr"].append(matchobj.group("ipaddr"))
             if line.startswith("set physical"):
                 self["physical"] = line.split("=")[1]
             if line.startswith("set autoboot"):
                 self["autoboot"] = line.split("=")[1]
-        f.close()
+        infh.close()
 
 
 ##########################################################################
@@ -87,15 +89,16 @@ class Zones(explorerbase.ExplorerBase):
         if not self.exists("zones"):
             return
         try:
-            self.parseZones()
+            self.parse_zones()
         except UserWarning as err:
             self.Warning(err)
             return
 
     ##########################################################################
-    def parseZones(self):
-        f = self.open("etc/zones/index")
-        for line in f:
+    def parse_zones(self):
+        """ TODO """
+        infh = self.open("etc/zones/index")
+        for line in infh:
             if line.startswith("#"):
                 continue
             bits = line.strip().split(":")
@@ -108,24 +111,26 @@ class Zones(explorerbase.ExplorerBase):
                 self.addConcern(
                     "status",
                     obj=zonename,
-                    text="Zone %s is not operational status=%s"
-                    % (zonename, zone["status"]),
+                    text=f"Zone {zonename} is not operational status={zone['status']}"
                 )
             zone["path"] = bits[2]
             self[zonename] = zone
-        f.close()
+        infh.close()
 
     ##########################################################################
-    def zoneNames(self):
+    def zone_names(self):
+        """ TODO """
         return sorted(self.data.keys())
 
     ##########################################################################
-    def zoneList(self):
-        return [self[zone] for zone in self.zoneNames()]
+    def zone_list(self):
+        """ TODO """
+        return [self[zone] for zone in self.zone_names()]
 
     ##########################################################################
     def analyse(self):
-        for zone in self.zoneList():
+        """ TODO """
+        for zone in self.zone_list():
             zone.analyse()
             self.inheritIssues(zone)
 

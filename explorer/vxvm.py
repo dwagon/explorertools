@@ -279,7 +279,7 @@ class storageVxvm(explorerbase.ExplorerBase):
         return self["vxvm_volumes"]
 
     ##########################################################################
-    def crossPopulate(self, data):
+    def cross_populate(self, data):
         """Match VXVM data with other storage data"""
         if "vxvm_diskgroups" not in data:  # No VXVM
             return
@@ -318,7 +318,7 @@ class storageVxvm(explorerbase.ExplorerBase):
                         {
                             "_type": "missing",
                             "missedby": diskgroup,
-                            "missed_at": "crossPopulate",
+                            "missed_at": "cross_populate",
                         }
                     )
                 else:

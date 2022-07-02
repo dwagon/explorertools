@@ -311,7 +311,7 @@ class storageVolmanager(explorerbase.ExplorerBase):
                     self.Warning("DID %s disk %s doesn't exist" % (did, disk))
 
     ##########################################################################
-    def crossPopulate(self, data):
+    def cross_populate(self, data):
         self.crossPopulateDid(data)
         self.crossPopulateMetadbs(data)
 
@@ -334,7 +334,7 @@ class storageVolmanager(explorerbase.ExplorerBase):
                     {
                         "_type": "missing",
                         "missedby": k,
-                        "missed_at": "crossPopulate - 1",
+                        "missed_at": "cross_populate - 1",
                     }
                 )
 

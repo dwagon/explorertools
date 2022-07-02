@@ -328,7 +328,7 @@ class storageEmc(explorerbase.ExplorerBase):
         return sorted(self["emcdisks"])
 
     ##########################################################################
-    def crossPopulate(self, data):
+    def cross_populate(self, data):
         """ TODO """
         # Look for partitions that live on disks that are EMC Power'd
         for obj in data.copy():

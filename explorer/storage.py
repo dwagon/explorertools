@@ -49,7 +49,7 @@ class Storage(explorerbase.ExplorerBase):
         self.initialParse()
         self.clusterCheck()
         self.bootAliases()
-        self.crossPopulate()
+        self.cross_populate()
 
     ##########################################################################
     def fsList(self):
@@ -365,16 +365,16 @@ class Storage(explorerbase.ExplorerBase):
             obj["devices"] = s
 
     ##########################################################################
-    def crossPopulate(self):
+    def cross_populate(self):
         """Match all of the uses and partitions and set values accordingly"""
 
         self.relationshipMunger()
         for k in ("volmanager", "swap", "filesys", "zfs", "vxvm", "disks", "emc"):
-            self.cache[k].crossPopulate(self.data)
+            self.cache[k].cross_populate(self.data)
         self.useMigrator()
         self.deviceCleaner()
         for k in ("volmanager", "swap", "filesys", "zfs", "vxvm", "disks", "emc"):
-            self.cache[k].crossPopulate(self.data)
+            self.cache[k].cross_populate(self.data)
         self.protectionCheck()
 
         # Check to see if the disks are in use - has to be done after all

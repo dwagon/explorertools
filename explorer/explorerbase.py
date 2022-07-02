@@ -22,7 +22,7 @@ debugFlag = False
 ##########################################################################
 # ExplorerBase ###########################################################
 ##########################################################################
-class ExplorerBase(object):
+class ExplorerBase:
     """Base class for all other explorer classes to inherit form to give
     basic functionality
     """
@@ -36,12 +36,14 @@ class ExplorerBase(object):
         self.parts = []
 
     ##########################################################################
-    def analyse(self):
+    def analyse(self, mode):
+        """ TODO """
         if self.__class__.__name__ != "Explorer":
             self.Fatal("Class %s needs an analyse() method" % (self.__class__.__name__))
 
     ##########################################################################
     def glob(self, globexpr):
+        """ TODO """
         globdir = os.path.join(
             self.config["datadir"], self.config["hostpath"], globexpr
         )
@@ -50,6 +52,7 @@ class ExplorerBase(object):
 
     ##########################################################################
     def pprint(self):
+        """ TODO """
         import pprint
 
         return pprint.pformat(self.data)
@@ -72,7 +75,7 @@ class ExplorerBase(object):
                 if "_type" in data[o] and data[o]["_type"] == "missing":
                     continue
                 if "description" not in data[o]:
-                    self.Warning("%s %s is undescribed" % (o, data[o]))
+                    self.Warning(f"{o} {data[o]} is undescribed")
                     continue
                 plural, olist = storage.Storage.pluralDescription(v, tmp)
                 # Don't add the names of the disc slices as they should be implicit
@@ -98,9 +101,9 @@ class ExplorerBase(object):
         """Normalise the device names by removing as much path information
         as possible. e.g. /dev/dsk/c0t0d0s0 -> c0t0d0s0
         """
-        m = re.match(r"/dev/md/(?P<diskset>\S+)/dsk/(?P<metadev>d\d+)", dev)
-        if m:
-            dev = "%s/%s" % (m.group("diskset"), m.group("metadev"))
+        matchobj = re.match(r"/dev/md/(?P<diskset>\S+)/dsk/(?P<metadev>d\d+)", dev)
+        if matchobj:
+            dev = "%s/%s" % (matchobj.group("diskset"), matchobj.group("metadev"))
         dev = dev.replace("/dev/did/dsk/", "did/")  # Cluster
         dev = dev.replace("/dev/dsk/", "")
         dev = dev.replace("/dev/vx/dsk/", "")  # VXVM
@@ -108,9 +111,9 @@ class ExplorerBase(object):
         dev = dev.replace("/dev/zvol/dsk/", "")  # ZFS volume
         dev = dev.replace("/dev/mpath/", "mpath_")  # Linux multipath
         if "/dev/mapper" in dev:
-            m = re.search("/dev/mapper/(?P<vg>.*?)-(?P<lv>.*)", dev)
-            if m:
-                dev = "LV:%s" % m.group("lv")
+            matchobj = re.search("/dev/mapper/(?P<vg>.*?)-(?P<lv>.*)", dev)
+            if matchobj:
+                dev = "LV:%s" % matchobj.group("lv")
             else:
                 dev = "LV:%s" % dev.replace("/dev/mapper/", "")
         if dev.startswith("/dev/"):
@@ -120,6 +123,7 @@ class ExplorerBase(object):
 
     ##########################################################################
     def __getitem__(self, key):
+        """ TODO """
         try:
             return self.data[key]
         except KeyError:
@@ -128,26 +132,32 @@ class ExplorerBase(object):
 
     ##########################################################################
     def keys(self):
+        """ TODO """
         return self.data.keys()
 
     ##########################################################################
     def values(self):
+        """ TODO """
         return self.data.values()
 
     ##########################################################################
     def __delitem__(self, key):
+        """ TODO """
         del self.data[key]
 
     ##########################################################################
     def items(self):
+        """ TODO """
         return self.data.items()
 
     ##########################################################################
     def __contains__(self, key):
+        """ TODO """
         return key in self.data
 
     ##########################################################################
     def __setitem__(self, key, value):
+        """ TODO """
         self.data[key] = value
 
     ##########################################################################
@@ -161,6 +171,7 @@ class ExplorerBase(object):
 
     ##########################################################################
     def name(self):
+        """ TODO """
         if hasattr(self, "objname"):
             return self.objname
         else:
@@ -168,6 +179,7 @@ class ExplorerBase(object):
 
     ##########################################################################
     def addCpu(self, *args, **kwargs):
+        """ TODO """
         if args:
             kwargs["desc"] = args[0]
         kwargs["component"] = "cpu"
@@ -175,6 +187,7 @@ class ExplorerBase(object):
 
     ##########################################################################
     def addMem(self, *args, **kwargs):
+        """ TODO """
         if args:
             kwargs["desc"] = args[0]
         kwargs["component"] = "memory"
@@ -182,6 +195,7 @@ class ExplorerBase(object):
 
     ##########################################################################
     def addPart(self, **kwargs):
+        """ TODO """
         if "fullpart" in kwargs:
             kwargs = kwargs["fullpart"]
         self.parts.append(kwargs)
@@ -216,6 +230,7 @@ class ExplorerBase(object):
 
     ##########################################################################
     def addIssue(self, *args, **kwargs):
+        """ TODO """
         if args and args[0].__class__.__name__ == "Issue":
             self.issues.append(args[0])
             return
@@ -230,6 +245,7 @@ class ExplorerBase(object):
 
     ##########################################################################
     def addConcern(self, *args, **kwargs):
+        """ TODO """
         kwargs["typ"] = "concern"
         if "category" not in kwargs:
             category = self.__class__.__name__
@@ -243,13 +259,14 @@ class ExplorerBase(object):
         """This lives here because it is called in multiple places"""
         fdisklist = self.glob("sos_commands/filesys/fdisk*")
         for fdiskfile in fdisklist:
-            f = self.open(fdiskfile)
-            lines = f.readlines()
+            infh = self.open(fdiskfile)
+            lines = infh.readlines()
             func(lines)
-            f.close()
+            infh.close()
 
     ##########################################################################
     def exists(self, filename):
+        """ TODO """
         fullfilepath = os.path.join(
             self.config["datadir"], self.config["hostpath"], filename
         )
@@ -257,48 +274,54 @@ class ExplorerBase(object):
 
     ##########################################################################
     def __repr__(self):
+        """ TODO """
         if hasattr(self, "name"):
             return "<%s %s %s>" % (
                 self.__class__.__name__,
                 self.name(),
                 repr(self.data),
             )
-        else:
-            return "<%s %s>" % (self.__class__.__name__, self.data)
+        return "<%s %s>" % (self.__class__.__name__, self.data)
 
     ##########################################################################
     def open(self, filename, mode="r"):
+        """ TODO """
         fullfilepath = os.path.join(
             self.config["datadir"], self.config["hostpath"], filename
         )
         if not os.path.exists(fullfilepath):
-            Warning("Failed to open: %s" % fullfilepath)
-            raise UserWarning("File %s doesn't exist (%s)" % (filename, fullfilepath))
-        f = open(fullfilepath, mode)
-        return f
+            Warning(f"Failed to open: {fullfilepath}")
+            raise UserWarning(f"File {filename} doesn't exist ({fullfilepath})")
+        infh = open(fullfilepath, mode, encoding="utf-8")
+        return infh
 
     ##########################################################################
     def Verbose(self, msg):
+        """ TODO """
         msg = "%s:%s: %s\n" % (self.hostname, self.__class__.__name__, msg)
         reporter.Verbose(msg)
 
     ##########################################################################
     def Warning(self, msg):
+        """ TODO """
         reporter.Warning(msg)
 
     ##########################################################################
     def Debug(self, msg):
+        """ TODO """
         if debugFlag:
             sys.stderr.write(
-                "Debug %s:%s: %s\n" % (self.hostname, self.__class__.__name__, msg)
+                f"Debug {self.hostname}:{self.__class__.__name__}: {msg}\n"
             )
 
     ##########################################################################
     def Fatal(self, msg):
+        """ TODO """
         reporter.Fatal(msg)
 
     ##########################################################################
     def prettyPrint(self, d=None, indent=0, fd=sys.stdout, keylist=[]):
+        """ TODO """
         if d is None and indent == 0:
             d = self.data
         keys = d.keys()
@@ -310,15 +333,15 @@ class ExplorerBase(object):
             v = d[k]
             if not v:
                 fd.write("%s%-15s\t%s\n" % (istr, k, str(v)))
-            elif type(v) == type({}):
+            elif isinstance(v, dict):
                 fd.write("%s%-15s\n" % (istr, k))
                 self.prettyPrint(v, indent + 1, fd=fd, keylist=keylist)
-            elif type(v) == type([]):
+            elif isinstance(v, list):
                 try:
                     fd.write("%s%-15s\t%s\n" % (istr, k, ", ".join(v)))
                 except TypeError:
                     fd.write("%s%-15s\t%s\n" % (istr, k, str(v)))
-            elif type(v) == type(None):
+            elif v is None:
                 fd.write("%s%-15s\tNone\n" % (istr, k))
             elif hasattr(v, "prettyPrint"):
                 fd.write("%s%-15s\n" % (istr, k))
@@ -328,6 +351,7 @@ class ExplorerBase(object):
 
     ##########################################################################
     def sizeStr(self, kbytes):
+        """ TODO """
         try:
             if type(kbytes) != type(int):
                 kbytes = int(kbytes)
@@ -340,6 +364,7 @@ class ExplorerBase(object):
 
     ##########################################################################
     def stripQuotes(self, str):
+        """ TODO """
         for i in range(2):  # Occassionally lots of nested quotes
             if str.startswith('"') and str.endswith('"'):
                 str = str[1:-1]
@@ -362,6 +387,7 @@ class ExplorerBase(object):
 
     ##########################################################################
     def parseLinux_hardwarepy(self, proc):
+        """ TODO """
         if self.exists("hardware.py"):
             f = self.open("hardware.py")
         elif self.exists("etc/sysconfig/hwconf"):
@@ -394,89 +420,89 @@ class ExplorerBase(object):
         handles tapes as well
         """
         if not self.exists(filename):
-            self.Warning("Couldn't open %s" % filename)
+            self.Warning(f"Couldn't open {filename}")
             return {}
-        f = self.open(filename)
+        infh = self.open(filename)
         datadev = {}
         dev = ""
-        for line in f:
+        for line in infh:
             line = line.strip()
             if not line:
                 continue
-            m = re.match(
+            matchobj = re.match(
                 r"(?P<device>\S+)\s*Soft Errors: (?P<softerrors>\d+) Hard Errors: (?P<harderrors>\d+) Transport Errors: (?P<transerrors>\d+)",
                 line,
             )
-            if m:
-                dev = m.group("device")
+            if matchobj:
+                dev = matchobj.group("device")
                 datadev[dev] = {}
-                datadev[dev].update(m.groupdict())
+                datadev[dev].update(matchobj.groupdict())
                 continue
-            m = re.match(
+            matchobj = re.match(
                 r"Vendor: (?P<vendor>.*?)\s+Product: (?P<product>.*?)\s+Revision: (?P<revision>.*) Serial No:(?P<serial>.*)",
                 line,
             )
-            if m:
-                datadev[dev].update(m.groupdict())
+            if matchobj:
+                datadev[dev].update(matchobj.groupdict())
                 continue
             # system info version
-            m = re.match(
+            matchobj = re.match(
                 r"^(?P<vendor>.*?)\s+Product: (?P<product>.*?)\s+Revision: (?P<revision>.*) Serial No:(?P<serial>.*)",
                 line,
             )
-            if m:
-                datadev[dev].update(m.groupdict())
+            if matchobj:
+                datadev[dev].update(matchobj.groupdict())
                 continue
-            m = re.match(
+            matchobj = re.match(
                 r"Model: (?P<model>.*) Revision: (?P<revision>.*) Serial No: (?P<serial>.*)",
                 line,
             )
-            if m:
-                datadev[dev].update(m.groupdict())
+            if matchobj:
+                datadev[dev].update(matchobj.groupdict())
                 continue
-            m = re.match(r"Size: (?P<size>\S+) <(?P<bytes>-?\d+) bytes>", line)
-            if m:
-                datadev[dev].update(m.groupdict())
+            matchobj = re.match(r"Size: (?P<size>\S+) <(?P<bytes>-?\d+) bytes>", line)
+            if matchobj:
+                datadev[dev].update(matchobj.groupdict())
                 continue
             # system info version
-            m = re.match(r"^(?P<size>\S+) <(?P<bytes>-?\d+) bytes>", line)
-            if m:
-                datadev[dev].update(m.groupdict())
+            matchobj = re.match(r"^(?P<size>\S+) <(?P<bytes>-?\d+) bytes>", line)
+            if matchobj:
+                datadev[dev].update(matchobj.groupdict())
                 continue
-            m = re.match(
+            matchobj = re.match(
                 r"Media Error: (?P<mediaerror>\d+) Device Not Ready: (?P<devnotready>\d+)\s+No Device: (?P<nodev>\d+) Recoverable: (?P<recoverable>\d+)",
                 line,
             )
-            if m:
-                datadev[dev].update(m.groupdict())
+            if matchobj:
+                datadev[dev].update(matchobj.groupdict())
                 continue
-            m = re.match(
+            matchobj = re.match(
                 r"Illegal Request: (?P<illreq>\d+) Predictive Failure Analysis: (?P<predfail>\d+)",
                 line,
             )
-            if m:
-                datadev[dev].update(m.groupdict())
+            if matchobj:
+                datadev[dev].update(matchobj.groupdict())
                 continue
-            m = re.match(r"Illegal Request: (?P<illreq>\d+)", line)
-            if m:
-                datadev[dev].update(m.groupdict())
+            matchobj = re.match(r"Illegal Request: (?P<illreq>\d+)", line)
+            if matchobj:
+                datadev[dev].update(matchobj.groupdict())
                 continue
-            m = re.match(
+            matchobj = re.match(
                 r"RPM: (?P<rpm>\d+) Heads: (?P<heads>\d+) Size: (?P<size>\S+) <(?P<bytes>-?\d+) bytes>",
                 line,
             )
-            if m:
-                datadev[dev].update(m.groupdict())
+            if matchobj:
+                datadev[dev].update(matchobj.groupdict())
                 continue
             # system info version
-            m = re.match(r"^(?P<disk>c\d+t\d+d\d+)$", line)
-            if m:
-                dev = m.group("disk")
+            matchobj = re.match(r"^(?P<disk>c\d+t\d+d\d+)$", line)
+            if matchobj:
+                dev = matchobj.group("disk")
                 datadev[dev] = {}
-                datadev[dev].update(m.groupdict())
+                datadev[dev].update(matchobj.groupdict())
                 continue
-            self.Debug("Unhandled iostat line >%s<" % line)
-        f.close()
+            self.Debug(f"Unhandled iostat line >{line}<")
+        infh.close()
         return datadev
 
 

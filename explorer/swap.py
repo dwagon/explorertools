@@ -154,7 +154,7 @@ class storageSwap(explorerbase.ExplorerBase):
         return self["swap_devices"]
 
     ##########################################################################
-    def crossPopulate(self, data):
+    def cross_populate(self, data):
         for swap in self.swapList():
             # Tell all devices that have swap on them that they are used for
             # swap

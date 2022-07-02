@@ -1199,7 +1199,7 @@ class storageDisks(explorerbase.ExplorerBase):
         return True
 
     ##########################################################################
-    def crossPopulate(self, data):
+    def cross_populate(self, data):
         for disk in self.diskList():
             try:
                 self.crossPopulateDisk(data, disk)

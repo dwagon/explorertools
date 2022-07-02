@@ -257,10 +257,10 @@ def read_config(cfg=None):
     options["changelogdir"] = config.get("Paths", "changelogdir")
     options["bindir"] = config.get("Paths", "bindir")
     options["hostinfodir"] = config.get("Paths", "hostinfodir")
-    options["agedcare"] = config.getboolean("options", "agedcare")
-    options["changelog"] = config.getboolean("options", "changelog")
-    options["hostinfo"] = config.getboolean("options", "hostinfo")
-    options["oldage"] = config.getint("options", "oldage")
+    options["agedcare"] = config.getboolean("Options", "agedcare")
+    options["changelog"] = config.getboolean("Options", "changelog")
+    options["hostinfo"] = config.getboolean("Options", "hostinfo")
+    options["oldage"] = config.getint("Options", "oldage")
     options["retain_compressed"] = config.getint("Retention", "retain_compressed")
     options["retain_dir"] = config.getint("Retention", "retain_dir")
 
@@ -285,14 +285,14 @@ def all_explorers(reg=""):
         for f in glob.glob(globstr)
         if os.path.splitext(f)[1] not in (".gz", ".bz2", ".md5")
     ]
-    for fn in files:
-        fullfile = os.path.join(OPTIONS["datadir"], fn)
+    for fname in files:
+        fullfile = os.path.join(OPTIONS["datadir"], fname)
         for reg, ostype in explorereg:
-            matchobj = re.match(reg, fn)
+            matchobj = re.match(reg, fname)
             if matchobj:
                 break
         if not matchobj:
-            sys.stderr.write("all_explorers: Couldn't match %s against explorers\n" % fn)
+            sys.stderr.write(f"all_explorers: Couldn't match {fname} against explorers\n")
             continue
         host = matchobj.group("hostname")
         if "." in host:
@@ -305,10 +305,10 @@ def all_explorers(reg=""):
                 "%Y.%m.%d.%H.%M.%s", time.localtime(os.path.getmtime(fullfile))
             )
         if host not in hostlist:
-            hostlist[host] = (d, fn, fullfile)
+            hostlist[host] = (d, fname, fullfile)
         else:
             if hostlist[host][0] < d:  # Update if new file is fresher
-                hostlist[host] = (d, fn, fullfile)
+                hostlist[host] = (d, fname, fullfile)
     return hostlist
 
 
@@ -316,6 +316,7 @@ def all_explorers(reg=""):
 def main():
     """ TODO """
     cfgfile = None
+    global OPTIONS
     try:
         opts, args = getopt.getopt(sys.argv[1:], "vc:", ["cfg="])
     except getopt.GetoptError as err:
@@ -328,7 +329,6 @@ def main():
         if o in ("-c", "--cfg"):
             cfgfile = a
 
-    global OPTIONS
     OPTIONS = read_config(cfgfile)
 
     if args:

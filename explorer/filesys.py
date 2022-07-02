@@ -427,7 +427,7 @@ class storageFilesystems(explorerbase.ExplorerBase):
     ##########################################################################
     # TODO: Add code to add up filesystem size +  cap
     # TODO: access zfs details to get userd + kbytes.
-    def crossPopulate(self, data):
+    def cross_populate(self, data):
         # TODO - filesystems that we only know from the cluster resourcing
         for cfs in self["clusterfs"]:
             if cfs not in self:

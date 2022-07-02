@@ -1,5 +1,5 @@
 """
-# Script to analyse prtconf -vD from explorers
+Script to analyse prtconf -vD from explorers
 """
 # Written by Dougal Scott <dwagon@pobox.com>
 # $Id: prtconf.py 2393 2012-06-01 06:38:17Z dougals $
@@ -8,8 +8,6 @@
 import re
 import explorerbase
 import kstat
-
-verbflag = 0
 
 
 ##########################################################################
@@ -23,35 +21,36 @@ class Driver(explorerbase.ExplorerBase):
         self.lines = {}
 
     ##########################################################################
-    def analyseLines(self):
+    def analyse_lines(self):
         """ TODO """
-        for mode in self.lines.keys():
+        for mode in self.lines:
             self.analyse(mode)
         self["vendor"] = ""
         if "hardware:inquiry-vendor-id" in self:
-            self["vendor"] += "%s " % self["hardware:inquiry-vendor-id"]
+            self["vendor"] += f"{self['hardware:inquiry-vendor-id']}"
         if "hardware:inquiry-product-id" in self:
             self["vendor"] += self["hardware:inquiry-product-id"]
         if self["vendor"] == "SUNW SUNWGS INT FCBPL":
             self["vendor"] = "Internal FibreChannel Backplane"
 
     ##########################################################################
-    def getName(self, line):
+    def get_name(self, line):
         """ TODO """
         for reg in (
             r"name='(?P<name>.*)'",
             r"name=(?P<name>.*)",
             r"name \<(?P<name>.*?)\>",
         ):
-            m = re.search(reg, line)
-            if m:
-                return m.group("name")
+            matchobj = re.search(reg, line)
+            if matchobj:
+                return matchobj.group("name")
         if "driver name" in line:
             return None
-        self.Warning("No match for name: %s" % line)
+        self.Warning(f"No match for name: {line}")
+        return None
 
     ##########################################################################
-    def getValue(self, line):
+    def get_value(self, line):
         """ TODO """
         for reg in (
             "value='(?P<value>.*)'",
@@ -59,10 +58,11 @@ class Driver(explorerbase.ExplorerBase):
             "value <(?P<value>.*?)>",
             "value '(?P<value>.*?)'",
         ):
-            m = re.search(reg, line)
-            if m:
-                return m.group("value")
-        self.Warning("No match for value:%s" % line)
+            matchobj = re.search(reg, line)
+            if matchobj:
+                return matchobj.group("value")
+        self.Warning(f"No match for value:{line}")
+        return None
 
     ##########################################################################
     def analyse(self, mode):
@@ -71,41 +71,41 @@ class Driver(explorerbase.ExplorerBase):
         value = ""
         for line in self.lines[mode]:
             if "name" in line:
-                name = self.getName(line)
+                name = self.get_name(line)
                 value = ""
             elif "value" in line:
-                value = self.getValue(line)
+                value = self.get_value(line)
 
             if name and value:
-                self["%s:%s" % (mode, name)] = value
+                self[f"{mode}:{name}"] = value
                 name = ""
                 value = ""
 
     ##########################################################################
-    def addParent(self, blob):
+    def add_parent(self, blob):
         """ TODO """
         self.parent = blob
 
     ##########################################################################
-    def removeChild(self, blob):
+    def remove_child(self, blob):
         """ TODO """
         self.children.remove(blob)
 
     ##########################################################################
-    def addChild(self, blob):
+    def add_child(self, blob):
         """ TODO """
         self.children.append(blob)
-        blob.addParent(self)
+        blob.add_parent(self)
 
     ##########################################################################
-    def isTape(self):
+    def is_tape(self):
         """ TODO """
         if self.name().startswith("st"):
             return True
         return False
 
     ##########################################################################
-    def isDisk(self):
+    def is_disk(self):
         """ TODO """
         if self.name().startswith("sd"):
             return True
@@ -114,7 +114,7 @@ class Driver(explorerbase.ExplorerBase):
         return False
 
     ##########################################################################
-    def isNull(self):
+    def is_null(self):
         """return True if there is no info in the blob, meaning that it is
         probably a null blob
         """
@@ -123,7 +123,7 @@ class Driver(explorerbase.ExplorerBase):
         return False
 
     ##########################################################################
-    def addLine(self, line, mode):
+    def add_line(self, line, mode):
         """ TODO """
         if mode not in self.lines:
             self.lines[mode] = []
@@ -142,40 +142,40 @@ class Prtconf(explorerbase.ExplorerBase):
         if self.exists("sysconfig/prtconf-vD.out"):
             self["_kstat_disks"] = []
             self["_kstat_tapes"] = []
-            self.getKstats()
-            self.parsePrtconf_vd()
+            self.get_kstats()
+            self.parse_prtconf_vd()
             for devname, blob in self.items():
                 if devname.startswith("_"):
                     continue
-                blob.analyseLines()
-                if self.isNullBlobs(blob):
-                    blob.parent.removeChild(blob)
+                blob.analyse_lines()
+                if self.is_null_blobs(blob):
+                    blob.parent.remove_child(blob)
                     del self[devname]
                     continue
-            self.analyseEnclosures()
+            self.analyse_enclosures()
         self["boot_aliases"] = {}
-        self.parsePrtconf_vp()
+        self.parse_prtconf_vp()
 
     ##########################################################################
-    def parsePrtconf_vp(self):
+    def parse_prtconf_vp(self):
         """ TODO """
         filename = "sysconfig/prtconf-vp.out"
         if not self.exists(filename):
             return
-        f = self.open(filename)
+        infh = self.open(filename)
         buff = []
-        for line in f:
+        for line in infh:
             line = line.strip()
             if not line:
                 buff = []
                 continue
             if "'aliases'" in line:
-                self.parseAliases(buff)
+                self.parse_aliases(buff)
             buff.append(line)
-        f.close()
+        infh.close()
 
     ##########################################################################
-    def parseAliases(self, buff):
+    def parse_aliases(self, buff):
         """ TODO """
         for line in buff:
             if "Node" in line:
@@ -184,28 +184,27 @@ class Prtconf(explorerbase.ExplorerBase):
             self["boot_aliases"][bits[0]] = bits[1].strip()[1:-1]
 
     ##########################################################################
-    def analyse(self):
+    def analyse(self, mode):
         """ TODO """
-        pass
 
     ##########################################################################
-    def isNullBlobs(self, blob):
+    def is_null_blobs(self, blob):
         """Sometimes there are lots of basically empty blobs in prtdiag
         Try and detect them
         They generally won't have a presence in kstat because they aren't real
         """
         if self["_kstat_disks"]:
-            if blob.isDisk() and blob.name() not in self["_kstat_disks"]:
+            if blob.is_disk() and blob.name() not in self["_kstat_disks"]:
                 return True
-            if blob.isTape() and blob.name() not in self["_kstat_tapes"]:
+            if blob.is_tape() and blob.name() not in self["_kstat_tapes"]:
                 return True
-        if blob.isNull():
-            print("Removing %s as a null blob" % blob)
+        if blob.is_null():
+            print(f"Removing {blob} as a null blob")
             return True
         return False
 
     ##########################################################################
-    def getKstats(self):
+    def get_kstats(self):
         """ TODO """
         k = kstat.Kstat(self.config)
         for link in k.classChains("disk"):
@@ -214,7 +213,7 @@ class Prtconf(explorerbase.ExplorerBase):
             self["_kstat_tapes"].append(link.name())
 
     ##########################################################################
-    def analyseEnclosures(self):
+    def analyse_enclosures(self):
         """ TODO """
         tmpdrivers = self.values()
         for devname, blob in self.items():
@@ -222,17 +221,17 @@ class Prtconf(explorerbase.ExplorerBase):
                 continue
             if blob.name().startswith("ses"):
                 kidlist = []
-                for b in blob.parent.children:
-                    if b not in tmpdrivers:  # A driver can only appear once
+                for blb in blob.parent.children:
+                    if blb not in tmpdrivers:  # A driver can only appear once
                         continue
-                    if b.name().startswith("sgen"):
-                        tmpdrivers.remove(b)
+                    if blb.name().startswith("sgen"):
+                        tmpdrivers.remove(blb)
                         continue
-                    if b.name().startswith("ses"):
-                        tmpdrivers.remove(b)
+                    if blb.name().startswith("ses"):
+                        tmpdrivers.remove(blb)
                         continue
-                    kidlist.append(b)
-                    tmpdrivers.remove(b)
+                    kidlist.append(blb)
+                    tmpdrivers.remove(blb)
                 if kidlist:
                     self["_enclosures"].append([blob, kidlist])
 
@@ -244,38 +243,36 @@ class Prtconf(explorerbase.ExplorerBase):
         print("%s%s" % (" " * indent * 4, blob.name()))
         for k, v in blob.data.items():
             print("    %s%s=%s" % (" " * indent * 4, k, v))
-        for c in blob.children:
-            self.display(c, indent + 1)
+        for chld in blob.children:
+            self.display(chld, indent + 1)
 
     ##########################################################################
-    def addDriver(self, name):
+    def add_driver(self, name):
         """ TODO """
-        d = Driver(self.config, name)
-        self[name] = d
-        return d
+        drvr = Driver(self.config, name)
+        self[name] = drvr
+        return drvr
 
     ##########################################################################
-    def parsePrtconf_vd(self):
+    def parse_prtconf_vd(self):
         """ TODO """
-        f = self.open("sysconfig/prtconf-vD.out")
-        self["_rootblob"] = self.addDriver("root")
+        infh = self.open("sysconfig/prtconf-vD.out")
+        self["_rootblob"] = self.add_driver("root")
         indentblob = {0: self["_rootblob"]}
         currblob = self["_rootblob"]
         mode = ""
 
-        for line in f:
-            m = re.match(
+        for line in infh:
+            matchobj = re.match(
                 r"(?P<indent>\s*)(?P<module>\S+), instance #(?P<instance>\d+) \(driver name: (?P<driver>\S+)\)",
                 line,
             )
-            if m:
+            if matchobj:
                 mode = ""
-                indent = len(m.group("indent")) / 4
+                indent = len(matchobj.group("indent")) / 4
 
-                currblob = self.addDriver(
-                    "%s%s" % (m.group("module"), m.group("instance"))
-                )
-                indentblob[indent - 1].addChild(currblob)
+                currblob = self.add_driver("{matchobj.group('module')}{matchobj.group('instance')}")
+                indentblob[indent - 1].add_child(currblob)
                 indentblob[indent] = currblob
                 continue
             if "System software properties" in line:
@@ -300,12 +297,12 @@ class Prtconf(explorerbase.ExplorerBase):
                 mode = "device"
                 continue
             if mode in ("hardware", "driver", "system"):
-                currblob.addLine(line, mode)
+                currblob.add_line(line, mode)
                 continue
             if mode in ("device", "range", "register", "system"):
                 continue
 
-        f.close()
+        infh.close()
 
 
 # EOF
