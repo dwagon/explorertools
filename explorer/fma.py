@@ -25,7 +25,7 @@ class Fma(explorerbase.ExplorerBase):
 
     ##########################################################################
     def analyse(self):
-        """ TODO """
+        """TODO"""
 
     ##########################################################################
     # --------------- ------------------------------------  -------------- ---
@@ -40,7 +40,7 @@ class Fma(explorerbase.ExplorerBase):
     #   degraded mem:///motherboard=0/chip=0/memory-controller=0/dimm=3/rank=0
     ##########################################################################
     def parseFmadm(self):
-        """ TODO """
+        """TODO"""
         f = self.open("fma/fmadm-faulty-a.out")
         buff = []  # Error excluding headers
         mode = None
@@ -66,7 +66,7 @@ class Fma(explorerbase.ExplorerBase):
 
     ##########################################################################
     def addFma(self, buff, mode):
-        """ TODO """
+        """TODO"""
         if mode == "TIME":
             subcat = buff[0].split()[-1].strip()
         if mode == "RESOURCE":

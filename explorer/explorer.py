@@ -39,10 +39,7 @@ import zfs
 import zones
 
 
-OPTIONS = {
-        "verbFlag":  False,
-        "debugFlag":  False
-        }
+OPTIONS = {"verbFlag": False, "debugFlag": False}
 
 explorereg = [
     (
@@ -70,7 +67,8 @@ explorereg = [
 # Explorer ###############################################################
 ##########################################################################
 class Explorer:
-    """ TODO """
+    """TODO"""
+
     def __init__(self, hostpath):
         self.rootpath = OPTIONS["datadir"]
         self.hostname = self.get_hostname(hostpath)
@@ -90,17 +88,17 @@ class Explorer:
 
     ##########################################################################
     def __repr__(self):
-        """ TODO """
+        """TODO"""
         return f"<Explorer {self.hostname}: {self.data}>"
 
     ##########################################################################
     def keys(self):
-        """ TODO """
+        """TODO"""
         return self.data.keys()
 
     ##########################################################################
     def get_hostname(self, hostpath):
-        """ TODO """
+        """TODO"""
         for reg, ostype in explorereg:
             matchobj = re.match(reg, os.path.basename(hostpath))
             if matchobj:
@@ -119,7 +117,7 @@ class Explorer:
 
     ##########################################################################
     def parse(self):
-        """ TODO """
+        """TODO"""
         if self.load_pickle():
             return
         self.data["explorer"] = misc.miscDetails(self.config)
@@ -147,7 +145,7 @@ class Explorer:
 
     ##########################################################################
     def save_pickle(self):
-        """ TODO """
+        """TODO"""
         try:
             f = open(self.picklepath, "wb")
             blob = (self.data, self.issues, self.parts)
@@ -158,7 +156,7 @@ class Explorer:
 
     ##########################################################################
     def load_pickle(self):
-        """ TODO """
+        """TODO"""
         if not os.path.exists(self.picklepath):
             return False
         try:
@@ -173,31 +171,31 @@ class Explorer:
 
     ##########################################################################
     def Warning(self, msg):
-        """ TODO """
+        """TODO"""
         reporter.Warning(msg)
 
     ##########################################################################
     def Fatal(self, msg):
-        """ TODO """
+        """TODO"""
         reporter.Fatal(msg)
 
     ##########################################################################
     def calc_parts(self):
-        """ TODO """
+        """TODO"""
         for type_ in self.data.keys():
             if self.data[type_].parts:
                 self.parts.extend(self.data[type_].parts)
 
     ##########################################################################
     def calc_issues(self):
-        """ TODO """
+        """TODO"""
         for type_ in self.data.keys():
             if self.data[type_].issues:
                 self.issues.extend(self.data[type_].issues)
 
     ##########################################################################
     def getCollectionDate(self):
-        """ TODO """
+        """TODO"""
         matchobj = re.match(self.reg, os.path.basename(self.hostpath))
         if matchobj:
             self.collectiondate = matchobj.group("date")
@@ -269,7 +267,7 @@ def read_config(cfg=None):
 
 ############################################################################
 def Fatal(msg):
-    """ TODO """
+    """TODO"""
     reporter.Fatal(msg)
 
 
@@ -292,7 +290,9 @@ def all_explorers(reg=""):
             if matchobj:
                 break
         if not matchobj:
-            sys.stderr.write(f"all_explorers: Couldn't match {fname} against explorers\n")
+            sys.stderr.write(
+                f"all_explorers: Couldn't match {fname} against explorers\n"
+            )
             continue
         host = matchobj.group("hostname")
         if "." in host:
@@ -314,7 +314,7 @@ def all_explorers(reg=""):
 
 ##########################################################################
 def main():
-    """ TODO """
+    """TODO"""
     cfgfile = None
     global OPTIONS
     try:

@@ -1,22 +1,23 @@
-#!/usr/local/bin/python
-#
+"""
 # Script to understand vxvm details
 # Ugly vxvm results in ugly code
-#
+"""
 # Written by Dougal Scott <dwagon@pobox.com>
 # $Id: vxvm.py 2393 2012-06-01 06:38:17Z dougals $
 # $HeadURL: http://svn/ops/unix/explorer/trunk/explorer/vxvm.py $
+# pylint: disable=too-few-public-methods
 
 import re
 import explorerbase
 import storage
 
+
 ##########################################################################
 # VxvmVolume #############################################################
 ##########################################################################
-
-
 class VxvmVolume(explorerbase.ExplorerBase):
+    """vxvm volume"""
+
     def __init__(self, config, volume, data, alldata):
         self.objname = volume
         explorerbase.ExplorerBase.__init__(self, config)
@@ -25,6 +26,7 @@ class VxvmVolume(explorerbase.ExplorerBase):
 
     ##########################################################################
     def analyse(self):
+        """TODO"""
         if self["use"] == "Unused":
             self.addConcern("volume", obj=self.name(), text="Volume is not used")
 
@@ -32,9 +34,9 @@ class VxvmVolume(explorerbase.ExplorerBase):
 ##########################################################################
 # VxvmDiskgroup ##########################################################
 ##########################################################################
-
-
 class VxvmDiskgroup(explorerbase.ExplorerBase):
+    """vxvm disk group"""
+
     def __init__(self, config, diskgroup, data, alldata):
         self.objname = diskgroup
         explorerbase.ExplorerBase.__init__(self, config)
@@ -43,6 +45,7 @@ class VxvmDiskgroup(explorerbase.ExplorerBase):
 
     ##########################################################################
     def analyse(self):
+        """TODO"""
         if "vxvm_status" in self and self["vxvm_status"] == "error":
             self.addIssue("diskgroup", obj=self.name(), text="Status is 'error'")
 
@@ -50,9 +53,9 @@ class VxvmDiskgroup(explorerbase.ExplorerBase):
 ##########################################################################
 # VxvmDgVolume ###########################################################
 ##########################################################################
-
-
 class VxvmDgVolume(explorerbase.ExplorerBase):
+    """vxvm disk group volume"""
+
     def __init__(self, config, dgvol, data, alldata):
         self.objname = dgvol
         explorerbase.ExplorerBase.__init__(self, config)
@@ -61,53 +64,57 @@ class VxvmDgVolume(explorerbase.ExplorerBase):
 
     ##########################################################################
     def analyse(self):
-        pass
+        """TODO"""
 
 
 ##########################################################################
-# Vxvm ########################################################################
+# Vxvm ###################################################################
 ##########################################################################
-
-
 class Vxvm(explorerbase.ExplorerBase):
+    """vxvm"""
+
     def __init__(self, config):
         explorerbase.ExplorerBase.__init__(self, config)
         self.st = storage.Storage(config)
         if "vxvm_diskgroups" not in self.st:
             return
-        for dg in self.diskgroupList():
+        for dg in self.diskgroups_list():
             self[dg] = VxvmDiskgroup(config, dg, self.st[dg], self.st)
 
-        for vol in self.volumeList():
+        for vol in self.volumes_list():
             self[vol] = VxvmVolume(config, vol, self.st[vol], self.st)
 
-        for dgv in self.dgvolList():
+        for dgv in self.dgvols_list():
             self[dgv] = VxvmDgVolume(config, dgv, self.st[dgv], self.st)
         self.analyse()
 
     ##########################################################################
-    def diskgroupList(self):
+    def diskgroups_list(self):
+        """TODO"""
         return self.st.data.get("vxvm_diskgroups", [])
 
     ##########################################################################
-    def dgvolList(self):
+    def dgvols_list(self):
+        """TODO"""
         return self.st.data.get("vxvm_dgvols", [])
 
     ##########################################################################
-    def volumeList(self):
+    def volumes_list(self):
+        """TODO"""
         return self.st.data.get("vxvm_volumes", [])
 
     ##########################################################################
     def analyse(self):
-        for dg in self.diskgroupList():
+        """TODO"""
+        for dg in self.diskgroups_list():
             self[dg].analyse()
             self.inheritIssues(self[dg])
 
-        for vol in self.volumeList():
+        for vol in self.volumes_list():
             self[vol].analyse()
             self.inheritIssues(self[vol])
 
-        for dgv in self.dgvolList():
+        for dgv in self.dgvols_list():
             self[dgv].analyse()
             self.inheritIssues(self[dgv])
 
@@ -115,15 +122,12 @@ class Vxvm(explorerbase.ExplorerBase):
 ##########################################################################
 # storageVxvm ############################################################
 ##########################################################################
-
-
 class storageVxvm(explorerbase.ExplorerBase):
-
     """Understand explorer output with respect to vxvm"""
 
-    ##########################################################################
-
-    def __init__(self, config, data={}):
+    def __init__(self, config, data=None):
+        if data is None:
+            data = {}
         explorerbase.ExplorerBase.__init__(self, config)
         self.data = data
         if not self.exists("disks/vxvm/vxdg-q-list.out"):
@@ -135,55 +139,53 @@ class storageVxvm(explorerbase.ExplorerBase):
 
     ##########################################################################
     def parse(self):
-        self.parseVxDg()
+        """TODO"""
+        self.parse_vxdg()
         self.parseVxDisk()
-        self.parseVxprint()
-        self.parseDevtree()
+        self.parse_vxprint()
+        self.parse_dev_tree()
 
     ##########################################################################
-    def foreignDisklist(self, data):
+    def foreign_disklist(self, data):
         """Disks exist on the system that belong to diskgroups on other systems
         Not sure how it works
         """
         disks = self.glob("disks/vxvm/disks/vxdisk_list*.out")
         for disk in disks:
-            hostid, dev, group = self.checkForeignDisk(disk)
+            hostid, dev, group = self.check_foreigndisk(disk)
             if hostid and hostid != self.hostname:
                 if dev not in data:
-                    self.Warning("VXVM referring to an unknown disk %s" % dev)
+                    self.Warning(f"VXVM referring to an unknown disk {dev}")
                     continue
                 if "disk" not in self[dev]:
-                    self.Warning(
-                        "VXVM referring to something unusual for disk %s" % dev
-                    )
+                    self.Warning(f"VXVM referring to something unusual for disk {dev}")
                     continue
                 disk = data[dev]["disk"]
-                data[disk]["use"] = set(
-                    ["VXVM diskgroup %s on server %s" % (group, hostid)]
-                )
+                data[disk]["use"] = set([f"VXVM diskgroup {group} on server {hostid}"])
 
     ##########################################################################
-    def checkForeignDisk(self, diskfile):
+    def check_foreigndisk(self, diskfile):
+        """TODO"""
         dev = None
         hostid = None
         group = None
-        f = self.open(diskfile)
-        for line in f:
+        infh = self.open(diskfile)
+        for line in infh:
             if line.startswith("Device:"):
                 dev = line.split()[-1]
             if line.startswith("hostid:"):
                 hostid = line.split()[-1]
             if line.startswith("group:"):
-                m = re.search(r".*name=(?P<name>\S*) id=.*", line)
-                if m:
-                    group = m.group("name")
+                matchobj = re.search(r".*name=(?P<name>\S*) id=.*", line)
+                if matchobj:
+                    group = matchobj.group("name")
                 else:
-                    self.Fatal("Couldn't match line %s" % line)
-        f.close()
+                    self.Fatal(f"Couldn't match line {line}")
+        infh.close()
         return hostid, dev, group
 
     ##########################################################################
-    def parseDevtree(self):
+    def parse_dev_tree(self):
         """Have seen this a couple of times - an alias in the device tree
         for a diskgroup
 
@@ -192,9 +194,9 @@ class storageVxvm(explorerbase.ExplorerBase):
         lrwxrwxrwx 1 root root 5 Aug  1  2007 bootdg -> sysdg
         lrwxrwxrwx 1 root root 49 Jun 30  2008 ssedb802p-dg -> /global/.devices/node@1//dev/vx/rdsk/ssedb802p-dg
         """
-        f = self.open("disks/vxvm/ls-lR_dev_vx.out")
+        infh = self.open("disks/vxvm/ls-lR_dev_vx.out")
         gameon = False
-        for line in f:
+        for line in infh:
             line = line.strip()
             if line.startswith("/dev/vx/dsk"):
                 gameon = True
@@ -209,13 +211,14 @@ class storageVxvm(explorerbase.ExplorerBase):
                         continue
                     self[alias] = self[vol].copy()
                     self["vxvm_diskgroups"].add(alias)
-        f.close()
+        infh.close()
 
     ##########################################################################
-    def parseVxprint(self):
+    def parse_vxprint(self):
+        """TODO"""
         filename = "disks/vxvm/vxprint-h.out"
-        f = self.open(filename)
-        for line in f:
+        infh = self.open(filename)
+        for line in infh:
             line = line.strip()
             if line.startswith("Disk group"):
                 diskgroup = line.split()[-1]
@@ -234,7 +237,7 @@ class storageVxvm(explorerbase.ExplorerBase):
                 )
                 self["vxvm_volumes"].add(volume)
                 # These are also referred to by diskgroup/volume
-                dgvolname = "%s/%s" % (diskgroup, volume)
+                dgvolname = f"{diskgroup}/{volume}"
                 self[dgvolname] = storage.Storage.initialDict(
                     {
                         "_type": "vxvm_dgvol",
@@ -246,14 +249,14 @@ class storageVxvm(explorerbase.ExplorerBase):
                     }
                 )
                 self["vxvm_dgvols"].add(dgvolname)
-
-        f.close()
+        infh.close()
 
     ##########################################################################
-    def parseVxDg(self):
+    def parse_vxdg(self):
+        """TODO"""
         filename = "disks/vxvm/vxdg-q-list.out"
-        f = self.open(filename)
-        for line in f:
+        infh = self.open(filename)
+        for line in infh:
             bits = line.split()
             name = bits[0]
             self[name] = storage.Storage.initialDict(
@@ -264,18 +267,21 @@ class storageVxvm(explorerbase.ExplorerBase):
                 }
             )
             self["vxvm_diskgroups"].add(name)
-        f.close()
+        infh.close()
 
     ##########################################################################
-    def diskgroupList(self):
+    def diskgroups_list(self):
+        """TODO"""
         return self["vxvm_diskgroups"]
 
     ##########################################################################
-    def dgvolList(self):
+    def dgvols_list(self):
+        """TODO"""
         return self["vxvm_dgvols"]
 
     ##########################################################################
-    def volumeList(self):
+    def volumes_list(self):
+        """TODO"""
         return self["vxvm_volumes"]
 
     ##########################################################################
@@ -284,7 +290,7 @@ class storageVxvm(explorerbase.ExplorerBase):
         if "vxvm_diskgroups" not in data:  # No VXVM
             return
 
-        for dg in self.diskgroupList():
+        for dg in self.diskgroups_list():
             self[dg]["devdesc"] = "VXVM diskgroup %s: %s" % (
                 dg,
                 ", ".join(self[dg]["devices"]),
@@ -292,7 +298,7 @@ class storageVxvm(explorerbase.ExplorerBase):
             if len(self[dg]["devices"]) >= 2:
                 self[dg]["protected"] = "VXVM"
 
-        for o in self.dgvolList():
+        for o in self.dgvols_list():
             diskgroup = self[o]["diskgroup"]
             self[o]["devices"] = self[diskgroup]["devices"]
             self[o]["devdesc"] = "VXVM DiskgroupVol: %s" % ", ".join(
@@ -301,7 +307,7 @@ class storageVxvm(explorerbase.ExplorerBase):
             if len(self[o]["devices"]) >= 2:
                 self[o]["protected"] = "VXVM"
 
-        for o in self.volumeList():
+        for o in self.volumes_list():
             diskgroup = self[o]["diskgroup"]
             self[o]["devices"] = self[diskgroup]["devices"]
             self[o]["devdesc"] = "VXVM Volume: %s" % ", ".join(
@@ -310,7 +316,7 @@ class storageVxvm(explorerbase.ExplorerBase):
             if len(self[o]["devices"]) >= 2:
                 self[o]["protected"] = "VXVM"
 
-        for diskgroup in self.diskgroupList():
+        for diskgroup in self.diskgroups_list():
             for dev in self[diskgroup]["devices"]:
                 if dev not in data:
                     self.Warning("VXVM referring to unknown disk: %s" % dev)
@@ -329,13 +335,14 @@ class storageVxvm(explorerbase.ExplorerBase):
                     data[disk]["use"].add(diskgroup)
                     data[disk]["use"].update(data[diskgroup]["use"])
 
-        self.foreignDisklist(data)
+        self.foreign_disklist(data)
 
     ##########################################################################
     def parseVxDisk(self):
-        f = self.open("disks/vxvm/vxdisk-list.out")
+        """TODO"""
+        infh = self.open("disks/vxvm/vxdisk-list.out")
         ctdnameFlag = False
-        for line in f:
+        for line in infh:
             if line.startswith("DEVICE"):
                 if "c#t#d#_NAME" in line or "OS_NATIVE_NAME" in line:
                     ctdnameFlag = True
@@ -376,7 +383,7 @@ class storageVxvm(explorerbase.ExplorerBase):
                     }
                 )
             self[device].update({"diskgroup": diskgroup, "vxvm_status": status})
-        f.close()
+        infh.close()
 
 
 # EOF

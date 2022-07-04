@@ -1,8 +1,7 @@
-#!/usr/local/bin/python
-#
+"""
 # Script to understand, represent and verify SDS/LVM configuration based on
 # explorers and sosreports
-#
+"""
 # Written by Dougal Scott <dwagon@pobox.com>
 # $Id: volmanager.py 4380 2013-02-22 02:53:51Z dougals $
 # $HeadURL: http://svn/ops/unix/explorer/trunk/explorer/volmanager.py $
@@ -14,13 +13,13 @@ import re
 import explorerbase
 import storage
 
-verbFlag = 0
-
 
 ##########################################################################
 # Metadev ################################################################
 ##########################################################################
 class Metadev(explorerbase.ExplorerBase):
+    """Metadevices"""
+
     def __init__(self, config, metadev, data, alldata):
         self.objname = metadev
         explorerbase.ExplorerBase.__init__(self, config)
@@ -29,17 +28,18 @@ class Metadev(explorerbase.ExplorerBase):
 
     ##########################################################################
     def analyse(self):
-        self.mirrorCheck()
+        """TODO"""
+        self.mirror_check()
         if "use" not in self or not self["use"]:
             self.addConcern(
                 "useless metadev",
                 obj=self.name(),
-                text="No use found for %s %s (devices %s)"
-                % (self.name(), self["description"], ", ".join(list(self["devices"]))),
+                text=f"No use found for {self.name} {self['description']} (devices %s)"
+                % (", ".join(list(self["devices"]))),
             )
 
     ##########################################################################
-    def mirrorCheck(self):
+    def mirror_check(self):
         """Check for disks that are one-sided mirrors"""
         if self["type"] != "mirror":
             return
@@ -51,11 +51,10 @@ class Metadev(explorerbase.ExplorerBase):
                     mounts.update(self.alldata[tmp]["use"])
                 except KeyError:
                     self.Warning(
-                        "Couldn't find %s in data as in %s's contains"
-                        % (tmp, self.name())
+                        "Couldn't find {tmp} in data as in {self.name()}'s contains"
                     )
         else:
-            if "use" in data:
+            if "use" in self.data:
                 mounts.update(self["use"])
             else:
                 mounts.update("unknown")
@@ -65,13 +64,13 @@ class Metadev(explorerbase.ExplorerBase):
                 self.addIssue(
                     "onesidedmirror",
                     obj=mount,
-                    text="%s (%s) - one sided mirror" % (mount, self.name()),
+                    text=f"{mount} ({self.name()}) - one sided mirror",
                 )
             elif numsubs > 2:
                 self.addConcern(
                     "multiwaymirror",
                     obj=mount,
-                    text="%s (%s) - %d way mirror" % (mount, self.name(), numsubs),
+                    text=f"{mount} ({self.name()}) - {numsubs} way mirror"
                 )
 
 
@@ -79,26 +78,29 @@ class Metadev(explorerbase.ExplorerBase):
 # Volmanager #############################################################
 ##########################################################################
 class Volmanager(explorerbase.ExplorerBase):
+    """Volmanager"""
+
     def __init__(self, config):
         explorerbase.ExplorerBase.__init__(self, config)
-        self.st = storage.Storage(config)
-        for objname, obj in self.st.items():
+        self.strg = storage.Storage(config)
+        for objname, obj in self.strg.items():
             if "_type" in obj and obj["_type"] in (
                 "metadev",
                 "disksuite",
                 "metadb",
                 "metadb_copy",
             ):
-                self[objname] = Metadev(config, objname, obj, self.st)
+                self[objname] = Metadev(config, objname, obj, self.strg)
         self.analyse()
 
     ##########################################################################
     def analyseLinux_mdstat(self):
+        """TODO"""
         if not self.exists("proc/mdstat"):
             return
         buff = []
-        f = self.open("proc/mdstat")
-        for line in f:
+        infh = self.open("proc/mdstat")
+        for line in infh:
             line = line.strip()
             if line.startswith("Personalities"):
                 continue
@@ -108,14 +110,15 @@ class Volmanager(explorerbase.ExplorerBase):
                 continue
             buff.append(line.strip())
 
-        f.close()
+        infh.close()
 
     ##########################################################################
-    def metaList(self):
-        return self.st["volmgt_metadevs"]
+    def meta_list(self):
+        """TODO"""
+        return self.strg["volmgt_metadevs"]
 
     ##########################################################################
-    def analyseMetadb(self):
+    def analyse_metadb(self):
         """Check to see if the metadbs are in a safe configuration"""
         if "metadb" not in self:
             return
@@ -154,7 +157,7 @@ class Volmanager(explorerbase.ExplorerBase):
         for dev, count in devs.items():
             # metadbs can be on partitions with other stuff but it isn't
             # recommended
-            otheruses = self.st[dev]["use"] - set(["metadb"])
+            otheruses = self.strg[dev]["use"] - set(["metadb"])
             if otheruses:
                 self.addConcern(
                     "mounted metadb",
@@ -182,17 +185,19 @@ class Volmanager(explorerbase.ExplorerBase):
 
     ##########################################################################
     def analyse(self):
-        self.analyseMetadb()
+        """ TODO """
+        self.analyse_metadb()
         self.analyseLinux_mdstat()
-        for md in self.metaList():
+        for md in self.meta_list():
             if md not in self:
-                self.Warning("md %s doesn't exist in data but in metaList" % md)
+                self.Warning(f"md {md} doesn't exist in data but in meta_list")
                 continue
             self[md].analyse()
             self.inheritIssues(self[md])
 
     ##########################################################################
     def analyseLinux_mdstat_chunk(self, buff):
+        """ TODO """
         for line in buff:
             if line.startswith("md"):
                 bits = line.split()
@@ -200,9 +205,7 @@ class Volmanager(explorerbase.ExplorerBase):
                 for devbit in bits[4:]:
                     if "(F)" in devbit:
                         self.addIssue(
-                            "failed device",
-                            obj=metadev,
-                            text="Failed metadev: %s" % line,
+                            "failed device", obj=metadev, text=f"Failed metadev: {line}"
                         )
 
 
@@ -215,14 +218,16 @@ class storageVolmanager(explorerbase.ExplorerBase):
     """
 
     ##########################################################################
-    def __init__(self, config, data={}):
+    def __init__(self, config, data=None):
+        if data is None:
+            data = {}
         explorerbase.ExplorerBase.__init__(self, config)
         self.data = data
         self["_setmap"] = {}
         self.parse()
 
     ##########################################################################
-    def didLookup(self, didpath, diskset=""):
+    def did_lookup(self, didpath, diskset=""):
         """Return the physical disk of the did specified
         hawk:/dev/did/rdsk/d21 -> [c3t0d0, c2t0d0]
         eagle:/dev/did/rdsk/d21s0 -> [c3t0d0s0, c2t0d0s0]
@@ -493,8 +498,8 @@ class storageVolmanager(explorerbase.ExplorerBase):
         if not self.exists("proc/mdstat"):
             return
         buff = []
-        f = self.open("proc/mdstat")
-        for line in f:
+        infh = self.open("proc/mdstat")
+        for line in infh:
             line = line.strip()
             if line.startswith("Personalities"):
                 continue
@@ -504,7 +509,7 @@ class storageVolmanager(explorerbase.ExplorerBase):
                 continue
             buff.append(line.strip())
 
-        f.close()
+        infh.close()
 
     ##########################################################################
     def parseLinux_mdstat_chunk(self, buff):
@@ -517,7 +522,7 @@ class storageVolmanager(explorerbase.ExplorerBase):
                         {"_type": "metadev", "_origin": "mdstat"}
                     )
                 # A colon is bits[1]
-                status = bits[2]
+                # status = bits[2]
                 raidlev = bits[3]
                 self["volmgt_metadevs"].append(metadev)
                 if raidlev == "raid1":
@@ -566,8 +571,8 @@ class storageVolmanager(explorerbase.ExplorerBase):
             return
         volabels = {}
         buff = []
-        f = self.open(lvs_file)
-        for line in f:
+        infh = self.open(lvs_file)
+        for line in infh:
             line = line.strip()
             if "LSize" in line:
                 continue
@@ -651,7 +656,7 @@ class storageVolmanager(explorerbase.ExplorerBase):
                 if lvFlag:
                     volabels[device] = lv
             self[vglabel]["partof"].add(lvlabel)
-        f.close()
+        infh.close()
         for k in self.keys():  # ZD
             print("# %s\t%s" % (k, self[k]))
 
@@ -661,12 +666,12 @@ class storageVolmanager(explorerbase.ExplorerBase):
         if self.config["explorertype"] == "solaris":
             self.parseSolaris_scdidadm()
             self.parseAllMetastatP()
-            self.parseFullMetastat()
+            self.parse_full_metastat()
             self.parseAllMetaDb()
-            for metadev in self.metaList():
+            for metadev in self.meta_list():
                 if metadev not in self:
                     self.Warning(
-                        "Couldn't find metadev %s even though it is in metaList"
+                        "Couldn't find metadev %s even though it is in meta_list"
                         % metadev
                     )
                     continue
@@ -688,29 +693,31 @@ class storageVolmanager(explorerbase.ExplorerBase):
                 "use": set(["metadb"]),
             }
         )
-        files = self.allFiles("metadb*.out")
+        files = self.all_files("metadb*.out")
         for filename in files:
             try:
-                self.parseMetaDb(filename)
+                self.parse_metadb(filename)
             except Exception as exc:
-                self.Warning("Failure on parseMetaDb(filename=%s) %s" % (filename, str(exc)))
+                self.Warning(
+                    "Failure on parse_metadb(filename=%s) %s" % (filename, str(exc))
+                )
                 raise
-        self.crossMatch()
+        self.cross_match()
 
     ##########################################################################
-    def whatDiskset(self, filename):
+    def what_diskset(self, filename):
         """Return the diskset that the file belongs to, or the empty string
         if it doesn't belong to any
         """
-        f = os.path.basename(filename)
-        m = re.match(r"(?P<cmd>.*)\.(?P<diskset>.*)\.out", f)
-        if m:
-            return m.group("diskset")
+        infh = os.path.basename(filename)
+        matchobj = re.match(r"(?P<cmd>.*)\.(?P<diskset>.*)\.out", infh)
+        if matchobj:
+            return matchobj.group("diskset")
         else:
             return ""
 
     ##########################################################################
-    def parseMetadbProxy(self, filename):
+    def parse_metadb_proxy(self, filename):
         """Handle a cluster situation where another host knows how the disks on
         this host are layed out
 
@@ -718,18 +725,18 @@ class storageVolmanager(explorerbase.ExplorerBase):
         they have two disks sets and each is a master of one - without the lock
         it just ends up infinitely recursing - bail out and admit failure
         """
-        if not self.createLock(filename):
+        if not self.create_lock(filename):
             self.Warning("Can't process %s - already locked" % filename)
             return
 
         proxyhost = None
-        diskset = self.whatDiskset(filename)
-        f = self.open(filename)
-        for line in f:
+        diskset = self.what_diskset(filename)
+        infh = self.open(filename)
+        for line in infh:
             line = line.strip()
             if line.startswith("Proxy"):
                 proxyhost = line.split(":")[-1].strip()
-        f.close()
+        infh.close()
 
         # Now get the details from the proxyhost
         foreign = storage.Storage(proxyhost)
@@ -750,7 +757,7 @@ class storageVolmanager(explorerbase.ExplorerBase):
                 if diddev in foreign["_proxy_didmap"]:
                     for dd in foreign["_proxy_didmap"][diddev]:
                         localdevice = "%s%s" % (dd, didslice)
-                        copyname = self.addMetadb(
+                        copyname = self.add_metadb(
                             localdevice,
                             {
                                 "flags": foreign[metadb]["flags"],
@@ -760,17 +767,17 @@ class storageVolmanager(explorerbase.ExplorerBase):
                             },
                         )
                         self["metadb"]["diskset_copies"].add(copyname)
-        self.releaseLock(filename)
+        self.release_lock(filename)
 
     ##########################################################################
-    def parseMetaDb(self, filename):
+    def parse_metadb(self, filename):
         """Analyse metadb output"""
-        diskset = self.whatDiskset(filename)
-        f = self.open(filename)
-        for line in f:
+        diskset = self.what_diskset(filename)
+        infh = self.open(filename)
+        for line in infh:
             line = line.strip()
             if line.startswith("Proxy command"):
-                # self.parseMetadbProxy(filename)
+                # self.parse_metadb_proxy(filename)
                 continue
             if self.lineSkipper(
                 line,
@@ -786,12 +793,12 @@ class storageVolmanager(explorerbase.ExplorerBase):
             bits = line.split()
 
             if "did" in bits[-1]:
-                devlist = [self.sanitiseDevice(d) for d in self.didLookup(bits[-1])]
+                devlist = [self.sanitiseDevice(d) for d in self.did_lookup(bits[-1])]
             else:
                 devlist = [self.sanitiseDevice(bits[-1])]
 
             for device in devlist:
-                copyname = self.addMetadb(
+                copyname = self.add_metadb(
                     device,
                     {
                         "first_block": bits[-3],
@@ -807,10 +814,13 @@ class storageVolmanager(explorerbase.ExplorerBase):
                 else:
                     self["metadb"]["contains"].add(copyname)
                     self["metadb"]["copies"].add(copyname)
-        f.close()
+        infh.close()
 
     ##########################################################################
-    def addMetadb(self, device, opts={}):
+    def add_metadb(self, device, opts=None):
+        """Add metadb"""
+        if opts is None:
+            opts = {}
         copyname = "metadb_%d" % self.metadbcopy
         self.metadbcopy += 1
 
@@ -828,8 +838,8 @@ class storageVolmanager(explorerbase.ExplorerBase):
         return copyname
 
     ##########################################################################
-    def parseFullMetastat(self):
-        for filename in self.allFiles("metastat.out"):
+    def parse_full_metastat(self):
+        for filename in self.all_files("metastat.out"):
             metadev = -1
             for line in self.open(filename):
                 line = line.rstrip()
@@ -841,43 +851,45 @@ class storageVolmanager(explorerbase.ExplorerBase):
                         continue
 
     ##########################################################################
-    def allFiles(self, filedesc):
+    def all_files(self, filedesc):
         """Return all files that match the description no matter
         which path they are in
         """
-        files = self.glob("disks/svm/%s" % filedesc)
+        files = self.glob(f"disks/svm/{filedesc}")
         if not files:
-            files = self.glob("disks/sds/%s" % filedesc)
+            files = self.glob(f"disks/sds/{filedesc}")
         return files
 
     ##########################################################################
     def parseAllMetastatP(self):
-        files = self.allFiles("metastat-p*.out")
+        files = self.all_files("metastat-p*.out")
         for filename in files:
-            self.parseMetastatP(filename)
-        self.crossMatch()
+            self.parse_metastat_p(filename)
+        self.cross_match()
 
     ##########################################################################
-    def createLock(self, filename):
+    def create_lock(self, filename):
+        """lock file"""
         lockfile = "%s.lock" % filename
         if os.path.exists(lockfile):
-            f = open(lockfile)
-            pid = f.readline().strip()
-            f.close()
+            infh = open(lockfile, encoding="utf-8")
+            pid = infh.readline().strip()
+            infh.close()
             if int(pid) != os.getpid():
                 self.Warning(
                     "Releasing stale lock from pid %s (Out PID=%d)" % (pid, os.getpid())
                 )
-                self.releaseLock(filename)
+                self.release_lock(filename)
             else:
                 return False
-        f = open(lockfile, "w")
-        f.write("%s\n" % os.getpid())
-        f.close()
+        infh = open(lockfile, "w")
+        infh.write(f"{os.getpid()}\n")
+        infh.close()
         return True
 
     ##########################################################################
-    def releaseLock(self, filename):
+    def release_lock(self, filename):
+        """Release lock"""
         lockfile = "%s.lock" % filename
         os.unlink(lockfile)
 
@@ -891,48 +903,47 @@ class storageVolmanager(explorerbase.ExplorerBase):
         it just ends up infinitely recursing - bail out and admit failure
         """
 
-        if not self.createLock(filename):
-            self.Warning("Can't process %s - already locked" % filename)
+        if not self.create_lock(filename):
+            self.Warning(f"Can't process {filename} - already locked")
             return
 
         proxyhost = None
-        diskset = self.whatDiskset(filename)
-        f = self.open(filename)
-        for line in f:
+        diskset = self.what_diskset(filename)
+        infh = self.open(filename)
+        for line in infh:
             line = line.strip()
             if line.startswith("Proxy"):
                 proxyhost = line.split(":")[-1].strip()
-        f.close()
+        infh.close()
 
         # Now get the details from the proxyhost
         foreign = storage.Storage(proxyhost)
 
-        for obj in foreign["_diskset_%s" % diskset]:
+        for obj in foreign[f"_diskset_{diskset}"]:
             for did in foreign[obj]["did_dev"]:
                 diddisk = did[:-2]
                 didslice = did[-2:]
                 if diddisk not in foreign["_proxy_didmap"]:
-                    self.Warning(
-                        "Couldn't find %s in %s' didmap" % (diddisk, proxyhost)
-                    )
+                    self.Warning(f"Couldn't find {diddisk} in {proxyhost}' didmap")
                     continue
                 localdevs = foreign["_proxy_didmap"][diddisk]
                 for ld in localdevs:
-                    localslice = "%s%s" % (ld, didslice)
+                    localslice = f"{ld}{didslice}"
+                    print(localslice)
 
-        self.releaseLock(filename)
+        self.release_lock(filename)
 
     ##########################################################################
-    def parseMetastatP(self, filename):
+    def parse_metastat_p(self, filename):
         """Parse the metastat -p output which is about configuration not
         state
         """
-        f = self.open(filename)
-        diskset = self.whatDiskset(filename)
+        infh = self.open(filename)
+        diskset = self.what_diskset(filename)
         if diskset:
-            self["_diskset_%s" % diskset] = set()
+            self[f"_diskset_{diskset}"] = set()
         subline = ""
-        for line in f:
+        for line in infh:
             line = line.strip()
             if not line:
                 continue
@@ -964,36 +975,36 @@ class storageVolmanager(explorerbase.ExplorerBase):
             )
             metadev = self[metadevname]
             if diskset:
-                self["_diskset_%s" % diskset].add(metadevname)
+                self[f"_diskset_{diskset}"].add(metadevname)
             if metadevname.startswith("hsp") or metadevname.find("/hsp") >= 0:
-                self.parseHotspare(metadev, bits[1:], diskset)
+                self.parse_hotspare(metadev, bits[1:], diskset)
             elif oper == "-m":  # Mirror
-                self.parseMirror(metadev, bits[2:], diskset)
+                self.parse_mirror(metadev, bits[2:], diskset)
             elif oper == "-p":  # Soft partition
                 self.parseSoftpar(metadev, bits[2:], diskset)
             elif oper == "-r":  # RAID
-                self.parseRaid(metadev, bits[2:], diskset)
+                self.parse_raid(metadev, bits[2:], diskset)
             elif oper[0] in string.digits:  # Concat/Stripe
-                self.parseConcat(metadev, bits[1:], diskset)
+                self.parse_concat(metadev, bits[1:], diskset)
             else:
-                self.Warning("Unhandled metadev type %s" % oper)
-                self.Warning("Line=%s" % line)
-
-        f.close()
+                self.Warning(f"Unhandled metadev type {oper}")
+                self.Warning(f"Line={line}")
+        infh.close()
 
     ##########################################################################
-    def parseHotspare(self, metadev, bits, diskset):
+    def parse_hotspare(self, metadev, bits, diskset):
+        """parse hotspare"""
         metadev["type"] = "hotspare"
         if diskset:
             ans = set()
             for d in bits:
-                ans.update(self.didLookup(d, diskset))
+                ans.update(self.did_lookup(d, diskset))
         else:
             pass
         metadev["description"] = "Hotspare"
 
     ##########################################################################
-    def parseMirror(self, metadev, bits, diskset):
+    def parse_mirror(self, metadev, bits, diskset):
         # d80 -m d81 d82 1 - config line
         # d81 d82 1 - is passed here
         metadev["type"] = "mirror"
@@ -1003,27 +1014,27 @@ class storageVolmanager(explorerbase.ExplorerBase):
             mirdesc = "%d-way " % (len(metadev["submirrors"]))
         else:
             mirdesc = ""
-        metadev["description"] = "%sMirror" % mirdesc
+        metadev["description"] = f"{mirdesc}Mirror"
 
     ##########################################################################
-    def metaList(self):
+    def meta_list(self):
         """Return a list of metadevices"""
         return self["volmgt_metadevs"]
 
     ##########################################################################
-    def crossMatch(self):
+    def cross_match(self):
         """Match subs etc with masters"""
-        for md in self.metaList():
+        for md in self.meta_list():
             if md not in self:
-                self.Warning("md=%s in metaList but not found in data" % md)
+                self.Warning("md=%s in meta_list but not found in data" % md)
                 continue
             if md == "metadb":
                 continue
             if self[md]["type"] == "partition":
                 continue
             if self[md]["type"] == "mirror":
-                for sm in self[md]["submirrors"]:
-                    self[sm]["partof"].add(md)
+                for subm in self[md]["submirrors"]:
+                    self[subm]["partof"].add(md)
 
     ##########################################################################
     def parseSoftpar(self, metadev, bits, diskset):
@@ -1039,36 +1050,33 @@ class storageVolmanager(explorerbase.ExplorerBase):
         offset = 0
         size = 0
         for idx in range(len(bits[1:])):
-            b = bits[idx]
+            bit = bits[idx]
             if skipnext:
                 skipnext = False
                 continue
-            if b == "-o":
+            if bit == "-o":
                 offset = int(bits[idx + 1])
                 skipnext = True
-            if b == "-b":
+            if bit == "-b":
                 size = int(bits[idx + 1])
                 skipnext = True
                 metadev["extents"].append((offset, size))
 
     ##########################################################################
-    def parseConcat(self, metadev, bits, diskset):
+    def parse_concat(self, metadev, bits, diskset):
         """Analyse concat/strip in a metastat output"""
-        bits = self.stripExtrabits(bits)
+        bits = self.strip_extrabits(bits)
         if bits[0] == "1" and bits[1] == "1":
             metadev["type"] = "partition"
             metadev["description"] = "Metaslice"
         else:
             metadev["type"] = "concat"
             if bits[0] == "1":
-                metadev["description"] = "%s-Way Concat" % bits[1]
+                metadev["description"] = f"{bits[1]}-Way Concat"
             elif bits[1] == "1":
-                metadev["description"] = "%s-Way Stripe" % bits[0]
+                metadev["description"] = f"{bits[0]}-Way Stripe"
             else:
-                metadev["description"] = "%s-Way Concat of %s-Way Stripe" % (
-                    bits[1],
-                    bits[0],
-                )
+                metadev["description"] = f"{bits[1]}-Way Concat of {bits[0]}-Way Stripe"
         metadev["did_dev"] = set()
 
         for bit in bits[2:]:
@@ -1081,14 +1089,14 @@ class storageVolmanager(explorerbase.ExplorerBase):
             bit = bit.replace("/dev/dsk/", "")
             if diskset:
                 metadev["diskset"] = diskset
-                slicelist = self.didLookup(bit, diskset)
+                slicelist = self.did_lookup(bit, diskset)
                 metadev["did_dev"].add(bit)
             else:
                 slicelist = [bit]
             metadev["contains"].update(slicelist)
 
     ##########################################################################
-    def stripExtrabits(self, bits):
+    def strip_extrabits(self, bits):
         """Remove things like interleave and hotspare options"""
         # Remove any interleave data
         if "-i" in bits:
@@ -1107,30 +1115,30 @@ class storageVolmanager(explorerbase.ExplorerBase):
         return "volmanager"
 
     ##########################################################################
-    def parseRaid(self, metadev, bits, diskset):
+    def parse_raid(self, metadev, bits, diskset):
         """Analyse raid definitions in a metastat output"""
         metadev["type"] = "raid"
         metadev["description"] = "RAID5"
         skipnext = False
         for idx in range(len(bits)):
-            b = bits[idx]
+            bit = bits[idx]
             if skipnext:
                 skipnext = False
                 continue
-            if b == "-k":  # Don't clear
+            if bit == "-k":  # Don't clear
                 pass
-            elif b == "-o":  # Original columns
+            elif bit == "-o":  # Original columns
                 skipnext = True
-            elif b == "-i":  # interlace
+            elif bit == "-i":  # interlace
                 metadev["interlace"] = bits[idx + 1]
                 skipnext = True
-            elif b == "-h":  # hotspare
+            elif bit == "-h":  # hotspare
                 metadev["hotspare"] = bits[idx + 1]
                 skipnext = True
-            elif b.startswith("c"):
-                metadev["contains"].add(b)
+            elif bit.startswith("c"):
+                metadev["contains"].add(bit)
             else:
-                self.Fatal("Unknown raid line: %s" % b)
+                self.Fatal(f"Unknown raid line: {bit}")
 
 
 # EOF

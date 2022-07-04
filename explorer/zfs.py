@@ -14,7 +14,8 @@ import storage
 # ZfsPool ################################################################
 ##########################################################################
 class ZfsPool(explorerbase.ExplorerBase):
-    """ TODO """
+    """TODO"""
+
     def __init__(self, config, pool, data, alldata):
         self.objname = pool
         explorerbase.ExplorerBase.__init__(self, config)
@@ -23,7 +24,7 @@ class ZfsPool(explorerbase.ExplorerBase):
 
     ##########################################################################
     def analyse(self):
-        """ TODO """
+        """TODO"""
         if self["health"] != "ONLINE":
             self.addIssue(
                 "poolhealth",
@@ -36,7 +37,8 @@ class ZfsPool(explorerbase.ExplorerBase):
 # Zfs ####################################################################
 ##########################################################################
 class Zfs(explorerbase.ExplorerBase):
-    """ TODO """
+    """TODO"""
+
     def __init__(self, config):
         explorerbase.ExplorerBase.__init__(self, config)
         self.st = storage.Storage(config)
@@ -47,12 +49,12 @@ class Zfs(explorerbase.ExplorerBase):
 
     ##########################################################################
     def pool_list(self):
-        """ TODO """
+        """TODO"""
         return self.values()
 
     ##########################################################################
     def analyse(self):
-        """ TODO """
+        """TODO"""
         for pool in self.pool_list():
             pool.analyse()
             self.inheritIssues(pool)
@@ -63,6 +65,7 @@ class Zfs(explorerbase.ExplorerBase):
 ##########################################################################
 class storageZfs(explorerbase.ExplorerBase):
     """Understand explorer output with respect to zfs"""
+
     ##########################################################################
     def __init__(self, config, data):
         explorerbase.ExplorerBase.__init__(self, config)
@@ -74,7 +77,7 @@ class storageZfs(explorerbase.ExplorerBase):
 
     ##########################################################################
     def parse(self):
-        """ TODO """
+        """TODO"""
         self.parse_zpool()
         for pool in self.pool_list():
             self.parse_get(pool)
@@ -87,7 +90,7 @@ class storageZfs(explorerbase.ExplorerBase):
 
     ##########################################################################
     def parse_get(self, pool):
-        """ TODO """
+        """TODO"""
         self.parse_zpool()
         # Construct a dictionary of the zfs properties in tmpd
         # Key'd on the property, values are a list of the values, source
@@ -144,13 +147,13 @@ class storageZfs(explorerbase.ExplorerBase):
 
     ##########################################################################
     def describer(self, obj, data):
-        """ TODO """
+        """TODO"""
         self.parse_zpool()
         return f"obj={obj}"
 
     ##########################################################################
     def parse_zpool_iostat(self):
-        """ TODO """
+        """TODO"""
         self.parse_zpool()
         filename = "disks/zfs/zpool_iostat_-v.out"
         if not self.exists(filename):
@@ -177,7 +180,7 @@ class storageZfs(explorerbase.ExplorerBase):
 
     ##########################################################################
     def crossPopulatePool(self, pool, data):
-        """ TODO """
+        """TODO"""
         self.parse_zpool()
         # For every mount point in the pool, tell the mount point about it
         data[pool]["partof"].update(self[pool]["use"])
@@ -193,7 +196,7 @@ class storageZfs(explorerbase.ExplorerBase):
                 self.addConcern(
                     "mount",
                     obj=mntpnt,
-                    text=f"ZFS pool {pool} has filesystem {mntpnt} which isn't mounted"
+                    text=f"ZFS pool {pool} has filesystem {mntpnt} which isn't mounted",
                 )
 
         # Every device used by the pool gets the use of the pool
@@ -212,7 +215,7 @@ class storageZfs(explorerbase.ExplorerBase):
 
     ##########################################################################
     def check_sub_pools(self, pool, data):
-        """ TODO """
+        """TODO"""
         # Filesystems get mounted under pools, not from the pools themselves
         # Eg. from pool01/da01 even though it is using pool01
         for _, fsdata in data.items():
@@ -234,7 +237,7 @@ class storageZfs(explorerbase.ExplorerBase):
 
     ##########################################################################
     def cross_populate(self, data):
-        """ TODO """
+        """TODO"""
         if "zfspools" not in data:  # No ZFS here
             return
         for pool in self.pool_list():
@@ -243,7 +246,7 @@ class storageZfs(explorerbase.ExplorerBase):
 
     ##########################################################################
     def parse_zpool(self):
-        """ TODO """
+        """TODO"""
         filename = "disks/zfs/zpool_list.out"
         infh = self.open(filename)
         for line in infh:

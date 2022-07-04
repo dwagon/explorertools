@@ -25,7 +25,7 @@ class Cluster(explorerbase.ExplorerBase):
 
     ##########################################################################
     def parse(self):
-        """ TODO """
+        """TODO"""
         if self.parse_suncluster():
             self["clustertype"] = "sun"
             self["incluster"] = True
@@ -37,7 +37,7 @@ class Cluster(explorerbase.ExplorerBase):
 
     ##########################################################################
     def parse_vcscluster(self):
-        """ TODO """
+        """TODO"""
         found = False
         filename = "sysconfig/modinfo.out"
         if not self.exists(filename):
@@ -50,7 +50,7 @@ class Cluster(explorerbase.ExplorerBase):
 
     ##########################################################################
     def parse_suncluster(self):
-        """ TODO """
+        """TODO"""
         incluster = False
         self["nodes"] = []
         self["clusterfs"] = set()
@@ -67,7 +67,7 @@ class Cluster(explorerbase.ExplorerBase):
 
     ##########################################################################
     def analyse(self):
-        """ TODO """
+        """TODO"""
 
     ##########################################################################
     def parse_cluster_filesystem(self):
@@ -84,7 +84,7 @@ class Cluster(explorerbase.ExplorerBase):
 
     ##########################################################################
     def parse_infrastructure(self):
-        """ TODO """
+        """TODO"""
         f = self.open("cluster/etc/cluster/ccr/infrastructure")
         for line in f:
             if line.startswith("cluster.name"):
@@ -105,7 +105,7 @@ class Cluster(explorerbase.ExplorerBase):
 
     ##########################################################################
     def parse_ccd(self):
-        """ TODO """
+        """TODO"""
         f = self.open("cluster/etc/opt/SUNWcluster/conf/ccd.database")
         for line in f:
             if line.startswith("LOGHOST:"):

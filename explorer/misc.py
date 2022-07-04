@@ -27,7 +27,7 @@ class miscDetails(explorerbase.ExplorerBase):
 
     ##########################################################################
     def parse(self):
-        """ TODO """
+        """TODO"""
         self.parse_explorer()
 
     ##########################################################################
@@ -60,7 +60,7 @@ class miscDetails(explorerbase.ExplorerBase):
 
     ##########################################################################
     def parse_explorer(self):
-        """ TODO """
+        """TODO"""
         self.get_explorer_version()
         if self.config["explorertype"] == "solaris":
             self.get_eeprom()
@@ -79,7 +79,7 @@ class miscDetails(explorerbase.ExplorerBase):
 
     ##########################################################################
     def get_modules(self):
-        """ TODO """
+        """TODO"""
         fname = "sysconfig/modinfo-c.out"
         self["modules"] = []
         if not self.exists(fname):
@@ -135,7 +135,7 @@ class miscDetails(explorerbase.ExplorerBase):
 
     ##########################################################################
     def parse_fc_info_stanza(self, buffer):
-        """ TODO """
+        """TODO"""
         if not buffer:
             return
         data = {}
@@ -195,7 +195,7 @@ class miscDetails(explorerbase.ExplorerBase):
 
     ##########################################################################
     def get_solaris_net_listeners(self):
-        """ TODO """
+        """TODO"""
         filename = "netinfo/netstat-an.out"
         if not self.exists(filename):
             self.Warning(f"{filename} doesn't exist")
@@ -270,7 +270,7 @@ class miscDetails(explorerbase.ExplorerBase):
 
     ##########################################################################
     def analyse(self):
-        """ TODO """
+        """TODO"""
         if (
             "eeprom" in self
             and "auto-boot?" in self["eeprom"]
@@ -280,7 +280,7 @@ class miscDetails(explorerbase.ExplorerBase):
 
     ##########################################################################
     def get_processes(self):
-        """ TODO """
+        """TODO"""
         processes = {}
         mode = None
         if self.config["explorertype"] == "solaris":
@@ -337,7 +337,7 @@ class miscDetails(explorerbase.ExplorerBase):
 
     ##########################################################################
     def get_patches(self):
-        """ TODO """
+        """TODO"""
         self["patches"] = {}
         if self.config["explorertype"] == "solaris":
             filename = "patch+pkg/patch_date.out"
@@ -371,7 +371,7 @@ class miscDetails(explorerbase.ExplorerBase):
 
     ##########################################################################
     def get_packages(self):
-        """ TODO """
+        """TODO"""
         self["packages"] = {}
         if self.config["explorertype"] == "solaris":
             if not self.exists("patch+pkg/pkginfo-l.out"):
@@ -426,7 +426,7 @@ class miscDetails(explorerbase.ExplorerBase):
 
     ##########################################################################
     def get_serial(self):
-        """ TODO """
+        """TODO"""
         if self.config["explorertype"] == "solaris":
             if self.get_ipmi_serial():
                 return
@@ -602,7 +602,7 @@ class miscDetails(explorerbase.ExplorerBase):
 
     ##########################################################################
     def get_explorer_version(self):
-        """ TODO """
+        """TODO"""
         if self.config["explorertype"] == "solaris":
             if not self.exists("README"):
                 self.Warning("No README found")

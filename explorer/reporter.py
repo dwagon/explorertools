@@ -22,13 +22,14 @@ class ComplaintHandler:
     """Decorator to make sure that any complaints, tracebacks etc. get captured
     and sent off to the appropriate authorities
     """
+
     def __init__(self, fn):
         self.fn = fn
         self.fd = tmpfile
 
     ##########################################################################
     def __call__(self, *args):
-        """ TODO """
+        """TODO"""
         try:
             self.fn(*args)
         except Exception:
@@ -38,14 +39,16 @@ class ComplaintHandler:
 
     ##########################################################################
     def report(self):
-        """ TODO """
+        """TODO"""
         tmpfile.flush()
         tmpfile.seek(0)
         data = tmpfile.read()
         tmpfile.close()
         if not data:
             return
-        with open(f"/tmp/explorerlog_{os.getpid()}.log", "w", encoding="utf-8") as outfh:
+        with open(
+            f"/tmp/explorerlog_{os.getpid()}.log", "w", encoding="utf-8"
+        ) as outfh:
             outfh.write("%s\n" % " ".join(sys.argv))
             outfh.write(data)
         msgbody = "ExplorerTools: Report"
@@ -65,28 +68,28 @@ class ComplaintHandler:
 
 ##########################################################################
 def Log(msg, fd=sys.stderr):
-    """ TODO """
+    """TODO"""
     fd.write("%s\n" % msg)
     tmpfile.write("%s %s\n" % (sys.argv[0], msg))
 
 
 ##########################################################################
 def Warning(msg, fd=sys.stderr):
-    """ TODO """
+    """TODO"""
     fd.write("Warning: %s\n" % msg)
     tmpfile.write("Warning: %s %s\n" % (sys.argv[0], msg))
 
 
 ##########################################################################
 def Verbose(msg, fd=sys.stderr):
-    """ TODO """
+    """TODO"""
     fd.write("%s\n" % msg)
     tmpfile.write("%s %s\n" % (sys.argv[0], msg))
 
 
 ##########################################################################
 def Fatal(msg, fd=sys.stderr):
-    """ TODO """
+    """TODO"""
     fd.write("Fatal: %s\n" % msg)
     tmpfile.write("Fatal: %s %s\n" % (sys.argv[0], msg))
     sys.exit(255)

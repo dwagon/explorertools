@@ -14,8 +14,9 @@ import storage
 # EmcSlice ###############################################################
 ##########################################################################
 class EmcSlice(explorerbase.ExplorerBase):
+    """ TODO """
     def __init__(self, config, slic, data, alldata):
-        """ TODO """
+        """TODO"""
         self.objname = slic
         explorerbase.ExplorerBase.__init__(self, config)
         self.data = data
@@ -23,17 +24,17 @@ class EmcSlice(explorerbase.ExplorerBase):
 
     ##########################################################################
     def isBackupSlice(self):
-        """ TODO """
+        """TODO"""
         return False
 
     ##########################################################################
     def getSectors(self):
-        """ TODO """
+        """TODO"""
         return None, None, None
 
     ##########################################################################
     def getNotes(self):
-        """ TODO """
+        """TODO"""
         return " "
         # return self["describer"]
 
@@ -42,9 +43,10 @@ class EmcSlice(explorerbase.ExplorerBase):
 # EmcDisk ################################################################
 ##########################################################################
 class EmcDisk(explorerbase.ExplorerBase):
-    """ EMC Disk """
+    """EMC Disk"""
+
     def __init__(self, config, disk, data, alldata):
-        """ TODO """
+        """TODO"""
         self.objname = disk
         explorerbase.ExplorerBase.__init__(self, config)
         self.data = data
@@ -52,12 +54,12 @@ class EmcDisk(explorerbase.ExplorerBase):
 
     ##########################################################################
     def unusedDisk(self):
-        """ TODO """
+        """TODO"""
         return self["unused"]
 
     ##########################################################################
     def sliceList(self):
-        """ TODO """
+        """TODO"""
         slices = sorted(self["slices"])
         return [self[s] for s in slices]
 
@@ -66,9 +68,10 @@ class EmcDisk(explorerbase.ExplorerBase):
 # EmcDisks ###############################################################
 ##########################################################################
 class EmcDisks(explorerbase.ExplorerBase):
-    """ EMC Disks """
+    """EMC Disks"""
+
     def __init__(self, config):
-        """ TODO """
+        """TODO"""
         explorerbase.ExplorerBase.__init__(self, config)
         self.st = storage.Storage(config)
         for objname, obj in self.st.items():
@@ -82,7 +85,7 @@ class EmcDisks(explorerbase.ExplorerBase):
 
     ##########################################################################
     def diskList(self):
-        """ TODO """
+        """TODO"""
         disks = sorted(self.keys())
         return [self[d] for d in disks]
 
@@ -98,7 +101,7 @@ class storageEmc(explorerbase.ExplorerBase):
     ##########################################################################
 
     def __init__(self, config, data={}):
-        """ TODO """
+        """TODO"""
         explorerbase.ExplorerBase.__init__(self, config)
         self.data = data
         self.paths = {}
@@ -106,7 +109,7 @@ class storageEmc(explorerbase.ExplorerBase):
 
     ##########################################################################
     def parse(self):
-        """ TODO """
+        """TODO"""
         self["emcdisks"] = set()
         try:
             if self.config["explorertype"] == "solaris":
@@ -142,13 +145,13 @@ class storageEmc(explorerbase.ExplorerBase):
 
     ##########################################################################
     def parse_Linux(self):
-        """ TODO """
+        """TODO"""
         self.parse_Linux_partitions()
         self.parseLinux_fdisk(self.parse_Linux_fdisk_chunk)
 
     ##########################################################################
     def parse_Linux_partitions(self):
-        """ TODO """
+        """TODO"""
         filename = "proc/partitions"
         f = self.open(filename)
         for line in f:
@@ -162,12 +165,12 @@ class storageEmc(explorerbase.ExplorerBase):
 
     ##########################################################################
     def parse_Linux_fdisk_chunk(self, lines):
-        """ TODO """
+        """TODO"""
         pass
 
     ##########################################################################
     def parse_Solaris(self):
-        """ TODO """
+        """TODO"""
         self.parse_Solaris_emc()
         self.parse_Solaris_mnttab()
         self.parse_Solaris_swap()
@@ -175,7 +178,7 @@ class storageEmc(explorerbase.ExplorerBase):
 
     ##########################################################################
     def parse_Solaris_vxvm(self):
-        """ TODO """
+        """TODO"""
         filename = "disks/vxvm/vxdisk-list.out"
         if not self.exists(filename):
             return
@@ -218,7 +221,7 @@ class storageEmc(explorerbase.ExplorerBase):
 
     ##########################################################################
     def addEmcSlice(self, device, origin=""):
-        """ TODO """
+        """TODO"""
         emcslice = self.sanitiseDevice(device)
         if emcslice not in self or self[emcslice]["_type"] != "emcslice":
             emcdisk = emcslice[:-1]
@@ -241,7 +244,7 @@ class storageEmc(explorerbase.ExplorerBase):
 
     ##########################################################################
     def addEmcDisk(self, disk, origin=""):
-        """ TODO """
+        """TODO"""
         self[disk] = storage.Storage.initialDict(
             {
                 "_type": "emcdisk",
@@ -313,7 +316,7 @@ class storageEmc(explorerbase.ExplorerBase):
 
     ##########################################################################
     def describer(self, obj, data):
-        """ TODO """
+        """TODO"""
         pass
 
     ##########################################################################
@@ -324,12 +327,12 @@ class storageEmc(explorerbase.ExplorerBase):
 
     ##########################################################################
     def diskList(self):
-        """ TODO """
+        """TODO"""
         return sorted(self["emcdisks"])
 
     ##########################################################################
     def cross_populate(self, data):
-        """ TODO """
+        """TODO"""
         # Look for partitions that live on disks that are EMC Power'd
         for obj in data.copy():
             if isinstance(data[obj], str):

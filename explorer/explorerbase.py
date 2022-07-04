@@ -37,13 +37,13 @@ class ExplorerBase:
 
     ##########################################################################
     def analyse(self, mode):
-        """ TODO """
+        """TODO"""
         if self.__class__.__name__ != "Explorer":
             self.Fatal("Class %s needs an analyse() method" % (self.__class__.__name__))
 
     ##########################################################################
     def glob(self, globexpr):
-        """ TODO """
+        """TODO"""
         globdir = os.path.join(
             self.config["datadir"], self.config["hostpath"], globexpr
         )
@@ -52,7 +52,7 @@ class ExplorerBase:
 
     ##########################################################################
     def pprint(self):
-        """ TODO """
+        """TODO"""
         import pprint
 
         return pprint.pformat(self.data)
@@ -123,7 +123,7 @@ class ExplorerBase:
 
     ##########################################################################
     def __getitem__(self, key):
-        """ TODO """
+        """TODO"""
         try:
             return self.data[key]
         except KeyError:
@@ -132,32 +132,32 @@ class ExplorerBase:
 
     ##########################################################################
     def keys(self):
-        """ TODO """
+        """TODO"""
         return self.data.keys()
 
     ##########################################################################
     def values(self):
-        """ TODO """
+        """TODO"""
         return self.data.values()
 
     ##########################################################################
     def __delitem__(self, key):
-        """ TODO """
+        """TODO"""
         del self.data[key]
 
     ##########################################################################
     def items(self):
-        """ TODO """
+        """TODO"""
         return self.data.items()
 
     ##########################################################################
     def __contains__(self, key):
-        """ TODO """
+        """TODO"""
         return key in self.data
 
     ##########################################################################
     def __setitem__(self, key, value):
-        """ TODO """
+        """TODO"""
         self.data[key] = value
 
     ##########################################################################
@@ -171,7 +171,7 @@ class ExplorerBase:
 
     ##########################################################################
     def name(self):
-        """ TODO """
+        """TODO"""
         if hasattr(self, "objname"):
             return self.objname
         else:
@@ -179,7 +179,7 @@ class ExplorerBase:
 
     ##########################################################################
     def addCpu(self, *args, **kwargs):
-        """ TODO """
+        """TODO"""
         if args:
             kwargs["desc"] = args[0]
         kwargs["component"] = "cpu"
@@ -187,7 +187,7 @@ class ExplorerBase:
 
     ##########################################################################
     def addMem(self, *args, **kwargs):
-        """ TODO """
+        """TODO"""
         if args:
             kwargs["desc"] = args[0]
         kwargs["component"] = "memory"
@@ -195,7 +195,7 @@ class ExplorerBase:
 
     ##########################################################################
     def addPart(self, **kwargs):
-        """ TODO """
+        """TODO"""
         if "fullpart" in kwargs:
             kwargs = kwargs["fullpart"]
         self.parts.append(kwargs)
@@ -230,7 +230,7 @@ class ExplorerBase:
 
     ##########################################################################
     def addIssue(self, *args, **kwargs):
-        """ TODO """
+        """TODO"""
         if args and args[0].__class__.__name__ == "Issue":
             self.issues.append(args[0])
             return
@@ -245,7 +245,7 @@ class ExplorerBase:
 
     ##########################################################################
     def addConcern(self, *args, **kwargs):
-        """ TODO """
+        """TODO"""
         kwargs["typ"] = "concern"
         if "category" not in kwargs:
             category = self.__class__.__name__
@@ -266,7 +266,7 @@ class ExplorerBase:
 
     ##########################################################################
     def exists(self, filename):
-        """ TODO """
+        """TODO"""
         fullfilepath = os.path.join(
             self.config["datadir"], self.config["hostpath"], filename
         )
@@ -274,7 +274,7 @@ class ExplorerBase:
 
     ##########################################################################
     def __repr__(self):
-        """ TODO """
+        """TODO"""
         if hasattr(self, "name"):
             return "<%s %s %s>" % (
                 self.__class__.__name__,
@@ -285,7 +285,7 @@ class ExplorerBase:
 
     ##########################################################################
     def open(self, filename, mode="r"):
-        """ TODO """
+        """TODO"""
         fullfilepath = os.path.join(
             self.config["datadir"], self.config["hostpath"], filename
         )
@@ -297,18 +297,18 @@ class ExplorerBase:
 
     ##########################################################################
     def Verbose(self, msg):
-        """ TODO """
+        """TODO"""
         msg = "%s:%s: %s\n" % (self.hostname, self.__class__.__name__, msg)
         reporter.Verbose(msg)
 
     ##########################################################################
     def Warning(self, msg):
-        """ TODO """
+        """TODO"""
         reporter.Warning(msg)
 
     ##########################################################################
     def Debug(self, msg):
-        """ TODO """
+        """TODO"""
         if debugFlag:
             sys.stderr.write(
                 f"Debug {self.hostname}:{self.__class__.__name__}: {msg}\n"
@@ -316,12 +316,12 @@ class ExplorerBase:
 
     ##########################################################################
     def Fatal(self, msg):
-        """ TODO """
+        """TODO"""
         reporter.Fatal(msg)
 
     ##########################################################################
     def prettyPrint(self, d=None, indent=0, fd=sys.stdout, keylist=[]):
-        """ TODO """
+        """TODO"""
         if d is None and indent == 0:
             d = self.data
         keys = d.keys()
@@ -351,7 +351,7 @@ class ExplorerBase:
 
     ##########################################################################
     def sizeStr(self, kbytes):
-        """ TODO """
+        """TODO"""
         try:
             if type(kbytes) != type(int):
                 kbytes = int(kbytes)
@@ -364,7 +364,7 @@ class ExplorerBase:
 
     ##########################################################################
     def stripQuotes(self, str):
-        """ TODO """
+        """TODO"""
         for i in range(2):  # Occassionally lots of nested quotes
             if str.startswith('"') and str.endswith('"'):
                 str = str[1:-1]
@@ -387,7 +387,7 @@ class ExplorerBase:
 
     ##########################################################################
     def parseLinux_hardwarepy(self, proc):
-        """ TODO """
+        """TODO"""
         if self.exists("hardware.py"):
             f = self.open("hardware.py")
         elif self.exists("etc/sysconfig/hwconf"):

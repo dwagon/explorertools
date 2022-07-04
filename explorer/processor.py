@@ -16,6 +16,7 @@ verbflag = 0
 # Processor ##############################################################
 ##########################################################################
 class Processor(explorerbase.ExplorerBase):
+    """ Processor """
     ##########################################################################
     def __init__(self, config, cpunum):
         explorerbase.ExplorerBase.__init__(self, config)
@@ -23,13 +24,14 @@ class Processor(explorerbase.ExplorerBase):
 
     ##########################################################################
     def analyse(self):
-        """ TODO """
+        """TODO"""
 
 
 ##########################################################################
 # Processors #############################################################
 ##########################################################################
 class Processors(explorerbase.ExplorerBase):
+    """ Processors """
     ##########################################################################
     def __init__(self, config):
         explorerbase.ExplorerBase.__init__(self, config)
@@ -37,31 +39,31 @@ class Processors(explorerbase.ExplorerBase):
 
     ##########################################################################
     def parse(self):
-        """ TODO """
+        """TODO"""
         try:
             if self.config["explorertype"] == "solaris":
-                self.parseSolaris_psrinfo()
+                self.parse_solaris_psrinfo()
             elif self.config["explorertype"] == "linux":
-                self.parseLinux_cpuinfo()
+                self.parse_linux_cpuinfo()
             else:
                 self.Fatal(
-                    "Processors - unknown explorertype %s" % self.config["explorertype"]
+                    f"Processors - unknown explorertype {self.config['explorertype']}"
                 )
         except UserWarning as err:
             self.Warning(err)
 
     ##########################################################################
     def analyse(self):
-        """ TODO """
+        """TODO"""
         for cpu in self.keys():
             self[cpu].analyse()
             self.inheritIssues(self[cpu])
 
     ##########################################################################
-    def parseLinux_cpuinfo(self):
-        """ TODO """
-        f = self.open("proc/cpuinfo")
-        for line in f:
+    def parse_linux_cpuinfo(self):
+        """TODO"""
+        infh = self.open("proc/cpuinfo")
+        for line in infh:
             if line.startswith("processor"):
                 cpunum = line.split()[-1]
                 cpu = Processor(self.config, cpunum)
@@ -71,13 +73,15 @@ class Processors(explorerbase.ExplorerBase):
             if line.startswith("cpu MHz"):
                 # Convert speed to a round number: 1500 rather than 1499.998
                 # MHz
-                cpu["speed"] = "%s" % int(
-                    math.ceil(float(line[line.find(":") + 1:].strip()))
-                )
-        f.close()
+                cpu["speed"] = str(
+                    int(
+                        math.ceil(
+                            float(line[line.find(":") + 1:].strip())))
+                    )
+        infh.close()
 
     ##########################################################################
-    def parseSolaris_psrinfo(self):
+    def parse_solaris_psrinfo(self):
         """
         Analyse psrinfo -v output which looks like:
         Status of processor 0 as of: 11/25/05 14:16:15
@@ -85,21 +89,21 @@ class Processors(explorerbase.ExplorerBase):
           The sparc processor operates at 400 MHz,
                 and has a sparc floating point processor.
         """
-        f = self.open("sysconfig/psrinfo-v.out")
-        for line in f:
+        infh = self.open("sysconfig/psrinfo-v.out")
+        for line in infh:
             line = line.strip()
-            m = re.search(r"Status of .*processor (?P<cpunum>\d+) as of: .*", line)
-            if m:
-                cpunum = int(m.group("cpunum"))
+            matchobj = re.search(r"Status of .*processor (?P<cpunum>\d+) as of: .*", line)
+            if matchobj:
+                cpunum = int(matchobj.group("cpunum"))
             cpu = Processor(self.config, cpunum)
-            m = re.search(
+            matchobj = re.search(
                 "The (?P<proctype>.*) processor operates at (?P<speed>.*),", line
             )
-            if m:
-                cpu["proctype"] = m.group("proctype")
-                cpu["speed"] = m.group("speed")
+            if matchobj:
+                cpu["proctype"] = matchobj.group("proctype")
+                cpu["speed"] = matchobj.group("speed")
                 self[cpunum] = cpu
-        f.close()
+        infh.close()
 
 
 # EOF

@@ -9,9 +9,10 @@ Script to provide an issue class for explorer analysis
 
 ##########################################################################
 class Issue:
-    """ TODO """
+    """TODO"""
+
     def __init__(self, *args, **kwargs):
-        """ TODO """
+        """TODO"""
         self.category = args[0]
         try:
             self.subcategory = args[1]
@@ -39,21 +40,21 @@ class Issue:
 
     ##########################################################################
     def isIssue(self):
-        """ TODO """
+        """TODO"""
         if self.typ == "issue":
             return True
         return False
 
     ##########################################################################
     def isConcern(self):
-        """ TODO """
+        """TODO"""
         if self.typ == "concern":
             return True
         return False
 
     ##########################################################################
     def __repr__(self):
-        """ TODO """
+        """TODO"""
         return "Issue %s:%s %s" % (self.category, self.subcategory, self.obj)
 
 

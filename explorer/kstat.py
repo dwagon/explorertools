@@ -17,7 +17,7 @@ class Chain(explorerbase.ExplorerBase):
 
     ##########################################################################
     def __init__(self, config, module, name, instance):
-        """ TODO """
+        """TODO"""
         explorerbase.ExplorerBase.__init__(self, config)
         self.module = module
         self.objname = name
@@ -27,7 +27,7 @@ class Chain(explorerbase.ExplorerBase):
 
     ##########################################################################
     def addVal(self, stat, val):
-        """ TODO """
+        """TODO"""
         if stat == "class":
             self.class_ = val
         elif stat == "snaptime":
@@ -46,7 +46,7 @@ class Chain(explorerbase.ExplorerBase):
 
     ##########################################################################
     def printLink(self):
-        """ TODO """
+        """TODO"""
         strg = ""
         for k in sorted(self.data.keys()):
             strg += "%s=%s\n" % (k, self[k])
@@ -61,13 +61,13 @@ class Kstat(explorerbase.ExplorerBase):
 
     ##########################################################################
     def __init__(self, config):
-        """ TODO """
+        """TODO"""
         explorerbase.ExplorerBase.__init__(self, config)
         self.parseKstat()
 
     ##########################################################################
     def parseKstat(self):
-        """ TODO """
+        """TODO"""
         if not self.exists("netinfo/kstat-p.out"):
             return
         f = self.open("netinfo/kstat-p.out")
@@ -96,12 +96,12 @@ class Kstat(explorerbase.ExplorerBase):
 
     ##########################################################################
     def moduleList(self):
-        """ TODO """
+        """TODO"""
         return sorted(self.keys())
 
     ##########################################################################
     def nameList(self, module=None):
-        """ TODO """
+        """TODO"""
         names = []
         if module is None:
             modlist = self.moduleList()
@@ -135,7 +135,7 @@ class Kstat(explorerbase.ExplorerBase):
 
     ##########################################################################
     def chain(self, module, name, instance):
-        """ TODO """
+        """TODO"""
         c = self[module][name][instance]
         return c
 

@@ -12,7 +12,8 @@ import explorerbase
 # Zone ###################################################################
 ##########################################################################
 class Zone(explorerbase.ExplorerBase):
-    """ TODO """
+    """TODO"""
+
     ##########################################################################
     def __init__(self, config, zonename):
         explorerbase.ExplorerBase.__init__(self, config)
@@ -27,7 +28,7 @@ class Zone(explorerbase.ExplorerBase):
 
     ##########################################################################
     def parse_ifconfig(self):
-        """ TODO """
+        """TODO"""
         ifc = f"zones/{self.name()}/sysconfig/ifconfig-a.out"
         if not self.exists(ifc):
             return
@@ -45,7 +46,7 @@ class Zone(explorerbase.ExplorerBase):
 
     ##########################################################################
     def parse_zone_sysconfig(self):
-        """ TODO """
+        """TODO"""
         unam = f"zones/{self.name()}/sysconfig/uname-a.out"
         if self.exists(unam):
             infh = self.open(unam)
@@ -57,11 +58,11 @@ class Zone(explorerbase.ExplorerBase):
 
     ##########################################################################
     def analyse(self):
-        """ TODO """
+        """TODO"""
 
     ##########################################################################
     def parse_zonecfg(self):
-        """ TODO """
+        """TODO"""
         infh = self.open(f"sysconfig/zonecfg-z-{self.name()}-export.out")
         for line in infh:
             line = line.strip()
@@ -96,7 +97,7 @@ class Zones(explorerbase.ExplorerBase):
 
     ##########################################################################
     def parse_zones(self):
-        """ TODO """
+        """TODO"""
         infh = self.open("etc/zones/index")
         for line in infh:
             if line.startswith("#"):
@@ -111,7 +112,7 @@ class Zones(explorerbase.ExplorerBase):
                 self.addConcern(
                     "status",
                     obj=zonename,
-                    text=f"Zone {zonename} is not operational status={zone['status']}"
+                    text=f"Zone {zonename} is not operational status={zone['status']}",
                 )
             zone["path"] = bits[2]
             self[zonename] = zone
@@ -119,17 +120,17 @@ class Zones(explorerbase.ExplorerBase):
 
     ##########################################################################
     def zone_names(self):
-        """ TODO """
+        """TODO"""
         return sorted(self.data.keys())
 
     ##########################################################################
     def zone_list(self):
-        """ TODO """
+        """TODO"""
         return [self[zone] for zone in self.zone_names()]
 
     ##########################################################################
     def analyse(self):
-        """ TODO """
+        """TODO"""
         for zone in self.zone_list():
             zone.analyse()
             self.inheritIssues(zone)

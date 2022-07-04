@@ -12,7 +12,8 @@ import kstat
 
 ##########################################################################
 class Driver(explorerbase.ExplorerBase):
-    """ TODO """
+    """TODO"""
+
     def __init__(self, config, drivername):
         explorerbase.ExplorerBase.__init__(self, config)
         self.objname = drivername
@@ -22,7 +23,7 @@ class Driver(explorerbase.ExplorerBase):
 
     ##########################################################################
     def analyse_lines(self):
-        """ TODO """
+        """TODO"""
         for mode in self.lines:
             self.analyse(mode)
         self["vendor"] = ""
@@ -35,7 +36,7 @@ class Driver(explorerbase.ExplorerBase):
 
     ##########################################################################
     def get_name(self, line):
-        """ TODO """
+        """TODO"""
         for reg in (
             r"name='(?P<name>.*)'",
             r"name=(?P<name>.*)",
@@ -51,7 +52,7 @@ class Driver(explorerbase.ExplorerBase):
 
     ##########################################################################
     def get_value(self, line):
-        """ TODO """
+        """TODO"""
         for reg in (
             "value='(?P<value>.*)'",
             "value=(?P<value>.*)",
@@ -66,7 +67,7 @@ class Driver(explorerbase.ExplorerBase):
 
     ##########################################################################
     def analyse(self, mode):
-        """ TODO """
+        """TODO"""
         name = ""
         value = ""
         for line in self.lines[mode]:
@@ -83,30 +84,30 @@ class Driver(explorerbase.ExplorerBase):
 
     ##########################################################################
     def add_parent(self, blob):
-        """ TODO """
+        """TODO"""
         self.parent = blob
 
     ##########################################################################
     def remove_child(self, blob):
-        """ TODO """
+        """TODO"""
         self.children.remove(blob)
 
     ##########################################################################
     def add_child(self, blob):
-        """ TODO """
+        """TODO"""
         self.children.append(blob)
         blob.add_parent(self)
 
     ##########################################################################
     def is_tape(self):
-        """ TODO """
+        """TODO"""
         if self.name().startswith("st"):
             return True
         return False
 
     ##########################################################################
     def is_disk(self):
-        """ TODO """
+        """TODO"""
         if self.name().startswith("sd"):
             return True
         if self.name().startswith("ssd"):
@@ -124,7 +125,7 @@ class Driver(explorerbase.ExplorerBase):
 
     ##########################################################################
     def add_line(self, line, mode):
-        """ TODO """
+        """TODO"""
         if mode not in self.lines:
             self.lines[mode] = []
         self.lines[mode].append(line.strip())
@@ -134,7 +135,8 @@ class Driver(explorerbase.ExplorerBase):
 # Prtconf ################################################################
 ##########################################################################
 class Prtconf(explorerbase.ExplorerBase):
-    """ TODO """
+    """TODO"""
+
     def __init__(self, config):
         explorerbase.ExplorerBase.__init__(self, config)
         self["_rootblob"] = None
@@ -158,7 +160,7 @@ class Prtconf(explorerbase.ExplorerBase):
 
     ##########################################################################
     def parse_prtconf_vp(self):
-        """ TODO """
+        """TODO"""
         filename = "sysconfig/prtconf-vp.out"
         if not self.exists(filename):
             return
@@ -176,7 +178,7 @@ class Prtconf(explorerbase.ExplorerBase):
 
     ##########################################################################
     def parse_aliases(self, buff):
-        """ TODO """
+        """TODO"""
         for line in buff:
             if "Node" in line:
                 continue
@@ -185,7 +187,7 @@ class Prtconf(explorerbase.ExplorerBase):
 
     ##########################################################################
     def analyse(self, mode):
-        """ TODO """
+        """TODO"""
 
     ##########################################################################
     def is_null_blobs(self, blob):
@@ -205,7 +207,7 @@ class Prtconf(explorerbase.ExplorerBase):
 
     ##########################################################################
     def get_kstats(self):
-        """ TODO """
+        """TODO"""
         k = kstat.Kstat(self.config)
         for link in k.classChains("disk"):
             self["_kstat_disks"].append(link.name())
@@ -214,7 +216,7 @@ class Prtconf(explorerbase.ExplorerBase):
 
     ##########################################################################
     def analyse_enclosures(self):
-        """ TODO """
+        """TODO"""
         tmpdrivers = self.values()
         for devname, blob in self.items():
             if devname.startswith("_"):
@@ -237,7 +239,7 @@ class Prtconf(explorerbase.ExplorerBase):
 
     ##########################################################################
     def display(self, blob=None, indent=0):
-        """ TODO """
+        """TODO"""
         if not blob:
             blob = self["_rootblob"]
         print("%s%s" % (" " * indent * 4, blob.name()))
@@ -248,14 +250,14 @@ class Prtconf(explorerbase.ExplorerBase):
 
     ##########################################################################
     def add_driver(self, name):
-        """ TODO """
+        """TODO"""
         drvr = Driver(self.config, name)
         self[name] = drvr
         return drvr
 
     ##########################################################################
     def parse_prtconf_vd(self):
-        """ TODO """
+        """TODO"""
         infh = self.open("sysconfig/prtconf-vD.out")
         self["_rootblob"] = self.add_driver("root")
         indentblob = {0: self["_rootblob"]}
@@ -271,7 +273,9 @@ class Prtconf(explorerbase.ExplorerBase):
                 mode = ""
                 indent = len(matchobj.group("indent")) / 4
 
-                currblob = self.add_driver("{matchobj.group('module')}{matchobj.group('instance')}")
+                currblob = self.add_driver(
+                    "{matchobj.group('module')}{matchobj.group('instance')}"
+                )
                 indentblob[indent - 1].add_child(currblob)
                 indentblob[indent] = currblob
                 continue

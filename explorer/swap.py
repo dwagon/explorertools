@@ -1,7 +1,6 @@
-#!/usr/local/bin/python
-#
-# Script to understand swap details
-#
+"""
+Script to understand swap details
+"""
 # Written by Dougal Scott <dwagon@pobox.com>
 # $Id: swap.py 2393 2012-06-01 06:38:17Z dougals $
 # $HeadURL: http://svn/ops/unix/explorer/trunk/explorer/swap.py $
@@ -14,6 +13,7 @@ import storage
 # SwapThing ##############################################################
 ##########################################################################
 class SwapThing(explorerbase.ExplorerBase):
+    """ Swap """
     def __init__(self, config, swapvol, data, alldata):
         self.objname = swapvol
         explorerbase.ExplorerBase.__init__(self, config)
@@ -22,10 +22,12 @@ class SwapThing(explorerbase.ExplorerBase):
 
     ##########################################################################
     def getNotes(self):
+        """ TODO """
         return self["describer"]
 
     ##########################################################################
     def analyse(self):
+        """ TODO """
         if self["devices"] and ("protected" not in self or not self["protected"]):
             self.addIssue("unprotected", obj=self.name(), text="Swap is not redundant")
 
@@ -34,6 +36,7 @@ class SwapThing(explorerbase.ExplorerBase):
 # Swap ###################################################################
 ##########################################################################
 class Swap(explorerbase.ExplorerBase):
+    """ Swap """
     def __init__(self, config):
         explorerbase.ExplorerBase.__init__(self, config)
         self.st = storage.Storage(config)
@@ -43,12 +46,14 @@ class Swap(explorerbase.ExplorerBase):
         self.analyse()
 
     ##########################################################################
-    def swapList(self):
+    def swap_list(self):
+        """ TODO """
         return [self[sw] for sw in sorted(self.keys())]
 
     ##########################################################################
     def analyse(self):
-        for swap in self.swapList():
+        """ TODO """
+        for swap in self.swap_list():
             swap.analyse()
             self.inheritIssues(swap)
 
@@ -58,6 +63,7 @@ class Swap(explorerbase.ExplorerBase):
 ##########################################################################
 class storageSwap(explorerbase.ExplorerBase):
     """Understand explorer output with respect to swap"""
+
     ##########################################################################
     def __init__(self, config, data={}):
         explorerbase.ExplorerBase.__init__(self, config)
@@ -73,7 +79,8 @@ class storageSwap(explorerbase.ExplorerBase):
         self.parse()
 
     ##########################################################################
-    def addLinux_swap(self, device, origin=None):
+    def add_linux_swap(self, device, origin=None):
+        """ TODO """
         name = "swap_%d" % self.swapnum
         self.swapnum += 1
         self[name] = storage.Storage.initialDict(
@@ -87,28 +94,29 @@ class storageSwap(explorerbase.ExplorerBase):
         self["swap_devices"].add(name)
 
     ##########################################################################
-    def parseLinux_fstab(self):
-        f = self.open("etc/fstab")
-        for line in f:
+    def parse_linux_fstab(self):
+        """ TODO """
+        infh = self.open("etc/fstab")
+        for line in infh:
             if "swap" not in line:
                 continue
             bits = line.split()
             if bits[1] == "swap":
                 device = self.sanitiseDevice(bits[0])
-                self.addLinux_swap(device, origin="etc/fstab")
+                self.add_linux_swap(device, origin="etc/fstab")
 
     ##########################################################################
-    def parseSolaris_swap(self):
+    def parse_solaris_swap(self):
         """
         Analyse swap output
         """
-        f = self.open("disks/swap-l.out")
-        for line in f:
+        infh = self.open("disks/swap-l.out")
+        for line in infh:
             line = line.rstrip()
             if line.startswith("swapfile"):
                 continue
             if line.startswith("/dev/"):
-                name = "swap_%d" % self.swapnum
+                name = "swap_{self.swapnum}"
                 self.swapnum += 1
                 bits = line.split()
                 self["swap_devices"].add(name)
@@ -127,35 +135,39 @@ class storageSwap(explorerbase.ExplorerBase):
                         "use": set(["_swap"]),
                     }
                 )
-        f.close()
+        infh.close()
 
     ##########################################################################
-    def parseLinux_fdisk_chunk(self, lines):
+    def parse_linux_fdisk_chunk(self, lines):
+        """ TODO """
         for line in lines:
             if "Linux swap" in line:
                 bits = line.split()
-                self.addLinux_swap(self.sanitiseDevice(bits[0]), origin="fdisk")
+                self.add_linux_swap(self.sanitiseDevice(bits[0]), origin="fdisk")
 
     ##########################################################################
     def parse(self):
+        """ TODO """
         self["swap_devices"] = set()
         try:
             if self.config["explorertype"] == "solaris":
-                self.parseSolaris_swap()
+                self.parse_solaris_swap()
             elif self.config["explorertype"] == "linux":
-                self.parseLinux_fdisk(self.parseLinux_fdisk_chunk)
+                self.parseLinux_fdisk(self.parse_linux_fdisk_chunk)
                 if not self["swap_devices"]:
-                    self.parseLinux_fstab()
+                    self.parse_linux_fstab()
         except UserWarning as err:
             self.Warning(err)
 
     ##########################################################################
-    def swapList(self):
+    def swap_list(self):
+        """ TODO """
         return self["swap_devices"]
 
     ##########################################################################
     def cross_populate(self, data):
-        for swap in self.swapList():
+        """ TODO """
+        for swap in self.swap_list():
             # Tell all devices that have swap on them that they are used for
             # swap
             for dev in data[swap]["devices"]:

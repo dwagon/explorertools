@@ -17,7 +17,8 @@ import storage
 # Slice ##################################################################
 ##########################################################################
 class Slice(explorerbase.ExplorerBase):
-    """ Slice of a disk """
+    """Slice of a disk"""
+
     def __init__(self, config, slic, data, alldata):
         self.objname = slic
         explorerbase.ExplorerBase.__init__(self, config)
@@ -26,31 +27,31 @@ class Slice(explorerbase.ExplorerBase):
 
     ##########################################################################
     def __repr__(self):
-        """ TODO """
+        """TODO"""
         return "<Slice %s %s>" % (self.name(), self.data)
 
     ##########################################################################
     def getCylinders(self):
-        """ TODO """
+        """TODO"""
         if "first_cylinder" not in self:
             return None, None, None
         return self["first_cylinder"], self["last_cylinder"], self["cylinder_count"]
 
     ##########################################################################
     def getSectors(self):
-        """ TODO """
+        """TODO"""
         if "first_sector" not in self:
             return None, None, None
         return self["first_sector"], self["last_sector"], self["sector_count"]
 
     ##########################################################################
     def isBackupSlice(self):
-        """ TODO """
+        """TODO"""
         return self["backup_slice"]
 
     ##########################################################################
     def getNotes(self):
-        """ TODO """
+        """TODO"""
         return self["describer"]
 
 
@@ -58,7 +59,8 @@ class Slice(explorerbase.ExplorerBase):
 # Disk ###################################################################
 ##########################################################################
 class Disk(explorerbase.ExplorerBase):
-    """ TODO """
+    """TODO"""
+
     def __init__(self, config, disk, data, alldata):
         self.objname = disk
         explorerbase.ExplorerBase.__init__(self, config)
@@ -67,12 +69,12 @@ class Disk(explorerbase.ExplorerBase):
 
     ##########################################################################
     def __repr__(self):
-        """ TODO """
+        """TODO"""
         return "<Disk %s %s>" % (self.name(), self.data)
 
     ##########################################################################
     def unusedDisk(self):
-        """ TODO """
+        """TODO"""
         return self["unused"]
 
     ##########################################################################
@@ -129,13 +131,13 @@ class Disk(explorerbase.ExplorerBase):
 
     ##########################################################################
     def sliceList(self):
-        """ TODO """
+        """TODO"""
         slices = sorted(self["slices"])
         return [self[s] for s in slices]
 
     ##########################################################################
     def analyse(self):
-        """ TODO """
+        """TODO"""
         # Check for errors
         if "predfail" in self and self["predfail"] != "0":
             self.addIssue(
@@ -215,7 +217,8 @@ class Disk(explorerbase.ExplorerBase):
 # Disks ##################################################################
 ##########################################################################
 class Disks(explorerbase.ExplorerBase):
-    """ Disks """
+    """Disks"""
+
     def __init__(self, config):
         explorerbase.ExplorerBase.__init__(self, config)
         self.st = storage.Storage(config)
@@ -227,12 +230,12 @@ class Disks(explorerbase.ExplorerBase):
 
     ##########################################################################
     def diskList(self):
-        """ TODO """
+        """TODO"""
         return self.values()
 
     ##########################################################################
     def analyse(self):
-        """ TODO """
+        """TODO"""
         for d in self.diskList():
             d.analyse()
             self.inheritIssues(d)
@@ -295,10 +298,10 @@ class Disks(explorerbase.ExplorerBase):
                                 "_origin": filename,
                             }
                         )
-#                    numdisks[volume] = numdisks.get(volume, 0) + 1
-#                    if numdisks[volume] > 1:
-#                        # By default the volume name is the disk name - stupid
-#                        self[volume]["protected"] = "Internal HW Raid"
+            #                    numdisks[volume] = numdisks.get(volume, 0) + 1
+            #                    if numdisks[volume] > 1:
+            #                        # By default the volume name is the disk name - stupid
+            #                        self[volume]["protected"] = "Internal HW Raid"
             else:
                 bits = line.split()
                 if len(bits) == 5:
@@ -334,7 +337,7 @@ class Disks(explorerbase.ExplorerBase):
 
     ##########################################################################
     def raidCheck(self, line, spot, label):
-        """ TODO """
+        """TODO"""
         if line.split()[spot] != "OK":
             return label
         return ""
@@ -350,7 +353,7 @@ class Disks(explorerbase.ExplorerBase):
 
     ##########################################################################
     def analyseLuxDisplay(self, luxf):
-        """ TODO """
+        """TODO"""
         f = self.open(luxf)
         for line in f:
             line = line.strip()
@@ -388,7 +391,7 @@ class storageDisks(explorerbase.ExplorerBase):
 
     ##########################################################################
     def parse(self):
-        """ TODO """
+        """TODO"""
         self["disks"] = set()
         try:
             if self.config["explorertype"] == "solaris":
@@ -401,7 +404,7 @@ class storageDisks(explorerbase.ExplorerBase):
 
     ##########################################################################
     def parse_Linux(self):
-        """ TODO """
+        """TODO"""
         self["_uuidmap"] = {}
         self["_labelmap"] = {}
         self.parseLinux_blkid()
@@ -445,7 +448,7 @@ class storageDisks(explorerbase.ExplorerBase):
 
     ##########################################################################
     def parseLinux_multipath(self):
-        """ TODO """
+        """TODO"""
         # This looks like it was explicitly designed to be unparseable by a computer
         # databases (360a9800057396d4e4a5a623454317175) dm-5 NETAPP,LUN
         # [size=200G][features=1 queue_if_no_path][hwhandler=0][rw]
@@ -481,7 +484,7 @@ class storageDisks(explorerbase.ExplorerBase):
 
     ##########################################################################
     def parseLinux_multipath_stanza(self, buffer):
-        """ TODO """
+        """TODO"""
         name = "mpath_%s" % buffer.splitlines()[0].split()[0]
         if name not in self:
             self[name] = storage.Storage.initialDict(
@@ -507,7 +510,7 @@ class storageDisks(explorerbase.ExplorerBase):
 
     ##########################################################################
     def parseLinux_hardwarepy_chunk(self, buff, class_):
-        """ TODO """
+        """TODO"""
         if class_ == "HD":
             if buff.get("bus", "none") == "USB":
                 return
@@ -546,7 +549,7 @@ class storageDisks(explorerbase.ExplorerBase):
 
     ##########################################################################
     def parse_Solaris(self):
-        """ TODO """
+        """TODO"""
         self.parseSolaris_format()
         if not self["disks"]:
             self.alternativeParseFormat()
@@ -563,7 +566,7 @@ class storageDisks(explorerbase.ExplorerBase):
 
     ##########################################################################
     def parseDisk(self, disk):
-        """ TODO """
+        """TODO"""
         self.parsePrtvtoc(disk)
 
     ##########################################################################
@@ -872,7 +875,9 @@ class storageDisks(explorerbase.ExplorerBase):
         f = self.open("etc/path_to_inst")
         self.devlist = {}
         for line in f:
-            matchobj = re.search(r'"(?P<path>.*)" (?P<devnum>\S+) "(?P<devtype>.*)"', line)
+            matchobj = re.search(
+                r'"(?P<path>.*)" (?P<devnum>\S+) "(?P<devtype>.*)"', line
+            )
             if matchobj:
                 self.devlist[
                     "%s%s" % (matchobj.group("devtype"), matchobj.group("devnum"))
@@ -1044,7 +1049,8 @@ class storageDisks(explorerbase.ExplorerBase):
                 continue
             if line.startswith("Disk"):
                 matchobj = re.search(
-                    r"Disk (?P<device>/dev/.*): (?P<size>.*), (?P<bytes>\d+) bytes", line
+                    r"Disk (?P<device>/dev/.*): (?P<size>.*), (?P<bytes>\d+) bytes",
+                    line,
                 )
                 if matchobj:
                     disk = self.sanitiseDevice(matchobj.group("device"))
@@ -1100,7 +1106,9 @@ class storageDisks(explorerbase.ExplorerBase):
                 self[disk]["cylinder_size"] = int(m.group("cylinder_size"))
                 continue
 
-            m = re.search(r"Units = cylinders of (?P<facta>\d+) \* (?P<factb>\d+)", line)
+            m = re.search(
+                r"Units = cylinders of (?P<facta>\d+) \* (?P<factb>\d+)", line
+            )
             if m:
                 self[disk]["cylinder_size"] = int(m.group("facta")) * int(
                     m.group("factb")
