@@ -989,12 +989,12 @@ class storageDisks(explorerbase.ExplorerBase):
                 continue
 
             # Check to see if it matches known virtual disks
-            isVirt = False
+            is_virt = False
             for virtfmt in [r"md\d", r"dm-\d", "lvm.", r"loop\d"]:
                 if re.match(virtfmt, part):
-                    isVirt = True
+                    is_virt = True
                     break
-            if isVirt:
+            if is_virt:
                 continue
 
             matchob = None
@@ -1009,7 +1009,7 @@ class storageDisks(explorerbase.ExplorerBase):
                     break
 
             if not matchob:
-                self.Fatal("Unhandled disk partition: %s" % part)
+                self.fatal(f"Unhandled disk partition: {part}")
             disk = matchob.group("disk")
             slic = matchob.group("slice")
             slicehandle = matchob.group("slicehandle")
