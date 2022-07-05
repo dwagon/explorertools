@@ -198,7 +198,7 @@ class miscDetails(explorerbase.ExplorerBase):
         """TODO"""
         filename = "netinfo/netstat-an.out"
         if not self.exists(filename):
-            self.Warning(f"{filename} doesn't exist")
+            self.warning(f"{filename} doesn't exist")
             return
         infh = self.open(filename)
         mode = None
@@ -291,7 +291,7 @@ class miscDetails(explorerbase.ExplorerBase):
                 infh = self.open("sysconfig/ps-ef.out")
                 mode = "vanilla"
             else:
-                self.Warning("No usable ps output")
+                self.warning("No usable ps output")
                 return
             psreg = re.compile(r".* \d+:\d\d (.*)$")
             for line in infh:
@@ -342,7 +342,7 @@ class miscDetails(explorerbase.ExplorerBase):
         if self.config["explorertype"] == "solaris":
             filename = "patch+pkg/patch_date.out"
             if not self.exists(filename):
-                self.Warning("Couldn't read patch dates: %s" % filename)
+                self.warning("Couldn't read patch dates: %s" % filename)
                 return
             infh = self.open(filename)
             for line in infh:
@@ -414,7 +414,7 @@ class miscDetails(explorerbase.ExplorerBase):
         """Check for eeprom settings"""
         self["eeprom"] = {}
         if not self.exists("sysconfig/eeprom.out"):
-            self.Warning("Couldn't read eeprom settings")
+            self.warning("Couldn't read eeprom settings")
             return
         infh = self.open("sysconfig/eeprom.out")
         for line in infh:
@@ -522,7 +522,7 @@ class miscDetails(explorerbase.ExplorerBase):
                 if not line.startswith("---"):
                     line = line.strip()
                     self["serial"] = self.sanitise_serial(line)
-                    # self.Warning("prtdiag serial='%s' -> %s" % (line, self['serial']))
+                    # self.warning("prtdiag serial='%s' -> %s" % (line, self['serial']))
                     return True
         infh.close()
         return False
@@ -546,11 +546,11 @@ class miscDetails(explorerbase.ExplorerBase):
                 line = line.strip()
                 if "Serial Number" in line:
                     self["serial"] = self.sanitise_serial(line.split()[-1])
-                    # self.Warning("txA serial='%s' -> %s" % (line, self['serial']))
+                    # self.warning("txA serial='%s' -> %s" % (line, self['serial']))
                     return True
                 if "Blade Serial Number:" in line:
                     self["serial"] = self.sanitise_serial(line.split()[-1])
-                    # self.Warning("txB serial='%s' -> %s" % (line, self['serial']))
+                    # self.warning("txB serial='%s' -> %s" % (line, self['serial']))
                     return True
             infh.close()
 
@@ -565,7 +565,7 @@ class miscDetails(explorerbase.ExplorerBase):
                 if len(serial.split()) != 1:
                     serial = serial.split()[0]  # Don't know what the second one is
                 self["serial"] = self.sanitise_serial(serial)
-                # self.Warning("txC serial='%s' -> %s" % (line, self['serial']))
+                # self.warning("txC serial='%s' -> %s" % (line, self['serial']))
                 return True
         infh.close()
         return False
@@ -595,7 +595,7 @@ class miscDetails(explorerbase.ExplorerBase):
                     continue
                 if serial != "0000000000":
                     self["serial"] = serial.lower()
-                    # self.Warning("ipmiA serial='%s' -> %s" % (line, self['serial']))
+                    # self.warning("ipmiA serial='%s' -> %s" % (line, self['serial']))
                     return True
         infh.close()
         return False
@@ -605,7 +605,7 @@ class miscDetails(explorerbase.ExplorerBase):
         """TODO"""
         if self.config["explorertype"] == "solaris":
             if not self.exists("README"):
-                self.Warning("No README found")
+                self.warning("No README found")
                 return
             infh = self.open("README")
             line = infh.readline()

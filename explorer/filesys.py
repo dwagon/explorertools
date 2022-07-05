@@ -112,7 +112,7 @@ class storageFilesystems(explorerbase.ExplorerBase):
         elif self.config["explorertype"] == "linux":
             dffile = "df"
         else:
-            self.Fatal(
+            self.fatal(
                 "parseDf - unsupported explorer type %s" % self.config["explorertype"]
             )
         self.parseDf_real(dffile)
@@ -179,7 +179,7 @@ class storageFilesystems(explorerbase.ExplorerBase):
             return int(num * 1024 * 1024)
         if units == "M":
             return int(num * 1024)
-        self.Fatal("dehumanise - unknown units %s" % units)
+        self.fatal("dehumanise - unknown units %s" % units)
 
     ##########################################################################
     def parseDf_real(self, dffile):
@@ -236,7 +236,7 @@ class storageFilesystems(explorerbase.ExplorerBase):
         elif self.config["explorertype"] == "linux":
             self.parseLinux_mount()
         else:
-            self.Fatal(
+            self.fatal(
                 "parseMount - unsupported explorer type %s"
                 % self.config["explorertype"]
             )
@@ -348,7 +348,7 @@ class storageFilesystems(explorerbase.ExplorerBase):
             elif self.config["explorertype"] == "linux":
                 self.parseLinux_fstab()
             else:
-                self.Fatal(
+                self.fatal(
                     "parseFstab - unsupported explorer type %s"
                     % self.config["explorertype"]
                 )

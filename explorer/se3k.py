@@ -99,7 +99,7 @@ class Storedge(explorerbase.ExplorerBase):
                             text="Component %s has status %s" % (component, status),
                         )
             except Exception as exc:
-                self.Warning("Parser failure on %s: %s: %s" % (fname, line, str(exc)))
+                self.warning("Parser failure on %s: %s: %s" % (fname, line, str(exc)))
                 raise
 
     ##########################################################################
@@ -177,7 +177,7 @@ class Storedge(explorerbase.ExplorerBase):
         elif "device not supported" in line:
             return
         else:
-            self.Fatal("Unknown se3k details: %s" % line)
+            self.fatal("Unknown se3k details: %s" % line)
 
     ##########################################################################
     def analyse(self):

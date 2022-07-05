@@ -46,11 +46,11 @@ class Processors(explorerbase.ExplorerBase):
             elif self.config["explorertype"] == "linux":
                 self.parse_linux_cpuinfo()
             else:
-                self.Fatal(
+                self.fatal(
                     f"Processors - unknown explorertype {self.config['explorertype']}"
                 )
         except UserWarning as err:
-            self.Warning(err)
+            self.warning(err)
 
     ##########################################################################
     def analyse(self):

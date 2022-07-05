@@ -2,5 +2,33 @@ Searching for disks...done
 
 
 AVAILABLE DISK SELECTIONS:
-       0. c2d0 <3PARdata-VV-3312 cyl 65533 alt 2 hd 8 sec 400>
+       0. c1d0 <3PARdata-VV-3312-250.00GB>
           /virtual-devices@100/channel-devices@200/disk@0
+       1. c1d1 <3PARdata-VV-3312 cyl 19725 alt 2 hd 224 sec 56>
+          /virtual-devices@100/channel-devices@200/disk@1
+       2. c1d2 <3PARdata-VV-3312 cyl 27917 alt 2 hd 224 sec 56>
+          /virtual-devices@100/channel-devices@200/disk@2
+       3. c1d3 <3PARdata-VV-3312 cyl 19725 alt 2 hd 224 sec 56>
+          /virtual-devices@100/channel-devices@200/disk@3
+       4. c1d4 <3PARdata-VV-3312 cyl 10029 alt 2 hd 224 sec 56>
+          /virtual-devices@100/channel-devices@200/disk@4
+       5. c1d5 <3PARdata-VV-3312 cyl 63360 alt 2 hd 224 sec 112>
+          /virtual-devices@100/channel-devices@200/disk@5
+       6. c1d6 <3PARdata-VV-3312 cyl 3341 alt 2 hd 224 sec 56>
+          /virtual-devices@100/channel-devices@200/disk@6
+       7. c1d7 <3PARdata-VV-3312 cyl 33936 alt 2 hd 224 sec 112>
+          /virtual-devices@100/channel-devices@200/disk@7
+       8. c1d8 <3PARdata-VV-3312 cyl 50487 alt 2 hd 224 sec 168>
+          /virtual-devices@100/channel-devices@200/disk@8
+       9. c1d9 <3PARdata-VV-3312 cyl 10029 alt 2 hd 224 sec 56>
+          /virtual-devices@100/channel-devices@200/disk@9
+      10. c1d10 <3PARdata-VV-3312 cyl 19725 alt 2 hd 224 sec 56>
+          /virtual-devices@100/channel-devices@200/disk@a
+      11. c1d12 <3PARdata-VV-3312 cyl 64280 alt 2 hd 224 sec 112>
+          /virtual-devices@100/channel-devices@200/disk@c
+      12. c1d13 <3PARdata-VV-3312 cyl 25075 alt 2 hd 224 sec 56>
+          /virtual-devices@100/channel-devices@200/disk@d
+      13. c1d14 <3PARdata-VV-3312 cyl 1022 alt 2 hd 128 sec 32>  METADB
+          /virtual-devices@100/channel-devices@200/disk@e
+      14. c1d15 <3PARdata-VV-3312 cyl 8357 alt 2 hd 224 sec 56>
+          /virtual-devices@100/channel-devices@200/disk@f

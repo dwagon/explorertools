@@ -1,6 +1,6 @@
 """
-# Script to understand, represent and verify SDS/LVM configuration based on
-# explorers and sosreports
+Script to understand, represent and verify SDS/LVM configuration based on
+explorers and sosreports
 """
 # Written by Dougal Scott <dwagon@pobox.com>
 # $Id: volmanager.py 4380 2013-02-22 02:53:51Z dougals $
@@ -50,7 +50,7 @@ class Metadev(explorerbase.ExplorerBase):
                 try:
                     mounts.update(self.alldata[tmp]["use"])
                 except KeyError:
-                    self.Warning(
+                    self.warning(
                         "Couldn't find {tmp} in data as in {self.name()}'s contains"
                     )
         else:
@@ -94,7 +94,7 @@ class Volmanager(explorerbase.ExplorerBase):
         self.analyse()
 
     ##########################################################################
-    def analyseLinux_mdstat(self):
+    def analyse_linux_mdstat(self):
         """TODO"""
         if not self.exists("proc/mdstat"):
             return
@@ -105,7 +105,7 @@ class Volmanager(explorerbase.ExplorerBase):
             if line.startswith("Personalities"):
                 continue
             if buff and not line:
-                self.analyseLinux_mdstat_chunk(buff)
+                self.analyse_linux_mdstat_chunk(buff)
                 buff = []
                 continue
             buff.append(line.strip())
@@ -142,7 +142,7 @@ class Volmanager(explorerbase.ExplorerBase):
         numdbs = 0
         devs = {}
         for metadb in self["metadb"]["copies"]:
-            if set(self[metadb]["flags"]).intersection(string.uppercase):
+            if set(self[metadb]["flags"]).intersection(string.ascii_uppercase):
                 self.addIssue(
                     "failed metadb",
                     obj=list(self[metadb]["contains"])[0],
@@ -187,16 +187,16 @@ class Volmanager(explorerbase.ExplorerBase):
     def analyse(self):
         """ TODO """
         self.analyse_metadb()
-        self.analyseLinux_mdstat()
+        self.analyse_linux_mdstat()
         for md in self.meta_list():
             if md not in self:
-                self.Warning(f"md {md} doesn't exist in data but in meta_list")
+                self.warning(f"md {md} doesn't exist in data but in meta_list")
                 continue
             self[md].analyse()
             self.inheritIssues(self[md])
 
     ##########################################################################
-    def analyseLinux_mdstat_chunk(self, buff):
+    def analyse_linux_mdstat_chunk(self, buff):
         """ TODO """
         for line in buff:
             if line.startswith("md"):
@@ -261,7 +261,7 @@ class storageVolmanager(explorerbase.ExplorerBase):
 
         ans = ""
         if dev not in self:
-            self.Warning("getDevDesc: dev %s not found in data" % dev)
+            self.warning("getDevDesc: dev %s not found in data" % dev)
             return
         if "type" not in self[dev]:
             return ans
@@ -280,7 +280,7 @@ class storageVolmanager(explorerbase.ExplorerBase):
         elif self[dev]["type"] == "metadb":
             ans = "MetaDB"
         else:
-            self.Warning("Unhandled devDesc() type=%s" % self[dev]["type"])
+            self.warning("Unhandled devDesc() type=%s" % self[dev]["type"])
         return ans
 
     ##########################################################################
@@ -298,7 +298,7 @@ class storageVolmanager(explorerbase.ExplorerBase):
                 devcounts[dev] = devcounts.get(dev, 0) + 1
         for dev, count in devcounts.items():
             if dev not in data:
-                self.Warning("Device %s has a metadb on it but doesn't exist" % dev)
+                self.warning("Device %s has a metadb on it but doesn't exist" % dev)
                 continue
             data[dev]["use"].add("metadb")
             data[dev]["name"] = "MetaDB (%d copies)" % count
@@ -313,7 +313,7 @@ class storageVolmanager(explorerbase.ExplorerBase):
                 if disk in data:
                     data[disk]["did"] = did
                 else:
-                    self.Warning("DID %s disk %s doesn't exist" % (did, disk))
+                    self.warning("DID %s disk %s doesn't exist" % (did, disk))
 
     ##########################################################################
     def cross_populate(self, data):
@@ -334,7 +334,7 @@ class storageVolmanager(explorerbase.ExplorerBase):
                 if baseslice in data:
                     data[baseslice]["partof"].add(k)
                     continue
-                self.Warning("Unmatched md location %s" % slice)
+                self.warning("Unmatched md location %s" % slice)
                 data[slice] = storage.Storage.initialDict(
                     {
                         "_type": "missing",
@@ -352,7 +352,7 @@ class storageVolmanager(explorerbase.ExplorerBase):
                 except KeyError:
                     continue  # TODO
                     self.prettyPrint(fd=sys.stderr)
-                    self.Fatal("k=%s %s" % (k, data[k]))
+                    self.fatal("k=%s %s" % (k, data[k]))
                 if device in self:
                     data[device]["use"].add(k)
                     continue
@@ -405,11 +405,11 @@ class storageVolmanager(explorerbase.ExplorerBase):
                             disk = data[dev]["disk"]
                             data[disk]["diskset"] = obj["diskset"]
                         else:
-                            self.Warning(
+                            self.warning(
                                 "Device %s has no disk associated with it" % dev
                             )
                     else:
-                        self.Warning(
+                        self.warning(
                             "Diskset %s %s lives on unknown disk %s"
                             % (obj["diskset"], obj["_type"], dev)
                         )
@@ -537,7 +537,7 @@ class storageVolmanager(explorerbase.ExplorerBase):
                     self[metadev]["protected"] = "RAID"
                     self[metadev]["type"] = "raid"
                 else:
-                    self.Fatal("Unhandled raidlev: %s" % raidlev)
+                    self.fatal("Unhandled raidlev: %s" % raidlev)
 
                 for devbit in bits[4:]:
                     dev = devbit[: devbit.find("[")]
@@ -636,7 +636,7 @@ class storageVolmanager(explorerbase.ExplorerBase):
                     # self[lv]['type']='softpar'
                     pass
                 else:
-                    self.Fatal("Unhandled LVM type %s" % attrs)
+                    self.fatal("Unhandled LVM type %s" % attrs)
             self[lvlabel]["contains"].add(vglabel)
             self[lvlabel]["aliases"] = set(["%s-%s" % (vg, lv)])
             if vglabel not in self:
@@ -670,7 +670,7 @@ class storageVolmanager(explorerbase.ExplorerBase):
             self.parseAllMetaDb()
             for metadev in self.meta_list():
                 if metadev not in self:
-                    self.Warning(
+                    self.warning(
                         "Couldn't find metadev %s even though it is in meta_list"
                         % metadev
                     )
@@ -698,7 +698,7 @@ class storageVolmanager(explorerbase.ExplorerBase):
             try:
                 self.parse_metadb(filename)
             except Exception as exc:
-                self.Warning(
+                self.warning(
                     "Failure on parse_metadb(filename=%s) %s" % (filename, str(exc))
                 )
                 raise
@@ -726,7 +726,7 @@ class storageVolmanager(explorerbase.ExplorerBase):
         it just ends up infinitely recursing - bail out and admit failure
         """
         if not self.create_lock(filename):
-            self.Warning("Can't process %s - already locked" % filename)
+            self.warning("Can't process %s - already locked" % filename)
             return
 
         proxyhost = None
@@ -741,11 +741,11 @@ class storageVolmanager(explorerbase.ExplorerBase):
         # Now get the details from the proxyhost
         foreign = storage.Storage(proxyhost)
         if "diskset_copies" not in foreign["metadb"]:
-            self.Warning("No diskset_copies found on %s" % proxyhost)
+            self.warning("No diskset_copies found on %s" % proxyhost)
         else:
             for metadb in foreign["metadb"]["diskset_copies"]:
                 if "did_dev" not in foreign[metadb]:
-                    self.Warning(
+                    self.warning(
                         "Couldn't find the did_dev in foreign metadb %s from host %s"
                         % (metadb, proxyhost)
                     )
@@ -876,7 +876,7 @@ class storageVolmanager(explorerbase.ExplorerBase):
             pid = infh.readline().strip()
             infh.close()
             if int(pid) != os.getpid():
-                self.Warning(
+                self.warning(
                     "Releasing stale lock from pid %s (Out PID=%d)" % (pid, os.getpid())
                 )
                 self.release_lock(filename)
@@ -904,7 +904,7 @@ class storageVolmanager(explorerbase.ExplorerBase):
         """
 
         if not self.create_lock(filename):
-            self.Warning(f"Can't process {filename} - already locked")
+            self.warning(f"Can't process {filename} - already locked")
             return
 
         proxyhost = None
@@ -924,7 +924,7 @@ class storageVolmanager(explorerbase.ExplorerBase):
                 diddisk = did[:-2]
                 didslice = did[-2:]
                 if diddisk not in foreign["_proxy_didmap"]:
-                    self.Warning(f"Couldn't find {diddisk} in {proxyhost}' didmap")
+                    self.warning(f"Couldn't find {diddisk} in {proxyhost}' didmap")
                     continue
                 localdevs = foreign["_proxy_didmap"][diddisk]
                 for ld in localdevs:
@@ -987,8 +987,8 @@ class storageVolmanager(explorerbase.ExplorerBase):
             elif oper[0] in string.digits:  # Concat/Stripe
                 self.parse_concat(metadev, bits[1:], diskset)
             else:
-                self.Warning(f"Unhandled metadev type {oper}")
-                self.Warning(f"Line={line}")
+                self.warning(f"Unhandled metadev type {oper}")
+                self.warning(f"Line={line}")
         infh.close()
 
     ##########################################################################
@@ -1026,7 +1026,7 @@ class storageVolmanager(explorerbase.ExplorerBase):
         """Match subs etc with masters"""
         for md in self.meta_list():
             if md not in self:
-                self.Warning("md=%s in meta_list but not found in data" % md)
+                self.warning("md=%s in meta_list but not found in data" % md)
                 continue
             if md == "metadb":
                 continue
@@ -1138,7 +1138,7 @@ class storageVolmanager(explorerbase.ExplorerBase):
             elif bit.startswith("c"):
                 metadev["contains"].add(bit)
             else:
-                self.Fatal(f"Unknown raid line: {bit}")
+                self.fatal(f"Unknown raid line: {bit}")
 
 
 # EOF

@@ -46,7 +46,7 @@ class Host(explorerbase.ExplorerBase):
             if self.exists("etc/redhat-release"):
                 f = self.open("etc/redhat-release")
             else:
-                self.Warning("No release details available")
+                self.warning("No release details available")
                 return
         data = f.readline()
         f.close()
@@ -63,7 +63,7 @@ class Host(explorerbase.ExplorerBase):
             f.close()
             self["reboot"] = " ".join(data.split()[3:])
         except UserWarning as err:
-            self.Warning(err)
+            self.warning(err)
 
     ##########################################################################
     def analyse(self):
@@ -86,7 +86,7 @@ class Host(explorerbase.ExplorerBase):
                     self["uptime"] = m.group("uptime")
             f.close()
         except UserWarning as err:
-            self.Warning(err)
+            self.warning(err)
 
     ##########################################################################
     def parseSolaris_sysdef(self):
@@ -104,7 +104,7 @@ class Host(explorerbase.ExplorerBase):
                     mode = ""
             f.close()
         except UserWarning as err:
-            self.Warning(err)
+            self.warning(err)
 
     ##########################################################################
     def shortHwdesc(self, fulldesc):
@@ -197,7 +197,7 @@ class Host(explorerbase.ExplorerBase):
                 self.parseUnameHW()
             self.checkForLdom()
         except UserWarning as err:
-            self.Warning("%s" % err)
+            self.warning("%s" % err)
 
     ##########################################################################
     def checkForLdom(self):
@@ -367,7 +367,7 @@ class Host(explorerbase.ExplorerBase):
                         self["ram"] = int(line.split()[1]) / 1024
                 f.close()
         except UserWarning as err:
-            self.Warning(err)
+            self.warning(err)
             self["ram"] = 0
 
     ##########################################################################
@@ -401,12 +401,12 @@ class Host(explorerbase.ExplorerBase):
                 self["kernelpatch"] = bits[3]
                 self["arch"] = bits[4]
             else:
-                self.Warning("No solaris uname output to analyse")
+                self.warning("No solaris uname output to analyse")
                 return
 
         elif self.config["explorertype"] == "linux":
             if not self.exists("uname"):
-                self.Warning("No linux uname output to analyse")
+                self.warning("No linux uname output to analyse")
                 return
             f = self.open("uname")
             for line in f:
@@ -432,7 +432,7 @@ class Host(explorerbase.ExplorerBase):
         try:
             hwtype, hwname = hardware.getHardware(hwdesc)
         except hardware.UnknownHardware:
-            self.Warning("Unknown hardware: %s" % hwdesc)
+            self.warning("Unknown hardware: %s" % hwdesc)
             hwtype = "unknown"
             hwname = "unknown"
         return hwtype, hwname

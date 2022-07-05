@@ -65,7 +65,9 @@ class storageSwap(explorerbase.ExplorerBase):
     """Understand explorer output with respect to swap"""
 
     ##########################################################################
-    def __init__(self, config, data={}):
+    def __init__(self, config, data=None):
+        if data is None:
+            data = {}
         explorerbase.ExplorerBase.__init__(self, config)
         self.data = data
         self.swapnum = 0
@@ -81,7 +83,7 @@ class storageSwap(explorerbase.ExplorerBase):
     ##########################################################################
     def add_linux_swap(self, device, origin=None):
         """ TODO """
-        name = "swap_%d" % self.swapnum
+        name = f"swap_{self.swapnum}"
         self.swapnum += 1
         self[name] = storage.Storage.initialDict(
             {"_type": "swap", "use": set(["_swap"]), "partof": set(["_swap"])}
@@ -116,7 +118,7 @@ class storageSwap(explorerbase.ExplorerBase):
             if line.startswith("swapfile"):
                 continue
             if line.startswith("/dev/"):
-                name = "swap_{self.swapnum}"
+                name = f"swap_{self.swapnum}"
                 self.swapnum += 1
                 bits = line.split()
                 self["swap_devices"].add(name)
@@ -153,7 +155,7 @@ class storageSwap(explorerbase.ExplorerBase):
             if self.config["explorertype"] == "solaris":
                 self.parse_solaris_swap()
             elif self.config["explorertype"] == "linux":
-                self.parseLinux_fdisk(self.parse_linux_fdisk_chunk)
+                self.parse_linux_fdisk(self.parse_linux_fdisk_chunk)
                 if not self["swap_devices"]:
                     self.parse_linux_fstab()
         except UserWarning as err:

@@ -115,9 +115,9 @@ class storageEmc(explorerbase.ExplorerBase):
             if self.config["explorertype"] == "solaris":
                 self.parse_Solaris()
             elif self.config["explorertype"] == "linux":
-                self.parse_Linux()
+                self.parse_linux()
         except UserWarning as err:
-            self.Warning(err)
+            self.warning(err)
         self.protectionCheck()
 
     ##########################################################################
@@ -144,13 +144,13 @@ class storageEmc(explorerbase.ExplorerBase):
                 data[disk]["unused"] = False
 
     ##########################################################################
-    def parse_Linux(self):
+    def parse_linux(self):
         """TODO"""
-        self.parse_Linux_partitions()
-        self.parseLinux_fdisk(self.parse_Linux_fdisk_chunk)
+        self.parse_linux_partitions()
+        self.parse_linux_fdisk(self.parse_linux_fdisk_chunk)
 
     ##########################################################################
-    def parse_Linux_partitions(self):
+    def parse_linux_partitions(self):
         """TODO"""
         filename = "proc/partitions"
         f = self.open(filename)
@@ -164,7 +164,7 @@ class storageEmc(explorerbase.ExplorerBase):
         f.close()
 
     ##########################################################################
-    def parse_Linux_fdisk_chunk(self, lines):
+    def parse_linux_fdisk_chunk(self, lines):
         """TODO"""
         pass
 
@@ -302,7 +302,7 @@ class storageEmc(explorerbase.ExplorerBase):
 
             if line[0].isdigit():
                 if not emcpower:
-                    self.Warning("No emcpower device discovered for %s" % line)
+                    self.warning("No emcpower device discovered for %s" % line)
                     continue
                 try:
                     dpath = line.split()[2][:-2]  # Strip off slice number

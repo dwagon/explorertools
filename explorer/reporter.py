@@ -89,8 +89,8 @@ def verbose(msg, outfd=sys.stderr):
 ##########################################################################
 def fatal(msg, outfd=sys.stderr):
     """TODO"""
-    outfd.write(f"Fatal: {msg}\n")
-    tmpfile.write(f"Fatal: {sys.argv[0]} {msg}\n")
+    outfd.write(f"fatal: {msg}\n")
+    tmpfile.write(f"fatal: {sys.argv[0]} {msg}\n")
     outfd.close()
     sys.exit(255)
 

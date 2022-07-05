@@ -151,21 +151,19 @@ class Disk(explorerbase.ExplorerBase):
                 self.addIssue(
                     "harderrors",
                     obj=self.name(),
-                    text="Disk %s has %s hard errors"
-                    % (self.name(), self["harderrors"]),
+                    text=f"Disk {self.name()} has {self['harderrors']} hard errors"
                 )
             elif int(self["harderrors"]) > 5:
                 self.addConcern(
                     "harderrors",
                     obj=self.name(),
-                    text="Disk %s has %s hard errors"
-                    % (self.name(), self["harderrors"]),
+                    text=f"Disk {self.name()} has {self['harderrors']} hard errors"
                 )
 
         # Check for cowboy usage of slice 2
         if self.config["explorertype"] == "solaris":
-            s2 = f"{self.name()}s2"
-            if s2 not in self:
+            sl2 = f"{self.name()}s2"
+            if sl2 not in self:
                 if "nobackupslice" in self and self["nobackupslice"]:
                     pass
                 elif self["use"]:
@@ -184,13 +182,13 @@ class Disk(explorerbase.ExplorerBase):
 
             # The only time this isn't true is when the disk/slice is used by
             # vxvm but not in format/prtvtoc
-            if s2 in self and "first_sector" in self[s2]:
-                if self[s2]["first_sector"] != 0:
+            if sl2 in self and "first_sector" in self[sl2]:
+                if self[sl2]["first_sector"] != 0:
                     self.addConcern(
                         "backupslice",
                         obj=self.name(),
                         text="%s is malformed for a backup slice (%s-%s not whole disk)"
-                        % (s2, self[s2]["first_sector"], self[s2]["last_sector"]),
+                        % (sl2, self[sl2]["first_sector"], self[sl2]["last_sector"]),
                     )
 
         if self.unused_disk():
@@ -199,14 +197,13 @@ class Disk(explorerbase.ExplorerBase):
                 self.addConcern(
                     "unuseddisk",
                     obj=self.name(),
-                    text="Disk %s (%s) appears not to be used"
-                    % (self.name(), self["nickname"]),
+                    text=f"Disk {self.name()} ({self['nickname']}) appears not to be used"
                 )
             else:
                 self.addConcern(
                     "unuseddisk",
                     obj=self.name(),
-                    text="Disk %s appears not to be used" % self.name(),
+                    text=f"Disk {self.name()} appears not to be used"
                 )
 
         for slic in self.slice_list():
@@ -221,11 +218,11 @@ class Disks(explorerbase.ExplorerBase):
 
     def __init__(self, config):
         explorerbase.ExplorerBase.__init__(self, config)
-        self.st = storage.Storage(config)
-        for disk in self.st.diskList():
-            self[disk] = Disk(config, disk, self.st[disk], self.st)
+        self.strg = storage.Storage(config)
+        for disk in self.strg.diskList():
+            self[disk] = Disk(config, disk, self.strg[disk], self.strg)
             for slic in self[disk]["slices"]:
-                self[disk][slic] = Slice(config, slic, self.st[slic], self.st)
+                self[disk][slic] = Slice(config, slic, self.strg[slic], self.strg)
         self.analyse()
 
     ##########################################################################
@@ -1097,11 +1094,10 @@ class storageDisks(explorerbase.ExplorerBase):
                 self[disk]["accessible cylinders"] = int(matchobj.group("cylinders"))
                 continue
 
-            matchobj = re.search(
+            if matchobj := re.search(
                 r"Units = cylinders of (?P<facta>\d+) \* (?P<factb>\d+) = (?P<cylinder_size>\d+) bytes",
                 line,
-            )
-            if matchobj:
+            ):
                 self[disk]["cylinder_size"] = int(matchobj.group("cylinder_size"))
                 continue
 
@@ -1409,7 +1405,7 @@ class storageDisks(explorerbase.ExplorerBase):
         str = ""
         debugstr = ""
         if "emcpowerpath" in data[slic]:
-            str += "EMC PowerPath %s" % data[slic]["emcpowerpath"]
+            str += f"EMC PowerPath {data[slic]['emcpowerpath']}"
         metadbcount = 0
         softparcount = 0
         for lev, partof in tmp:
@@ -1468,8 +1464,6 @@ class storageDisks(explorerbase.ExplorerBase):
             str = str[:-4]
         debugstr += "%s" % tmp
         return str
-        # return "%s <font color=blue>[%s]</font>" % (str, debugstr)     #
-        # Debugging
 
     ##########################################################################
     def diskDescriber(self, disk, data):

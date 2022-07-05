@@ -47,7 +47,7 @@ class Driver(explorerbase.ExplorerBase):
                 return matchobj.group("name")
         if "driver name" in line:
             return None
-        self.Warning(f"No match for name: {line}")
+        self.warning(f"No match for name: {line}")
         return None
 
     ##########################################################################
@@ -62,7 +62,7 @@ class Driver(explorerbase.ExplorerBase):
             matchobj = re.search(reg, line)
             if matchobj:
                 return matchobj.group("value")
-        self.Warning(f"No match for value:{line}")
+        self.warning(f"No match for value:{line}")
         return None
 
     ##########################################################################

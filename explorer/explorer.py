@@ -165,7 +165,7 @@ class Explorer:
             (self.data, self.issues, self.parts) = blob
             f.close()
         except Exception as err:
-            self.Warning("load_pickle() Failed %s" % (str(err)))
+            self.warning("load_pickle() Failed %s" % (str(err)))
             return False
         return True
 
@@ -201,7 +201,7 @@ class Explorer:
             self.collectiondate = matchobj.group("date")
             self.collectiontime = matchobj.group("time")
         else:
-            self.Warning("Couldn't get date from %s" % self.hostpath)
+            self.warning("Couldn't get date from %s" % self.hostpath)
             return None, None
         return self.collectiondate, self.collectiontime
 
@@ -245,7 +245,7 @@ def read_config(cfg=None):
         else:
             cfg = "/usr/local/etc/explorertools.cfg"
     if not os.path.exists(cfg):
-        Fatal(f"Couldn't read config file: {cfg}")
+        fatal(f"Couldn't read config file: {cfg}")
     config = configparser.ConfigParser(defaults)
     config.read(cfg)
     options["configfile"] = os.path.realpath(cfg)
@@ -266,9 +266,9 @@ def read_config(cfg=None):
 
 
 ############################################################################
-def Fatal(msg):
+def fatal(msg):
     """TODO"""
-    reporter.Fatal(msg)
+    reporter.fatal(msg)
 
 
 ############################################################################

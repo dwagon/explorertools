@@ -1,3 +1,45 @@
 vdc0      Soft Errors: 0 Transport Errors: 0 Protocol Errors: 0 
-Vendor: SUN Product: VDSK Size: 107.37GB <107374182400 bytes>
+Vendor: SUN Product: VDSK Size: 268.44GB <268435456000 bytes>
+
+vdc1      Soft Errors: 0 Transport Errors: 0 Protocol Errors: 0 
+Vendor: SUN Product: VDSK Size: 126.70GB <126701535232 bytes>
+
+vdc2      Soft Errors: 0 Transport Errors: 0 Protocol Errors: 0 
+Vendor: SUN Product: VDSK Size: 179.31GB <179314884608 bytes>
+
+vdc3      Soft Errors: 0 Transport Errors: 0 Protocol Errors: 0 
+Vendor: SUN Product: VDSK Size: 126.70GB <126701535232 bytes>
+
+vdc4      Soft Errors: 0 Transport Errors: 0 Protocol Errors: 0 
+Vendor: SUN Product: VDSK Size: 813.90GB <813896302592 bytes>
+
+vdc5      Soft Errors: 0 Transport Errors: 0 Protocol Errors: 0 
+Vendor: SUN Product: VDSK Size: 64.42GB <64424509440 bytes>
+
+vdc6      Soft Errors: 0 Transport Errors: 0 Protocol Errors: 0 
+Vendor: SUN Product: VDSK Size: 435.94GB <435939180544 bytes>
+
+vdc7      Soft Errors: 0 Transport Errors: 0 Protocol Errors: 0 
+Vendor: SUN Product: VDSK Size: 21.47GB <21474836480 bytes>
+
+vdc8      Soft Errors: 0 Transport Errors: 0 Protocol Errors: 0 
+Vendor: SUN Product: VDSK Size: 972.81GB <972810092544 bytes>
+
+vdc9      Soft Errors: 0 Transport Errors: 0 Protocol Errors: 0 
+Vendor: SUN Product: VDSK Size: 64.42GB <64424509440 bytes>
+
+vdc11     Soft Errors: 0 Transport Errors: 0 Protocol Errors: 0 
+Vendor: SUN Product: VDSK Size: 825.71GB <825707462656 bytes>
+
+vdc12     Soft Errors: 0 Transport Errors: 0 Protocol Errors: 0 
+Vendor: SUN Product: VDSK Size: 161.06GB <161061273600 bytes>
+
+vdc13     Soft Errors: 0 Transport Errors: 0 Protocol Errors: 0 
+Vendor: SUN Product: VDSK Size: 2.15GB <2147483648 bytes>
+
+vdc14     Soft Errors: 0 Transport Errors: 0 Protocol Errors: 0 
+Vendor: SUN Product: VDSK Size: 53.69GB <53687091200 bytes>
+
+vdc15     Soft Errors: 0 Transport Errors: 0 Protocol Errors: 0 
+Vendor: SUN Product: VDSK Size: 126.70GB <126701535232 bytes>
 

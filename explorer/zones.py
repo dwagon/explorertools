@@ -24,7 +24,7 @@ class Zone(explorerbase.ExplorerBase):
             self.parse_zone_sysconfig()
             self.parse_ifconfig()
         except UserWarning as err:
-            self.Warning(err)
+            self.warning(err)
 
     ##########################################################################
     def parse_ifconfig(self):
@@ -41,7 +41,7 @@ class Zone(explorerbase.ExplorerBase):
                     if "127.0.0.1" != matchobj.group("ipaddr"):
                         self["ipaddrs"].append(matchobj.group("ipaddr"))
                 else:
-                    self.Warning(f"No match: {line}")
+                    self.warning(f"No match: {line}")
         infh.close()
 
     ##########################################################################
@@ -92,7 +92,7 @@ class Zones(explorerbase.ExplorerBase):
         try:
             self.parse_zones()
         except UserWarning as err:
-            self.Warning(err)
+            self.warning(err)
             return
 
     ##########################################################################

@@ -1,7 +1,7 @@
-#!/usr/bin/python
-
+"""
 # Script to provide an aggregated interface to all sorts of storage
 # handled by explorers
+"""
 # This is so that scripts that need to know about host storage don't
 # need to code for all the variations, and new types can be added here
 # rather than in a number of other scripts.
@@ -20,8 +20,6 @@ from explorer import volmanager
 from explorer import vxvm
 from explorer import cluster
 from explorer import prtconf
-
-verbFlag = False
 
 # There are a number of data tags that have more complex meanings or
 # more important uses
@@ -47,17 +45,19 @@ class Storage(explorerbase.ExplorerBase):
 
     ##########################################################################
     def parse(self):
+        """ TODO """
         self.initial_parse()
         self.clusterCheck()
-        self.bootAliases()
+        self.boot_aliases()
         self.cross_populate()
 
     ##########################################################################
     def fsList(self):
+        """ TODO """
         return self.genericList("filesystem")
 
     ##########################################################################
-    def bootAliases(self):
+    def boot_aliases(self):
         """PROM devaliases"""
         # 'disk1': '/pci@1c,600000/scsi@2/disk@1,0'
         # Also need to check
@@ -78,39 +78,41 @@ class Storage(explorerbase.ExplorerBase):
     ##########################################################################
     def initial_parse(self):
         """Parse the raw sources of data"""
-        d = disks.storageDisks(self.config, {})
-        self.data.update(d.data)
-        self.cache["disks"] = d
+        strg_disk = disks.storageDisks(self.config, {})
+        self.data.update(strg_disk.data)
+        self.cache["disks"] = strg_disk
 
-        f = filesys.storageFilesystems(self.config, self.data)
-        self.data.update(f.data)
-        self.cache["filesys"] = f
+        strg_fs = filesys.storageFilesystems(self.config, self.data)
+        self.data.update(strg_fs.data)
+        self.cache["filesys"] = strg_fs
 
-        z = zfs.storageZfs(self.config, self.data)
-        self.data.update(z.data)
-        self.cache["zfs"] = z
+        strg_zfs = zfs.storageZfs(self.config, self.data)
+        self.data.update(strg_zfs.data)
+        self.cache["zfs"] = strg_zfs
 
-        s = swap.storageSwap(self.config, self.data)
-        self.data.update(s.data)
-        self.cache["swap"] = s
+        strg_swap = swap.storageSwap(self.config, self.data)
+        self.data.update(strg_swap.data)
+        self.cache["swap"] = strg_swap
 
-        ds = volmanager.storageVolmanager(self.config, self.data)
-        self.data.update(ds.data)
-        self.cache["volmanager"] = ds
+        strg_volmg = volmanager.storageVolmanager(self.config, self.data)
+        self.data.update(strg_volmg.data)
+        self.cache["volmanager"] = strg_volmg
 
-        v = vxvm.storageVxvm(self.config, self.data)
-        self.data.update(v.data)
-        self.cache["vxvm"] = v
+        strg_vxvm = vxvm.storageVxvm(self.config, self.data)
+        self.data.update(strg_vxvm.data)
+        self.cache["vxvm"] = strg_vxvm
 
-        e = emc.storageEmc(self.config, self.data)
-        self.data.update(e.data)
-        self.cache["emc"] = e
+        strg_emc = emc.storageEmc(self.config, self.data)
+        self.data.update(strg_emc.data)
+        self.cache["emc"] = strg_emc
 
     ##########################################################################
     @classmethod
-    def initialDict(class_=None, d={}):
+    def initialDict(class_=None, indict=None):
         """Setup an initial dictionary for most things"""
-        id = {
+        if indict is None:
+            indict = {}
+        initdict = {
             "_type": "unset",
             "use": set(),
             "protected": False,
@@ -118,8 +120,8 @@ class Storage(explorerbase.ExplorerBase):
             "partof": set(),
             "contains": set(),
         }
-        id.update(d)
-        return id
+        initdict.update(indict)
+        return initdict
 
     ##########################################################################
     def clusterCheck(self):
@@ -132,7 +134,7 @@ class Storage(explorerbase.ExplorerBase):
             slice = quorumdev[-2:]
             dev = quorumdev[:-2]
             if dev not in self["_didmap"]:
-                self.warning("Couldn't find quorum disk %s did details" % dev)
+                self.warning(f"Couldn't find quorum disk {dev} did details")
                 return
             for d in self["_didmap"][dev]:
                 qslice = "%s%s" % (d, slice)
@@ -143,6 +145,7 @@ class Storage(explorerbase.ExplorerBase):
 
     ##########################################################################
     def genericList(self, types):
+        """ TODO """
         ans = []
         if not isinstance(types, list):
             types = [types]
@@ -221,6 +224,7 @@ class Storage(explorerbase.ExplorerBase):
 
     ##########################################################################
     def upRelations(self, objname, val):
+        """ TODO """
         count = 0
         # self.debug("upRelations(objname=%s, val=%s)" % (objname, val))
         for parent in list(self[objname]["partof"]):
@@ -244,7 +248,7 @@ class Storage(explorerbase.ExplorerBase):
                 for k in self.keys():
                     print("%s\t%s" % (k, self[k]))
                 print("#" * 80)
-                self.Fatal(
+                self.fatal(
                     "upRelations: objname=%s val=%s %s - %s"
                     % (objname, val, self[objname], str(err))
                 )
@@ -252,6 +256,7 @@ class Storage(explorerbase.ExplorerBase):
 
     ##########################################################################
     def downRelations(self, objname, val):
+        """ TODO """
         count = 0
         # self.debug("downRelations(objname=%s, val=%s)" % (objname, val))
         for kid in self[objname]["contains"]:
@@ -284,7 +289,7 @@ class Storage(explorerbase.ExplorerBase):
                 for k in self.keys():
                     print("%s\t%s" % (k, self[k]))
                 print("#" * 80)
-                self.Fatal(
+                self.fatal(
                     "downRelations: objname=%s val=%s %s - %s"
                     % (objname, val, self[objname], str(err))
                 )
@@ -387,6 +392,7 @@ class Storage(explorerbase.ExplorerBase):
 
     ##########################################################################
     def allDescriber(self):
+        """ TODO """
         # Work out a description for each object
         for obj in self.keys():
             if "_type" not in self[obj]:
@@ -425,6 +431,7 @@ class Storage(explorerbase.ExplorerBase):
 
     ##########################################################################
     def poolList(self):
+        """ TODO """
         return self.genericList("zfs_pool")
 
     ##########################################################################
@@ -445,6 +452,7 @@ class Storage(explorerbase.ExplorerBase):
     @classmethod
     ##########################################################################
     def pluralDescription(class_, val, objlist):
+        """ TODO """
         # Work out a count of the obj to see if it should be plural
         olist = []
         count = 0
@@ -460,11 +468,11 @@ class Storage(explorerbase.ExplorerBase):
 
     ##########################################################################
     def get(self, o, key):
+        """ TODO """
         if not o:
             return ""
         if key in self[o]:
             return self[o][key]
         return ""
-
 
 # EOF

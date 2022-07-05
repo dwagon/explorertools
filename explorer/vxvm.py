@@ -155,10 +155,10 @@ class storageVxvm(explorerbase.ExplorerBase):
             hostid, dev, group = self.check_foreigndisk(disk)
             if hostid and hostid != self.hostname:
                 if dev not in data:
-                    self.Warning(f"VXVM referring to an unknown disk {dev}")
+                    self.warning(f"VXVM referring to an unknown disk {dev}")
                     continue
                 if "disk" not in self[dev]:
-                    self.Warning(f"VXVM referring to something unusual for disk {dev}")
+                    self.warning(f"VXVM referring to something unusual for disk {dev}")
                     continue
                 disk = data[dev]["disk"]
                 data[disk]["use"] = set([f"VXVM diskgroup {group} on server {hostid}"])
@@ -180,7 +180,7 @@ class storageVxvm(explorerbase.ExplorerBase):
                 if matchobj:
                     group = matchobj.group("name")
                 else:
-                    self.Fatal(f"Couldn't match line {line}")
+                    self.fatal(f"Couldn't match line {line}")
         infh.close()
         return hostid, dev, group
 
@@ -319,7 +319,7 @@ class storageVxvm(explorerbase.ExplorerBase):
         for diskgroup in self.diskgroups_list():
             for dev in self[diskgroup]["devices"]:
                 if dev not in data:
-                    self.Warning("VXVM referring to unknown disk: %s" % dev)
+                    self.warning("VXVM referring to unknown disk: %s" % dev)
                     self[dev] = storage.Storage.initialDict(
                         {
                             "_type": "missing",
@@ -361,7 +361,7 @@ class storageVxvm(explorerbase.ExplorerBase):
                             "description": "Unimported VXVM diskgroup %s" % diskgroup,
                         }
                     )
-                    self.Warning("Unimported diskgroup %s" % diskgroup)
+                    self.warning("Unimported diskgroup %s" % diskgroup)
 
             if ctdnameFlag:
                 status = " ".join(bits[4:-1])
@@ -370,11 +370,11 @@ class storageVxvm(explorerbase.ExplorerBase):
                 status = " ".join(bits[4:])
 
             if diskgroup not in self and diskgroup != "-":
-                self.Warning("Previously unknown diskgroup %s" % diskgroup)
+                self.warning("Previously unknown diskgroup %s" % diskgroup)
             if diskgroup != "-":
                 self[diskgroup]["contains"].add(device)
             if device not in self:
-                self.Warning("VXVM refering to an unknown disk %s" % device)
+                self.warning("VXVM refering to an unknown disk %s" % device)
                 self[device] = storage.Storage.initialDict(
                     {
                         "_type": "missing",
