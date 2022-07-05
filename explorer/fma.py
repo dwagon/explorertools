@@ -6,7 +6,7 @@ Script to understand fma output for explorer analysis
 # $Id: fma.py 2393 2012-06-01 06:38:17Z dougals $
 # $HeadURL: http://svn/ops/unix/explorer/trunk/explorer/fma.py $
 
-import explorerbase
+import explorer.explorerbase
 
 ##########################################################################
 # Fma ####################################################################

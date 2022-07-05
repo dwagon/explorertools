@@ -17,26 +17,26 @@ import sys
 import time
 import pickle
 
-import cluster
-import disks
-import emc
-import filesys
-import fma
-import hostdet
-import misc
-import nic
-import processor
-import prtconf
-import prtdiag
-import reporter
-import se3k
-import svcs
-import swap
-import tapes
-import volmanager
-import vxvm
-import zfs
-import zones
+from explorer import cluster
+from explorer import disks
+from explorer import emc
+from explorer import filesys
+from explorer import fma
+from explorer import hostdet
+from explorer import misc
+from explorer import nic
+from explorer import processor
+from explorer import prtconf
+from explorer import prtdiag
+from explorer import reporter
+from explorer import se3k
+from explorer import svcs
+from explorer import swap
+from explorer import tapes
+from explorer import volmanager
+from explorer import vxvm
+from explorer import zfs
+from explorer import zones
 
 
 OPTIONS = {"verbFlag": False, "debugFlag": False}
@@ -108,7 +108,7 @@ class Explorer:
                 if "." in host:
                     host = host[: host.find(".")]
                 return host
-        self.Fatal(f"Couldn't match {hostpath} against explorers")
+        self.fatal(f"Couldn't match {hostpath} against explorers")
         return ""
 
     ##########################################################################
@@ -170,14 +170,14 @@ class Explorer:
         return True
 
     ##########################################################################
-    def Warning(self, msg):
+    def warning(self, msg):
         """TODO"""
-        reporter.Warning(msg)
+        reporter.warning(msg)
 
     ##########################################################################
-    def Fatal(self, msg):
+    def fatal(self, msg):
         """TODO"""
-        reporter.Fatal(msg)
+        reporter.fatal(msg)
 
     ##########################################################################
     def calc_parts(self):

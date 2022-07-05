@@ -1,0 +1,16 @@
+rpool/ROOT/May2021 on / type zfs read/write/setuid/devices/rstchown/dev=4010002 on Thu Jan  1 10:00:00 1970
+/devices on /devices type devfs read/write/setuid/devices/rstchown/dev=6240000 on Thu May 12 08:39:35 2022
+ctfs on /system/contract type ctfs read/write/setuid/devices/rstchown/dev=62c0001 on Thu May 12 08:39:35 2022
+proc on /proc type proc read/write/setuid/devices/rstchown/dev=6280000 on Thu May 12 08:39:35 2022
+mnttab on /etc/mnttab type mntfs read/write/setuid/devices/rstchown/dev=6300001 on Thu May 12 08:39:35 2022
+swap on /etc/svc/volatile type tmpfs read/write/setuid/devices/rstchown/xattr/dev=6340001 on Thu May 12 08:39:35 2022
+objfs on /system/object type objfs read/write/setuid/devices/rstchown/dev=6380001 on Thu May 12 08:39:35 2022
+sharefs on /etc/dfs/sharetab type sharefs read/write/setuid/devices/rstchown/dev=63c0001 on Thu May 12 08:39:35 2022
+/platform/sun4v/lib/libc_psr/libc_psr_hwcap3.so.1 on /platform/sun4v/lib/libc_psr.so.1 type lofs read/write/setuid/devices/rstchown/dev=4010002 on Thu May 12 08:39:36 2022
+/platform/sun4v/lib/sparcv9/libc_psr/libc_psr_hwcap3.so.1 on /platform/sun4v/lib/sparcv9/libc_psr.so.1 type lofs read/write/setuid/devices/rstchown/dev=4010002 on Thu May 12 08:39:36 2022
+fd on /dev/fd type fd read/write/setuid/devices/rstchown/dev=6540001 on Thu May 12 08:39:38 2022
+rpool/ROOT/May2021/var on /var type zfs read/write/setuid/devices/rstchown/nonbmand/exec/xattr/atime/dev=4010003 on Thu May 12 08:39:39 2022
+swap on /tmp type tmpfs read/write/setuid/devices/rstchown/xattr/size=1024m/dev=6340002 on Thu May 12 08:39:39 2022
+swap on /var/run type tmpfs read/write/setuid/devices/rstchown/xattr/dev=6340003 on Thu May 12 08:39:39 2022
+rpool on /rpool type zfs read/write/setuid/devices/rstchown/nonbmand/exec/xattr/atime/dev=4010004 on Thu May 12 08:39:39 2022
+rpool/usr-local on /usr/local type zfs read/write/setuid/devices/rstchown/nonbmand/exec/xattr/atime/dev=4010005 on Thu May 12 08:39:39 2022

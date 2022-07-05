@@ -1,0 +1,17 @@
+Filesystem            kbytes    used   avail capacity  Mounted on
+rpool/ROOT/May2021   102703104 8925121 58532130    14%    /
+/devices                   0       0       0     0%    /devices
+ctfs                       0       0       0     0%    /system/contract
+proc                       0       0       0     0%    /proc
+mnttab                     0       0       0     0%    /etc/mnttab
+swap                 3392096    1840 3390256     1%    /etc/svc/volatile
+objfs                      0       0       0     0%    /system/object
+sharefs                    0       0       0     0%    /etc/dfs/sharetab
+/platform/sun4v/lib/libc_psr/libc_psr_hwcap3.so.1 67457251 8925121 58532130    14%    /platform/sun4v/lib/libc_psr.so.1
+/platform/sun4v/lib/sparcv9/libc_psr/libc_psr_hwcap3.so.1 67457251 8925121 58532130    14%    /platform/sun4v/lib/sparcv9/libc_psr.so.1
+fd                         0       0       0     0%    /dev/fd
+rpool/ROOT/May2021/var 10485760 4725292 2869797    63%    /var
+swap                 1048576     512 1048064     1%    /tmp
+swap                 3390832     576 3390256     1%    /var/run
+rpool                102703104 18129762 58532130    24%    /rpool
+rpool/usr-local      102703104  157345 58532130     1%    /usr/local

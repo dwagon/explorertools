@@ -6,7 +6,7 @@ Script to understand kstat output
 # $Id: kstat.py 2393 2012-06-01 06:38:17Z dougals $
 # $HeadURL: http://svn/ops/unix/explorer/trunk/explorer/kstat.py $
 
-import explorerbase
+import explorer.explorerbase as explorerbase
 
 
 ##########################################################################

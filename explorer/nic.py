@@ -7,8 +7,8 @@
 # $HeadURL: http://svn/ops/unix/explorer/trunk/explorer/nic.py $
 
 import re
-import explorerbase
-import kstat
+from explorer import kstat
+from explorer import explorerbase
 
 _cidrmap = {}
 
@@ -42,7 +42,7 @@ class Nic(explorerbase.ExplorerBase):
         try:
             self.parse_linux_ethtool()
         except UserWarning as err:
-            self.Warning(err)
+            self.warning(err)
 
     ##########################################################################
     def parse_solaris(self):
@@ -56,9 +56,9 @@ class Nic(explorerbase.ExplorerBase):
         for line in infh:
             line = line.strip()
             if "Duplex:" in line and "Unknown" not in line:
-                self["link_duplex"] = line[line.find(":") + 1 :].lower().strip()
+                self["link_duplex"] = line[line.find(":") + 1:].lower().strip()
             if "Speed" in line and "Unknown" not in line:
-                self["link_speed"] = line[line.find(":") + 1 :].lower()
+                self["link_speed"] = line[line.find(":") + 1:].lower()
         infh.close()
 
     ##########################################################################
@@ -107,7 +107,7 @@ class Nic(explorerbase.ExplorerBase):
             infh = self.open(nddfile)
             line = infh.readline()
             infh.close()
-            self["ndd_%s" % self.cmdfilename(nddfile)] = line.strip()
+            self["ndd_{self.cmdfilename(nddfile)]}"] = line.strip()
 
         # Every smegging nic type does it differently - thanks sun
         if not self.is_virtual():
@@ -136,11 +136,11 @@ class Nic(explorerbase.ExplorerBase):
             elif self["ndd_link_speed"] == "10":
                 self["link_speed"] = 10
             elif self["ndd_link_speed"] == "1":
-                pass  # TODO
+                pass  # TO DO
             elif self["ndd_link_speed"] == "0":
-                pass  # TODO
+                pass  # TO DO
             else:
-                self.Warning(f"Unhandled ndd_link_speed={self['ndd_link_speed']}")
+                self.warning(f"Unhandled ndd_link_speed={self['ndd_link_speed']}")
 
     ##########################################################################
     def get_kstat_duplex(self):
@@ -156,8 +156,8 @@ class Nic(explorerbase.ExplorerBase):
             if not line.startswith(self["dev"]):
                 continue
             if (
-                ":%s:" % self["inst"] not in line
-                and "%s%s" % (self["dev"], self["inst"]) not in line
+                f":{self['inst']}:" not in line
+                and f"{self['dev']}{self['inst']}" not in line
             ):
                 continue
             infh.close()
@@ -178,7 +178,7 @@ class Nic(explorerbase.ExplorerBase):
             if self["ndd_link_mode"] == "2":
                 self["link_duplex"] = "full"
                 return
-            self.Warning(f"Unhandled ndd_link_mode={self['ndd_link_mode']}")
+            self.warning(f"Unhandled ndd_link_mode={self['ndd_link_mode']}")
 
         if self["dev"] in ("bge", "ixge", "nge"):
             try:
@@ -231,7 +231,7 @@ class Nic(explorerbase.ExplorerBase):
         elif self["dev"] == "nxge":
             # Comes out as string not a number
             self["link_duplex"] = self.get_kstat_duplex()
-            # self.Warning("No duplex info for nxge networks - need dladm output")
+            # self.warning("No duplex info for nxge networks - need dladm output")
         elif self["dev"] == "le":
             self["link_duplex"] = "half (normal)"
         elif self["dev"] == "jnic146x":
@@ -252,7 +252,7 @@ class Nic(explorerbase.ExplorerBase):
                     "2": "full",
                 }[self["ndd_link_duplex"]]
             else:
-                self.Warning(f"Unhandled nic: {self['dev']} in get_link_duplex()")
+                self.warning(f"Unhandled nic: {self['dev']} in get_link_duplex()")
 
     ##########################################################################
     def get_network(self, dct):
@@ -267,11 +267,11 @@ class Nic(explorerbase.ExplorerBase):
                 int(quads[2]) + 256 * (int(quads[1]) + 256 * int(quads[0]))
             )
         order = 3
-        ip = 0
+        ipaddr = 0
         for quad in dct["ipaddr"].split("."):
-            ip += int(quad) << (8 * order)
+            ipaddr += int(quad) << (8 * order)
             order -= 1
-        network = ip & nmsk
+        network = ipaddr & nmsk
         netstr = ""
         for hexmap, shft in [("ff000000", 24), ("ff0000", 16), ("ff00", 8), ("ff", 0)]:
             netstr += "%d." % ((network & int(hexmap, 16)) >> shft)
@@ -286,30 +286,16 @@ class Nic(explorerbase.ExplorerBase):
         return self["interfaces"][ifname]
 
     ##########################################################################
-    def is_virtual(self):
+    def is_virtual(self) -> bool:
         """TODO"""
         if ":" in self.objname:
             return True
         if "vlan" in self:
             return True
-        if self.name().startswith("clprivnet"):
-            return True
-        if self.name().startswith("dman"):
-            return True
-        if self.name().startswith("wrsmd"):
-            return True
-        if self.name().startswith("scman"):
-            return True
-        if self.name().startswith("lo"):
-            return True
-        if self.name().startswith("bond"):
-            return True
-        if self.name().startswith("sppp"):
-            return True
-        if self.name().startswith("vsw"):
-            return True
-        if self.name().startswith("vnet"):
-            return True
+        prefixes = ["clprivnet", "dman", "wrsmd", "scman", "lo", "bond", "sppp", "vsw", "vnet"]
+        for prefix in prefixes:
+            if self.name().startswith(prefix):
+                return True
         return False
 
     ##########################################################################
@@ -339,18 +325,20 @@ class Nic(explorerbase.ExplorerBase):
 # Nics ###################################################################
 ##########################################################################
 class Nics(explorerbase.ExplorerBase):
+    """ Handle multiple NICS """
     ##########################################################################
     def __init__(self, config):
         explorerbase.ExplorerBase.__init__(self, config)
-        self.parseIfconfig()
-        self.parseHosts()
-        for nic in self.nicList():
+        self.parse_ifconfig()
+        self.parse_hosts()
+        for nic in self.nic_list():
             nic.post()
         self.parse_kstats()
         self.analyse()
 
     ##########################################################################
     def parse_kstats(self):
+        """ Get more stats from kstats if available """
         if self.config["explorertype"] != "solaris":
             return
         virtchains = [
@@ -390,21 +378,21 @@ class Nics(explorerbase.ExplorerBase):
             if link.name().startswith("vnetldc"):
                 continue
             real = True
-            for vc in virtchains:
-                if link.name().startswith(vc):
+            for virtchain in virtchains:
+                if link.name().startswith(virtchain):
                     real = False
                     break
             if not real:
                 continue
 
-            nicname, vlan, dev, inst = self.calcVlan(link.name())
+            nicname, vlan, dev, inst = self.calc_vlan(link.name())
 
             # If the name isn't a nic we have seen before it isn't in use
             # We also have to check interfaces for VLAN names
             if nicname in self:
                 continue
             found = False
-            for nic in self.nicList():
+            for nic in self.nic_list():
                 for iface in nic["interfaces"]:
                     if nicname == iface:
                         found = True
@@ -414,39 +402,38 @@ class Nics(explorerbase.ExplorerBase):
                 self[nicname]["used"] = False
 
     ##########################################################################
-    def nicNames(self):
+    def nic_names(self):
         """Return a list of the names of all the nics, sorted alphabetically"""
         return sorted(self.data.keys())
 
     ##########################################################################
-    def nicList(self):
+    def nic_list(self):
         """Return all the nic objects in a list, sorted by the name"""
-        return [self.data[nic] for nic in self.nicNames()]
+        return [self.data[nic] for nic in self.nic_names()]
 
     ##########################################################################
     def analyse(self):
-        for nic in self.nicList():
+        for nic in self.nic_list():
             nic.analyse()
             self.inheritIssues(nic)
 
     ##########################################################################
-    def calcVlan(self, ifname):
+    def calc_vlan(self, ifname):
+        """ Calc VLAN """
         vlan = 0
         matchobj = re.match(r"(?P<dev>\D.+?)(?P<inst>\d+)(?P<vip>:\d+)?$", ifname)
         if not matchobj:
-            self.Fatal(f"Unknown interface name: {ifname}")
+            self.fatal(f"Unknown interface name: {ifname}")
         dev = matchobj.group("dev")
         inst = int(matchobj.group("inst"))
         if inst > 1000:
             vlan = inst / 1000
             inst = inst % 1000
-            nicname = "%s%d" % (dev, inst)
-        else:
-            nicname = "%s%d" % (dev, inst)
+        nicname = f"{dev}{inst}"
         return nicname, vlan, dev, inst
 
     ##########################################################################
-    def parseHosts(self):
+    def parse_hosts(self):
         """
         See if we can match up hostnames with ip addresses based on /etc/hosts
         /etc/hostname.* files can be difficult to parse because of all the options
@@ -465,7 +452,7 @@ class Nics(explorerbase.ExplorerBase):
             ipmap[bits[0]] = bits[1:]
         infh.close()
 
-        for nic in self.nicList():
+        for nic in self.nic_list():
             for iface in nic["interfaces"]:
                 if (
                     "ipaddr" in nic["interfaces"][iface]
@@ -476,7 +463,7 @@ class Nics(explorerbase.ExplorerBase):
                     ]
 
     ##########################################################################
-    def parseIfconfig(self):
+    def parse_ifconfig(self):
         """
         Analyse ifconfig -a output:
         """
@@ -487,7 +474,7 @@ class Nics(explorerbase.ExplorerBase):
                 self.parse_linux_ifconfig()
                 self.parse_linux_bond()
         except UserWarning as err:
-            self.Warning(err)
+            self.warning(err)
 
     ##########################################################################
     def parse_linux_bond(self):
@@ -503,7 +490,7 @@ class Nics(explorerbase.ExplorerBase):
                     self[bond]["slaves"].append(slave)
                     self[slave]["master"] = bond
                     self[slave]["used"] = True
-                    self[slave]["notes"] = "Slave of %s" % bond
+                    self[slave]["notes"] = f"Slave of {bond}"
             self[bond]["notes"] = "Bond Master of %s" % (
                 ", ".join(self[bond]["slaves"])
             )
@@ -511,6 +498,7 @@ class Nics(explorerbase.ExplorerBase):
 
     ##########################################################################
     def parse_linux_ifconfig(self):
+        """ Parse linux ifconfig """
         infh = self.open("ifconfig")
         data = []
         for line in infh:
@@ -529,6 +517,7 @@ class Nics(explorerbase.ExplorerBase):
 
     ##########################################################################
     def parse_linux_ifconfig_interface(self, data):
+        """ Parse linux ifconfig interface """
         if not data:
             return
         line = data[0]
@@ -550,84 +539,73 @@ class Nics(explorerbase.ExplorerBase):
 
         nicobj = self[nicname].add_interface(ifname)
         for line in data:
-            matchobj = re.search(
+            if matchobj := re.search(
                 r"inet addr:(?P<ipaddr>.*?)\s+Bcast:(?P<broadcast>.*?)\s+Mask:(?P<mask>.*)",
-                line,
-            )
-            if matchobj:
+                line
+            ):
                 nicobj["ipaddr"] = matchobj.group("ipaddr")
                 nicobj["broadcast"] = matchobj.group("broadcast")
                 nicobj["netmask"] = matchobj.group("mask")
                 continue
-            matchobj = re.search(r"inet6 addr:(?P<inet6>.*)\s+Scope:", line)
-            if matchobj:
+            if matchobj := re.search(r"inet6 addr:(?P<inet6>.*)\s+Scope:", line):
                 nicobj["inet6"] = matchobj.group("inet6").strip()
                 continue
-            matchobj = re.search(r"inet addr:(?P<ipaddr>.*?)\s+Mask:(?P<mask>.*)", line)
-            if matchobj:
+            if matchobj := re.search(r"inet addr:(?P<ipaddr>.*?)\s+Mask:(?P<mask>.*)", line):
                 nicobj["ipaddr"] = matchobj.group("ipaddr")
                 nicobj["netmask"] = matchobj.group("mask")
                 continue
-            matchobj = re.search(
+            if matchobj := re.search(
                 r".*Link encap:(?P<linkencap>.*?)\s+HWaddr (?P<hwaddr>.*)", line
-            )
-            if matchobj:
+            ):
                 nicobj["linkencap"] = matchobj.group("linkencap").strip()
                 nicobj["hwaddr"] = matchobj.group("hwaddr")
                 continue
-            matchobj = re.search(r".*Link encap:(?P<linkencap>.*?)", line)
-            if matchobj:
+            if matchobj := re.search(r".*Link encap:(?P<linkencap>.*?)", line):
                 nicobj["linkencap"] = matchobj.group("linkencap").strip()
                 continue
-            matchobj = re.search(
+            if matchobj := re.search(
                 r"(?P<flags>.*)MTU:(?P<mtu>\d+)\s+Metric:(?P<metric>\d+)", line
-            )
-            if matchobj:
+            ):
                 nicobj["flags"] = matchobj.group("flags").strip()
                 nicobj["mtu"] = matchobj.group("mtu")
                 nicobj["metric"] = matchobj.group("metric")
 
     ##########################################################################
     def parse_solaris_ifconfig(self):
+        """ Parse solaris ifconfig-a.out """
         infh = self.open("sysconfig/ifconfig-a.out")
         nicobj = {}
         for line in infh:
             line = line.rstrip()
-            if line[0] == "\t":
-                matchobj = re.search(
+            if line[0] in [" ", "\t"]:
+                if matchobj := re.search(
                     r"inet (?P<ipaddr>.*) netmask (?P<netmask>.*) broadcast (?P<broadcast>.*)",
-                    line,
-                )
-                if matchobj:
+                    line
+                ):
                     nicobj["ipaddr"] = matchobj.group("ipaddr")
                     nicobj["netmask"] = matchobj.group("netmask")
                     nicobj["broadcast"] = matchobj.group("broadcast")
                     if "-->" in nicobj["ipaddr"]:  # Point to point link
                         nicobj["ipaddr"] = nicobj["ipaddr"].split()[0]
                     continue
-                matchobj = re.search(
+                if matchobj := re.search(
                     "inet (?P<ipaddr>.*) netmask (?P<netmask>.*)", line
-                )
-                if matchobj:
+                ):
                     nicobj["ipaddr"] = matchobj.group("ipaddr")
                     nicobj["netmask"] = matchobj.group("netmask")
                     if "-->" in nicobj["ipaddr"]:  # Point to point link
                         nicobj["ipaddr"] = nicobj["ipaddr"].split()[0]
                     continue
-                matchobj = re.search("zone (?P<zone>.*)", line)
-                if matchobj:
+                if matchobj := re.search("zone (?P<zone>.*)", line):
                     nicobj["zone"] = matchobj.group("zone")
                     continue
-                matchobj = re.search("ether (?P<ether>.*)", line)
-                if matchobj:
+                if matchobj := re.search("ether (?P<ether>.*)", line):
                     nicobj["ether"] = matchobj.group("ether")
                     continue
-                matchobj = re.search("groupname (?P<groupname>.*)", line)
-                if matchobj:
+                if matchobj := re.search("groupname (?P<groupname>.*)", line):
                     nicobj["groupname"] = matchobj.group("groupname")
                     continue
-                matchobj = re.search("inet6 (?P<inet6>.*)", line)
-                if matchobj:
+                if matchobj := re.search("inet6 (?P<inet6>.*)", line):
                     nicobj["inet6"] = matchobj.group("inet6")
                     continue
             else:
@@ -635,21 +613,21 @@ class Nics(explorerbase.ExplorerBase):
                     r"(?P<ifname>.*): flags=(?P<flagbits>.*)<(?P<flags>.*)> mtu (?P<mtu>\d+)( index (?P<index>\d+))?",
                     line,
                 )
-                if not matchobj:
-                    self.Fatal(f"Unhandled nic line: '{line}'")
-                ifname = matchobj.group("ifname")
-                nicname, vlan, dev, inst = self.calcVlan(ifname)
-                if nicname not in self:
-                    self[nicname] = Nic(self.config, nicname, dev, inst)
-                    self[nicname]["used"] = True
-                nicobj = self[nicname].add_interface(ifname)
-                nicobj["flags"] = matchobj.group("flags")
-                nicobj["flagbits"] = matchobj.group("flagbits")
-                nicobj["mtu"] = matchobj.group("mtu")
-                if "index" in matchobj.groupdict():
-                    nicobj["index"] = matchobj.group("index")
-                if vlan:
-                    nicobj["vlan"] = vlan
+            if not matchobj:
+                self.fatal(f"Unhandled nic line: '{line}'")
+            ifname = matchobj.group("ifname")
+            nicname, vlan, dev, inst = self.calc_vlan(ifname)
+            if nicname not in self:
+                self[nicname] = Nic(self.config, nicname, dev, inst)
+                self[nicname]["used"] = True
+            nicobj = self[nicname].add_interface(ifname)
+            nicobj["flags"] = matchobj.group("flags")
+            nicobj["flagbits"] = matchobj.group("flagbits")
+            nicobj["mtu"] = matchobj.group("mtu")
+            if "index" in matchobj.groupdict():
+                nicobj["index"] = matchobj.group("index")
+            if vlan:
+                nicobj["vlan"] = vlan
         infh.close()
 
 

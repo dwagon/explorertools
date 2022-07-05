@@ -6,8 +6,8 @@ Script to analyse prtconf -vD from explorers
 # $HeadURL: http://svn/ops/unix/explorer/trunk/explorer/prtconf.py $
 
 import re
-import explorerbase
-import kstat
+from explorer import explorerbase
+from explorer import kstat
 
 
 ##########################################################################

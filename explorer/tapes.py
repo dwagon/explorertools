@@ -7,7 +7,7 @@
 # $HeadURL: http://svn/ops/unix/explorer/trunk/explorer/tapes.py $
 
 import os
-import explorerbase
+import explorer.explorerbase
 
 
 ##########################################################################

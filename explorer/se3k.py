@@ -9,7 +9,7 @@
 import os
 import re
 import string
-import explorerbase
+import explorer.explorerbase
 
 
 ##########################################################################

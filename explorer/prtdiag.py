@@ -15,10 +15,10 @@ import sys
 import re
 
 sys.path.append("/app/explorer/lib/python/site-packages")
-import explorerbase
-import drivemap
-import cardmap
-import hostdet
+import explorer.explorerbase
+import explorer.drivemap
+import explorer.cardmap
+import explorer.hostdet
 
 verbflag = False
 

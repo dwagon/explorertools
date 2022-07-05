@@ -1,0 +1,2 @@
+swapfile             dev  swaplo blocks   free
+/dev/zvol/dsk/rpool/swap 256,1      16 8388592 8123824

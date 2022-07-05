@@ -7,8 +7,8 @@ Script to understand filesystem details
 # $HeadURL: http://svn/ops/unix/explorer/trunk/explorer/filesys.py $
 
 import re
-import explorerbase
-import storage
+from explorer import explorerbase
+from explorer import storage
 
 
 ##########################################################################
@@ -26,7 +26,7 @@ class Filesystem(explorerbase.ExplorerBase):
     def analyse(self):
         if not self["protected"]:
             self.addIssue(
-                "unprotected", obj=self.name(), text="%s is not redundant" % self.name()
+                "unprotected", obj=self.name(), text=f"{self.name()} is not redundant"
             )
 
     ##########################################################################
@@ -107,7 +107,7 @@ class storageFilesystems(explorerbase.ExplorerBase):
                     dffile = fname
                     break
             if not dffile:
-                self.Warning("No usable df file")
+                self.warning("No usable df file")
                 return
         elif self.config["explorertype"] == "linux":
             dffile = "df"
@@ -300,7 +300,7 @@ class storageFilesystems(explorerbase.ExplorerBase):
                 filename = fname
                 break
         if not filename:
-            self.Warning("No usable mount output")
+            self.warning("No usable mount output")
             return
         f = self.open(filename)
         for line in f:
@@ -353,7 +353,7 @@ class storageFilesystems(explorerbase.ExplorerBase):
                     % self.config["explorertype"]
                 )
         except UserWarning as err:
-            self.Warning(err)
+            self.warning(err)
 
     ##########################################################################
     def parseLinux_fstab(self):
@@ -371,7 +371,7 @@ class storageFilesystems(explorerbase.ExplorerBase):
                 opts = bits[3]
             except IndexError:
                 if fstype != "nfs":
-                    self.Warning("Malformed fstab line: %s" % line)
+                    self.warning("Malformed fstab line: %s" % line)
         f.close()
 
     ##########################################################################
@@ -387,7 +387,7 @@ class storageFilesystems(explorerbase.ExplorerBase):
                 continue
             bits = line.split()
             if len(bits) < 4:
-                self.Warning("Unhandled vfstab line: %s" % line)
+                self.warning("Unhandled vfstab line: %s" % line)
                 continue
             mp = bits[2]
             if mp == "-":
@@ -444,9 +444,9 @@ class storageFilesystems(explorerbase.ExplorerBase):
                     # also protected
                     if "protected" in data[dev]:
                         data[fs]["protected"] = data[dev]["protected"]
-                        # self.Warning("Filesystem %s is protected (%s) as it is on %s" % (fs, data[dev]['protected'], dev))
+                        # self.warning("Filesystem %s is protected (%s) as it is on %s" % (fs, data[dev]['protected'], dev))
                 else:
-                    self.Warning("FS %s relies on non existant device %s" % (fs, dev))
+                    self.warning("FS %s relies on non existant device %s" % (fs, dev))
 
 
 # EOF

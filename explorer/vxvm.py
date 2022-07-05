@@ -8,8 +8,8 @@
 # pylint: disable=too-few-public-methods
 
 import re
-import explorerbase
-import storage
+from explorer import explorerbase
+from explorer import storage
 
 
 ##########################################################################

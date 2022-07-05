@@ -10,16 +10,16 @@
 # $Id: storage.py 4380 2013-02-22 02:53:51Z dougals $
 # $HeadURL: http://svn/ops/unix/explorer/trunk/explorer/storage.py $
 
-import explorerbase
-import disks
-import emc
-import filesys
-import zfs
-import swap
-import volmanager
-import vxvm
-import cluster
-import prtconf
+from explorer import explorerbase
+from explorer import disks
+from explorer import emc
+from explorer import filesys
+from explorer import zfs
+from explorer import swap
+from explorer import volmanager
+from explorer import vxvm
+from explorer import cluster
+from explorer import prtconf
 
 verbFlag = False
 
@@ -39,6 +39,7 @@ verbFlag = False
 # Storage ################################################################
 ##########################################################################
 class Storage(explorerbase.ExplorerBase):
+    """ Storage Class """
     def __init__(self, config):
         explorerbase.ExplorerBase.__init__(self, config)
         self.cache = {}
@@ -46,7 +47,7 @@ class Storage(explorerbase.ExplorerBase):
 
     ##########################################################################
     def parse(self):
-        self.initialParse()
+        self.initial_parse()
         self.clusterCheck()
         self.bootAliases()
         self.cross_populate()
@@ -75,7 +76,7 @@ class Storage(explorerbase.ExplorerBase):
                     self[objname]["bootaliases"] = list(aliases)
 
     ##########################################################################
-    def initialParse(self):
+    def initial_parse(self):
         """Parse the raw sources of data"""
         d = disks.storageDisks(self.config, {})
         self.data.update(d.data)
@@ -131,12 +132,12 @@ class Storage(explorerbase.ExplorerBase):
             slice = quorumdev[-2:]
             dev = quorumdev[:-2]
             if dev not in self["_didmap"]:
-                self.Warning("Couldn't find quorum disk %s did details" % dev)
+                self.warning("Couldn't find quorum disk %s did details" % dev)
                 return
             for d in self["_didmap"][dev]:
                 qslice = "%s%s" % (d, slice)
                 if qslice not in self:
-                    self.Warning("Quorum slice %s has no disk defined" % qslice)
+                    self.warning("Quorum slice %s has no disk defined" % qslice)
                 else:
                     self[qslice]["use"] = set(["Cluster %s Quorum" % c["name"]])
 
@@ -174,12 +175,12 @@ class Storage(explorerbase.ExplorerBase):
                 try:
                     self[parent]["protected"] = val
                 except KeyError:
-                    self.Warning("protPropogator(objname=%s, val=%s)" % (objname, val))
+                    self.warning("protPropogator(objname=%s, val=%s)" % (objname, val))
                     raise
             self.protPropogator(parent, val)
 
     ##########################################################################
-    def relationshipMunger(self):
+    def relationship_munger(self):
         """Migrate the descriptions up and down the chain using the partof/contains
         keys.
 
@@ -207,10 +208,10 @@ class Storage(explorerbase.ExplorerBase):
         diffs = -1
         # If there are problems with the relationship model then uncomment the
         # following line for a good time
-        # self.Debug("data=%s" % self.data.items())
+        # self.debug("data=%s" % self.data.items())
         while diffs:
             diffs = 0
-            for objname, obj in self.data.items():
+            for objname, obj in list(self.data.items())[:]:
                 if "virtual" in obj and obj["virtual"]:
                     continue
                 if "partof" in obj and obj["partof"]:
@@ -221,13 +222,13 @@ class Storage(explorerbase.ExplorerBase):
     ##########################################################################
     def upRelations(self, objname, val):
         count = 0
-        # self.Debug("upRelations(objname=%s, val=%s)" % (objname, val))
+        # self.debug("upRelations(objname=%s, val=%s)" % (objname, val))
         for parent in list(self[objname]["partof"]):
-            # self.Debug("parent=%s" % parent)
+            # self.debug("parent=%s" % parent)
             for subval in val:
-                # self.Debug("up subval=%s" % subval)
+                # self.debug("up subval=%s" % subval)
                 if parent not in self:
-                    self.Debug(
+                    self.debug(
                         "upRelations: parent %s doesn't exist. objname=%s val=%s subval=%s"
                         % (parent, objname, val, subval)
                     )
@@ -252,9 +253,9 @@ class Storage(explorerbase.ExplorerBase):
     ##########################################################################
     def downRelations(self, objname, val):
         count = 0
-        # self.Debug("downRelations(objname=%s, val=%s)" % (objname, val))
+        # self.debug("downRelations(objname=%s, val=%s)" % (objname, val))
         for kid in self[objname]["contains"]:
-            # self.Debug("kid=%s" % kid)
+            # self.debug("kid=%s" % kid)
             if kid not in self:
                 self[kid] = Storage.initialDict(
                     {
@@ -265,14 +266,14 @@ class Storage(explorerbase.ExplorerBase):
                         "_relationship_down": set(),
                     }
                 )
-                self.Debug(
+                self.debug(
                     "kid %s missed by %s in downRelations val=%s" % (kid, objname, val)
                 )
             for subval in val:
-                # self.Debug("down subval=%s" % subval)
+                # self.debug("down subval=%s" % subval)
                 if subval not in self[kid]["_relationship_up"]:
                     if subval not in self[kid]["partof"]:
-                        # self.Debug("kid %s now partof %s" % (kid, subval))
+                        # self.debug("kid %s now partof %s" % (kid, subval))
                         self[kid]["partof"].add(subval)
                         self[kid]["_relationship_down"].add(subval)
                         count += 1
@@ -288,7 +289,7 @@ class Storage(explorerbase.ExplorerBase):
                     % (objname, val, self[objname], str(err))
                 )
             except Exception:
-                self.Debug(
+                self.debug(
                     "downRelations: objname=%s val=%s %s"
                     % (objname, val, self[objname])
                 )
@@ -319,7 +320,7 @@ class Storage(explorerbase.ExplorerBase):
                         "missed_at": "downPropogator key=%s val=%s" % (key, val),
                     }
                 )
-                self.Debug(
+                self.debug(
                     "kid %s missed by %s in downPropogator key=%s val=%s"
                     % (kid, objname, key, val)
                 )
@@ -352,7 +353,7 @@ class Storage(explorerbase.ExplorerBase):
                 # The devices should contain only the slices involved
                 for o in obj["contains"]:
                     if o not in self:
-                        self.Debug(
+                        self.debug(
                             "%s is in contains %s of %s but doesn't exist"
                             % (o, obj["contains"], objname)
                         )
@@ -368,7 +369,7 @@ class Storage(explorerbase.ExplorerBase):
     def cross_populate(self):
         """Match all of the uses and partitions and set values accordingly"""
 
-        self.relationshipMunger()
+        self.relationship_munger()
         for k in ("volmanager", "swap", "filesys", "zfs", "vxvm", "disks", "emc"):
             self.cache[k].cross_populate(self.data)
         self.useMigrator()
@@ -420,7 +421,7 @@ class Storage(explorerbase.ExplorerBase):
                 self[obj]["describer"] = self.cache["vxvm"].describer(obj, self.data)
             else:
                 self[obj]["describer"] = "Unhandled %s" % self[obj]["_type"]
-                self.Debug("Unhandled describer %s - %s" % (obj, self[obj]["_type"]))
+                self.debug("Unhandled describer %s - %s" % (obj, self[obj]["_type"]))
 
     ##########################################################################
     def poolList(self):

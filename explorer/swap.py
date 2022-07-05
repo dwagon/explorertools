@@ -5,8 +5,8 @@ Script to understand swap details
 # $Id: swap.py 2393 2012-06-01 06:38:17Z dougals $
 # $HeadURL: http://svn/ops/unix/explorer/trunk/explorer/swap.py $
 
-import explorerbase
-import storage
+from explorer import explorerbase
+from explorer import storage
 
 
 ##########################################################################
@@ -157,7 +157,7 @@ class storageSwap(explorerbase.ExplorerBase):
                 if not self["swap_devices"]:
                     self.parse_linux_fstab()
         except UserWarning as err:
-            self.Warning(err)
+            self.warning(err)
 
     ##########################################################################
     def swap_list(self):

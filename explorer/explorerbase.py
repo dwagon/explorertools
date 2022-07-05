@@ -12,8 +12,8 @@ import os
 import re
 import sys
 
-import issue
-import reporter
+from explorer import issue
+from explorer import reporter
 
 verbFlag = False
 debugFlag = False
@@ -36,10 +36,10 @@ class ExplorerBase:
         self.parts = []
 
     ##########################################################################
-    def analyse(self, mode):
+    def analyse(self):
         """TODO"""
         if self.__class__.__name__ != "Explorer":
-            self.Fatal("Class %s needs an analyse() method" % (self.__class__.__name__))
+            self.fatal("Class %s needs an analyse() method" % (self.__class__.__name__))
 
     ##########################################################################
     def glob(self, globexpr):
@@ -61,7 +61,7 @@ class ExplorerBase:
     def describer(self, filesys, data):
         """Calculate the description of a filesystem object
         based on what it contains"""
-        import storage
+        from explorer import storage
 
         tmp = []
         for obj in data[filesys]["contains"]:
@@ -75,7 +75,7 @@ class ExplorerBase:
                 if "_type" in data[o] and data[o]["_type"] == "missing":
                     continue
                 if "description" not in data[o]:
-                    self.Warning(f"{o} {data[o]} is undescribed")
+                    self.warning(f"{o} {data[o]} is undescribed")
                     continue
                 plural, olist = storage.Storage.pluralDescription(v, tmp)
                 # Don't add the names of the disc slices as they should be implicit
@@ -127,7 +127,7 @@ class ExplorerBase:
         try:
             return self.data[key]
         except KeyError:
-            # self.Warning("key=%s Items=%s" % (key, self.data.items()))
+            # self.warning("key=%s Items=%s" % (key, self.data.items()))
             raise
 
     ##########################################################################
@@ -290,24 +290,24 @@ class ExplorerBase:
             self.config["datadir"], self.config["hostpath"], filename
         )
         if not os.path.exists(fullfilepath):
-            Warning(f"Failed to open: {fullfilepath}")
+            self.warning(f"Failed to open: {fullfilepath}")
             raise UserWarning(f"File {filename} doesn't exist ({fullfilepath})")
         infh = open(fullfilepath, mode, encoding="utf-8")
         return infh
 
     ##########################################################################
-    def Verbose(self, msg):
+    def verbose(self, msg):
         """TODO"""
         msg = "%s:%s: %s\n" % (self.hostname, self.__class__.__name__, msg)
         reporter.Verbose(msg)
 
     ##########################################################################
-    def Warning(self, msg):
+    def warning(self, msg):
         """TODO"""
-        reporter.Warning(msg)
+        reporter.warning(msg)
 
     ##########################################################################
-    def Debug(self, msg):
+    def debug(self, msg):
         """TODO"""
         if debugFlag:
             sys.stderr.write(
@@ -315,9 +315,9 @@ class ExplorerBase:
             )
 
     ##########################################################################
-    def Fatal(self, msg):
+    def fatal(self, msg):
         """TODO"""
-        reporter.Fatal(msg)
+        reporter.fatal(msg)
 
     ##########################################################################
     def prettyPrint(self, d=None, indent=0, fd=sys.stdout, keylist=[]):
@@ -382,7 +382,7 @@ class ExplorerBase:
             a = self.stripQuotes(bits[0].strip())
             b = self.stripQuotes(bits[1].strip())
         except IndexError:
-            self.Fatal("dequoteKV issue: line=%s" % line)
+            self.fatal("dequoteKV issue: line=%s" % line)
         return a, b
 
     ##########################################################################
@@ -420,7 +420,7 @@ class ExplorerBase:
         handles tapes as well
         """
         if not self.exists(filename):
-            self.Warning(f"Couldn't open {filename}")
+            self.warning(f"Couldn't open {filename}")
             return {}
         infh = self.open(filename)
         datadev = {}

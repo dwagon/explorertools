@@ -6,8 +6,8 @@ Script to understand emc drive details
 # $Id: emc.py 2393 2012-06-01 06:38:17Z dougals $
 # $HeadURL: http://svn/ops/unix/explorer/trunk/explorer/emc.py $
 
-import explorerbase
-import storage
+from explorer import explorerbase
+from explorer import storage
 
 
 ##########################################################################

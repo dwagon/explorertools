@@ -7,8 +7,8 @@ Script to understand host details
 # $HeadURL: http://svn/ops/unix/explorer/trunk/explorer/hostdet.py $
 
 import re
-import explorerbase
-import hardware
+import explorer.explorerbase
+import explorer.hardware
 
 
 ##########################################################################

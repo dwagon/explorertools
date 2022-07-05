@@ -5,7 +5,7 @@
 # $HeadURL: http://svn/ops/unix/explorer/trunk/explorer/zones.py $
 
 import re
-import explorerbase
+import explorer.explorerbase
 
 
 ##########################################################################

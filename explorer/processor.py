@@ -7,7 +7,7 @@ Script to understand processor details
 
 import re
 import math
-import explorerbase
+import explorer.explorerbase
 
 verbflag = 0
 

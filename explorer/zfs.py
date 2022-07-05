@@ -6,8 +6,8 @@
 # $HeadURL: http://svn/ops/unix/explorer/trunk/explorer/zfs.py $
 
 import re
-import explorerbase
-import storage
+from explorer import explorerbase
+from explorer import storage
 
 
 ##########################################################################

@@ -5,7 +5,7 @@
 # $HeadURL: http://svn/ops/unix/explorer/trunk/explorer/cluster.py $
 
 import re
-import explorerbase
+from explorer import explorerbase
 
 
 ##########################################################################
