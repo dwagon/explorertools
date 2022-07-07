@@ -258,8 +258,8 @@ class storageZfs(explorerbase.ExplorerBase):
             if "/sbin/zpool: not found" in line:
                 return
             bits = line.split()
-            pool = bits[0]
-            self["zfspools"].add(pool)
+            poolname = bits[0]
+            self["zfspools"].add(poolname)
             pool = storage.Storage.initialDict(
                 {"_type": "zfs_pool", "description": "ZFS Pool", "_origin": filename}
             )
@@ -269,7 +269,7 @@ class storageZfs(explorerbase.ExplorerBase):
             pool["cap"] = bits[4]
             pool["health"] = bits[5]
             pool["altroot"] = bits[6]
-            self[pool] = pool
+            self[poolname] = pool
         infh.close()
 
 

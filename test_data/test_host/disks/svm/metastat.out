@@ -1,0 +1,172 @@
+d19: Mirror
+    Submirror 0: d125
+      State: Okay         
+    Pass: 1
+    Read option: roundrobin (default)
+    Write option: parallel (default)
+    Size: 1899926784 blocks (905 GB)
+
+d125: Submirror of d19
+    State: Okay         
+    Size: 1899926784 blocks (905 GB)
+    Stripe 0:
+	Device   Start Block  Dbase        State Reloc Hot Spare
+	c1d8s0          0     No            Okay   Yes 
+
+
+d18: Mirror
+    Submirror 0: d124
+      State: Okay         
+    Pass: 1
+    Read option: roundrobin (default)
+    Write option: parallel (default)
+    Size: 41909504 blocks (19 GB)
+
+d124: Submirror of d18
+    State: Okay         
+    Size: 41909504 blocks (19 GB)
+    Stripe 0:
+	Device   Start Block  Dbase        State Reloc Hot Spare
+	c1d6s0          0     No            Okay   Yes 
+
+
+d17: Mirror
+    Submirror 0: d123
+      State: Okay         
+    Pass: 1
+    Read option: roundrobin (default)
+    Write option: parallel (default)
+    Size: 851386368 blocks (405 GB)
+
+d123: Submirror of d17
+    State: Okay         
+    Size: 851386368 blocks (405 GB)
+    Stripe 0:
+	Device   Start Block  Dbase        State Reloc Hot Spare
+	c1d7s0          0     No            Okay   Yes 
+
+
+d16: Mirror
+    Submirror 0: d122
+      State: Okay         
+    Pass: 1
+    Read option: roundrobin (default)
+    Write option: parallel (default)
+    Size: 247430400 blocks (117 GB)
+
+d122: Submirror of d16
+    State: Okay         
+    Size: 247430400 blocks (117 GB)
+    Stripe 0:
+	Device   Start Block  Dbase        State Reloc Hot Spare
+	c1d1s0          0     No            Okay   Yes 
+
+
+d15: Mirror
+    Submirror 0: d121
+      State: Okay         
+    Pass: 1
+    Read option: roundrobin (default)
+    Write option: parallel (default)
+    Size: 125803776 blocks (59 GB)
+
+d121: Submirror of d15
+    State: Okay         
+    Size: 125803776 blocks (59 GB)
+    Stripe 0:
+	Device   Start Block  Dbase        State Reloc Hot Spare
+	c1d4s0          0     No            Okay   Yes 
+
+
+d13: Mirror
+    Submirror 0: d119
+      State: Okay         
+    Pass: 1
+    Read option: roundrobin (default)
+    Write option: parallel (default)
+    Size: 1589575680 blocks (757 GB)
+
+d119: Submirror of d13
+    State: Okay         
+    Size: 1589575680 blocks (757 GB)
+    Stripe 0:
+	Device   Start Block  Dbase        State Reloc Hot Spare
+	c1d5s0          0     No            Okay   Yes 
+
+
+d12: Mirror
+    Submirror 0: d118
+      State: Okay         
+    Pass: 1
+    Read option: roundrobin (default)
+    Write option: parallel (default)
+    Size: 247430400 blocks (117 GB)
+
+d118: Submirror of d12
+    State: Okay         
+    Size: 247430400 blocks (117 GB)
+    Stripe 0:
+	Device    Start Block  Dbase        State Reloc Hot Spare
+	c1d10s0          0     No            Okay   Yes 
+
+
+d11: Mirror
+    Submirror 0: d117
+      State: Okay         
+    Pass: 1
+    Read option: roundrobin (default)
+    Write option: parallel (default)
+    Size: 125803776 blocks (59 GB)
+
+d117: Submirror of d11
+    State: Okay         
+    Size: 125803776 blocks (59 GB)
+    Stripe 0:
+	Device   Start Block  Dbase        State Reloc Hot Spare
+	c1d9s0          0     No            Okay   Yes 
+
+
+d10: Mirror
+    Submirror 0: d116
+      State: Okay         
+    Pass: 1
+    Read option: roundrobin (default)
+    Write option: parallel (default)
+    Size: 350190848 blocks (166 GB)
+
+d116: Submirror of d10
+    State: Okay         
+    Size: 350190848 blocks (166 GB)
+    Stripe 0:
+	Device   Start Block  Dbase        State Reloc Hot Spare
+	c1d2s0          0     No            Okay   Yes 
+
+
+d14: Mirror
+    Submirror 0: d120
+      State: Okay         
+    Pass: 1
+    Read option: roundrobin (default)
+    Write option: parallel (default)
+    Size: 247430400 blocks (117 GB)
+
+d120: Submirror of d14
+    State: Okay         
+    Size: 247430400 blocks (117 GB)
+    Stripe 0:
+	Device   Start Block  Dbase        State Reloc Hot Spare
+	c1d3s0          0     No            Okay   Yes 
+
+
+Device Relocation Information:
+Device   Reloc	Device ID
+c1d8    Yes  	id1,vdc@n60002ac0000000000000260d00020a95
+c1d6    Yes  	id1,vdc@n60002ac0000000000000260c00020a95
+c1d7    Yes  	id1,vdc@n60002ac0000000000000260b00020a95
+c1d1    Yes  	id1,vdc@n60002ac0000000000000260a00020a95
+c1d4    Yes  	id1,vdc@n60002ac0000000000000260900020a95
+c1d3    Yes  	id1,vdc@n60002ac0000000000000260800020a95
+c1d5    Yes  	id1,vdc@n60002ac0000000000000260700020a95
+c1d10   Yes  	id1,vdc@n60002ac0000000000000260600020a95
+c1d9    Yes  	id1,vdc@n60002ac0000000000000260500020a95
+c1d2    Yes  	id1,vdc@n60002ac0000000000000260400020a95

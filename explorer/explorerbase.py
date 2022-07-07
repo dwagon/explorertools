@@ -15,7 +15,6 @@ import sys
 from explorer import issue
 from explorer import reporter
 
-verbFlag = False
 debugFlag = False
 
 
@@ -286,9 +285,11 @@ class ExplorerBase:
     ##########################################################################
     def open(self, filename, mode="r"):
         """TODO"""
-        fullfilepath = os.path.join(
-            self.config["datadir"], self.config["hostpath"], filename
-        )
+        prefix = os.path.join(self.config["datadir"], self.config["hostpath"])
+        if filename.startswith(prefix):
+            fullfilepath = filename
+        else:
+            fullfilepath = os.path.join(prefix, filename)
         if not os.path.exists(fullfilepath):
             self.warning(f"Failed to open: {fullfilepath}")
             raise UserWarning(f"File {filename} doesn't exist ({fullfilepath})")
@@ -299,7 +300,7 @@ class ExplorerBase:
     def verbose(self, msg):
         """TODO"""
         msg = "%s:%s: %s\n" % (self.hostname, self.__class__.__name__, msg)
-        reporter.Verbose(msg)
+        reporter.verbose(msg)
 
     ##########################################################################
     def warning(self, msg):
@@ -324,7 +325,7 @@ class ExplorerBase:
         """TODO"""
         if d is None and indent == 0:
             d = self.data
-        keys = d.keys()
+        keys = list(d.keys())
         keys.sort()
         istr = " " * (indent * 2)
         for k in keys:
@@ -353,7 +354,7 @@ class ExplorerBase:
     def sizeStr(self, kbytes):
         """TODO"""
         try:
-            if type(kbytes) != type(int):
+            if not isinstance(kbytes, int):
                 kbytes = int(kbytes)
             for scale, unit in ((1, "Mb"), (2, "Gb"), (3, "Tb"), (4, "Pb")):
                 if kbytes < math.pow(1024, scale + 1):
@@ -363,14 +364,14 @@ class ExplorerBase:
             return kbytes
 
     ##########################################################################
-    def stripQuotes(self, str):
-        """TODO"""
-        for i in range(2):  # Occassionally lots of nested quotes
-            if str.startswith('"') and str.endswith('"'):
-                str = str[1:-1]
-            if str.startswith("'") and str.endswith("'"):
-                str = str[1:-1]
-        return str
+    def stripQuotes(self, strn):
+        """Strip outside quotes no matter which type"""
+        for _ in range(2):  # Occassionally lots of nested quotes
+            if strn.startswith('"') and strn.endswith('"'):
+                strn = strn[1:-1]
+            if strn.startswith("'") and strn.endswith("'"):
+                strn = strn[1:-1]
+        return strn
 
     ##########################################################################
     def dequoteKV(self, line):

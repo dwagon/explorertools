@@ -188,12 +188,12 @@ class Volmanager(explorerbase.ExplorerBase):
         """ TODO """
         self.analyse_metadb()
         self.analyse_linux_mdstat()
-        for md in self.meta_list():
-            if md not in self:
-                self.warning(f"md {md} doesn't exist in data but in meta_list")
+        for meta in self.meta_list():
+            if meta not in self:
+                self.warning(f"meta {meta} doesn't exist in data but in meta_list")
                 continue
-            self[md].analyse()
-            self.inheritIssues(self[md])
+            self[meta].analyse()
+            self.inheritIssues(self[meta])
 
     ##########################################################################
     def analyse_linux_mdstat_chunk(self, buff):
@@ -245,12 +245,12 @@ class storageVolmanager(explorerbase.ExplorerBase):
             return self["_didmap"][did]
 
         # Try it again without the slices, if any
-        slice = did[-2:]
+        slic = did[-2:]
         did = did[:-2]
         if did in self["_didmap"]:
             for dev in self["_didmap"][did]:
                 self["_setmap"][dev] = diskset
-            return [p + slice for p in self["_didmap"][did]]
+            return [p + slic for p in self["_didmap"][did]]
 
         return "unknown_%s" % didpath
 
@@ -334,7 +334,7 @@ class storageVolmanager(explorerbase.ExplorerBase):
                 if baseslice in data:
                     data[baseslice]["partof"].add(k)
                     continue
-                self.warning("Unmatched md location %s" % slice)
+                self.warning("Unmatched meta location %s" % slice)
                 data[slice] = storage.Storage.initialDict(
                     {
                         "_type": "missing",
@@ -427,15 +427,15 @@ class storageVolmanager(explorerbase.ExplorerBase):
         """If something is mirrored or part of a raid then the disks are
         regarded as protected as is what it is used for
         """
-        for md in data.keys():
-            if "_type" in data[md] and data[md]["_type"] == "disksuite":
-                if data[md]["type"] == "mirror" and len(data[md]["submirrors"]) >= 2:
-                    data[md]["protected"] = "Mirror"
-                    for sm in data[md]["submirrors"]:
+        for meta in data.keys():
+            if "_type" in data[meta] and data[meta]["_type"] == "disksuite":
+                if data[meta]["type"] == "mirror" and len(data[meta]["submirrors"]) >= 2:
+                    data[meta]["protected"] = "Mirror"
+                    for sm in data[meta]["submirrors"]:
                         data[sm]["protected"] = "Mirror"
-                elif data[md]["type"] == "raid":
-                    data[md]["protected"] = "Raid"
-                    for dev in data[md]["devices"]:
+                elif data[meta]["type"] == "raid":
+                    data[meta]["protected"] = "Raid"
+                    for dev in data[meta]["devices"]:
                         data[dev]["protected"] = "Raid"
 
     ##########################################################################
@@ -665,7 +665,7 @@ class storageVolmanager(explorerbase.ExplorerBase):
         self["volmgt_metadevs"] = []
         if self.config["explorertype"] == "solaris":
             self.parseSolaris_scdidadm()
-            self.parseAllMetastatP()
+            self.parse_all_metastat_p()
             self.parse_full_metastat()
             self.parseAllMetaDb()
             for metadev in self.meta_list():
@@ -861,7 +861,8 @@ class storageVolmanager(explorerbase.ExplorerBase):
         return files
 
     ##########################################################################
-    def parseAllMetastatP(self):
+    def parse_all_metastat_p(self):
+        """ TODO """
         files = self.all_files("metastat-p*.out")
         for filename in files:
             self.parse_metastat_p(filename)
@@ -870,27 +871,25 @@ class storageVolmanager(explorerbase.ExplorerBase):
     ##########################################################################
     def create_lock(self, filename):
         """lock file"""
-        lockfile = "%s.lock" % filename
+        lockfile = f"{filename}.lock"
         if os.path.exists(lockfile):
-            infh = open(lockfile, encoding="utf-8")
-            pid = infh.readline().strip()
-            infh.close()
+            with open(lockfile, encoding="utf-8") as infh:
+                pid = infh.readline().strip()
             if int(pid) != os.getpid():
                 self.warning(
-                    "Releasing stale lock from pid %s (Out PID=%d)" % (pid, os.getpid())
+                    f"Releasing stale lock from pid {pid} (Out PID={os.getpid()})"
                 )
                 self.release_lock(filename)
             else:
                 return False
-        infh = open(lockfile, "w")
-        infh.write(f"{os.getpid()}\n")
-        infh.close()
+        with open(lockfile, "w", encoding="utf-8") as infh:
+            infh.write(f"{os.getpid()}\n")
         return True
 
     ##########################################################################
     def release_lock(self, filename):
         """Release lock"""
-        lockfile = "%s.lock" % filename
+        lockfile = f"{filename}.lock"
         os.unlink(lockfile)
 
     ##########################################################################
@@ -953,7 +952,7 @@ class storageVolmanager(explorerbase.ExplorerBase):
             if "no such set" in line:
                 continue
             if subline:  # Handle lines split over multiple lines
-                line = "%s %s" % (subline, line)
+                line = f"{subline} {line}"
                 subline = ""
             if line.endswith("\\"):
                 subline = line[:-1]
@@ -1024,17 +1023,20 @@ class storageVolmanager(explorerbase.ExplorerBase):
     ##########################################################################
     def cross_match(self):
         """Match subs etc with masters"""
-        for md in self.meta_list():
-            if md not in self:
-                self.warning("md=%s in meta_list but not found in data" % md)
+        for meta in self.meta_list():
+            if meta not in self:
+                self.warning(f"meta={meta} in meta_list but not found in data")
                 continue
-            if md == "metadb":
+            if meta == "metadb":
                 continue
-            if self[md]["type"] == "partition":
+            if self[meta]["type"] == "partition":
                 continue
-            if self[md]["type"] == "mirror":
-                for subm in self[md]["submirrors"]:
-                    self[subm]["partof"].add(md)
+            if self[meta]["type"] == "mirror":
+                for subm in self[meta]["submirrors"]:
+                    try:
+                        self[subm]["partof"].add(meta)
+                    except KeyError:
+                        self.warning(f"Submirror {subm} not found")
 
     ##########################################################################
     def parseSoftpar(self, metadev, bits, diskset):

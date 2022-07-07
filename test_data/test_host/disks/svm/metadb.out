@@ -1,0 +1,4 @@
+	flags		first blk	block count
+     a m  pc luo    	16		8192		/dev/dsk/c1d14s7
+     a    pc luo    	8208		8192		/dev/dsk/c1d14s7
+     a    pc luo    	16400		8192		/dev/dsk/c1d14s7

@@ -147,10 +147,9 @@ class Explorer:
     def save_pickle(self):
         """TODO"""
         try:
-            f = open(self.picklepath, "wb")
-            blob = (self.data, self.issues, self.parts)
-            pickle.dump(blob, f)
-            f.close()
+            with open(self.picklepath, "wb") as outfh:
+                blob = (self.data, self.issues, self.parts)
+                pickle.dump(blob, outfh)
         except IOError:
             pass
 
@@ -160,10 +159,9 @@ class Explorer:
         if not os.path.exists(self.picklepath):
             return False
         try:
-            f = open(self.picklepath)
-            blob = pickle.load(f)
-            (self.data, self.issues, self.parts) = blob
-            f.close()
+            with open(self.picklepath) as infh:
+                blob = pickle.load(infh)
+                (self.data, self.issues, self.parts) = blob
         except Exception as err:
             self.warning("load_pickle() Failed %s" % (str(err)))
             return False
