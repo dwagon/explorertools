@@ -1,0 +1,4 @@
+NAME       SIZE  ALLOC   FREE  CAP  DEDUP  HEALTH  ALTROOT
+datapool   149G   168K   149G   0%  1.00x  ONLINE  -
+rpool      248G   108G   140G  43%  1.00x  ONLINE  -
+swappool  49.8G    47G  2.75G  94%  1.00x  ONLINE  -

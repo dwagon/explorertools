@@ -1,20 +1,29 @@
-#live-upgrade:<Sun Jan 31 11:05:30 AEDT 2016> updated boot environment <oct2015>
-#live-upgrade:<Sun Jan 31 10:21:40 EST 2016> updated boot environment <jun2015>
-#live-upgrade:<Sun Sep 21 12:01:56 EST 2014> updated boot environment <apr2014>
-#live-upgrade:<Sat Oct 20 16:03:38 EST 2012> updated boot environment <oct2012>
 #device		device		mount		FS	fsck	mount	mount
 #to mount	to fsck		point		type	pass	at boot	options
 #
-fd	-	/dev/fd	fd	-	no	-
-/proc	-	/proc	proc	-	no	-
-/dev/zvol/dsk/rpool/swap	-	-	swap	-	no	-
-/devices	-	/devices	devfs	-	no	-
-sharefs	-	/etc/dfs/sharetab	sharefs	-	no	-
-ctfs	-	/system/contract	ctfs	-	no	-
-objfs	-	/system/object	objfs	-	no	-
-swap	-	/tmp	tmpfs	-	yes	-
-#  DOVETON tscluster01 config directory
-#dovevs-tsc.toll.com.au:/Boot-Data/tscluster01	-	/tscluster01	nfs	-	yes	rsize=131072,wsize=131072
-#hnas-dov-tscluster.toll.com.au:/Boot-Data/tscluster01   -       /tscluster01    nfs     -       yes     rsize=131072,wsize=131072,hard,intr,rw,suid,proto=tcp,vers=3
-#L#hnas-dov-tscluster.toll.com.au:/Boot-Data/tscluster03   -       /tscluster03   nfs     -       yes     rsize=131072,wsize=131072,hard,intr,rw,suid,proto=tcp,vers=3
-hnas-dov-tscluster.toll.com.au:/boot_data/tscluster03   -       /tscluster03   nfs     -       yes     rsize=131072,wsize=131072,hard,intr,rw,suid,proto=tcp,vers=3
+# START Informational entries for filesystems mounted by the kernel
+#/devices	-		/devices	devfs	-	no	-
+#/proc		-		/proc		proc	-	no	-
+#ctfs		-		/system/contract ctfs	-	no	-
+#objfs		-		/system/object	objfs	-	no	-
+#sharefs	-		/etc/dfs/sharetab	sharefs	-	no	-
+#fd		-		/dev/fd		fd	-	no	-
+#swap		-		/tmp		tmpfs	-	yes	-
+# END Informational entries for filesystems mounted by the kernel
+
+/dev/zvol/dsk/rpool/swap	-		-		swap	-	no	-
+/dev/zvol/dsk/swappool/swap	-		-		swap	-       no	-
+
+#Database File System
+
+/dev/md/dsk/d10	 /dev/md/rdsk/d10		/unibis 		ufs		2		yes		logging
+/dev/md/dsk/d11	 /dev/md/rdsk/d11		/unibis/sort-area 	ufs 		2 		yes 		logging
+/dev/md/dsk/d12	 /dev/md/rdsk/d12		/unibis/spool 		ufs		2 		yes		logging
+/dev/md/dsk/d13	 /dev/md/rdsk/d13 		/unibis/online-bkup     ufs		2		yes		logging
+/dev/md/dsk/d14  /dev/md/rdsk/d14		/unibis/data/AI2 	ufs		2		yes		logging
+/dev/md/dsk/d15	 /dev/md/rdsk/d15		/unibis/data/BI1 	ufs		2		yes		logging
+/dev/md/dsk/d16	 /dev/md/rdsk/d16		/unibis/data/AI1 	ufs 		2 		yes		logging
+/dev/md/dsk/d17  /dev/md/rdsk/d17		/unibis/data/DB1 	ufs		2		yes		logging
+/dev/md/dsk/d18	 /dev/md/rdsk/d18  		/unibis/data/BI2 	ufs 		2		yes		logging
+/dev/md/dsk/d19	 /dev/md/rdsk/d19		/unibis/data/DB2 	ufs		2 		yes		logging
+

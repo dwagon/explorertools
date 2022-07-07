@@ -1,0 +1,19 @@
+               capacity     operations    bandwidth
+pool        alloc   free   read  write   read  write
+---------   -----  -----  -----  -----  -----  -----
+datapool     168K   149G      0      0      2      0
+  c1d13s0    168K   149G      0      0      2      0
+---------   -----  -----  -----  -----  -----  -----
+               capacity     operations    bandwidth
+pool        alloc   free   read  write   read  write
+---------   -----  -----  -----  -----  -----  -----
+rpool        108G   140G     18     31  2.03M  2.76M
+  c1d0       108G   140G     18     31  2.03M  2.76M
+---------   -----  -----  -----  -----  -----  -----
+               capacity     operations    bandwidth
+pool        alloc   free   read  write   read  write
+---------   -----  -----  -----  -----  -----  -----
+swappool      47G  2.75G      0      0  2.12K  3.11K
+  c1d15s0     47G  2.75G      0      0  2.12K  3.11K
+---------   -----  -----  -----  -----  -----  -----
+
