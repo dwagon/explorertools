@@ -1,0 +1,21 @@
+* /dev/rdsk/c1d1s0 partition map
+*
+* Dimensions:
+*     512 bytes/sector
+*      56 sectors/track
+*     224 tracks/cylinder
+*   12544 sectors/cylinder
+*   19727 cylinders
+*   19725 accessible cylinders
+*
+* Label:
+*   SMI/VTOC
+*
+* Flags:
+*   1: unmountable
+*  10: read-only
+*
+*                          First     Sector    Last
+* Partition  Tag  Flags    Sector     Count    Sector  Mount Directory
+       0      2    00          0 247430400 247430399
+       2      5    01          0 247430400 247430399

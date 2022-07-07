@@ -1,0 +1,23 @@
+* /dev/rdsk/c1d0s0 partition map
+*
+* Dimensions:
+*     512 bytes/sector
+* 524288000 sectors
+* 524287933 accessible sectors
+*
+* Label:
+*   EFI/GPT
+*
+* Flags:
+*   1: unmountable
+*  10: read-only
+*
+* Unallocated space:
+*	First     Sector    Last
+*	Sector     Count    Sector 
+*          34       222       255
+*
+*                          First     Sector    Last
+* Partition  Tag  Flags    Sector     Count    Sector  Mount Directory
+       0      4    00        256 524271327 524271582
+       8     11    00  524271583     16384 524287966

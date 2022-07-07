@@ -1,4 +1,3 @@
-#!/usr/bin/env python
 """
 Script to understand disk details
 """
@@ -219,23 +218,23 @@ class Disks(explorerbase.ExplorerBase):
     def __init__(self, config):
         explorerbase.ExplorerBase.__init__(self, config)
         self.strg = storage.Storage(config)
-        for disk in self.strg.diskList():
+        for disk in self.strg.disk_list():
             self[disk] = Disk(config, disk, self.strg[disk], self.strg)
             for slic in self[disk]["slices"]:
                 self[disk][slic] = Slice(config, slic, self.strg[slic], self.strg)
         self.analyse()
 
     ##########################################################################
-    def diskList(self):
+    def disk_list(self):
         """TODO"""
         return self.values()
 
     ##########################################################################
     def analyse(self):
         """TODO"""
-        for d in self.diskList():
-            d.analyse()
-            self.inheritIssues(d)
+        for dsk in self.disk_list():
+            dsk.analyse()
+            self.inheritIssues(dsk)
         self.analyseRaidctl()
         self.analyseLuxadm()
 
@@ -346,10 +345,10 @@ class Disks(explorerbase.ExplorerBase):
         """
         # self.arrays={}
         for luxf in self.glob("disks/luxadm_display_*"):
-            self.analyseLuxDisplay(luxf)
+            self.analyse_luxdisplay(luxf)
 
     ##########################################################################
-    def analyseLuxDisplay(self, luxf):
+    def analyse_luxdisplay(self, luxf):
         """TODO"""
         infh = self.open(luxf)
         for line in infh:
@@ -379,12 +378,14 @@ class storageDisks(explorerbase.ExplorerBase):
     """
 
     ##########################################################################
-    def __init__(self, config, data={}):
+    def __init__(self, config, data=None):
         explorerbase.ExplorerBase.__init__(self, config)
+        if data is None:
+            data = {}
         self.data = data
         self.channelmap = {}
         self.parse()
-        self.selfPopulate()
+        self.self_populate()
 
     ##########################################################################
     def parse(self):
@@ -410,7 +411,7 @@ class storageDisks(explorerbase.ExplorerBase):
         self.parse_linux_multipath()
         self.parse_linux_pvs()
         self.parse_linux_hardwarepy(self.parse_linux_hardwarepy_chunk)
-        for disk in self.diskList():
+        for disk in self.disk_list():
             self.postProcess(disk)
 
     ##########################################################################
@@ -481,7 +482,7 @@ class storageDisks(explorerbase.ExplorerBase):
     ##########################################################################
     def parse_linux_multipath_stanza(self, buffer):
         """TODO"""
-        name = "mpath_%s" % buffer.splitlines()[0].split()[0]
+        name = f"mpath_{buffer.splitlines()[0].split()[0]}"
         if name not in self:
             self[name] = storage.Storage.initialDict(
                 {
@@ -552,16 +553,16 @@ class storageDisks(explorerbase.ExplorerBase):
         self.parsePathToInst()
         self.parseLuxadm()
         for disk in self["disks"]:
-            self.parseDisk(disk)
+            self.parse_disk(disk)
         datadev = self.parseIostatE()
-        for dev in datadev:
-            self.matchDiskToPath(datadev[dev])
-        for disk in self.diskList():
+        for _, val in datadev.items():
+            self.matchDiskToPath(val)
+        for disk in self.disk_list():
             self.postProcess(disk)
         self.parseRaidctl()
 
     ##########################################################################
-    def parseDisk(self, disk):
+    def parse_disk(self, disk):
         """TODO"""
         self.parse_prtvtoc(disk)
 
@@ -643,22 +644,22 @@ class storageDisks(explorerbase.ExplorerBase):
     ##########################################################################
     def mergeDrivemap(self, disk):
         """Take the options listed in drivemap for this device and merge them in"""
-        d = self[disk]
-        if "product" in d and d["product"] in drivemap.drivemap:
-            dr = drivemap.drivemap[d["product"]]
+        dsk = self[disk]
+        if "product" in dsk and dsk["product"] in drivemap.drivemap:
+            dr = drivemap.drivemap[dsk["product"]]
             for k, v in dr.items():
-                d[k] = v
+                dsk[k] = v
 
     ##########################################################################
     def protectionCheck(self):
         """If a disk from the drivemap is listed as protected, then
         mark it as such"""
 
-        for disk in self.diskList():
-            d = self[disk]
-            if "product" in d and d["product"] in drivemap.drivemap:
-                if "protected" in drivemap.drivemap[d["product"]]:
-                    d["protected"] = drivemap.drivemap[d["product"]]["protected"]
+        for disk in self.disk_list():
+            dsk = self[disk]
+            if "product" in dsk and dsk["product"] in drivemap.drivemap:
+                if "protected" in drivemap.drivemap[dsk["product"]]:
+                    dsk["protected"] = drivemap.drivemap[dsk["product"]]["protected"]
 
     ##########################################################################
     def parseRaidctl(self):
@@ -765,7 +766,7 @@ class storageDisks(explorerbase.ExplorerBase):
 
         # Handle multipathed disks
         if disk in self.channelmap:
-            self[disk]["aliases"] = set([d for d in self.channelmap[disk] if d != disk])
+            self[disk]["aliases"] = set([_ for _ in self.channelmap[disk] if _ != disk])
 
     ##########################################################################
     def isRemovable(self, disk):
@@ -881,17 +882,17 @@ class storageDisks(explorerbase.ExplorerBase):
         infh.close()
 
     ##########################################################################
-    def matchDiskToPath(self, d):
+    def matchDiskToPath(self, dsk):
         """Match the disk to the path found in path_to_inst
         so we can tie a disk in c0t0d0 format to one in sd0 format
         """
         try:
-            path = self.devlist[d["device"]]
+            path = self.devlist[dsk["device"]]
         except KeyError:  # device doesn't appear in path_to_inst
-            self.warning("Disk %s isn't in /etc/path_to_inst" % d["device"])
+            self.warning("Disk %s isn't in /etc/path_to_inst" % dsk["device"])
             return
 
-        for disk in self.diskList():
+        for disk in self.disk_list():
             if "path" not in self[disk]:
                 continue
 
@@ -906,11 +907,11 @@ class storageDisks(explorerbase.ExplorerBase):
 
             # Match the device in sd0 format to c0t0d0 by the path_to_inst
             if path.endswith(self[disk]["path"]):
-                for k, v in d.items():
+                for k, v in dsk.items():
                     self[disk][k] = v
                 return
         # This won't match removable media
-        # self.warning("Couldn't match %s %s %s" % (d['device'], path, `d`))
+        # self.warning("Couldn't match %s %s %s" % (dsk['device'], path, `dsk`))
 
     ##########################################################################
     def alternativeParseFormat(self):
@@ -918,8 +919,8 @@ class storageDisks(explorerbase.ExplorerBase):
         Try an alternative approach
         """
         self.addConcern("format", text="Couldn't get format data")
-        disklist = self.glob("disks/prtvtoc/*")
-        for diskfile in disklist:
+        disk_list = self.glob("disks/prtvtoc/*")
+        for diskfile in disk_list:
             # Strip s2 off the end of the filename
             disk = os.path.split(diskfile)[-1][:-2]
             self[disk] = storage.Storage.initialDict(
@@ -1032,6 +1033,7 @@ class storageDisks(explorerbase.ExplorerBase):
 
     ##########################################################################
     def parse_linux_fdisk_chunk(self, lines):
+        """ TODO """
         disk = None
         for line in lines:
             line = line.strip()
@@ -1175,8 +1177,8 @@ class storageDisks(explorerbase.ExplorerBase):
         infh.close()
 
     ##########################################################################
-    def selfPopulate(self):
-        for d in self.diskList():
+    def self_populate(self):
+        for d in self.disk_list():
             # If a disk is raid protected then its slices are also
             if "protected" in self[d]:
                 for s in self[d]["slices"]:
@@ -1203,7 +1205,7 @@ class storageDisks(explorerbase.ExplorerBase):
 
     ##########################################################################
     def cross_populate(self, data):
-        for disk in self.diskList():
+        for disk in self.disk_list():
             try:
                 self.crossPopulateDisk(data, disk)
             except Exception:
@@ -1278,7 +1280,7 @@ class storageDisks(explorerbase.ExplorerBase):
         """
         Check to see if the disks are actually used
         """
-        for disk in self.diskList():
+        for disk in self.disk_list():
             # If the entire disk has a use then we don't need to check slices
             if data[disk]["use"]:
                 data[disk]["unused"] = False
@@ -1299,7 +1301,7 @@ class storageDisks(explorerbase.ExplorerBase):
 
         # If the disk is a multipath'd one then if we are used then
         # the other disks are used
-        for disk in self.diskList():
+        for disk in self.disk_list():
             if not data[disk]["unused"] and "aliases" in data[disk]:
                 for d in data[disk]["aliases"]:
                     data[d]["unused"] = False
@@ -1512,7 +1514,7 @@ class storageDisks(explorerbase.ExplorerBase):
         return str
 
     ##########################################################################
-    def diskList(self):
+    def disk_list(self):
         """Return a list of disks defined on this server
         In the storage class this returns a list of keys, in Disks
         class it returns a list of instances of Disk.

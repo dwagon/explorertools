@@ -1,0 +1,28 @@
+* /dev/rdsk/c1d14s0 (volume "METADB") partition map
+*
+* Dimensions:
+*     512 bytes/sector
+*      32 sectors/track
+*     128 tracks/cylinder
+*    4096 sectors/cylinder
+*    1024 cylinders
+*    1022 accessible cylinders
+*
+* Label:
+*   SMI/VTOC
+*
+* Flags:
+*   1: unmountable
+*  10: read-only
+*
+* Unallocated space:
+*	First     Sector    Last
+*	Sector     Count    Sector 
+*      393216    270336    663551
+*
+*                          First     Sector    Last
+* Partition  Tag  Flags    Sector     Count    Sector  Mount Directory
+       0      2    00          0    131072    131071
+       1      3    01     131072    262144    393215
+       2      5    01          0   4186112   4186111
+       7      4    00     663552   3522560   4186111
