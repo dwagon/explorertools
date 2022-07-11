@@ -28,7 +28,7 @@ class VxvmVolume(explorerbase.ExplorerBase):
     def analyse(self):
         """TODO"""
         if self["use"] == "Unused":
-            self.addConcern("volume", obj=self.name(), text="Volume is not used")
+            self.add_concern("volume", obj=self.name(), text="Volume is not used")
 
 
 ##########################################################################
@@ -108,15 +108,15 @@ class Vxvm(explorerbase.ExplorerBase):
         """TODO"""
         for dg in self.diskgroups_list():
             self[dg].analyse()
-            self.inheritIssues(self[dg])
+            self.inherit_issues(self[dg])
 
         for vol in self.volumes_list():
             self[vol].analyse()
-            self.inheritIssues(self[vol])
+            self.inherit_issues(self[vol])
 
         for dgv in self.dgvols_list():
             self[dgv].analyse()
-            self.inheritIssues(self[dgv])
+            self.inherit_issues(self[dgv])
 
 
 ##########################################################################

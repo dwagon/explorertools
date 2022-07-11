@@ -175,7 +175,7 @@ class ExplorerBase:
             return self.hostname
 
     ##########################################################################
-    def addCpu(self, *args, **kwargs):
+    def add_cpu(self, *args, **kwargs):
         """TODO"""
         if args:
             kwargs["desc"] = args[0]
@@ -183,7 +183,7 @@ class ExplorerBase:
         self.addPart(**kwargs)
 
     ##########################################################################
-    def addMem(self, *args, **kwargs):
+    def add_mem(self, *args, **kwargs):
         """TODO"""
         if args:
             kwargs["desc"] = args[0]
@@ -191,7 +191,7 @@ class ExplorerBase:
         self.addPart(**kwargs)
 
     ##########################################################################
-    def addPart(self, **kwargs):
+    def add_part(self, **kwargs):
         """TODO"""
         if "fullpart" in kwargs:
             kwargs = kwargs["fullpart"]
@@ -217,7 +217,7 @@ class ExplorerBase:
         return False
 
     ##########################################################################
-    def inheritIssues(self, obj):
+    def inherit_issues(self, obj):
         """Inherit all the issues from those in obj
         This is uses so a collector object (e.g. Disks) will get the issues
         from the things that it collects (e.g. Disk)
@@ -226,7 +226,7 @@ class ExplorerBase:
             self.addIssue(iss)
 
     ##########################################################################
-    def addIssue(self, *args, **kwargs):
+    def add_issue(self, *args, **kwargs):
         """TODO"""
         if args and args[0].__class__.__name__ == "Issue":
             self.issues.append(args[0])
@@ -413,7 +413,7 @@ class ExplorerBase:
             proc(buff, class_)
 
     ##########################################################################
-    def parseIostat(self, filename="disks/iostat_-E.out"):
+    def parse_iostat(self, filename="disks/iostat_-E.out"):
         """Parse iostat -E output; this would normally belong under disks, but it also
         handles tapes as well
         """
@@ -427,79 +427,82 @@ class ExplorerBase:
             line = line.strip()
             if not line:
                 continue
-            matchobj = re.match(
+            if matchobj := re.match(
                 r"(?P<device>\S+)\s*Soft Errors: (?P<softerrors>\d+) Hard Errors: (?P<harderrors>\d+) Transport Errors: (?P<transerrors>\d+)",
                 line,
-            )
-            if matchobj:
+            ):
                 dev = matchobj.group("device")
                 datadev[dev] = {}
                 datadev[dev].update(matchobj.groupdict())
                 continue
-            matchobj = re.match(
+            if matchobj := re.match(
+                r"(?P<device>\S+)\s*Soft Errors: (?P<softerrors>\d+) Transport Errors: (?P<transerrors>\d+) Protocol Errors: (?P<proterrors>\d+)",
+                line,
+            ):
+                dev = matchobj.group("device")
+                datadev[dev] = {}
+                datadev[dev].update(matchobj.groupdict())
+                continue
+            if matchobj := re.match(
+                r"Vendor: (?P<vendor>.*?)\s+Product: (?P<product>.*?)\s+Size: (?P<size>\S+) <(?P<bytes>-?\d+) bytes>",
+                line,
+            ):
+                datadev[dev].update(matchobj.groupdict())
+                continue
+            if matchobj := re.match(
                 r"Vendor: (?P<vendor>.*?)\s+Product: (?P<product>.*?)\s+Revision: (?P<revision>.*) Serial No:(?P<serial>.*)",
                 line,
-            )
-            if matchobj:
+            ):
                 datadev[dev].update(matchobj.groupdict())
                 continue
             # system info version
-            matchobj = re.match(
+            if matchobj := re.match(
                 r"^(?P<vendor>.*?)\s+Product: (?P<product>.*?)\s+Revision: (?P<revision>.*) Serial No:(?P<serial>.*)",
                 line,
-            )
-            if matchobj:
+            ):
                 datadev[dev].update(matchobj.groupdict())
                 continue
-            matchobj = re.match(
+            if matchobj := re.match(
                 r"Model: (?P<model>.*) Revision: (?P<revision>.*) Serial No: (?P<serial>.*)",
                 line,
-            )
-            if matchobj:
+            ):
                 datadev[dev].update(matchobj.groupdict())
                 continue
-            matchobj = re.match(r"Size: (?P<size>\S+) <(?P<bytes>-?\d+) bytes>", line)
-            if matchobj:
+            if matchobj := re.match(r"Size: (?P<size>\S+) <(?P<bytes>-?\d+) bytes>", line):
                 datadev[dev].update(matchobj.groupdict())
                 continue
             # system info version
-            matchobj = re.match(r"^(?P<size>\S+) <(?P<bytes>-?\d+) bytes>", line)
-            if matchobj:
+            if matchobj := re.match(r"^(?P<size>\S+) <(?P<bytes>-?\d+) bytes>", line):
                 datadev[dev].update(matchobj.groupdict())
                 continue
-            matchobj = re.match(
+            if matchobj := re.match(
                 r"Media Error: (?P<mediaerror>\d+) Device Not Ready: (?P<devnotready>\d+)\s+No Device: (?P<nodev>\d+) Recoverable: (?P<recoverable>\d+)",
                 line,
-            )
-            if matchobj:
+            ):
                 datadev[dev].update(matchobj.groupdict())
                 continue
-            matchobj = re.match(
+            if matchobj := re.match(
                 r"Illegal Request: (?P<illreq>\d+) Predictive Failure Analysis: (?P<predfail>\d+)",
                 line,
-            )
-            if matchobj:
+            ):
                 datadev[dev].update(matchobj.groupdict())
                 continue
-            matchobj = re.match(r"Illegal Request: (?P<illreq>\d+)", line)
-            if matchobj:
+            if matchobj := re.match(r"Illegal Request: (?P<illreq>\d+)", line):
                 datadev[dev].update(matchobj.groupdict())
                 continue
-            matchobj = re.match(
+            if matchobj := re.match(
                 r"RPM: (?P<rpm>\d+) Heads: (?P<heads>\d+) Size: (?P<size>\S+) <(?P<bytes>-?\d+) bytes>",
                 line,
-            )
-            if matchobj:
+            ):
                 datadev[dev].update(matchobj.groupdict())
                 continue
             # system info version
-            matchobj = re.match(r"^(?P<disk>c\d+t\d+d\d+)$", line)
-            if matchobj:
+            if matchobj := re.match(r"^(?P<disk>c\d+t\d+d\d+)$", line):
                 dev = matchobj.group("disk")
                 datadev[dev] = {}
                 datadev[dev].update(matchobj.groupdict())
                 continue
-            self.Debug(f"Unhandled iostat line >{line}<")
+            self.debug(f"Unhandled iostat line >{line}<")
         infh.close()
         return datadev
 

@@ -1,0 +1,15 @@
+svc:/network/smb:default (SMB properties)
+ State: disabled since Sun Apr 10 05:40:08 2022
+Reason: Disabled by an administrator.
+   See: http://support.oracle.com/msg/SMF-8000-05
+   See: man -M /usr/share/man -s 5 smb
+   See: /var/svc/log/network-smb:default.log
+Impact: 1 dependent service is not running:
+        svc:/network/smb/client2:default
+
+svc:/application/pkg/server:default (image packaging repository)
+ State: maintenance since Sun Apr 10 05:40:22 2022
+Reason: Start method failed repeatedly, last exited with status 1.
+   See: http://support.oracle.com/msg/SMF-8000-KS
+   See: /var/svc/log/application-pkg-server:default.log
+Impact: This service is not running.

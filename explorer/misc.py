@@ -275,7 +275,7 @@ class miscDetails(explorerbase.ExplorerBase):
             and "auto-boot?" in self["eeprom"]
             and self["eeprom"]["auto-boot?"] == "false"
         ):
-            self.addIssue("autoboot", category="eeprom", text="auto-boot? set to false")
+            self.add_issue("autoboot", category="eeprom", text="auto-boot? set to false")
 
     ##########################################################################
     def get_processes(self):

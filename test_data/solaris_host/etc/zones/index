@@ -1,0 +1,7 @@
+#
+# Copyright (c) 2016, Oracle and/or its affiliates. All rights reserved.
+#
+# DO NOT EDIT OR REMOVE: this file serves to allow for updating this BE
+# from a system version that does not support a shared zone index file.
+#
+global:installed:/

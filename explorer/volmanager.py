@@ -31,7 +31,7 @@ class Metadev(explorerbase.ExplorerBase):
         """TODO"""
         self.mirror_check()
         if "use" not in self or not self["use"]:
-            self.addConcern(
+            self.add_concern(
                 "useless metadev",
                 obj=self.name(),
                 text=f"No use found for {self.name} {self['description']} (devices %s)"
@@ -61,13 +61,13 @@ class Metadev(explorerbase.ExplorerBase):
         for mount in mounts:
             numsubs = len(self["submirrors"])
             if numsubs < 2 and not self["protected"]:
-                self.addIssue(
+                self.add_issue(
                     "onesidedmirror",
                     obj=mount,
                     text=f"{mount} ({self.name()}) - one sided mirror",
                 )
             elif numsubs > 2:
-                self.addConcern(
+                self.add_concern(
                     "multiwaymirror",
                     obj=mount,
                     text=f"{mount} ({self.name()}) - {numsubs} way mirror"
@@ -126,13 +126,13 @@ class Volmanager(explorerbase.ExplorerBase):
             return
 
         if len(self["metadb"]["devices"]) < 2:
-            self.addIssue(
+            self.add_issue(
                 "metadb diversity",
                 obj="metadb",
                 text="Insufficient diversity of metadbs",
             )
         if len(self["metadb"]["copies"]) < 2:  # Should be 3
-            self.addIssue(
+            self.add_issue(
                 "too few metadb",
                 obj="metadb",
                 text="Insufficient number of metadbs (%d copies)"
@@ -143,13 +143,13 @@ class Volmanager(explorerbase.ExplorerBase):
         devs = {}
         for metadb in self["metadb"]["copies"]:
             if set(self[metadb]["flags"]).intersection(string.ascii_uppercase):
-                self.addIssue(
+                self.add_issue(
                     "failed metadb",
                     obj=list(self[metadb]["contains"])[0],
-                    text="Failure on metadb: %s" % self[metadb]["flags"],
+                    text=f"Failure on metadb: {self[metadb]['flags']}"
                 )
             if "diskset" in self[metadb] and self[metadb]["diskset"]:
-                continue  # TODO - diskset metadbs *sigh*
+                continue  # TO DO - diskset metadbs *sigh*
             numdbs += 1
             dev = list(self[metadb]["contains"])[0]
             devs[dev] = devs.get(dev, 0) + 1
@@ -159,7 +159,7 @@ class Volmanager(explorerbase.ExplorerBase):
             # recommended
             otheruses = self.strg[dev]["use"] - set(["metadb"])
             if otheruses:
-                self.addConcern(
+                self.add_concern(
                     "mounted metadb",
                     obj=dev,
                     text="Slice used for more than metadb: %s"
@@ -167,7 +167,7 @@ class Volmanager(explorerbase.ExplorerBase):
                 )
 
             if numdbs - count < 2:
-                self.addIssue(
+                self.add_issue(
                     "too few metadb on failure",
                     obj=dev,
                     text="Insufficient local metadbs if %s failed (%d left)"
@@ -176,7 +176,7 @@ class Volmanager(explorerbase.ExplorerBase):
                 continue
             pct = (numdbs - count) / float(numdbs)
             if pct < 0.5:
-                self.addIssue(
+                self.add_issue(
                     "too low percentage metadb on failure",
                     obj=dev,
                     text="Insufficient local metadbs if %s failed (%d%% left)"
@@ -193,7 +193,7 @@ class Volmanager(explorerbase.ExplorerBase):
                 self.warning(f"meta {meta} doesn't exist in data but in meta_list")
                 continue
             self[meta].analyse()
-            self.inheritIssues(self[meta])
+            self.inherit_issues(self[meta])
 
     ##########################################################################
     def analyse_linux_mdstat_chunk(self, buff):
@@ -204,7 +204,7 @@ class Volmanager(explorerbase.ExplorerBase):
                 metadev = bits[0]
                 for devbit in bits[4:]:
                     if "(F)" in devbit:
-                        self.addIssue(
+                        self.add_issue(
                             "failed device", obj=metadev, text=f"Failed metadev: {line}"
                         )
 
@@ -252,16 +252,16 @@ class storageVolmanager(explorerbase.ExplorerBase):
                 self["_setmap"][dev] = diskset
             return [p + slic for p in self["_didmap"][did]]
 
-        return "unknown_%s" % didpath
+        return f"unknown_{didpath}"
 
     ##########################################################################
-    def getDevDesc(self, dev):
+    def get_dev_desc(self, dev):
         """Return a description of the metadev suitable for use in a
         mountpoint report"""
 
         ans = ""
         if dev not in self:
-            self.warning("getDevDesc: dev %s not found in data" % dev)
+            self.warning(f"get_dev_desc: dev {dev} not found in data")
             return
         if "type" not in self[dev]:
             return ans
@@ -326,16 +326,16 @@ class storageVolmanager(explorerbase.ExplorerBase):
             if "type" not in self[k]:
                 continue
             slicelist = self[k]["devices"]
-            for slice in slicelist:
-                if slice in data:
-                    data[slice]["partof"].add(k)
+            for slic_ in slicelist:
+                if slic_ in data:
+                    data[slic_]["partof"].add(k)
                     continue
-                baseslice = slice.split("/")[-1]
+                baseslice = slic_.split("/")[-1]
                 if baseslice in data:
                     data[baseslice]["partof"].add(k)
                     continue
-                self.warning("Unmatched meta location %s" % slice)
-                data[slice] = storage.Storage.initial_dict(
+                self.warning("Unmatched meta location %s" % slic_)
+                data[slic_] = storage.Storage.initial_dict(
                     {
                         "_type": "missing",
                         "missedby": k,
@@ -481,8 +481,8 @@ class storageVolmanager(explorerbase.ExplorerBase):
 
         # Hack to fill in slices
         for did in self["_didmap"]:
-            for slice in [0, 2]:
-                didslice = "did/%ss%d" % (did, slice)
+            for slic_ in [0, 2]:
+                didslice = "did/%ss%d" % (did, slic_)
                 self[didslice] = storage.Storage.initial_dict(
                     {
                         "_type": "did_slice",
@@ -491,7 +491,7 @@ class storageVolmanager(explorerbase.ExplorerBase):
                     }
                 )
                 for disk in self["_didmap"][did]:
-                    self[didslice]["contains"].add("%ss%d" % (disk, slice))
+                    self[didslice]["contains"].add("%ss%d" % (disk, slic_))
 
     ##########################################################################
     def parseLinux_mdstat(self):
@@ -675,7 +675,7 @@ class storageVolmanager(explorerbase.ExplorerBase):
                         % metadev
                     )
                     continue
-                self[metadev]["devdesc"] = self.getDevDesc(metadev)
+                self[metadev]["devdesc"] = self.get_dev_desc(metadev)
         if self.config["explorertype"] == "linux":
             self.parseLinux_lvs()
             self.parseLinux_mdstat()

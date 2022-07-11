@@ -26,7 +26,7 @@ class ZfsPool(explorerbase.ExplorerBase):
     def analyse(self):
         """TODO"""
         if self["health"] != "ONLINE":
-            self.addIssue(
+            self.add_issue(
                 "poolhealth",
                 obj=self.objname,
                 text=f"ZFS pool has health of {self['health']}",
@@ -57,7 +57,7 @@ class Zfs(explorerbase.ExplorerBase):
         """TODO"""
         for pool in self.pool_list():
             pool.analyse()
-            self.inheritIssues(pool)
+            self.inherit_issues(pool)
 
 
 ##########################################################################
@@ -193,7 +193,7 @@ class storageZfs(explorerbase.ExplorerBase):
                 data[mntpnt]["pool"] = pool
                 data[mntpnt]["contains"].add(pool)
             else:
-                self.addConcern(
+                self.add_concern(
                     "mount",
                     obj=mntpnt,
                     text=f"ZFS pool {pool} has filesystem {mntpnt} which isn't mounted",

@@ -29,7 +29,7 @@ class SwapThing(explorerbase.ExplorerBase):
     def analyse(self):
         """ TODO """
         if self["devices"] and ("protected" not in self or not self["protected"]):
-            self.addIssue("unprotected", obj=self.name(), text="Swap is not redundant")
+            self.add_issue("unprotected", obj=self.name(), text="Swap is not redundant")
 
 
 ##########################################################################
@@ -55,7 +55,7 @@ class Swap(explorerbase.ExplorerBase):
         """ TODO """
         for swap in self.swap_list():
             swap.analyse()
-            self.inheritIssues(swap)
+            self.inherit_issues(swap)
 
 
 ##########################################################################

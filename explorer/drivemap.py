@@ -250,6 +250,7 @@ drivemap = {
     "HP Virtual CD-ROM": {"fake": True},
     "HP Virtual DVD-ROM": {"fake": True},
     "VIRTUALCDROM DRIVE": {"fake": True},
+    "VDSK": {"fake": True},
     # Tape Drives
     "03592J1A": {
         "desc": "Unknown IBM Tape Drive",

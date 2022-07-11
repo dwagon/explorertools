@@ -142,17 +142,17 @@ class Host(explorerbase.ExplorerBase):
             line = line.strip()
             if line.startswith("Handle"):
                 if "System Information" in data:
-                    for d in data:
-                        if "Product Name" in d:
-                            hwdesc = d.split(":")[1].strip()
+                    for dataline in data:
+                        if "Product Name" in dataline:
+                            hwdesc = dataline.split(":")[1].strip()
                             hwtype, hwname = self.get_hardware(hwdesc)
                             self["hwdesc"] = hwdesc
                             self["hwtype"] = hwtype
                             self["hardware"] = hwname
                 elif "BIOS Information" in data:
-                    for d in data:
-                        if "Version" in d:
-                            self["bios"] = d.split(":")[1].strip()
+                    for dataline in data:
+                        if "Version" in dataline:
+                            self["bios"] = dataline.split(":")[1].strip()
                 data = []
             else:
                 data.append(line)

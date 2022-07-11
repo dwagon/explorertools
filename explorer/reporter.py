@@ -1,10 +1,7 @@
-#!/usr/bin/env python
-#
+"""
 # Module to assist with reporting any problems with the explorer tools
-#
-# Written by Dougal Scott <dwagon@pobox.com>
-# $Id: reporter.py 4431 2013-02-27 07:38:45Z dougals $
-# $HeadURL: http://svn/ops/unix/explorer/trunk/explorer/reporter.py $
+"""
+# Written by Dougal Scott <dougal.scott@gmail.com>
 
 import os
 import sys

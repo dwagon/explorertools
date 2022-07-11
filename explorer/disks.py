@@ -139,7 +139,7 @@ class Disk(explorerbase.ExplorerBase):
         """TODO"""
         # Check for errors
         if "predfail" in self and self["predfail"] != "0":
-            self.addIssue(
+            self.add_issue(
                 "predfail",
                 obj=self.name(),
                 text=f"Disk {self.name()} predicted to fail"
@@ -147,7 +147,7 @@ class Disk(explorerbase.ExplorerBase):
         elif "harderrors" in self:
             # Small numbers of hard errors occur too often
             if int(self["harderrors"]) > 50:
-                self.addIssue(
+                self.add_issue(
                     "harderrors",
                     obj=self.name(),
                     text=f"Disk {self.name()} has {self['harderrors']} hard errors"
@@ -206,7 +206,7 @@ class Disk(explorerbase.ExplorerBase):
                 )
 
         for slic in self.slice_list():
-            self.inheritIssues(slic)
+            self.inherit_issues(slic)
 
 
 ##########################################################################
@@ -234,7 +234,7 @@ class Disks(explorerbase.ExplorerBase):
         """TODO"""
         for dsk in self.disk_list():
             dsk.analyse()
-            self.inheritIssues(dsk)
+            self.inherit_issues(dsk)
         self.analyseRaidctl()
         self.analyseLuxadm()
 
@@ -328,7 +328,7 @@ class Disks(explorerbase.ExplorerBase):
         infh.close()
         for tag, obj in bad_tags:
             if tag:
-                self.addIssue(tag, obj=obj, text=buff)
+                self.add_issue(tag, obj=obj, text=buff)
                 break
 
     ##########################################################################
@@ -361,7 +361,7 @@ class Disks(explorerbase.ExplorerBase):
                 else:
                     status = line.split()[-1].strip()
                 if status not in ("O.K.", "ONLINE", "STANDBY"):
-                    self.addIssue(
+                    self.add_issue(
                         "channel",
                         obj=path,
                         text=f"Channel path {path} has bad status '{status}'",

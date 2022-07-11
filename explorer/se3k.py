@@ -1,15 +1,12 @@
-#!/usr/bin/env python
-#
+"""
 # Script to understand se3k disk array details
-#
-# Written by Dougal Scott <dwagon@pobox.com>
-# $Id: se3k.py 2393 2012-06-01 06:38:17Z dougals $
-# $HeadURL: http://svn/ops/unix/explorer/trunk/explorer/se3k.py $
+"""
+# Written by Dougal Scott <dougal.scott@gmail.com>
 
 import os
 import re
 import string
-import explorer.explorerbase
+from explorer import explorerbase
 
 
 ##########################################################################
@@ -23,14 +20,15 @@ class Storedge(explorerbase.ExplorerBase):
         self["disks"] = {}
         self["hwimage"] = ""
         self["logicaldrives"] = {}
-        self.parseShowDisks()
-        self.parseShowConfiguration()
+        self.parse_show_disks()
+        self.parse_show_configuration()
         self.parseShowEnclosureStatus()
         self.parseShowLogicalDrives()
         self.getHwimage()
 
     ##########################################################################
     def getHwimage(self):
+        """ TODO """
         tbl = {
             "SUN StorEdge 3310": "3310.png",
             "SUN StorEdge 3510": "3510.png",
@@ -40,13 +38,14 @@ class Storedge(explorerbase.ExplorerBase):
             self["hwimage"] = tbl[self["hardware"]]
 
     ##########################################################################
-    def parseShowConfiguration(self):
+    def parse_show_configuration(self):
+        """ TODO """
         fname = "disks/se3k/sccli/%s/show_configuration.out" % self.name()
         if not self.exists(fname):
             return
-        f = self.open(fname)
+        infh = self.open(fname)
         mode = None
-        for line in f:
+        for line in infh:
             try:
                 line = line.strip()
                 if not line:
@@ -66,7 +65,7 @@ class Storedge(explorerbase.ExplorerBase):
                     if line.startswith("FRU Status:"):
                         status = line.split(":")[1].strip()
                         if status != "OK":
-                            self.addIssue(
+                            self.add_issue(
                                 "SE3k_FRU",
                                 obj="%s %s" % (self.name(), fru),
                                 text="FRU (%s) %s has status %s"
@@ -76,7 +75,7 @@ class Storedge(explorerbase.ExplorerBase):
                     if line.startswith("----") or line.startswith("Id"):
                         continue
                     if line.split()[-1].strip() != "OK":
-                        self.addIssue(
+                        self.add_issue(
                             "SE3k_Enclosure",
                             obj="%s" % self.name(),
                             text="Enclosure (%s) has status %s"
@@ -93,7 +92,7 @@ class Storedge(explorerbase.ExplorerBase):
                     status = bits[2].strip()
                     component = " ".join(bits[0:2])
                     if status not in ("OK", "Unknown"):
-                        self.addIssue(
+                        self.add_issue(
                             "SE3k_Component",
                             obj="%s %s" % (self.name(), component),
                             text="Component %s has status %s" % (component, status),
@@ -104,11 +103,12 @@ class Storedge(explorerbase.ExplorerBase):
 
     ##########################################################################
     def parseShowLogicalDrives(self):
+        """ TODO """
         fname = "disks/se3k/sccli/%s/show_logical-drives.out" % self.name()
         if not self.exists(fname):
             return
-        f = self.open(fname)
-        for line in f:
+        infh = self.open(fname)
+        for line in infh:
             line = line.strip()
             if line.startswith("ld"):
                 bits = line.split()
@@ -122,23 +122,24 @@ class Storedge(explorerbase.ExplorerBase):
                     "status": bits[8],
                 }
                 if bits[8] != "Good":
-                    self.addIssue(
+                    self.add_issue(
                         "logical",
                         obj="%s %s" % (self.name(), bits[0]),
                         text="Logical Drive (%s) %s has status %s"
                         % (self["controller"], bits[0], bits[8]),
                     )
-        f.close()
+        infh.close()
 
     ##########################################################################
     def parseShowEnclosureStatus(self):
+        """ TODO """
         if not self.exists(
             "disks/se3k/sccli/%s/show_enclosure-status.out" % self.name()
         ):
             return
-        f = self.open("disks/se3k/sccli/%s/show_enclosure-status.out" % self.name())
+        infh = self.open("disks/se3k/sccli/%s/show_enclosure-status.out" % self.name())
         header = ""
-        for line in f:
+        for line in infh:
             line = line.strip()
             if not line:
                 continue
@@ -157,38 +158,40 @@ class Storedge(explorerbase.ExplorerBase):
                 continue
             bits = line.split()
             if bits[2] not in ("OK", "Unknown"):
-                self.addIssue(
+                self.add_issue(
                     "component",
                     obj="%s %s" % (bits[0], bits[1]),
                     text="%s\n%s" % (header, line),
                 )
-        f.close()
+        infh.close()
 
     ##########################################################################
-    def getDetails(self, line):
-        m = re.search(
+    def get_details(self, line):
+        """ TODO """
+        matchobj = re.search(
             r"sccli: selected device /dev/(rdsk|es)/(?P<device>\S+) \[(?P<hardware>.*) (?P<serial>SN#.*)\]",
             line,
         )
-        if m:
-            self["controller"] = m.group("device")
-            self["hardware"] = m.group("hardware")
-            self["serial"] = m.group("serial")
+        if matchobj:
+            self["controller"] = matchobj.group("device")
+            self["hardware"] = matchobj.group("hardware")
+            self["serial"] = matchobj.group("serial")
         elif "device not supported" in line:
             return
         else:
-            self.fatal("Unknown se3k details: %s" % line)
+            self.fatal(f"Unknown se3k details: {line}")
 
     ##########################################################################
     def analyse(self):
-        pass
+        """ TODO """
 
     ##########################################################################
-    def parseShowDisks(self):
-        f = self.open("disks/se3k/sccli/%s/show_disks.out" % self.name())
-        for line in f:
+    def parse_show_disks(self):
+        """ TODO """
+        infh = self.open("disks/se3k/sccli/%s/show_disks.out" % self.name())
+        for line in infh:
             if line.startswith("sccli"):
-                self.getDetails(line)
+                self.get_details(line)
                 continue
             if line.startswith("Ch"):
                 continue
@@ -199,31 +202,27 @@ class Storedge(explorerbase.ExplorerBase):
             if line.strip().startswith("WWNN"):
                 continue
             bits = line.strip().split()
-            id = bits[1]
+            id_ = bits[1]
             size = bits[2]
             status = bits[5]
             if status not in ("ONLINE", "STAND-BY"):
-                self.addIssue(
+                self.add_issue(
                     "disk",
-                    obj=id,
+                    obj=id_,
                     text="Array %s-%s disk %s has status %s"
-                    % (self.name(), self["controller"], id, status),
+                    % (self.name(), self["controller"], id_, status),
                 )
-            self["disks"][id] = {"size": size, "status": status}
-        f.close()
+            self["disks"][id_] = {"size": size, "status": status}
+        infh.close()
 
 
 ##########################################################################
 # se3k ###################################################################
 ##########################################################################
-
-
 class Se3k(explorerbase.ExplorerBase):
-
     """Understand explorer output with respect to se3k disk arrays"""
 
     ##########################################################################
-
     def __init__(self, config):
         explorerbase.ExplorerBase.__init__(self, config)
         if not self.exists("disks/se3k/rev"):
@@ -232,16 +231,18 @@ class Se3k(explorerbase.ExplorerBase):
             array = os.path.basename(arr)
             self[array] = Storedge(config, array)
             for i in self[array].issues:
-                self.addIssue(i)
+                self.add_issue(i)
 
     ##########################################################################
     def analyse(self):
-        for arr in self.arrayList():
+        """ TODO """
+        for arr in self.array_list():
             arr.analyse()
-            self.inheritIssues(arr)
+            self.inherit_issues(arr)
 
     ##########################################################################
-    def arrayList(self):
+    def array_list(self):
+        """ TODO """
         return sorted([self[a] for a in self.keys()])
 
 

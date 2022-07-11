@@ -1,12 +1,10 @@
 #!/usr/local/bin/python
-#
-# Script to understand svcs output for explorer analysis
-#
-# Written by Dougal Scott <dwagon@pobox.com>
-# $Id: svcs.py 2393 2012-06-01 06:38:17Z dougals $
-# $HeadURL: http://svn/ops/unix/explorer/trunk/explorer/svcs.py $
+"""
+Script to understand svcs output for explorer analysis
+"""
+# Written by Dougal Scott <dougal.scott@gmail.com>
 
-import explorer.explorerbase
+from explorer import explorerbase
 
 
 ##########################################################################
@@ -20,30 +18,31 @@ class Svcs(explorerbase.ExplorerBase):
         explorerbase.ExplorerBase.__init__(self, config)
         if not self.exists("sysconfig/svcs-xv.out"):
             return
-        self.parseSVCS()
+        self.parse_svcs()
 
     ##########################################################################
     def analyse(self):
         pass
 
     ##########################################################################
-    def parseSVCS(self):
-        f = self.open("sysconfig/svcs-xv.out")
+    def parse_svcs(self):
+        """ TODO """
+        infh = self.open("sysconfig/svcs-xv.out")
         buf = []
-        for line in f:
+        for line in infh:
             line = line.rstrip()
             if line.startswith("svc:"):
                 if buf:
-                    subcat = buf[0][buf[0].find("(") + 1 : buf[0].rfind(")")].replace(
+                    subcat = buf[0][buf[0].find("(") + 1: buf[0].rfind(")")].replace(
                         ",", ""
                     )
-                    self.addIssue(subcat, obj=buf[0], text=buf)
+                    self.add_issue(subcat, obj=buf[0], text=buf)
                     buf = []
             buf.append(line)
         if buf:
-            subcat = buf[0][buf[0].find("(") + 1 : buf[0].rfind(")")].replace(",", "")
-            self.addIssue(subcat, obj=buf[0], text=buf)
-        f.close()
+            subcat = buf[0][buf[0].find("(") + 1: buf[0].rfind(")")].replace(",", "")
+            self.add_issue(subcat, obj=buf[0], text=buf)
+        infh.close()
 
 
 # EOF

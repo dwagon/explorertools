@@ -5,7 +5,7 @@
 # $HeadURL: http://svn/ops/unix/explorer/trunk/explorer/zones.py $
 
 import re
-import explorer.explorerbase
+from explorer import explorerbase
 
 
 ##########################################################################
@@ -109,7 +109,7 @@ class Zones(explorerbase.ExplorerBase):
             zone = Zone(self.config, zonename)
             zone["status"] = bits[1]
             if zone["status"] != "installed":
-                self.addConcern(
+                self.add_concern(
                     "status",
                     obj=zonename,
                     text=f"Zone {zonename} is not operational status={zone['status']}",
@@ -133,7 +133,7 @@ class Zones(explorerbase.ExplorerBase):
         """TODO"""
         for zone in self.zone_list():
             zone.analyse()
-            self.inheritIssues(zone)
+            self.inherit_issues(zone)
 
 
 # EOF

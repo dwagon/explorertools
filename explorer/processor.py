@@ -55,7 +55,7 @@ class Processors(explorerbase.ExplorerBase):
         """TODO"""
         for cpudets in self.values():
             cpudets.analyse()
-            self.inheritIssues(cpudets)
+            self.inherit_issues(cpudets)
 
     ##########################################################################
     def _parse_linux_cpuinfo(self):

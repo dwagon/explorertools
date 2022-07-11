@@ -67,7 +67,7 @@ class Fma(explorerbase.ExplorerBase):
             subcat = buff[0].split()[-1].strip()
         if mode == "RESOURCE":
             subcat = buff[0].split()[0].strip()
-        self.addIssue(subcat, obj=buff[0], text=buff)
+        self.add_issue(subcat, obj=buff[0], text=buff)
 
 
 # EOF

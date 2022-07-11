@@ -27,7 +27,7 @@ class Filesystem(explorerbase.ExplorerBase):
     def analyse(self):
         """ TODO """
         if not self["protected"]:
-            self.addIssue(
+            self.add_issue(
                 "unprotected", obj=self.name(), text=f"{self.name()} is not redundant"
             )
 
@@ -56,7 +56,7 @@ class Filesystems(explorerbase.ExplorerBase):
         """ TODO """
         for flsys in self.fs_list():
             flsys.analyse()
-            self.inheritIssues(flsys)
+            self.inherit_issues(flsys)
 
     ##########################################################################
     def fs_list(self):
@@ -414,7 +414,7 @@ class storageFilesystems(explorerbase.ExplorerBase):
             if mntpnt.endswith("/") and mntpnt != "/":
                 mntpnt = mntpnt[:-1]
             if "/dsk/" in bits[1]:  # Should always be /rdsk/
-                self.addIssue(
+                self.add_issue(
                     "vfstab", obj=mntpnt, text=f"FSCK device misconfigured for {mntpnt}"
                 )
             if mntpnt not in self:
@@ -427,7 +427,7 @@ class storageFilesystems(explorerbase.ExplorerBase):
             flsys = self[mntpnt]
             newdev = self.sanitiseDevice(bits[0])
             if "device" in flsys and flsys["device"] != newdev:
-                self.addIssue(
+                self.add_issue(
                     "vfstab",
                     obj=mntpnt,
                     text=f"Mounted device {flsys['device']} disagrees with vfstab device {newdev}"

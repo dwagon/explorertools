@@ -1,24 +1,19 @@
-#!/usr/local/bin/python
-#
-# Script to analyse prtdiag output in explorers for errors
-# This also does a lot of non prtdiag analysis for general hardware detection
-#
-# Written by Dougal Scott <dwagon@pobox.com>
-# $Id: prtdiag.py 3037 2012-10-01 07:23:07Z dougals $
-# $HeadURL: http://svn/ops/unix/explorer/trunk/explorer/prtdiag.py $
+"""
+Script to analyse prtdiag output in explorers for errors
+This also does a lot of non prtdiag analysis for general hardware detection
+"""
+# Written by Dougal Scott <dougal.scott@gmail.com>
 
 # To add a new host you will need to
 #  a) add a line to Prtdiag.parse() to detect it from the first line in prtdiag output
 #  b) create a function to analyse the contents - see others for examples
 
-import sys
 import re
 
-sys.path.append("/app/explorer/lib/python/site-packages")
-import explorer.explorerbase
-import explorer.drivemap
-import explorer.cardmap
-import explorer.hostdet
+from explorer import explorerbase
+from explorer import drivemap
+from explorer import cardmap
+from explorer import hostdet
 
 verbflag = False
 
@@ -104,8 +99,8 @@ class Prtdiag(explorerbase.ExplorerBase):
             self.parse()
             self.removeFalseCards()
             self.aggregateCombos()
-            self.getDriveHardware()
-            self.inheritParts()
+            self.get_drive_hardware()
+            self.inherit_parts()
             if not self.foundCpu:
                 self.warning("Didn't find CPU")
             if not self.foundMem:
@@ -116,7 +111,7 @@ class Prtdiag(explorerbase.ExplorerBase):
             self.warning(err)
 
     ##########################################################################
-    def parseLinux(self, hardware):
+    def parse_linux(self, hardware):
         """TODO"""
         try:
             self.parseLinux_dmidecode()
@@ -407,21 +402,21 @@ class Prtdiag(explorerbase.ExplorerBase):
             r"\d\d:\d\d.\d Class (?P<class>[0-f]{4}): (?P<pciid>[0-f]{4}:[0-f]{4}).*"
         )
 
-        f = self.open(filename)
-        for line in f:
+        infh = self.open(filename)
+        for line in infh:
             m = reg.match(line)
             if m:
                 pciid = m.group("pciid")
 
                 self["pcis"].append(pciid)
                 if pciid in self.pcidb:
-                    self.Debug("pcidb[%s]=%s" % (pciid, self.pcidb[pciid]))
+                    self.debug("pcidb[%s]=%s" % (pciid, self.pcidb[pciid]))
                 else:
-                    f = open("/tmp/pci.log", "a")  # DEBUG
-                    f.write("%s %s\n" % (self.hostname, pciid))  # DEBUG
-                    f.close()  # DEBUG
+                    outfh = open("/tmp/pci.log", "a")  # DEBUG
+                    outfh.write("%s %s\n" % (self.hostname, pciid))  # DEBUG
+                    outfh.close()  # DEBUG
                     self.warning("Unknown pciid=%s" % pciid)
-        f.close()
+        infh.close()
 
     ##########################################################################
     def parseLinux_hardwarepy_chunk(self, buff, class_):
@@ -432,12 +427,12 @@ class Prtdiag(explorerbase.ExplorerBase):
             model = buff["desc"]
             if model.startswith('"') and model.endswith('"'):
                 model = model[1:-1]
-            self.addDrive(model)
+            self.add_drive(model)
         elif class_ == "CDROM":
             model = buff["desc"]
             if model.startswith('"') and model.endswith('"'):
                 model = model[1:-1]
-            self.addDrive(model)
+            self.add_drive(model)
         elif class_ == "AUDIO":
             pass
         elif class_ == "CPU":
@@ -478,14 +473,14 @@ class Prtdiag(explorerbase.ExplorerBase):
         elif class_ == "UNSPEC":
             pass
         else:
-            self.Debug("Unhandled hardware class_=%s" % class_)
+            self.fatal("Unhandled hardware class_=%s" % class_)
 
     ##########################################################################
     def parseLinux_ide(self):
         """TODO"""
         files = self.glob("proc/ide/*/*/model")
-        for f in files:
-            mf = self.open(f)
+        for fname in files:
+            mf = self.open(fname)
             model = mf.readline().strip()
             mf.close()
 
@@ -493,18 +488,18 @@ class Prtdiag(explorerbase.ExplorerBase):
     def parseLinux_scsi(self):
         """TODO"""
         buff = []
-        f = self.open("proc/scsi/scsi")
-        for line in f:
+        infh = self.open("proc/scsi/scsi")
+        for line in infh:
             if "Host" in line:
                 self.parseLinux_scsi_chunk(buff)
                 buff = [line]
             else:
                 buff.append(line)
-        f.close()
+        infh.close()
         self.parseLinux_scsi_chunk(buff)
 
     ##########################################################################
-    def addDrive(self, model):
+    def add_drive(self, model):
         """TODO"""
         if model in drivemap.drivemap:
             desc = drivemap.drivemap[model].get("desc", None)
@@ -534,14 +529,14 @@ class Prtdiag(explorerbase.ExplorerBase):
                 model = m.group("model").strip()
                 if model.startswith('"') and model.endswith('"'):
                     model = model[1:-1]
-                self.addDrive(model)
+                self.add_drive(model)
 
     ##########################################################################
     def parseLinux_dmidecode(self):
         """TODO"""
-        f = self.open("dmidecode")
+        infh = self.open("dmidecode")
         data = []
-        for line in f:
+        for line in infh:
             line = line.strip()
             if line.startswith("Handle"):
                 self.parseDmiBundle(data)
@@ -549,13 +544,13 @@ class Prtdiag(explorerbase.ExplorerBase):
             if line.endswith("Information"):
                 info = " ".join(line.split()[:-1])
             data.append(line)
-        f.close()
+        infh.close()
         self.parseDmiBundle(data)
 
     ##########################################################################
     def dmiline(self, line):
         """TODO"""
-        data = line[line.find(":") + 1 :].strip()
+        data = line[line.find(":") + 1:].strip()
         return data
 
     ##########################################################################
@@ -746,10 +741,10 @@ class Prtdiag(explorerbase.ExplorerBase):
         for loc in self.allCardLocations():
             for card in self[loc]:
                 card.analyse()
-                self.inheritIssues(card)
+                self.inherit_issues(card)
 
     ##########################################################################
-    def inheritParts(self):
+    def inherit_parts(self):
         """Get the parts of the children and make them our own"""
         for loc in self.allCardLocations():
             for card in self[loc]:
@@ -757,13 +752,13 @@ class Prtdiag(explorerbase.ExplorerBase):
                     self.addPart(fullpart=part)
 
     ##########################################################################
-    def getDriveHardware(self):
+    def get_drive_hardware(self):
         """This is not part of Prtdiag analsysis but more part of hardware
         analysis
         """
         if self.config["explorertype"] != "solaris":
             return
-        data = self.parseIostat()
+        data = self.parse_iostat()
         for dev in data:
             if "product" not in data[dev]:
                 if "model" in data[dev]:
@@ -771,7 +766,7 @@ class Prtdiag(explorerbase.ExplorerBase):
                 else:
                     self.warning("No product for %s - %s" % (dev, data[dev]))
                     continue
-            self.addDrive(data[dev]["product"])
+            self.add_drive(data[dev]["product"])
 
     ##########################################################################
     def allCardLocations(self):
@@ -825,6 +820,7 @@ class Prtdiag(explorerbase.ExplorerBase):
             "sun_t1000": self.sun_t1000,
             "sun_t4_1": self.sun_t4,
             "sun_t4_4": self.sun_t4,
+            "sun_t8_2": self.sun_t4,
             "sun_t2000": self.sun_t2000,
             "sun_t5220": self.sun_t5220,
             "sun_t6300": self.sun_t6300,
@@ -872,7 +868,7 @@ class Prtdiag(explorerbase.ExplorerBase):
 
         # Linux
         if self.config["explorertype"] == "linux":
-            self.parseLinux(hardware)
+            self.parse_linux(hardware)
             return
 
         # Solaris
@@ -892,9 +888,9 @@ class Prtdiag(explorerbase.ExplorerBase):
         ipmi = {}
         filename = "ipmi/ipmitool_fru.out"
         if self.exists(filename):
-            f = self.open(filename)
+            infh = self.open(filename)
             self.foundIo = True
-            for line in f:
+            for line in infh:
                 line = line.strip()
                 if line.startswith("FRU Device Description"):
                     name = line.split(":", 1)[-1].split()[0].strip().replace(".fru", "")
@@ -904,19 +900,19 @@ class Prtdiag(explorerbase.ExplorerBase):
                     continue
                 bits = line.split(":", 1)
                 ipmi[name][bits[0].strip()] = bits[1].strip()
-            f.close()
+            infh.close()
 
         filename = "ipmi/ipmitool_chassis_status.out"
         if self.exists(filename):
-            f = self.open(filename)
-            for line in f:
+            infh = self.open(filename)
+            for line in infh:
                 if "Main Power Fault" in line and "true" in line:
-                    self.addIssue("Power", text="Main Power Fault")
+                    self.add_issue("Power", text="Main Power Fault")
                 if "Drive Fault" in line and "true" in line:
-                    self.addIssue("Drive", text="Drive Fault")
+                    self.add_issue("Drive", text="Drive Fault")
                 if "Cooling/Fan Fault" in line and "true" in line:
-                    self.addIssue("Fan", text="Cooling/Fan Fault")
-            f.close()
+                    self.add_issue("Fan", text="Cooling/Fan Fault")
+            infh.close()
         return ipmi
 
     ##########################################################################
@@ -989,8 +985,8 @@ class Prtdiag(explorerbase.ExplorerBase):
                 self.addMem(desc=desc, option=option, part=part, size=size)
 
         if self.exists("sysconfig/prtpicl-v.out"):
-            f = self.open("sysconfig/prtpicl-v.out")
-            for line in f:
+            infh = self.open("sysconfig/prtpicl-v.out")
+            for line in infh:
                 if ":brand-string" in line:
                     cpu = line.replace(":brand-string", "").strip()
                     self.foundCpu = True
@@ -1008,7 +1004,7 @@ class Prtdiag(explorerbase.ExplorerBase):
                         )
                     else:
                         self.warning("Unhandled V20Z CPU: %s" % cpu)
-            f.close()
+            infh.close()
 
     ##########################################################################
     def sun_v40z(self):
@@ -1065,8 +1061,8 @@ class Prtdiag(explorerbase.ExplorerBase):
                     self.warning("Unhandled Mem on V40Z: %s" % desc)
 
         if self.exists("sysconfig/prtpicl-v.out"):
-            f = self.open("sysconfig/prtpicl-v.out")
-            for line in f:
+            infh = self.open("sysconfig/prtpicl-v.out")
+            for line in infh:
                 if ":brand-string" in line:
                     cpu = line.replace(":brand-string", "").strip()
                     if cpu in cpuMap:
@@ -1078,7 +1074,7 @@ class Prtdiag(explorerbase.ExplorerBase):
                         )
                     else:
                         self.warning("Unhandled V40Z CPU: %s" % cpu)
-            f.close()
+            infh.close()
 
     ##########################################################################
     def sun_t6300(self):
@@ -1095,7 +1091,7 @@ class Prtdiag(explorerbase.ExplorerBase):
         modeDict = {
             #           'cpu': ('', '== CPUs ==', ''),
             #           'mem': ('', '== Memory Configuration ==', ''),
-            "iocards": ("", "== IO Configuration ==", "", self.parseIo),
+            "iocards": ("", "== IO Configuration ==", "", self.parse_io),
             "hwrev": ("", "== HW Revisions ==", ""),
             "fan": ("Fan sensors", "", ""),
             "temp": ("Temperature sensors", "", ""),
@@ -1122,8 +1118,8 @@ class Prtdiag(explorerbase.ExplorerBase):
             data = self.genericPrtdiag(modeDict)
             self.genericIo(data, ["MB"])
 
-            f = self.open("sysconfig/prtdiag-v.out")
-            for line in f:
+            infh = self.open("sysconfig/prtdiag-v.out")
+            for line in infh:
                 line = line.rstrip()
                 if mode == "fan":
                     self.genericCheck("Fan", line, 1, ["-----", "Status"])
@@ -1135,13 +1131,13 @@ class Prtdiag(explorerbase.ExplorerBase):
                     self.genericCheck("Voltage", line, -1, ["-----", "Status"])
                 if mode == "voltindic":
                     self.genericCheck("Voltage", line, -1, ["-----", "Status"])
-            f.close()
+            infh.close()
 
         if self.exists("Tx000/showenvironment"):
-            f = self.open("Tx000/showenvironment")
-            for line in f:
+            infh = self.open("Tx000/showenvironment")
+            for line in infh:
                 line = line.strip()
-                mode, skip = self.modeSelect(mode, line, envmodeDict)
+                mode, skip = self.mode_select(mode, line, envmodeDict)
                 if skip:
                     continue
                 if mode == "temp":
@@ -1158,7 +1154,7 @@ class Prtdiag(explorerbase.ExplorerBase):
                     self.genericCheck("Voltage", line, 1, ["-----", "Sensor"])
                 if mode == "psu":
                     self.genericCheck("Power Supply", line, 1, ["-----", "Supply"])
-            f.close()
+            infh.close()
 
         self.generic_tx000_showfru("t6300", memMap)
 
@@ -1177,7 +1173,7 @@ class Prtdiag(explorerbase.ExplorerBase):
         modeDict = {
             "cpu": ("", "== Virtual CPUs ==", ""),
             #           'mem': ('', '== Memory Configuration ==', ''),
-            "iocards": ("", "== IO Devices ==", "", self.parseIo),
+            "iocards": ("", "== IO Devices ==", "", self.parse_io),
             "hwrev": ("", "== HW Revisions ==", ""),
             "env": ("", "== Environmental Status ==", ""),
             "fan": ("Fan sensors", "", ""),
@@ -1223,8 +1219,8 @@ class Prtdiag(explorerbase.ExplorerBase):
                 ],
             )
 
-            f = self.open("sysconfig/prtdiag-v.out")
-            for line in f:
+            infh = self.open("sysconfig/prtdiag-v.out")
+            for line in infh:
                 line = line.rstrip()
                 if mode == "cpu":
                     # Lots of threads and virtuals make this mostly irrelevent
@@ -1245,13 +1241,13 @@ class Prtdiag(explorerbase.ExplorerBase):
                     self.genericCheck("LEDs", line, -1, ["-----", "Location"])
                 if mode == "fru":
                     self.genericCheck("LEDs", line, -1, ["-----", "Location"])
-            f.close()
+            infh.close()
 
         if self.exists("Tx000/showenvironment"):
-            f = self.open("Tx000/showenvironment")
-            for line in f:
+            infh = self.open("Tx000/showenvironment")
+            for line in infh:
                 line = line.strip()
-                mode, skip = self.modeSelect(mode, line, envmodeDict)
+                mode, skip = self.mode_select(mode, line, envmodeDict)
                 if skip:
                     continue
                 if mode == "temp":
@@ -1268,7 +1264,7 @@ class Prtdiag(explorerbase.ExplorerBase):
                     self.genericCheck("Voltage", line, 1, ["-----", "Sensor"])
                 if mode == "psu":
                     self.genericCheck("Power Supply", line, 1, ["-----", "Supply"])
-            f.close()
+            infh.close()
 
         self.generic_tx000_showfru("t6320", memMap)
 
@@ -1287,7 +1283,7 @@ class Prtdiag(explorerbase.ExplorerBase):
         modeDict = {
             "cpu": ("", "== CPUs ==", ""),
             "mem": ("", "== Memory Configuration ==", ""),
-            "iocards": ("", "== IO Configuration ==", "", self.parseIo),
+            "iocards": ("", "== IO Configuration ==", "", self.parse_io),
             "hwrev": ("", "== HW Revisions ==", ""),
             "fan": ("Fan sensors", "", ""),
             "temp": ("Temperature sensors", "", ""),
@@ -1324,8 +1320,8 @@ class Prtdiag(explorerbase.ExplorerBase):
             data = self.genericPrtdiag(modeDict)
             self.genericIo(data, ["MB"])
 
-            f = self.open("sysconfig/prtdiag-v.out")
-            for line in f:
+            infh = self.open("sysconfig/prtdiag-v.out")
+            for line in infh:
                 line = line.rstrip()
                 if mode == "fan":
                     self.genericCheck("Fan", line, 1, ["-----", "Status"])
@@ -1337,13 +1333,13 @@ class Prtdiag(explorerbase.ExplorerBase):
                     self.genericCheck("Voltage", line, -1, ["-----", "Status"])
                 if mode == "voltindic":
                     self.genericCheck("Voltage", line, -1, ["-----", "Status"])
-            f.close()
+            infh.close()
 
         if self.exists("Tx000/showenvironment"):
-            f = self.open("Tx000/showenvironment")
-            for line in f:
+            infh = self.open("Tx000/showenvironment")
+            for line in infh:
                 line = line.strip()
-                mode, skip = self.modeSelect(mode, line, envmodeDict)
+                mode, skip = self.mode_select(mode, line, envmodeDict)
                 if skip:
                     continue
                 if mode == "temp":
@@ -1360,7 +1356,7 @@ class Prtdiag(explorerbase.ExplorerBase):
                     self.genericCheck("Voltage", line, 1, ["-----", "Sensor"])
                 if mode == "psu":
                     self.genericCheck("Power Supply", line, 1, ["-----", "Supply"])
-            f.close()
+            infh.close()
 
         self.generic_tx000_showfru("t5220", memMap)
 
@@ -1369,8 +1365,8 @@ class Prtdiag(explorerbase.ExplorerBase):
         """TODO"""
         numdimm = 0
         if self.exists("Tx000/showfru"):
-            f = self.open("Tx000/showfru")
-            for line in f:
+            infh = self.open("Tx000/showfru")
+            for line in infh:
                 line = line.strip()
                 if "Sun_Part_No" in line or "Sun_Part_Dash_Rev" in line:
                     partnum = line.split(":")[-1].strip()
@@ -1390,7 +1386,7 @@ class Prtdiag(explorerbase.ExplorerBase):
                         numdimm += 1
                     else:
                         self.warning("Unhandled Memory in %s: %s" % (label, desc))
-            f.close()
+            infh.close()
 
     ##########################################################################
     def lookupPart(self, partnum):
@@ -1495,9 +1491,9 @@ class Prtdiag(explorerbase.ExplorerBase):
     def sun_4800(self):
         """TODO"""
         modeDict = {
-            "cpu": ("", "== CPUs ==", "", self.parseCpu),
-            "mem": ("", "== Memory Configuration ==", "", self.parseMem),
-            "iocards": ("", "== IO Cards ==", "", self.parseIo),
+            "cpu": ("", "== CPUs ==", "", self.parse_cpu),
+            "mem": ("", "== Memory Configuration ==", "", self.parse_mem),
+            "iocards": ("", "== IO Cards ==", "", self.parse_io),
             "acboards": ("", "== Active Boards for Domain ==", ""),
             "hwstatus": ("", "== Hardware Failures ==", ""),
         }
@@ -1545,9 +1541,9 @@ class Prtdiag(explorerbase.ExplorerBase):
     def sun_15k(self):
         """TODO"""
         modeDict = {
-            "cpu": ("", "== CPUs ==", "", self.parseCpu),
-            "iocards": ("", "== IO Cards ==", "", self.parseIo),
-            "mem": ("", "== Memory Configuration ==", "", self.parseMem),
+            "cpu": ("", "== CPUs ==", "", self.parse_cpu),
+            "iocards": ("", "== IO Cards ==", "", self.parse_io),
+            "mem": ("", "== Memory Configuration ==", "", self.parse_mem),
             "hwrev": ("", "== Diagnostic Information ==", ""),
         }
         cpuMap = {
@@ -1584,9 +1580,9 @@ class Prtdiag(explorerbase.ExplorerBase):
     def sun_25k(self):
         """TODO"""
         modeDict = {
-            "cpu": ("", "== CPUs ==", "", self.parseCpu),
-            "iocards": ("", "== IO Cards ==", "", self.parseIo),
-            "mem": ("", "== Memory Configuration ==", "", self.parseMem),
+            "cpu": ("", "== CPUs ==", "", self.parse_cpu),
+            "iocards": ("", "== IO Cards ==", "", self.parse_io),
+            "mem": ("", "== Memory Configuration ==", "", self.parse_mem),
             "hwrev": ("", "== Diagnostic Information ==", ""),
         }
         cpuMap = {
@@ -1617,10 +1613,10 @@ class Prtdiag(explorerbase.ExplorerBase):
         IO cards are a basket case for the m series
         """
         modeDict = {
-            "cpu": ("", "== CPUs ==", "", self.parseCpu),
-            "mem": ("", "== Memory Configuration ==", "", self.parseMem),
+            "cpu": ("", "== CPUs ==", "", self.parse_cpu),
+            "mem": ("", "== Memory Configuration ==", "", self.parse_mem),
             "hwrev": ("", "== Hardware Revisions ==", ""),
-            "iocards": ("", "== IO Devices ==", "", self.parseIo),
+            "iocards": ("", "== IO Devices ==", "", self.parse_io),
         }
         cpuMap = {
             "6 @ 2150": {
@@ -1647,10 +1643,10 @@ class Prtdiag(explorerbase.ExplorerBase):
         IO cards are a basket case for the m series
         """
         modeDict = {
-            "cpu": ("", "== CPUs ==", "", self.parseCpu),
-            "mem": ("", "== Memory Configuration ==", "", self.parseMem),
+            "cpu": ("", "== CPUs ==", "", self.parse_cpu),
+            "mem": ("", "== Memory Configuration ==", "", self.parse_mem),
             "hwrev": ("", "== Hardware Revisions ==", ""),
-            "iocards": ("", "== IO Devices ==", "", self.parseIo),
+            "iocards": ("", "== IO Devices ==", "", self.parse_io),
         }
         cpuMap = {
             "6 @ 2150": {
@@ -1678,10 +1674,10 @@ class Prtdiag(explorerbase.ExplorerBase):
         IO cards are a basket case for the m series
         """
         modeDict = {
-            "cpu": ("", "== CPUs ==", "", self.parseCpu),
-            "mem": ("", "== Memory Configuration ==", "", self.parseMem),
+            "cpu": ("", "== CPUs ==", "", self.parse_cpu),
+            "mem": ("", "== Memory Configuration ==", "", self.parse_mem),
             "hwrev": ("", "== Hardware Revisions ==", ""),
-            "iocards": ("", "== IO Devices ==", "", self.parseIo),
+            "iocards": ("", "== IO Devices ==", "", self.parse_io),
         }
         cpuMap = {
             "7 @ 2520": {
@@ -1728,8 +1724,8 @@ class Prtdiag(explorerbase.ExplorerBase):
         """TODO"""
         self["numslots"] = 1
         modeDict = {
-            "cpu": ("", "== CPUs ==", "", self.parseCpu),
-            "iocards": ("", "== IO Devices ==", "", self.parseIo),
+            "cpu": ("", "== CPUs ==", "", self.parse_cpu),
+            "iocards": ("", "== IO Devices ==", "", self.parse_io),
             "hwrev": ("", "== HW Revisions ==", ""),
             "memconf": ("", "== Memory Configuration ==", ""),
             "nofailures": ("No failures found", "", ""),
@@ -1759,8 +1755,8 @@ class Prtdiag(explorerbase.ExplorerBase):
         """TODO"""
         self["numslots"] = 1
         modeDict = {
-            "cpu": ("", "== CPUs ==", "", self.parseCpu),
-            "iocards": ("", "== IO Cards ==", "", self.parseIo),
+            "cpu": ("", "== CPUs ==", "", self.parse_cpu),
+            "iocards": ("", "== IO Cards ==", "", self.parse_io),
             "hwrev": ("", "== HW Revisions ==", ""),
             "nofailures": ("No failures found", "", ""),
         }
@@ -1801,9 +1797,9 @@ class Prtdiag(explorerbase.ExplorerBase):
         """TODO"""
         self["numslots"] = 3
         modeDict = {
-            "cpu": ("", "== CPUs ==", "", self.parseCpu),
-            "iocards": ("", "== IO Devices ==", "", self.parseIo),
-            "mem": ("", "== Memory Configuration ==", "", self.parseMem),
+            "cpu": ("", "== CPUs ==", "", self.parse_cpu),
+            "iocards": ("", "== IO Devices ==", "", self.parse_io),
+            "mem": ("", "== Memory Configuration ==", "", self.parse_mem),
             "environ": ("", "== Environmental Status ==", ""),
             "usb": ("", "== usb Devices ==", ""),
             "hwrev": ("", "== HW Revisions ==", ""),
@@ -1852,9 +1848,9 @@ class Prtdiag(explorerbase.ExplorerBase):
         """TODO"""
         # self['numslots']=3
         modeDict = {
-            "cpu": ("", "== CPUs ==", "", self.parseCpu),
-            "iocards": ("", "== IO Devices ==", "", self.parseIo),
-            "mem": ("", "== Memory Configuration ==", "", self.parseMem),
+            "cpu": ("", "== CPUs ==", "", self.parse_cpu),
+            "iocards": ("", "== IO Devices ==", "", self.parse_io),
+            "mem": ("", "== Memory Configuration ==", "", self.parse_mem),
             "environ": ("", "== Environmental Status ==", ""),
             "usb": ("", "== usb Devices ==", ""),
             "hwrev": ("", "== HW Revisions ==", ""),
@@ -1895,10 +1891,10 @@ class Prtdiag(explorerbase.ExplorerBase):
         """TODO"""
         self["numslots"] = 4
         modeDict = {
-            "cpu": ("", "== CPUs ==", "", self.parseCpu),
-            "iocards": ("", "== IO Devices ==", "", self.parseIo),
+            "cpu": ("", "== CPUs ==", "", self.parse_cpu),
+            "iocards": ("", "== IO Devices ==", "", self.parse_io),
             "memconf": ("", "== Memory Configuration ==", ""),
-            # 'mem': ('Bank Table:', '', '', self.parseMem),     # TODO
+            # 'mem': ('Bank Table:', '', '', self.parse_mem),     # TODO
             "environ": ("", "== Environmental Status ==", ""),
             "usb": ("", "== usb Devices ==", ""),
             "hwrev": ("", "== HW Revisions ==", ""),
@@ -1923,10 +1919,10 @@ class Prtdiag(explorerbase.ExplorerBase):
         """TODO"""
         self["numslots"] = 4
         modeDict = {
-            "cpu": ("", "== CPUs ==", "", self.parseCpu),
-            "iocards": ("", "== IO Devices ==", "", self.parseIo),
+            "cpu": ("", "== CPUs ==", "", self.parse_cpu),
+            "iocards": ("", "== IO Devices ==", "", self.parse_io),
             "memconf": ("", "== Memory Configuration ==", ""),
-            # 'mem': ('Bank Table:', '', '', self.parseMem),     # TODO
+            # 'mem': ('Bank Table:', '', '', self.parse_mem),     # TODO
             "environ": ("", "== Environmental Status ==", ""),
             "usb": ("", "== usb Devices ==", ""),
             "hwrev": ("", "== HW Revisions ==", ""),
@@ -1967,8 +1963,8 @@ class Prtdiag(explorerbase.ExplorerBase):
             },
         }
         modeDict = {
-            "cpu": ("", "== Virtual CPUs ==", "", self.parseCpu),
-            "iocards": ("", "== IO Configuration ==", "", self.parseIo),
+            "cpu": ("", "== Virtual CPUs ==", "", self.parse_cpu),
+            "iocards": ("", "== IO Configuration ==", "", self.parse_io),
             "environ": ("", "== Environmental Status ==", ""),
             "hwrev": ("", "== HW Revisions ==", ""),
         }
@@ -2021,10 +2017,10 @@ class Prtdiag(explorerbase.ExplorerBase):
 
         data = self.genericPrtdiag(modeDict)
 
-        f = self.open("Tx000/showenvironment")
-        for line in f:
+        infh = self.open("Tx000/showenvironment")
+        for line in infh:
             line = line.strip()
-            mode, skip = self.modeSelect(mode, line, modeDict)
+            mode, skip = self.mode_select(mode, line, modeDict)
             if skip:
                 continue
             if mode == "temp":
@@ -2043,7 +2039,7 @@ class Prtdiag(explorerbase.ExplorerBase):
                 self.genericCheck("Power Supply", line, 1, ["-----", "Supply"])
             if mode == "current":
                 self.genericCheck("Current", line, 1, ["-----", "Sensor"])
-        f.close()
+        infh.close()
 
     ##########################################################################
     def sun_t2000_prtdiag(self):
@@ -2051,8 +2047,8 @@ class Prtdiag(explorerbase.ExplorerBase):
         mode = "unknown"
         self["numslots"] = 5
         modeDict = {
-            "cpu": ("", "== CPUs ==", "", self.parseCpu),
-            "iocards": ("", "== IO Configuration ==", "", self.parseIo),
+            "cpu": ("", "== CPUs ==", "", self.parse_cpu),
+            "iocards": ("", "== IO Configuration ==", "", self.parse_io),
             "mem": ("", "== Physical Memory Configuration ==", ""),
             "hwrev": ("", "== HW Revisions ==", ""),
         }
@@ -2094,7 +2090,7 @@ class Prtdiag(explorerbase.ExplorerBase):
         numdimms = 0
         self["numslots"] = 3
         modeDict = {
-            "cpu": ("", "== Processor Sockets ==", "", self.parseCpu),
+            "cpu": ("", "== Processor Sockets ==", "", self.parse_cpu),
             "mem": ("", "== Memory Device Sockets ==", ""),
             "obd": ("", "== On-Board Devices ==", ""),
         }
@@ -2106,7 +2102,7 @@ class Prtdiag(explorerbase.ExplorerBase):
         fh = self.open("sysconfig/prtdiag-v.out")
         for line in fh:
             line = line.strip()
-            mode, skip = self.modeSelect(mode, line, modeDict)
+            mode, skip = self.mode_select(mode, line, modeDict)
             if skip:
                 continue
             if mode == "iocards":
@@ -2132,6 +2128,7 @@ class Prtdiag(explorerbase.ExplorerBase):
             if mode == "mem":
                 if "in use" in line:
                     numdimms += 1
+        fh.close()
 
         self.addMem(
             desc="Unknown dimm",
@@ -2146,7 +2143,7 @@ class Prtdiag(explorerbase.ExplorerBase):
         mode = "unknown"
         self["numslots"] = 0
         modeDict = {
-            "cpu": ("", "== CPUs ==", "", self.parseCpu),
+            "cpu": ("", "== CPUs ==", "", self.parse_cpu),
             "iocards": ("", "== IO Cards ==", ""),  # No cards possible
             "hwrev": ("", "== HW Revisions ==", ""),
             "nofailures": ("No failures found", "", ""),
@@ -2209,7 +2206,7 @@ class Prtdiag(explorerbase.ExplorerBase):
         """TODO"""
         self["numslots"] = 0
         modeDict = {
-            "cpu": ("", "== CPUs ==", "", self.parseCpu),
+            "cpu": ("", "== CPUs ==", "", self.parse_cpu),
             "iocards": ("", "== IO Cards ==", ""),
             "hwrev": ("", "== HW Revisions ==", ""),
             "nofailures": ("No failures found", "", ""),
@@ -2252,8 +2249,8 @@ class Prtdiag(explorerbase.ExplorerBase):
         """TODO"""
         self["numslots"] = 4
         modeDict = {
-            "cpu": ("", "== CPUs ==", "", self.parseCpu),
-            "iocards": ("", "== IO Cards ==", "", self.parseIo),
+            "cpu": ("", "== CPUs ==", "", self.parse_cpu),
+            "iocards": ("", "== IO Cards ==", "", self.parse_io),
             "hwrev": ("", "== HW Revisions ==", ""),
             "nofailures": ("No failures found", "", ""),
         }
@@ -2288,8 +2285,8 @@ class Prtdiag(explorerbase.ExplorerBase):
         """TODO"""
         self["numslots"] = 4
         modeDict = {
-            "cpu": ("", "== CPUs ==", "", self.parseCpu),
-            "iocards": ("", "== IO Cards ==", "", self.parseIo),
+            "cpu": ("", "== CPUs ==", "", self.parse_cpu),
+            "iocards": ("", "== IO Cards ==", "", self.parse_io),
             "hwrev": ("", "== HW Revisions ==", ""),
             "nofailures": ("No failures found", "", ""),
         }
@@ -2316,8 +2313,8 @@ class Prtdiag(explorerbase.ExplorerBase):
         """TODO"""
         self["numslots"] = 1
         modeDict = {
-            "cpu": ("", "== CPUs ==", "", self.parseCpu),
-            "iocards": ("", "== IO Cards ==", "", self.parseIo),
+            "cpu": ("", "== CPUs ==", "", self.parse_cpu),
+            "iocards": ("", "== IO Cards ==", "", self.parse_io),
             "hwrev": ("", "== HW Revisions ==", ""),
             "nofailures": ("No failures found", "", ""),
         }
@@ -2349,8 +2346,8 @@ class Prtdiag(explorerbase.ExplorerBase):
         """TODO"""
         self["numslots"] = 3
         modeDict = {
-            "cpu": ("", "== CPUs ==", "", self.parseCpu),
-            "iocards": ("", "== IO Cards ==", "", self.parseIo),
+            "cpu": ("", "== CPUs ==", "", self.parse_cpu),
+            "iocards": ("", "== IO Cards ==", "", self.parse_io),
             "nofailures": ("No failures found", "", ""),
         }
         cpuMap = {
@@ -2374,8 +2371,8 @@ class Prtdiag(explorerbase.ExplorerBase):
         """TODO"""
         self["numslots"] = 3
         modeDict = {
-            "cpu": ("", "== CPUs ==", "", self.parseCpu),
-            "iocards": ("", "== IO Cards ==", "", self.parseIo),
+            "cpu": ("", "== CPUs ==", "", self.parse_cpu),
+            "iocards": ("", "== IO Cards ==", "", self.parse_io),
             "nofailures": ("No failures found", "", ""),
         }
         cpuMap = {
@@ -2396,8 +2393,8 @@ class Prtdiag(explorerbase.ExplorerBase):
         mode = "unknown"
         self["numslots"] = 3
         modeDict = {
-            "cpu": ("", "== CPUs ==", "", self.parseCpu),
-            "iocards": ("", "== IO Cards ==", "", self.parseIo),
+            "cpu": ("", "== CPUs ==", "", self.parse_cpu),
+            "iocards": ("", "== IO Cards ==", "", self.parse_io),
             "nofailures": ("No failures found", "", ""),
         }
         cpuMap = {
@@ -2419,8 +2416,8 @@ class Prtdiag(explorerbase.ExplorerBase):
         """TODO"""
         self["numslots"] = 4
         modeDict = {
-            "cpu": ("", "== CPUs ==", "", self.parseCpu),
-            "iocards": ("", "== IO Cards ==", "", self.parseIo),
+            "cpu": ("", "== CPUs ==", "", self.parse_cpu),
+            "iocards": ("", "== IO Cards ==", "", self.parse_io),
             "nofailures": ("No failures found", "", ""),
         }
         cpuMap = {
@@ -2440,8 +2437,8 @@ class Prtdiag(explorerbase.ExplorerBase):
         """TODO"""
         # self['numslots']=4
         modeDict = {
-            "cpu": ("", "== CPUs ==", "", self.parseCpu),
-            "iocards": ("", "== IO Cards ==", "", self.parseIo),
+            "cpu": ("", "== CPUs ==", "", self.parse_cpu),
+            "iocards": ("", "== IO Cards ==", "", self.parse_io),
             "nofailures": ("No failures found", "", ""),
         }
         cpuMap = {
@@ -2457,8 +2454,8 @@ class Prtdiag(explorerbase.ExplorerBase):
         """TODO"""
         self["numslots"] = 4
         modeDict = {
-            "cpu": ("", "== CPUs ==", "", self.parseCpu),
-            "iocards": ("", "== IO Cards ==", "", self.parseIo),
+            "cpu": ("", "== CPUs ==", "", self.parse_cpu),
+            "iocards": ("", "== IO Cards ==", "", self.parse_io),
             "nofailures": ("No failures found", "", ""),
         }
         cpuMap = {
@@ -2493,7 +2490,7 @@ class Prtdiag(explorerbase.ExplorerBase):
         """These aren't real hosts - rather they are attachments to a 15k or equivalent"""
         mode = "unknown"
         modeDict = {
-            "cpu": ("", "== CPUs ==", "", self.parseCpu),
+            "cpu": ("", "== CPUs ==", "", self.parse_cpu),
             "iocards": ("", "== IO Cards ==", ""),
             "hwrev": ("", "== HW Revisions", ""),
             "nofailures": ("No failures found", "", ""),
@@ -2505,7 +2502,7 @@ class Prtdiag(explorerbase.ExplorerBase):
         fh = self.open("sysconfig/prtdiag-v.out")
         for line in fh:
             line = line.strip()
-            mode, skip = self.modeSelect(mode, line, modeDict)
+            mode, skip = self.mode_select(mode, line, modeDict)
             if skip:
                 continue
             if mode == "iocards":
@@ -2532,7 +2529,7 @@ class Prtdiag(explorerbase.ExplorerBase):
         """These aren't real hosts - rather they are attachments to a 25k or equivalent"""
         mode = "unknown"
         modeDict = {
-            "cpu": ("", "== CPUs ==", "", self.parseCpu),
+            "cpu": ("", "== CPUs ==", "", self.parse_cpu),
             "iocards": ("", "== IO Cards ==", ""),
             "hwrev": ("", "== HW Revisions", ""),
             "nofailures": ("No failures found", "", ""),
@@ -2544,7 +2541,7 @@ class Prtdiag(explorerbase.ExplorerBase):
         fh = self.open("sysconfig/prtdiag-v.out")
         for line in fh:
             line = line.strip()
-            mode, skip = self.modeSelect(mode, line, modeDict)
+            mode, skip = self.mode_select(mode, line, modeDict)
             if skip:
                 continue
             if mode == "iocards":
@@ -2640,7 +2637,7 @@ class Prtdiag(explorerbase.ExplorerBase):
         fh = self.open("sysconfig/prtdiag-v.out")
         for line in fh:
             line = line.strip()
-            mode, skip = self.modeSelect(mode, line, modeDict)
+            mode, skip = self.mode_select(mode, line, modeDict)
             if skip:
                 continue
             if mode == "processor":
@@ -2655,6 +2652,7 @@ class Prtdiag(explorerbase.ExplorerBase):
             if mode == "upgrade":
                 if "in use" in line:
                     pass
+        fh.close()
 
     ##########################################################################
     def sun_x4600(self):
@@ -2730,7 +2728,7 @@ class Prtdiag(explorerbase.ExplorerBase):
         fh = self.open("sysconfig/prtdiag-v.out")
         for line in fh:
             line = line.strip()
-            mode, skip = self.modeSelect(mode, line, modeDict)
+            mode, skip = self.mode_select(mode, line, modeDict)
             if skip:
                 continue
             if mode == "processor":
@@ -2745,6 +2743,7 @@ class Prtdiag(explorerbase.ExplorerBase):
             if mode == "upgrade":
                 if "in use" in line:
                     pass
+        fh.close()
 
     ##########################################################################
     def sun_x4200(self):
@@ -2802,7 +2801,7 @@ class Prtdiag(explorerbase.ExplorerBase):
         fh = self.open("sysconfig/prtdiag-v.out")
         for line in fh:
             line = line.strip()
-            mode, skip = self.modeSelect(mode, line, modeDict)
+            mode, skip = self.mode_select(mode, line, modeDict)
             if skip:
                 continue
             if mode == "processor":
@@ -2817,6 +2816,7 @@ class Prtdiag(explorerbase.ExplorerBase):
             if mode == "upgrade":
                 if "in use" in line:
                     pass
+        fh.close()
 
     ##########################################################################
     def sun_x4140(self):
@@ -2870,7 +2870,7 @@ class Prtdiag(explorerbase.ExplorerBase):
         fh = self.open("sysconfig/prtdiag-v.out")
         for line in fh:
             line = line.strip()
-            mode, skip = self.modeSelect(mode, line, modeDict)
+            mode, skip = self.mode_select(mode, line, modeDict)
             if skip:
                 continue
             if mode == "processor":
@@ -2884,6 +2884,7 @@ class Prtdiag(explorerbase.ExplorerBase):
             if mode == "upgrade":
                 if "in use" in line:
                     pass
+        fh.close()
 
     ##########################################################################
     def sun_t4(self):
@@ -2891,8 +2892,8 @@ class Prtdiag(explorerbase.ExplorerBase):
         mode = "unknown"
         self["numslots"] = 0
         modeDict = {
-            "cpu": ("", "== Virtual CPUs ==", "", self.parseCpu),
-            "iocards": ("", "== IO Devices ==", "", self.parseIo),
+            "cpu": ("", "== Virtual CPUs ==", "", self.parse_cpu),
+            "iocards": ("", "== IO Devices ==", "", self.parse_io),
             "environ": ("", "== Environmental Status ==", ""),
             "fan": ("Fan sensors", "", ""),
             "temp": ("Temperature sensors", "", ""),
@@ -2908,8 +2909,7 @@ class Prtdiag(explorerbase.ExplorerBase):
         if self.exists("sysconfig/prtdiag-v.out"):
             fh = self.open("sysconfig/prtdiag-v.out")
             for line in fh:
-                line = line.strip()
-                mode, skip = self.modeSelect(mode, line, modeDict)
+                mode, skip = self.mode_select(mode, line, modeDict)
                 if skip:
                     continue
                 if mode == "fan":
@@ -2942,6 +2942,7 @@ class Prtdiag(explorerbase.ExplorerBase):
                     self.genericCheck(
                         "FRU", line, [1, 2], ["Location", "-------", "======"]
                     )
+            fh.close()
 
     ##########################################################################
     def sun_x6220(self):
@@ -2981,7 +2982,7 @@ class Prtdiag(explorerbase.ExplorerBase):
             fh = self.open("sysconfig/prtdiag-v.out")
             for line in fh:
                 line = line.strip()
-                mode, skip = self.modeSelect(mode, line, modeDict)
+                mode, skip = self.mode_select(mode, line, modeDict)
                 if skip:
                     continue
                 if mode == "processor":
@@ -2995,6 +2996,7 @@ class Prtdiag(explorerbase.ExplorerBase):
                 if mode == "upgrade":
                     if "in use" in line:
                         pass
+            fh.close()
 
     ##########################################################################
     def sun_x2100(self):
@@ -3054,7 +3056,7 @@ class Prtdiag(explorerbase.ExplorerBase):
             fh = self.open("sysconfig/prtdiag-v.out")
             for line in fh:
                 line = line.strip()
-                mode, skip = self.modeSelect(mode, line, modeDict)
+                mode, skip = self.mode_select(mode, line, modeDict)
                 if skip:
                     continue
                 if mode == "processor":
@@ -3068,6 +3070,7 @@ class Prtdiag(explorerbase.ExplorerBase):
                 if mode == "upgrade":
                     if "in use" in line:
                         pass
+            fh.close()
 
     ##########################################################################
     def sun_x2200(self):
@@ -3127,7 +3130,7 @@ class Prtdiag(explorerbase.ExplorerBase):
             fh = self.open("sysconfig/prtdiag-v.out")
             for line in fh:
                 line = line.strip()
-                mode, skip = self.modeSelect(mode, line, modeDict)
+                mode, skip = self.mode_select(mode, line, modeDict)
                 if skip:
                     continue
                 if mode == "processor":
@@ -3141,6 +3144,7 @@ class Prtdiag(explorerbase.ExplorerBase):
                 if mode == "upgrade":
                     if "in use" in line:
                         pass
+            fh.close()
 
     ##########################################################################
     def vmware(self):
@@ -3217,7 +3221,7 @@ class Prtdiag(explorerbase.ExplorerBase):
             fh = self.open("sysconfig/prtdiag-v.out")
             for line in fh:
                 line = line.strip()
-                mode, skip = self.modeSelect(mode, line, modeDict)
+                mode, skip = self.mode_select(mode, line, modeDict)
                 if skip:
                     continue
                 if mode == "processor":
@@ -3231,15 +3235,16 @@ class Prtdiag(explorerbase.ExplorerBase):
                 if mode == "upgrade":
                     if "in use" in line:
                         pass
+            fh.close()
 
     ##########################################################################
     def sun_v480(self):
         """TODO"""
         mode = "unknown"
         modeDict = {
-            "cpu": ("", "== CPUs ==", "", self.parseCpu),
-            "mem": ("", "== Memory Configuration ==", "", self.parseMem),
-            "iocards": ("", "== IO Cards ==", "", self.parseIo),
+            "cpu": ("", "== CPUs ==", "", self.parse_cpu),
+            "mem": ("", "== Memory Configuration ==", "", self.parse_mem),
+            "iocards": ("", "== IO Cards ==", "", self.parse_io),
             "environ": ("", "==  Environmental Status ==", ""),
             "hwrev": ("", "== HW Revisions ==", ""),
             "temp": ("System Temperatures", "", ""),
@@ -3296,7 +3301,7 @@ class Prtdiag(explorerbase.ExplorerBase):
         fh = self.open("sysconfig/prtdiag-v.out")
         for line in fh:
             line = line.strip()
-            mode, skip = self.modeSelect(mode, line, modeDict)
+            mode, skip = self.mode_select(mode, line, modeDict)
             if skip:
                 continue
 
@@ -3320,9 +3325,9 @@ class Prtdiag(explorerbase.ExplorerBase):
         mode = "unknown"
         self["numslots"] = 4
         modeDict = {
-            "cpu": ("", "== CPUs ==", "", self.parseCpu),
-            "mem": ("", "== Memory Configuration ==", "", self.parseMem),
-            "iocards": ("", "== IO Cards ==", "", self.parseIo),
+            "cpu": ("", "== CPUs ==", "", self.parse_cpu),
+            "mem": ("", "== Memory Configuration ==", "", self.parse_mem),
+            "iocards": ("", "== IO Cards ==", "", self.parse_io),
             "environ": ("", "== Environmental Status ==", ""),
             "hwrev": ("", "== HW Revisions ==", ""),
             "disk": ("Disk Status:", "", ""),
@@ -3385,7 +3390,7 @@ class Prtdiag(explorerbase.ExplorerBase):
         fh = self.open("sysconfig/prtdiag-v.out")
         for line in fh:
             line = line.strip()
-            mode, skip = self.modeSelect(mode, line, modeDict)
+            mode, skip = self.mode_select(mode, line, modeDict)
             if skip:
                 continue
             if mode == "disk":
@@ -3412,10 +3417,10 @@ class Prtdiag(explorerbase.ExplorerBase):
             "fan": ("Fan Status:", "", ""),
             "psu": ("Power Supplies:", "", ""),
             "hwrev": ("", "== HW Revisions ==", ""),
-            "cpu": ("", "== CPUs ==", "", self.parseCpu),
-            "iocards": ("", "== IO Cards ==", "", self.parseIo),
+            "cpu": ("", "== CPUs ==", "", self.parse_cpu),
+            "iocards": ("", "== IO Cards ==", "", self.parse_io),
             "enviro": ("", "==  Environmental Status ==", ""),
-            "mem": ("", "== Memory Configuration ==", "", self.parseMem),
+            "mem": ("", "== Memory Configuration ==", "", self.parse_mem),
         }
         cpuMap = {
             # TODO
@@ -3465,7 +3470,7 @@ class Prtdiag(explorerbase.ExplorerBase):
         fh = self.open("sysconfig/prtdiag-v.out")
         for line in fh:
             line = line.strip()
-            mode, skip = self.modeSelect(mode, line, modeDict)
+            mode, skip = self.mode_select(mode, line, modeDict)
             if skip:
                 continue
             if mode == "temp":
@@ -3496,9 +3501,9 @@ class Prtdiag(explorerbase.ExplorerBase):
         mode = "unknown"
         self["numslots"] = 6
         modeDict = {
-            "cpu": ("", "== CPUs ==", "", self.parseCpu),
-            "iodevs": ("", "== IO Devices ==", "", self.parseIo),
-            "iodcards": ("", "== IO Cards ==", "", self.parseIo),
+            "cpu": ("", "== CPUs ==", "", self.parse_cpu),
+            "iodevs": ("", "== IO Devices ==", "", self.parse_io),
+            "iodcards": ("", "== IO Cards ==", "", self.parse_io),
             "hwrev": ("", "== HW Revisions ==", ""),
             "mem": ("", "== Memory Configuration ==", ""),
             "bankt": ("Bank Table:", "", ""),
@@ -3603,7 +3608,7 @@ class Prtdiag(explorerbase.ExplorerBase):
         fh = self.open("sysconfig/prtdiag-v.out")
         for line in fh:
             line = line.strip()
-            mode, skip = self.modeSelect(mode, line, modeDict)
+            mode, skip = self.mode_select(mode, line, modeDict)
             if skip:
                 continue
             if mode == "fans":
@@ -3624,8 +3629,8 @@ class Prtdiag(explorerbase.ExplorerBase):
         mode = "unknown"
         self["numslots"] = 8
         modeDict = {
-            "cpu": ("", "== CPUs ==", "", self.parseCpu),
-            "iodevs": ("", "== IO Devices ==", "", self.parseIo),
+            "cpu": ("", "== CPUs ==", "", self.parse_cpu),
+            "iodevs": ("", "== IO Devices ==", "", self.parse_io),
             "hwrev": ("", "== HW Revisions ==", ""),
             "mem": ("", "== Memory Configuration ==", ""),
             "memmodule": ("Memory Module Groups:", "", "", self.parseMemmod),
@@ -3667,7 +3672,7 @@ class Prtdiag(explorerbase.ExplorerBase):
         fh = self.open("sysconfig/prtdiag-v.out")
         for line in fh:
             line = line.strip()
-            mode, skip = self.modeSelect(mode, line, modeDict)
+            mode, skip = self.mode_select(mode, line, modeDict)
             if skip:
                 continue
             if mode == "fans":
@@ -3700,9 +3705,9 @@ class Prtdiag(explorerbase.ExplorerBase):
         self["numslots"] = 1
         badfan = False
         modeDict = {
-            "cpu": ("", "== CPUs ==", "", self.parseCpu),
+            "cpu": ("", "== CPUs ==", "", self.parse_cpu),
             "hwrev": ("", "== HW Revisions ==", ""),
-            "iocards": ("", "== IO Devices ==", "", self.parseIo),
+            "iocards": ("", "== IO Devices ==", "", self.parse_io),
             "mem": ("", "== Memory Configuration ==", ""),
             "bankt": ("Bank Table", "", ""),
             "memmodule": ("Memory Module Groups", "", "", self.parseMemmod),
@@ -3788,7 +3793,7 @@ class Prtdiag(explorerbase.ExplorerBase):
         fh = self.open("sysconfig/prtdiag-v.out")
         for line in fh:
             line = line.strip()
-            mode, skip = self.modeSelect(mode, line, modeDict)
+            mode, skip = self.mode_select(mode, line, modeDict)
             if skip:
                 continue
 
@@ -3815,8 +3820,8 @@ class Prtdiag(explorerbase.ExplorerBase):
         mode = "unknown"
         self["numslots"] = 4
         modeDict = {
-            "cpu": ("", "== CPUs ==", "", self.parseCpu),
-            "iocards": ("", "== IO Devices ==", "", self.parseIo),
+            "cpu": ("", "== CPUs ==", "", self.parse_cpu),
+            "iocards": ("", "== IO Devices ==", "", self.parse_io),
             "hwrev": ("", "== HW Revisions ==", ""),
             "memconf": ("", "== Memory Configuration ==", ""),
             "fans1": ("Fan Status:", "", ""),
@@ -3874,7 +3879,7 @@ class Prtdiag(explorerbase.ExplorerBase):
         fh = self.open("sysconfig/prtdiag-v.out")
         for line in fh:
             line = line.strip()
-            mode, skip = self.modeSelect(mode, line, modeDict)
+            mode, skip = self.mode_select(mode, line, modeDict)
             if skip:
                 continue
 
@@ -3902,9 +3907,9 @@ class Prtdiag(explorerbase.ExplorerBase):
         mode = "unknown"
         self["numslots"] = 3
         modeDict = {
-            "cpu": ("", "== CPUs ==", "", self.parseCpu),
-            "iodevs": ("", "== IO Devices ==", "", self.parseIo),
-            "iocards": ("", "== IO Cards ==", "", self.parseIo),
+            "cpu": ("", "== CPUs ==", "", self.parse_cpu),
+            "iodevs": ("", "== IO Devices ==", "", self.parse_io),
+            "iocards": ("", "== IO Cards ==", "", self.parse_io),
             "hwrev": ("", "== HW Revisions ==", ""),
             "memconf": ("", "== Memory Configuration ==", ""),
             "fans1": ("Fan Status:", "", ""),
@@ -4007,7 +4012,7 @@ class Prtdiag(explorerbase.ExplorerBase):
         fh = self.open("sysconfig/prtdiag-v.out")
         for line in fh:
             line = line.strip()
-            mode, skip = self.modeSelect(mode, line, modeDict)
+            mode, skip = self.mode_select(mode, line, modeDict)
             if skip:
                 continue
 
@@ -4038,11 +4043,11 @@ class Prtdiag(explorerbase.ExplorerBase):
         mode = "unknown"
         self["numslots"] = 9
         modeDict = {
-            "mem": ("", "== Memory Configuration ==", "", self.parseMem),
-            "iocards": ("", "== IO Cards ==", "", self.parseIo),
+            "mem": ("", "== Memory Configuration ==", "", self.parse_mem),
+            "iocards": ("", "== IO Cards ==", "", self.parse_io),
             "environ": ("", "== Environmental Status ==", ""),
             "hwrev": ("", "== HW Revisions ==", ""),
-            "cpu": ("", "== CPUs ==", "", self.parseCpu),
+            "cpu": ("", "== CPUs ==", "", self.parse_cpu),
             "fans": ("Fan Bank", "", ""),
             "fsp": ("Front Status Panel:", "", ""),
             "psu": ("Power Supplies:", "", ""),
@@ -4118,7 +4123,7 @@ class Prtdiag(explorerbase.ExplorerBase):
         fh = self.open("sysconfig/prtdiag-v.out")
         for line in fh:
             line = line.strip()
-            mode, skip = self.modeSelect(mode, line, modeDict)
+            mode, skip = self.mode_select(mode, line, modeDict)
             if skip:
                 continue
             if not line:
@@ -4221,10 +4226,10 @@ class Prtdiag(explorerbase.ExplorerBase):
         mode = "unknown"
         self["numslots"] = 9
         modeDict = {
-            "mem": ("", "== Memory Configuration ==", "", self.parseMem),
-            "iocards": ("", "== IO Cards ==", "", self.parseIo),
+            "mem": ("", "== Memory Configuration ==", "", self.parse_mem),
+            "iocards": ("", "== IO Cards ==", "", self.parse_io),
             "environ": ("", "== Environmental Status ==", ""),
-            "cpu": ("", "== CPUs ==", "", self.parseCpu),
+            "cpu": ("", "== CPUs ==", "", self.parse_cpu),
             "hwrev": ("", "== HW Revisions ==", ""),
             "fans": ("Fan Bank", "", ""),
             "fsp": ("Front Status Panel:", "", ""),
@@ -4301,7 +4306,7 @@ class Prtdiag(explorerbase.ExplorerBase):
         fh = self.open("sysconfig/prtdiag-v.out")
         for line in fh:
             line = line.strip()
-            mode, skip = self.modeSelect(mode, line, modeDict)
+            mode, skip = self.mode_select(mode, line, modeDict)
             if skip:
                 continue
 
@@ -4331,9 +4336,9 @@ class Prtdiag(explorerbase.ExplorerBase):
             "mem": ("", "== Memory Configuration ==", ""),
             "bankt": ("Bank Table:", "", ""),
             "memmodule": ("Memory Module Groups:", "", "", self.parseMemmod),
-            "iocards": ("", "== IO Devices ==", "", self.parseIo),
+            "iocards": ("", "== IO Devices ==", "", self.parse_io),
             "environ": ("", "== Environmental Status ==", ""),
-            "cpu": ("", "== CPUs ==", "", self.parseCpu),
+            "cpu": ("", "== CPUs ==", "", self.parse_cpu),
             "led": ("Led State:", "", ""),
             "hwrev": ("", "== HW Revisions ==", ""),
             "fru": ("", "== FRU Operational Status ==", ""),
@@ -4370,7 +4375,7 @@ class Prtdiag(explorerbase.ExplorerBase):
         fh = self.open("sysconfig/prtdiag-v.out")
         for line in fh:
             line = line.strip()
-            mode, skip = self.modeSelect(mode, line, modeDict)
+            mode, skip = self.mode_select(mode, line, modeDict)
             if skip:
                 continue
             if mode == "fru":
@@ -4398,9 +4403,9 @@ class Prtdiag(explorerbase.ExplorerBase):
             "memconf": ("", "== Memory Configuration ==", ""),
             "bankt": ("Bank Table:", "", ""),
             "memmodule": ("Memory Module Groups:", "", "", self.parseMemmod),
-            "iocards": ("", "== IO Devices ==", "", self.parseIo),
+            "iocards": ("", "== IO Devices ==", "", self.parse_io),
             "environ": ("", "== Environmental Status ==", ""),
-            "cpu": ("", "== CPUs ==", "", self.parseCpu),
+            "cpu": ("", "== CPUs ==", "", self.parse_cpu),
             "led": ("Led State:", "", ""),
             "hwrev": ("", "== HW Revisions ==", ""),
             "fru": ("", "== FRU Operational Status ==", ""),
@@ -4449,7 +4454,7 @@ class Prtdiag(explorerbase.ExplorerBase):
         fh = self.open("sysconfig/prtdiag-v.out")
         for line in fh:
             line = line.strip()
-            mode, skip = self.modeSelect(mode, line, modeDict)
+            mode, skip = self.mode_select(mode, line, modeDict)
             if skip:
                 continue
             if mode == "fru":
@@ -4465,9 +4470,10 @@ class Prtdiag(explorerbase.ExplorerBase):
         fh.close()
 
     ##########################################################################
-    def modeSelect(self, mode, line, modeDict):
+    def mode_select(self, mode, line, modeDict):
         """Return the mode based on the line"""
         found = False
+        line = line.strip()
         for k, v in modeDict.items():
             if len(v) == 3:
                 pre, mid, post = v
@@ -4484,7 +4490,7 @@ class Prtdiag(explorerbase.ExplorerBase):
                 break
         if found:
             if self.tmpissue:
-                self.addIssue(mode, obj=self.tmpissue, text=self.buffer)
+                self.add_issue(mode, obj=self.tmpissue, text=self.buffer)
                 self.tmpissue = ""
             self.buffer = [line]
             self.badmode = False
@@ -4498,9 +4504,9 @@ class Prtdiag(explorerbase.ExplorerBase):
         mode = "unknown"
         self["numslots"] = 4
         modeDict = {
-            "cpu": ("", "== CPUs ==", "", self.parseCpu),
-            "mem": ("", "== Memory ==", "", self.parseMem),
-            "iocards": ("", "== IO Cards ==", "", self.parseIo),
+            "cpu": ("", "== CPUs ==", "", self.parse_cpu),
+            "mem": ("", "== Memory ==", "", self.parse_mem),
+            "iocards": ("", "== IO Cards ==", "", self.parse_io),
             "environ": ("", "== Environmental Status ==", ""),
             "hwrev": ("", "== HW Revisions ==", ""),
             "fans": ("Fans:", "", ""),
@@ -4559,7 +4565,7 @@ class Prtdiag(explorerbase.ExplorerBase):
         fh = self.open("sysconfig/prtdiag-v.out")
         for line in fh:
             line = line.strip()
-            mode, skip = self.modeSelect(mode, line, modeDict)
+            mode, skip = self.mode_select(mode, line, modeDict)
             if skip:
                 continue
 
@@ -4570,7 +4576,7 @@ class Prtdiag(explorerbase.ExplorerBase):
         fh.close()
 
     ##########################################################################
-    def parseCpu(self, buff):
+    def parse_cpu(self, buff):
         """TODO"""
         headers = []
         cpus = []
@@ -4894,13 +4900,13 @@ class Prtdiag(explorerbase.ExplorerBase):
                     }
                 )
             else:
-                self.fatal("parseCpu: Unhandled CPU format: %s" % headers)
+                self.fatal("parse_cpu: Unhandled CPU format: %s" % headers)
         if cpus:
             self.foundCpu = True
         return cpus
 
     ##########################################################################
-    def parseIo(self, buff):
+    def parse_io(self, buff):
         """TODO"""
         iocards = []
         headers = []
@@ -5341,7 +5347,7 @@ class Prtdiag(explorerbase.ExplorerBase):
         return iocards
 
     ##########################################################################
-    def parseMem(self, buff):
+    def parse_mem(self, buff):
         """TODO"""
         inheaders = True
         headers = []
@@ -5567,7 +5573,7 @@ class Prtdiag(explorerbase.ExplorerBase):
                     {"dimmsize": bits[4], "status": bits[3], "qty": int(bits[5])}
                 )
             else:
-                self.fatal("parseMem: unhandled headers: %s" % headers)
+                self.fatal("parse_mem: unhandled headers: %s" % headers)
         self.foundMem = True
         return dimms
 
@@ -5621,7 +5627,7 @@ class Prtdiag(explorerbase.ExplorerBase):
             line = line.rstrip()
             if "Memory size" in line:
                 data["memsize"] = self.dehumanise(line.split(":")[-1])
-            mode, skip = self.modeSelect(mode, line, modeDict)
+            mode, skip = self.mode_select(mode, line, modeDict)
             if mode != oldmode:
                 if oldmode in modeDict and len(modeDict[oldmode]) >= 4:
                     data[oldmode] = modeDict[oldmode][3](buff)
@@ -5634,11 +5640,11 @@ class Prtdiag(explorerbase.ExplorerBase):
         # Debugging output below
         #       for k in data.keys():
         #           if type(data[k])==type([]):
-        #               self.Debug("genericPrtdiag: data[%s]=" % k)
+        #               self.debug("genericPrtdiag: data[%s]=" % k)
         #               for v in data[k]:
-        #                   self.Debug("genericPrtdiag:     %s" % v)
+        #                   self.debug("genericPrtdiag:     %s" % v)
         #           else:
-        #               self.Debug("genericPrtdiag: data[%s]=%s" % (k, data[k]))
+        #               self.debug("genericPrtdiag: data[%s]=%s" % (k, data[k]))
 
         return data
 
@@ -5648,9 +5654,9 @@ class Prtdiag(explorerbase.ExplorerBase):
         mode = "unknown"
         self["numslots"] = 10
         modeDict = {
-            "cpu": ("", "== CPUs ==", "", self.parseCpu),
-            "mem": ("", "== Memory ==", "", self.parseMem),
-            "iocards": ("", "== IO Cards ==", "", self.parseIo),
+            "cpu": ("", "== CPUs ==", "", self.parse_cpu),
+            "mem": ("", "== Memory ==", "", self.parse_mem),
+            "iocards": ("", "== IO Cards ==", "", self.parse_io),
             "environ": ("", "== Environmental Status ==", ""),
             "hwrev": ("", "== HW Revisions ==", ""),
             "fans": ("Fans:", "", ""),
@@ -5725,7 +5731,7 @@ class Prtdiag(explorerbase.ExplorerBase):
         fh = self.open("sysconfig/prtdiag-v.out")
         for line in fh:
             line = line.strip()
-            mode, skip = self.modeSelect(mode, line, modeDict)
+            mode, skip = self.mode_select(mode, line, modeDict)
             if skip:
                 continue
             if mode == "mem":
@@ -5756,9 +5762,9 @@ class Prtdiag(explorerbase.ExplorerBase):
         ecache = 0
         errbuffer = []
         modeDict = {
-            "cpu": ("", "== CPUs ==", "", self.parseCpu),
-            "mem": ("", "== Memory ==", "", self.parseMem),
-            "iocards": ("", "== IO Cards ==", "", self.parseIo),
+            "cpu": ("", "== CPUs ==", "", self.parse_cpu),
+            "mem": ("", "== Memory ==", "", self.parse_mem),
+            "iocards": ("", "== IO Cards ==", "", self.parse_io),
             "environ": ("", "== Environmental Status ==", ""),
             "fans": ("Fans:", "", ""),
             "temp": ("System Temperatures", "", ""),
@@ -5827,7 +5833,7 @@ class Prtdiag(explorerbase.ExplorerBase):
         fh = self.open("sysconfig/prtdiag-v.out")
         for line in fh:
             line = line.strip()
-            mode, skip = self.modeSelect(mode, line, modeDict)
+            mode, skip = self.mode_select(mode, line, modeDict)
             if skip:
                 continue
 
@@ -5896,15 +5902,15 @@ class Prtdiag(explorerbase.ExplorerBase):
                 errbuffer.append(line)
 
         if errbuffer:
-            self.addIssue("Hardware Problem", text=errbuffer)
+            self.add_issue("Hardware Problem", text=errbuffer)
 
     ##########################################################################
     def sun_e6900(self):
         """TODO"""
         modeDict = {
-            "cpu": ("", "== CPUs ==", "", self.parseCpu),
-            "mem": ("", "== Memory Configuration ==", "", self.parseMem),
-            "iocards": ("", "== IO Cards ==", "", self.parseIo),
+            "cpu": ("", "== CPUs ==", "", self.parse_cpu),
+            "mem": ("", "== Memory Configuration ==", "", self.parse_mem),
+            "iocards": ("", "== IO Cards ==", "", self.parse_io),
             "activeb": ("", "== Active Boards for Domain ==", ""),
         }
         cpuMap = {
@@ -5944,8 +5950,8 @@ class Prtdiag(explorerbase.ExplorerBase):
         filename = "fru/prtfru_-x.out"
         if not self.exists(filename):
             return
-        f = self.open(filename)
-        f.close()
+        infh = self.open(filename)
+        infh.close()
 
     ##########################################################################
     def checkColumn(self, colnum, line):

@@ -415,7 +415,7 @@ class Nics(explorerbase.ExplorerBase):
     def analyse(self):
         for nic in self.nic_list():
             nic.analyse()
-            self.inheritIssues(nic)
+            self.inherit_issues(nic)
 
     ##########################################################################
     def calc_vlan(self, ifname):
