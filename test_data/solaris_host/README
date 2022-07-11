@@ -1,0 +1,53 @@
+=========== ORACLE EXPLORER DATA COLLECTOR (Version 20.4) ===========
+
+This directory contains system configuration information.
+Information was gathered on Sun Jun 19 22:04:51 AEST 2022.
+
+Synopsis
+========
+
+       Customer Name: Toll
+         Contract ID: 
+    Modules selected: asrm,cluster,crypto,disks,emc,etc,fcal,fma,fru,ilomextended,ilomsnapshot_start,init,ipmi,ipmiextended,ldap,ldom,lic,lp,lvm,messages,ndd,netinfo,pci,photon,quorumserv,raidmanager,samfs,sanextended,sbu,se3k,se3kextended,se61xx,servicetags,sf15k_ndd,sf15k_sc,smfextended,sonoma,ssa,ssp,st25xx,st5800,storade,storedge,stortools,sunray,t3,t3extended,tape,tx000,u4ft,var,vtsst,vxfs,vxvm,xscfextended,zfsconfig
+        Command Line: explorer -q -t /opt/SUNWexplo/output
+       Explorer_Type: PROACTIVE
+   License Agreement: Tue Oct 5 11:34:27 GMT 2021
+
+           User Name: 
+         User e-mail: 
+        User Phone #: 
+
+System Serial number: 1818NN82ND
+      Address line 1: 
+      Address line 2: 
+                City: 
+               State: 
+             Country: Australia 
+            Zip Code: 
+        Country Code: AU
+
+The following info was collected using UNIX tools (hostname, arch, etc)
+------------------------------------------------- ---------------------
+
+Date: 2022.06.19.22.04
+Finished: 2022.06.19.22.04
+Hostname: unibis
+Hostid: 5ce40c86
+Release: 5.11
+Kernel architecture: sun4v
+Application architecture: sparc
+Domain: 
+Kernel version: SunOS 5.11 11.4.35.94.4
+Entire Version : 11.4-11.4.35.0.1.94.4
+System Type: 
+Uptime:  10:04pm  up 70 day(s), 16:25,  0 users,  load average: 3.41, 2.88, 1.95
+Swap-s:
+total: 17575424k bytes allocated + 14411792k reserved = 31987216k used, 45446392k available
+Swap-l:
+swapfile                    dev            swaplo      blocks        free encrypted
+/dev/zvol/dsk/rpool/swap    248,5               0     8388608     6700640       yes
+/dev/zvol/dsk/swappool/swap 248,6               0    98566144    96851024       yes
+Vmstat:
+ kthr      memory            page            disk          faults      cpu
+ r b w   swap  free  re  mf pi po fr de sr m0 m1 m2 m3   in   sy   cs us sy id
+ 0 0 65 44286216 4718176 2086 2841 15072 97 98 0 9 17 17 98 98 7764 39851 22090 4 5 91

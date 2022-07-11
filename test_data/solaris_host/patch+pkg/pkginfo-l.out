@@ -1,0 +1,2907 @@
+Long pkg Listing
+================
+
+   PKGINST:  BRCMbnx
+      NAME:  QLogic 570x/571x Gigabit Ethernet Driver
+  CATEGORY:  system
+      ARCH:  sparc
+   VERSION:  11.11,REV=2009.11.11
+   BASEDIR:  /
+    VENDOR:  QLogic Corporation
+      DESC:  QLogic 570x/571x PCI-X/PCIE Adapter Gigabit Ethernet Driver
+  INSTDATE:  Aug 16 2018 19:05
+   HOTLINE:  Please contact your local service provider
+    STATUS:  completely installed
+
+   PKGINST:  BRCMbnxe
+      NAME:  QLogic 57xxx 10/20GbE NIC Driver
+  CATEGORY:  system
+      ARCH:  sparc
+   VERSION:  11.11,REV=2009.11.11
+   BASEDIR:  /
+    VENDOR:  QLogic Corporation, Inc.
+      DESC:  QLogic 57xxx 10/20 Gigabit Ethernet PCI-X/PCIE Adapter Driver
+  INSTDATE:  Aug 16 2018 19:05
+   HOTLINE:  Please contact your local service provider
+    STATUS:  completely installed
+
+   PKGINST:  CentrifyDC
+      NAME:  Centrify DirectControl Agent
+  CATEGORY:  system
+      ARCH:  sparc
+   VERSION:  5.7.1-353
+   BASEDIR:  /
+    VENDOR:  Centrify Corporation
+    PSTAMP:  2021.01.28-15:39:48
+  INSTDATE:  Jul 23 2021 13:56
+     EMAIL:  support@centrify.com
+    STATUS:  completely installed
+     FILES:      791 installed pathnames
+                  61 directories
+                 218 executables
+                   6 setuid/setgid executables
+              240190 blocks used (approx)
+
+   PKGINST:  CentrifyDC-adbindproxy
+      NAME:  Centrify for Samba
+  CATEGORY:  system
+      ARCH:  sparc
+   VERSION:  5.7.0-217
+   BASEDIR:  /
+    VENDOR:  Centrify Corporation
+    PSTAMP:  2020.11.04-18:52:03
+  INSTDATE:  Jul 17 2021 15:08
+     EMAIL:  support@centrify.com
+    STATUS:  completely installed
+     FILES:       11 installed pathnames
+                   1 directories
+                   6 executables
+               10179 blocks used (approx)
+
+   PKGINST:  CentrifyDC-curl
+      NAME:  Centrify DirectControl cURL
+  CATEGORY:  system
+      ARCH:  sparc
+   VERSION:  5.7.1-353
+   BASEDIR:  /
+    VENDOR:  Centrify Corporation
+    PSTAMP:  2021.01.28-15:41:48
+  INSTDATE:  Jul 17 2021 15:01
+     EMAIL:  support@centrify.com
+    STATUS:  completely installed
+     FILES:        5 installed pathnames
+                   3 executables
+                1629 blocks used (approx)
+
+   PKGINST:  CentrifyDC-openldap
+      NAME:  Centrify DirectControl OpenLDAP
+  CATEGORY:  system
+      ARCH:  sparc
+   VERSION:  5.7.1-353
+   BASEDIR:  /
+    VENDOR:  Centrify Corporation
+    PSTAMP:  2021.01.28-15:43:43
+  INSTDATE:  Jul 17 2021 15:01
+     EMAIL:  support@centrify.com
+    STATUS:  completely installed
+     FILES:       50 installed pathnames
+                   1 directories
+                  23 executables
+                9189 blocks used (approx)
+
+   PKGINST:  CentrifyDC-openssl
+      NAME:  Centrify DirectControl OpenSSL
+  CATEGORY:  system
+      ARCH:  sparc
+   VERSION:  5.7.1-353
+   BASEDIR:  /
+    VENDOR:  Centrify Corporation
+    PSTAMP:  2021.01.28-15:42:42
+  INSTDATE:  Jul 17 2021 15:00
+     EMAIL:  support@centrify.com
+    STATUS:  completely installed
+     FILES:       33 installed pathnames
+                  19 directories
+                   7 executables
+               13458 blocks used (approx)
+
+   PKGINST:  ManageSoft
+      NAME:  ManageSoft Managed Device for Solaris
+  CATEGORY:  system
+      ARCH:  sparc
+   VERSION:  16.0.1
+   BASEDIR:  /
+    VENDOR:  Flexera Software LLC
+    PSTAMP:  ita-solaris8build.flexera.com20201112152740
+  INSTDATE:  Apr 26 2022 17:48
+    VSTOCK:  MGSESOL
+    STATUS:  completely installed
+     FILES:       53 installed pathnames
+                  10 directories
+                  33 executables
+               56767 blocks used (approx)
+
+   PKGINST:  SUNWaac
+      NAME:  Adaptec AdvanceRaid Controller SCSI HBA Driver
+  CATEGORY:  system
+      ARCH:  sparc
+   VERSION:  11.11,REV=2009.11.11
+   BASEDIR:  /
+    VENDOR:  Oracle Corporation
+      DESC:  Adaptec AdvanceRaid Controller SCSI HBA Driver
+  INSTDATE:  Aug 16 2018 19:05
+   HOTLINE:  Please contact your local service provider
+    STATUS:  completely installed
+
+   PKGINST:  SUNWaccr
+      NAME:  System Accounting, (Root)
+  CATEGORY:  system
+      ARCH:  sparc
+   VERSION:  11.11,REV=2009.11.11
+   BASEDIR:  /
+    VENDOR:  Oracle Corporation
+      DESC:  utilities for accounting and reporting of system activity
+  INSTDATE:  Aug 16 2018 19:05
+   HOTLINE:  Please contact your local service provider
+    STATUS:  completely installed
+
+   PKGINST:  SUNWaccu
+      NAME:  System Accounting, (Usr)
+  CATEGORY:  system
+      ARCH:  sparc
+   VERSION:  11.11,REV=2009.11.11
+   BASEDIR:  /
+    VENDOR:  Oracle Corporation
+      DESC:  utilities for accounting and reporting of system activity
+  INSTDATE:  Aug 16 2018 19:05
+   HOTLINE:  Please contact your local service provider
+    STATUS:  completely installed
+
+   PKGINST:  SUNWarc
+      NAME:  Lint Libraries (usr)
+  CATEGORY:  system
+      ARCH:  sparc
+   VERSION:  11.11,REV=2009.11.11
+   BASEDIR:  /
+    VENDOR:  Oracle Corporation
+      DESC:  lint libraries and startup objects for software development
+  INSTDATE:  Aug 16 2018 19:05
+   HOTLINE:  Please contact your local service provider
+    STATUS:  completely installed
+
+   PKGINST:  SUNWarcr
+      NAME:  Lint Libraries (root)
+  CATEGORY:  system
+      ARCH:  sparc
+   VERSION:  11.11,REV=2009.11.11
+   BASEDIR:  /
+    VENDOR:  Oracle Corporation
+      DESC:  lint libraries for software development
+  INSTDATE:  Aug 16 2018 19:05
+   HOTLINE:  Please contact your local service provider
+    STATUS:  completely installed
+
+   PKGINST:  SUNWastfb
+      NAME:  AST Graphics System Software Device Driver
+  CATEGORY:  system,graphics
+      ARCH:  sparc
+   VERSION:  11.0.0,REV=2010.10.22
+   BASEDIR:  /
+    VENDOR:  Oracle Corporation
+      DESC:  Device driver for AST graphics
+  INSTDATE:  Aug 16 2018 19:05
+   HOTLINE:  Please contact your local service provider
+    STATUS:  completely installed
+
+   PKGINST:  SUNWatfsr
+      NAME:  AutoFS, (Root)
+  CATEGORY:  system
+      ARCH:  sparc
+   VERSION:  11.11,REV=2009.11.11
+   BASEDIR:  /
+    VENDOR:  Oracle Corporation
+      DESC:  configuration and start-up files for the AutoFS filesystem
+  INSTDATE:  Aug 16 2018 19:05
+   HOTLINE:  Please contact your local service provider
+    STATUS:  completely installed
+
+   PKGINST:  SUNWatfsu
+      NAME:  AutoFS, (Usr)
+  CATEGORY:  system
+      ARCH:  sparc
+   VERSION:  11.11,REV=2009.11.11
+   BASEDIR:  /
+    VENDOR:  Oracle Corporation
+      DESC:  utilities and a daemon (automountd) for the AutoFS filesystem
+  INSTDATE:  Aug 16 2018 19:05
+   HOTLINE:  Please contact your local service provider
+    STATUS:  completely installed
+
+   PKGINST:  SUNWaudh
+      NAME:  Audio Header Files
+  CATEGORY:  system
+      ARCH:  sparc
+   VERSION:  11.11,REV=2009.11.11
+   BASEDIR:  /
+    VENDOR:  Oracle Corporation
+      DESC:  SunOS C/C++ header files for audio drivers and applications
+  INSTDATE:  Aug 16 2018 19:05
+   HOTLINE:  Please contact your local service provider
+    STATUS:  completely installed
+
+   PKGINST:  SUNWbart
+      NAME:  Basic Audit Reporting Tool
+  CATEGORY:  system
+      ARCH:  sparc
+   VERSION:  11.11,REV=2009.11.11
+   BASEDIR:  /
+    VENDOR:  Oracle Corporation
+      DESC:  Basic Audit Reporting Tool (BART)
+  INSTDATE:  Aug 16 2018 19:05
+   HOTLINE:  Please contact your local service provider
+    STATUS:  completely installed
+
+   PKGINST:  SUNWbge
+      NAME:  Broadcom 57xx GE NIC Driver
+  CATEGORY:  system
+      ARCH:  sparc
+   VERSION:  11.11,REV=2009.11.11
+   BASEDIR:  /
+    VENDOR:  Oracle Corporation
+      DESC:  Broadcom 57xx Gigabit Ethernet Network Adapter Driver
+  INSTDATE:  Aug 16 2018 19:05
+   HOTLINE:  Please contact your local service provider
+    STATUS:  completely installed
+
+   PKGINST:  SUNWbipr
+      NAME:  Basic IP commands (Root)
+  CATEGORY:  system
+      ARCH:  sparc
+   VERSION:  11.11,REV=2009.11.11
+   BASEDIR:  /
+    VENDOR:  Oracle Corporation
+      DESC:  Basic IP commands (Root)
+  INSTDATE:  Aug 16 2018 19:05
+   HOTLINE:  Please contact your local service provider
+    STATUS:  completely installed
+
+   PKGINST:  SUNWbnxt
+      NAME:  Oracle Dual Port 10/25Gb NIC Driver
+  CATEGORY:  system
+      ARCH:  sparc
+   VERSION:  11.11,REV=2009.11.11
+   BASEDIR:  /
+    VENDOR:  Oracle Corporation
+      DESC:  Oracle Dual Port 10/25Gb NIC Driver
+  INSTDATE:  Aug 16 2018 19:05
+   HOTLINE:  Please contact your local service provider
+    STATUS:  completely installed
+
+   PKGINST:  SUNWbridger
+      NAME:  IEEE 802 Bridging Support (Root)
+  CATEGORY:  system
+      ARCH:  sparc
+   VERSION:  11.11,REV=2009.11.11
+   BASEDIR:  /
+    VENDOR:  Oracle Corporation
+      DESC:  Datalink layer bridging support
+  INSTDATE:  Aug 16 2018 19:05
+   HOTLINE:  Please contact your local service provider
+    STATUS:  completely installed
+
+   PKGINST:  SUNWbridgeu
+      NAME:  IEEE 802 Bridging Support (Usr)
+  CATEGORY:  system
+      ARCH:  sparc
+   VERSION:  11.11,REV=2009.11.11
+   BASEDIR:  /
+    VENDOR:  Oracle Corporation
+      DESC:  Datalink layer bridging support
+  INSTDATE:  Aug 16 2018 19:05
+   HOTLINE:  Please contact your local service provider
+    STATUS:  completely installed
+
+   PKGINST:  SUNWbtool
+      NAME:  CCS tools bundled with SunOS
+  CATEGORY:  system
+      ARCH:  sparc
+   VERSION:  11.11,REV=2009.11.11
+   BASEDIR:  /
+    VENDOR:  Oracle Corporation
+      DESC:  software development utilities, including ar, dis, dump, elfdump, elfedit, lex, lorder, mcs, nm, prof, ranlib, rpcgen, size, strip, tsort, and yacc
+  INSTDATE:  Aug 16 2018 19:05
+   HOTLINE:  Please contact your local service provider
+    STATUS:  completely installed
+
+   PKGINST:  SUNWcakr.v
+      NAME:  Core Solaris Kernel Architecture (Root)
+  CATEGORY:  system
+      ARCH:  sparc.sun4v
+   VERSION:  11.11,REV=2009.11.11
+   BASEDIR:  /
+    VENDOR:  Oracle Corporation
+      DESC:  core kernel software for a specific hardware platform group
+  INSTDATE:  Aug 16 2018 19:05
+   HOTLINE:  Please contact your local service provider
+    STATUS:  completely installed
+
+   PKGINST:  SUNWcakrnt2000.v
+      NAME:  Platform Specific Drivers for Netra-T2000, (Root)
+  CATEGORY:  system
+      ARCH:  sparc.sun4v
+   VERSION:  11.11,REV=2009.11.11
+   BASEDIR:  /
+    VENDOR:  Oracle Corporation
+      DESC:  driver software for the Netra-T2000 hardware platform
+  INSTDATE:  Aug 16 2018 19:05
+   HOTLINE:  Please contact your local service provider
+    STATUS:  completely installed
+
+   PKGINST:  SUNWcar.v
+      NAME:  Core Architecture, (Root)
+  CATEGORY:  system
+      ARCH:  sparc.sun4v
+   VERSION:  11.11,REV=2009.11.11
+   BASEDIR:  /
+    VENDOR:  Oracle Corporation
+      DESC:  core software for a specific hardware platform group
+  INSTDATE:  Aug 16 2018 19:05
+   HOTLINE:  Please contact your local service provider
+    STATUS:  completely installed
+
+   PKGINST:  SUNWcdrw
+      NAME:  utility for writing to CD-R/RW and DVD{+-}R/RW disks
+  CATEGORY:  system
+      ARCH:  sparc
+   VERSION:  11.11,REV=2009.11.11
+   BASEDIR:  /
+    VENDOR:  Oracle Corporation
+      DESC:  utility for writing to CD-R/RW and DVD{+-}R/RW disks
+  INSTDATE:  Aug 16 2018 19:05
+   HOTLINE:  Please contact your local service provider
+    STATUS:  completely installed
+
+   PKGINST:  SUNWcfcl
+      NAME:  Common Fibre Channel HBA API Library (Usr)
+  CATEGORY:  system
+      ARCH:  sparc
+   VERSION:  11.11,REV=2009.11.11
+   BASEDIR:  /
+    VENDOR:  Oracle Corporation
+      DESC:  Common Fibre Channel HBA API Library based on the T11 FC-MI specification
+  INSTDATE:  Aug 16 2018 19:05
+   HOTLINE:  Please contact your local service provider
+    STATUS:  completely installed
+
+   PKGINST:  SUNWcfclr
+      NAME:  Common Fibre Channel HBA API Library (Root)
+  CATEGORY:  system
+      ARCH:  sparc
+   VERSION:  11.11,REV=2009.11.11
+   BASEDIR:  /
+    VENDOR:  Oracle Corporation
+      DESC:  Common Fibre Channel HBA API Library based on the T11 FC-MI specification
+  INSTDATE:  Aug 16 2018 19:05
+   HOTLINE:  Please contact your local service provider
+    STATUS:  completely installed
+
+   PKGINST:  SUNWcfpl
+      NAME:  fp cfgadm plug-in library
+  CATEGORY:  system
+      ARCH:  sparc
+   VERSION:  11.11,REV=2009.11.11
+   BASEDIR:  /
+    VENDOR:  Oracle Corporation
+      DESC:  Provides the fp plug-in library of libcfgadm.
+  INSTDATE:  Aug 16 2018 19:05
+   HOTLINE:  Please contact your local service provider
+    STATUS:  completely installed
+
+   PKGINST:  SUNWcfplr
+      NAME:  fp cfgadm plug-in library (root)
+  CATEGORY:  system
+      ARCH:  sparc
+   VERSION:  11.11,REV=2009.11.11
+   BASEDIR:  /
+    VENDOR:  Oracle Corporation
+      DESC:  Provides support for fp plug-in library of libcfgadm.
+  INSTDATE:  Aug 16 2018 19:05
+   HOTLINE:  Please contact your local service provider
+    STATUS:  completely installed
+
+   PKGINST:  SUNWckr
+      NAME:  Core Solaris Kernel (Root)
+  CATEGORY:  system
+      ARCH:  sparc
+   VERSION:  11.11,REV=2009.11.11
+   BASEDIR:  /
+    VENDOR:  Oracle Corporation
+      DESC:  core kernel software for a specific instruction-set architecture
+  INSTDATE:  Aug 16 2018 19:05
+   HOTLINE:  Please contact your local service provider
+    STATUS:  completely installed
+
+   PKGINST:  SUNWcnetr
+      NAME:  Core Solaris Network Infrastructure (Root)
+  CATEGORY:  system
+      ARCH:  sparc
+   VERSION:  11.11,REV=2009.11.11
+   BASEDIR:  /
+    VENDOR:  Oracle Corporation
+      DESC:  core software for network infrastructure configuration
+  INSTDATE:  Aug 16 2018 19:05
+   HOTLINE:  Please contact your local service provider
+    STATUS:  completely installed
+
+   PKGINST:  SUNWcnsr
+      NAME:  Common Network Services (Root): time, daytime, echo, discard, chargen
+  CATEGORY:  system
+      ARCH:  sparc
+   VERSION:  11.11,REV=2009.11.11
+   BASEDIR:  /
+    VENDOR:  Oracle Corporation
+      DESC:  Common Network Services (Root): time, daytime, echo, discard, chargen
+  INSTDATE:  Aug 16 2018 19:05
+   HOTLINE:  Please contact your local service provider
+    STATUS:  completely installed
+
+   PKGINST:  SUNWcnsu
+      NAME:  Common Network Services (Usr): time, daytime, echo, discard, chargen
+  CATEGORY:  system
+      ARCH:  sparc
+   VERSION:  11.11,REV=2009.11.11
+   BASEDIR:  /
+    VENDOR:  Oracle Corporation
+      DESC:  Common Network Services (Usr): time, daytime, echo, discard, chargen
+  INSTDATE:  Aug 16 2018 19:05
+   HOTLINE:  Please contact your local service provider
+    STATUS:  completely installed
+
+   PKGINST:  SUNWcpc.v
+      NAME:  CPU Performance Counter driver
+  CATEGORY:  system
+      ARCH:  sparc.sun4v
+   VERSION:  11.11,REV=2009.11.11
+   BASEDIR:  /
+    VENDOR:  Oracle Corporation
+      DESC:  Kernel support for CPU Performance Counters
+  INSTDATE:  Aug 16 2018 19:05
+   HOTLINE:  Please contact your local service provider
+    STATUS:  completely installed
+
+   PKGINST:  SUNWcpcu
+      NAME:  CPU Performance Counter libraries and utilities
+  CATEGORY:  system
+      ARCH:  sparc
+   VERSION:  11.11,REV=2009.11.11
+   BASEDIR:  /
+    VENDOR:  Oracle Corporation
+      DESC:  CPU Performance Counter libraries and utilities
+  INSTDATE:  Aug 16 2018 19:05
+   HOTLINE:  Please contact your local service provider
+    STATUS:  completely installed
+
+   PKGINST:  SUNWcpp
+      NAME:  Solaris cpp
+  CATEGORY:  system
+      ARCH:  sparc
+   VERSION:  5.11,REV=2011.04.11
+   BASEDIR:  /
+    VENDOR:  Sun Microsystems, Inc.
+      DESC:  Solaris cpp
+  INSTDATE:  Aug 16 2018 19:05
+   HOTLINE:  Please contact your local service provider
+    STATUS:  completely installed
+
+   PKGINST:  SUNWcsd
+      NAME:  Core Solaris Devices
+  CATEGORY:  system
+      ARCH:  sparc
+   VERSION:  11.11,REV=2009.11.11
+   BASEDIR:  /
+    VENDOR:  Oracle Corporation
+      DESC:  core entries for /dev and /devices needed for the initial boot of Solaris
+  INSTDATE:  Aug 16 2018 19:05
+   HOTLINE:  Please contact your local service provider
+    STATUS:  completely installed
+
+   PKGINST:  SUNWcsl
+      NAME:  Core Solaris, (Shared Libs)
+  CATEGORY:  system
+      ARCH:  sparc
+   VERSION:  11.11,REV=2009.11.11
+   BASEDIR:  /
+    VENDOR:  Oracle Corporation
+      DESC:  core shared libraries for a specific instruction-set architecture
+  INSTDATE:  Aug 16 2018 19:05
+   HOTLINE:  Please contact your local service provider
+    STATUS:  completely installed
+
+   PKGINST:  SUNWcslr
+      NAME:  Core Solaris Libraries (Root)
+  CATEGORY:  system
+      ARCH:  sparc
+   VERSION:  11.11,REV=2009.11.11
+   BASEDIR:  /
+    VENDOR:  Oracle Corporation
+      DESC:  core software for a specific instruction-set architecture
+  INSTDATE:  Aug 16 2018 19:05
+   HOTLINE:  Please contact your local service provider
+    STATUS:  completely installed
+
+   PKGINST:  SUNWcsr
+      NAME:  Core Solaris, (Root)
+  CATEGORY:  system
+      ARCH:  sparc
+   VERSION:  11.11,REV=2009.11.11
+   BASEDIR:  /
+    VENDOR:  Oracle Corporation
+      DESC:  core software for a specific instruction-set architecture
+  INSTDATE:  Aug 16 2018 19:05
+   HOTLINE:  Please contact your local service provider
+    STATUS:  completely installed
+
+   PKGINST:  SUNWcsu
+      NAME:  Core Solaris, (Usr)
+  CATEGORY:  system
+      ARCH:  sparc
+   VERSION:  11.11,REV=2009.11.11
+   BASEDIR:  /
+    VENDOR:  Oracle Corporation
+      DESC:  core software for a specific instruction-set architecture
+  INSTDATE:  Aug 16 2018 19:05
+   HOTLINE:  Please contact your local service provider
+    STATUS:  completely installed
+
+   PKGINST:  SUNWddu-DB
+      NAME:  Device Driver Utility database
+  CATEGORY:  system
+      ARCH:  sparc
+   VERSION:  11.11,REV=2009.11.11
+   BASEDIR:  /
+    VENDOR:  Oracle Corporation
+      DESC:  Database used by the Device Driver Utility for device detection and driver availability.
+  INSTDATE:  Aug 16 2018 19:05
+   HOTLINE:  Please contact your local service provider
+    STATUS:  completely installed
+
+   PKGINST:  SUNWddu-LIB
+      NAME:  Device Driver Utility library
+  CATEGORY:  system
+      ARCH:  sparc
+   VERSION:  11.11,REV=2009.11.11
+   BASEDIR:  /
+    VENDOR:  Oracle Corporation
+      DESC:  Common components used by both the graphical-based and text-based Device Driver Utilities.
+  INSTDATE:  Aug 16 2018 19:05
+   HOTLINE:  Please contact your local service provider
+    STATUS:  completely installed
+
+   PKGINST:  SUNWddu-Text
+      NAME:  Text-based Device Driver Utility
+  CATEGORY:  system
+      ARCH:  sparc
+   VERSION:  11.11,REV=2009.11.11
+   BASEDIR:  /
+    VENDOR:  Oracle Corporation
+      DESC:  ddu-text(8) is a text-based utility that provides information about devices on a system including those devices that lack a device driver.
+  INSTDATE:  Aug 16 2018 19:05
+   HOTLINE:  Please contact your local service provider
+    STATUS:  completely installed
+
+   PKGINST:  SUNWdoc
+      NAME:  Documentation Tools
+  CATEGORY:  system
+      ARCH:  sparc
+   VERSION:  11.11,REV=2009.11.11
+   BASEDIR:  /
+    VENDOR:  Oracle Corporation
+      DESC:  utilities and fonts for development, display, and production of documentation such as manual pages (nroff/troff)
+  INSTDATE:  Aug 16 2018 19:05
+   HOTLINE:  Please contact your local service provider
+    STATUS:  completely installed
+
+   PKGINST:  SUNWdsdr
+      NAME:  Multicast DNS and Service Discovery (Root)
+  CATEGORY:  system
+      ARCH:  sparc
+   VERSION:  11.11,REV=2009.11.11
+   BASEDIR:  /
+    VENDOR:  Oracle Corporation
+      DESC:  Root components for Multicast DNS daemon and service discovery support
+  INSTDATE:  Aug 16 2018 19:05
+   HOTLINE:  Please contact your local service provider
+    STATUS:  completely installed
+
+   PKGINST:  SUNWdsdu
+      NAME:  Multicast DNS and Service Discovery (Usr)
+  CATEGORY:  system
+      ARCH:  sparc
+   VERSION:  11.11,REV=2009.11.11
+   BASEDIR:  /
+    VENDOR:  Oracle Corporation
+      DESC:  Multicast DNS daemon and service discovery modules
+  INSTDATE:  Aug 16 2018 19:05
+   HOTLINE:  Please contact your local service provider
+    STATUS:  completely installed
+
+   PKGINST:  SUNWdtrc
+      NAME:  DTrace Clients
+  CATEGORY:  system
+      ARCH:  sparc
+   VERSION:  11.11,REV=2009.11.11
+   BASEDIR:  /
+    VENDOR:  Oracle Corporation
+      DESC:  Dynamic Tracing (DTrace) Clients
+  INSTDATE:  Aug 16 2018 19:05
+   HOTLINE:  Please contact your local service provider
+    STATUS:  completely installed
+
+   PKGINST:  SUNWdtrp
+      NAME:  DTrace Providers
+  CATEGORY:  system
+      ARCH:  sparc
+   VERSION:  11.11,REV=2009.11.11
+   BASEDIR:  /
+    VENDOR:  Oracle Corporation
+      DESC:  Dynamic Tracing (DTrace) Providers
+  INSTDATE:  Aug 16 2018 19:05
+   HOTLINE:  Please contact your local service provider
+    STATUS:  completely installed
+
+   PKGINST:  SUNWefck
+      NAME:  Embedded FCode Interpreter Drivers
+  CATEGORY:  system
+      ARCH:  sparc
+   VERSION:  11.11,REV=2009.11.11
+   BASEDIR:  /
+    VENDOR:  Oracle Corporation
+      DESC:  Embedded FCode Interpreter
+  INSTDATE:  Aug 16 2018 19:05
+   HOTLINE:  Please contact your local service provider
+    STATUS:  completely installed
+
+   PKGINST:  SUNWefcl
+      NAME:  Embedded FCode Libraries
+  CATEGORY:  system
+      ARCH:  sparc
+   VERSION:  11.11,REV=2009.11.11
+   BASEDIR:  /
+    VENDOR:  Oracle Corporation
+      DESC:  Embedded FCode Libraries
+  INSTDATE:  Aug 16 2018 19:05
+   HOTLINE:  Please contact your local service provider
+    STATUS:  completely installed
+
+   PKGINST:  SUNWefcr
+      NAME:  Embedded FCode Interpreter (Root)
+  CATEGORY:  system
+      ARCH:  sparc
+   VERSION:  11.11,REV=2009.11.11
+   BASEDIR:  /
+    VENDOR:  Oracle Corporation
+      DESC:  Embedded FCode Interpreter
+  INSTDATE:  Aug 16 2018 19:05
+   HOTLINE:  Please contact your local service provider
+    STATUS:  completely installed
+
+   PKGINST:  SUNWefcu
+      NAME:  Embedded FCode Interpreter
+  CATEGORY:  system
+      ARCH:  sparc
+   VERSION:  11.11,REV=2009.11.11
+   BASEDIR:  /
+    VENDOR:  Oracle Corporation
+      DESC:  Embedded FCode Interpreter
+  INSTDATE:  Aug 16 2018 19:05
+   HOTLINE:  Please contact your local service provider
+    STATUS:  completely installed
+
+   PKGINST:  SUNWemlxs
+      NAME:  Emulex-Sun driver kit for Fibre Channel and Converged Network Adapters (root)
+  CATEGORY:  system
+      ARCH:  sparc
+   VERSION:  11.11,REV=2009.11.11
+   BASEDIR:  /
+    VENDOR:  Emulex Corporation
+      DESC:  Device driver kit for Emulex-Sun FC, FCoE, and NIC adapters
+  INSTDATE:  Aug 16 2018 19:05
+   HOTLINE:  Please contact your local service provider
+    STATUS:  completely installed
+
+   PKGINST:  SUNWemlxu
+      NAME:  Emulex-Sun LightPulse Fibre Channel Adapter Utilties (usr)
+  CATEGORY:  system
+      ARCH:  sparc
+   VERSION:  11.11,REV=2009.11.11
+   BASEDIR:  /
+    VENDOR:  Emulex Corporation
+      DESC:  Support software for Emulex-Sun LightPulse Fibre Channel adapters
+  INSTDATE:  Aug 16 2018 19:05
+   HOTLINE:  Please contact your local service provider
+    STATUS:  completely installed
+
+   PKGINST:  SUNWesu
+      NAME:  Extended System Utilities
+  CATEGORY:  system
+      ARCH:  sparc
+   VERSION:  11.11,REV=2009.11.11
+   BASEDIR:  /
+    VENDOR:  Oracle Corporation
+      DESC:  additional UNIX system utilities.
+  INSTDATE:  Aug 16 2018 19:05
+   HOTLINE:  Please contact your local service provider
+    STATUS:  completely installed
+
+   PKGINST:  SUNWfchba
+      NAME:  Sun Fibre Channel Host Bus Adapter Library
+  CATEGORY:  system
+      ARCH:  sparc
+   VERSION:  11.11,REV=2009.11.11
+   BASEDIR:  /
+    VENDOR:  Oracle Corporation
+      DESC:  SNIA HBA library for Sun Fibre Channel adapters
+  INSTDATE:  Aug 16 2018 19:05
+   HOTLINE:  Please contact your local service provider
+    STATUS:  completely installed
+
+   PKGINST:  SUNWfchbar
+      NAME:  Sun Fibre Channel Host Bus Adapter Library (root)
+  CATEGORY:  system
+      ARCH:  sparc
+   VERSION:  11.11,REV=2009.11.11
+   BASEDIR:  /
+    VENDOR:  Oracle Corporation
+      DESC:  T11 FC-HBA library for Sun Fibre Channel adapters (root)
+  INSTDATE:  Aug 16 2018 19:05
+   HOTLINE:  Please contact your local service provider
+    STATUS:  completely installed
+
+   PKGINST:  SUNWfcip
+      NAME:  Sun FCIP IP/ARP over FibreChannel Device Driver
+  CATEGORY:  system
+      ARCH:  sparc
+   VERSION:  11.11,REV=2009.11.11
+   BASEDIR:  /
+    VENDOR:  Oracle Corporation
+      DESC:  Sun FCIP IP/ARP over FibreChannel Device Driver
+  INSTDATE:  Aug 16 2018 19:05
+   HOTLINE:  Please contact your local service provider
+    STATUS:  completely installed
+
+   PKGINST:  SUNWfcoe
+      NAME:  Sun FCoE Transport Driver
+  CATEGORY:  system
+      ARCH:  sparc
+   VERSION:  11.11,REV=2009.11.11
+   BASEDIR:  /
+    VENDOR:  Oracle Corporation
+      DESC:  Sun FCoE (Fibre Channel over Ethernet) Transport Driver
+  INSTDATE:  Aug 16 2018 19:05
+   HOTLINE:  Please contact your local service provider
+    STATUS:  completely installed
+
+   PKGINST:  SUNWfcoei
+      NAME:  Sun FCoE Initiator Driver
+  CATEGORY:  system
+      ARCH:  sparc
+   VERSION:  11.11,REV=2009.11.11
+   BASEDIR:  /
+    VENDOR:  Oracle Corporation
+      DESC:  Sun FCoE (Fibre Channel over Ethernet) Initiator Driver
+  INSTDATE:  Aug 16 2018 19:05
+   HOTLINE:  Please contact your local service provider
+    STATUS:  completely installed
+
+   PKGINST:  SUNWfcoeu
+      NAME:  Sun FCoE Port Management Library
+  CATEGORY:  system
+      ARCH:  sparc
+   VERSION:  11.11,REV=2009.11.11
+   BASEDIR:  /
+    VENDOR:  Oracle Corporation
+      DESC:  Sun FCoE (Fibre Channel over Ethernet) Port Management Library
+  INSTDATE:  Aug 16 2018 19:05
+   HOTLINE:  Please contact your local service provider
+    STATUS:  completely installed
+
+   PKGINST:  SUNWfcp
+      NAME:  Sun FCP SCSI Device Driver
+  CATEGORY:  system
+      ARCH:  sparc
+   VERSION:  11.11,REV=2009.11.11
+   BASEDIR:  /
+    VENDOR:  Oracle Corporation
+      DESC:  Sun FCP SCSI Fibre Channel Device Driver
+  INSTDATE:  Aug 16 2018 19:05
+   HOTLINE:  Please contact your local service provider
+    STATUS:  completely installed
+
+   PKGINST:  SUNWfcprt
+      NAME:  Fibre Channel HBA Port utility
+  CATEGORY:  system
+      ARCH:  sparc
+   VERSION:  11.11,REV=2009.11.11
+   BASEDIR:  /
+    VENDOR:  Oracle Corporation
+      DESC:  Utility for Fibre Channel Host Bus Adapters
+  INSTDATE:  Aug 16 2018 19:05
+   HOTLINE:  Please contact your local service provider
+    STATUS:  completely installed
+
+   PKGINST:  SUNWfcprtr
+      NAME:  Fibre Channel HBA Port NPIV utility (root)
+  CATEGORY:  system
+      ARCH:  sparc
+   VERSION:  11.11,REV=2009.11.11
+   BASEDIR:  /
+    VENDOR:  Oracle Corporation
+      DESC:  NPIV Utility for Fibre Channel Host Bus Adapters (root)
+  INSTDATE:  Aug 16 2018 19:05
+   HOTLINE:  Please contact your local service provider
+    STATUS:  completely installed
+
+   PKGINST:  SUNWfcsm
+      NAME:  FCSM driver
+  CATEGORY:  system
+      ARCH:  sparc
+   VERSION:  11.11,REV=2009.11.11
+   BASEDIR:  /
+    VENDOR:  Oracle Corporation
+      DESC:  Provides the FCSM driver
+  INSTDATE:  Aug 16 2018 19:05
+   HOTLINE:  Please contact your local service provider
+    STATUS:  completely installed
+
+   PKGINST:  SUNWfctl
+      NAME:  Sun Fibre Channel Transport layer
+  CATEGORY:  system
+      ARCH:  sparc
+   VERSION:  11.11,REV=2009.11.11
+   BASEDIR:  /
+    VENDOR:  Oracle Corporation
+      DESC:  fctl module and fp device driver
+  INSTDATE:  Aug 16 2018 19:05
+   HOTLINE:  Please contact your local service provider
+    STATUS:  completely installed
+
+   PKGINST:  SUNWfmd
+      NAME:  Fault Management Daemon and Utilities
+  CATEGORY:  system
+      ARCH:  sparc
+   VERSION:  11.11,REV=2009.11.11
+   BASEDIR:  /
+    VENDOR:  Oracle Corporation
+      DESC:  Fault Management Daemon and Utilities
+  INSTDATE:  Aug 16 2018 19:05
+   HOTLINE:  Please contact your local service provider
+    STATUS:  completely installed
+
+   PKGINST:  SUNWfmdr
+      NAME:  Fault Management Daemon and Utilities (Root)
+  CATEGORY:  system
+      ARCH:  sparc
+   VERSION:  11.11,REV=2009.11.11
+   BASEDIR:  /
+    VENDOR:  Oracle Corporation
+      DESC:  Fault Management Daemon and Utilities (Root)
+  INSTDATE:  Aug 16 2018 19:05
+   HOTLINE:  Please contact your local service provider
+    STATUS:  completely installed
+
+   PKGINST:  SUNWfss
+      NAME:  Fair Share Scheduler
+  CATEGORY:  system
+      ARCH:  sparc
+   VERSION:  11.11,REV=2009.11.11
+   BASEDIR:  /
+    VENDOR:  Oracle Corporation
+      DESC:  core software for the fair share scheduler
+  INSTDATE:  Aug 16 2018 19:05
+   HOTLINE:  Please contact your local service provider
+    STATUS:  completely installed
+
+   PKGINST:  SUNWftpr
+      NAME:  FTP Server, (Root)
+  CATEGORY:  system
+      ARCH:  sparc
+   VERSION:  11.11,REV=2009.11.11
+   BASEDIR:  /
+    VENDOR:  Oracle Corporation
+      DESC:  FTP Server Configuration Files
+  INSTDATE:  Aug 16 2018 19:05
+   HOTLINE:  Please contact your local service provider
+    STATUS:  completely installed
+
+   PKGINST:  SUNWfwflash
+      NAME:  Sun Firmware Flash Update Tool (fwflash)
+  CATEGORY:  system
+      ARCH:  sparc
+   VERSION:  11.11,REV=2009.11.11
+   BASEDIR:  /
+    VENDOR:  Oracle Corporation
+      DESC:  Sun Firmware Flash Update Tool (fwflash)
+  INSTDATE:  Aug 16 2018 19:05
+   HOTLINE:  Please contact your local service provider
+    STATUS:  completely installed
+
+   PKGINST:  SUNWgss
+      NAME:  GSSAPI V2
+  CATEGORY:  system
+      ARCH:  sparc
+   VERSION:  11.11,REV=2009.11.11
+   BASEDIR:  /
+    VENDOR:  Oracle Corporation
+      DESC:  Generic Security Service Application Program Interface, Version 2 - user
+  INSTDATE:  Aug 16 2018 19:05
+   HOTLINE:  Please contact your local service provider
+    STATUS:  completely installed
+
+   PKGINST:  SUNWgssc
+      NAME:  GSSAPI CONFIG V2
+  CATEGORY:  system
+      ARCH:  sparc
+   VERSION:  11.11,REV=2009.11.11
+   BASEDIR:  /
+    VENDOR:  Oracle Corporation
+      DESC:  Generic Security Service Application Program Interface, Version 2 - config
+  INSTDATE:  Aug 16 2018 19:05
+   HOTLINE:  Please contact your local service provider
+    STATUS:  completely installed
+
+   PKGINST:  SUNWgssk
+      NAME:  kernel GSSAPI V2
+  CATEGORY:  system
+      ARCH:  sparc
+   VERSION:  11.11,REV=2009.11.11
+   BASEDIR:  /
+    VENDOR:  Oracle Corporation
+      DESC:  Generic Security Service Application Program Interface, Version 2 - kernel
+  INSTDATE:  Aug 16 2018 19:05
+   HOTLINE:  Please contact your local service provider
+    STATUS:  completely installed
+
+   PKGINST:  SUNWhal
+      NAME:  Hardware Abstraction Layer
+  CATEGORY:  system
+      ARCH:  sparc
+   VERSION:  11.11,REV=2009.11.11
+   BASEDIR:  /
+    VENDOR:  Oracle Corporation
+      DESC:  Hardware Abstraction Layer, HAL (freedesktop.org)
+  INSTDATE:  Aug 16 2018 19:05
+   HOTLINE:  Please contact your local service provider
+    STATUS:  completely installed
+
+   PKGINST:  SUNWhalr
+      NAME:  Hardware Abstraction Layer (Root)
+  CATEGORY:  system
+      ARCH:  sparc
+   VERSION:  11.11,REV=2009.11.11
+   BASEDIR:  /
+    VENDOR:  Oracle Corporation
+      DESC:  Hardware Abstraction Layer, HAL (freedesktop.org) (Root)
+  INSTDATE:  Aug 16 2018 19:05
+   HOTLINE:  Please contact your local service provider
+    STATUS:  completely installed
+
+   PKGINST:  SUNWhea
+      NAME:  SunOS Header Files
+  CATEGORY:  system
+      ARCH:  sparc
+   VERSION:  11.11,REV=2009.11.11
+   BASEDIR:  /
+    VENDOR:  Oracle Corporation
+      DESC:  SunOS C/C++ header files for general development of software
+  INSTDATE:  Aug 16 2018 19:05
+   HOTLINE:  Please contact your local service provider
+    STATUS:  completely installed
+
+   PKGINST:  SUNWhermon
+      NAME:  Sun IB Hermon HCA driver
+  CATEGORY:  system
+      ARCH:  sparc
+   VERSION:  11.11,REV=2009.11.11
+   BASEDIR:  /
+    VENDOR:  Oracle Corporation
+      DESC:  Hermon HCA driver
+  INSTDATE:  Aug 16 2018 19:05
+   HOTLINE:  Please contact your local service provider
+    STATUS:  completely installed
+
+   PKGINST:  SUNWi40e
+      NAME:  Oracle Quad 10GbE NIC Driver
+  CATEGORY:  system
+      ARCH:  sparc
+   VERSION:  11.11,REV=2009.11.11
+   BASEDIR:  /
+    VENDOR:  Oracle Corporation
+      DESC:  Oracle Quad 10GbE NIC Driver
+  INSTDATE:  Aug 16 2018 19:05
+   HOTLINE:  Please contact your local service provider
+    STATUS:  completely installed
+
+   PKGINST:  SUNWib
+      NAME:  Sun InfiniBand Framework
+  CATEGORY:  system
+      ARCH:  sparc
+   VERSION:  11.11,REV=2009.11.11
+   BASEDIR:  /
+    VENDOR:  Oracle Corporation
+      DESC:  Sun InfiniBand Framework
+  INSTDATE:  Aug 16 2018 19:05
+   HOTLINE:  Please contact your local service provider
+    STATUS:  completely installed
+
+   PKGINST:  SUNWibdmar
+      NAME:  Sun InfiniBand Device Management Agent (Root)
+  CATEGORY:  system
+      ARCH:  sparc
+   VERSION:  11.11,REV=2009.11.11
+   BASEDIR:  /
+    VENDOR:  Oracle Corporation
+      DESC:  Sun InfiniBand Device Management Agent (Root)
+  INSTDATE:  Aug 16 2018 19:05
+   HOTLINE:  Please contact your local service provider
+    STATUS:  completely installed
+
+   PKGINST:  SUNWibsdp
+      NAME:  Sun InfiniBand layered Sockets Direct Protocol
+  CATEGORY:  system
+      ARCH:  sparc
+   VERSION:  11.11,REV=2009.11.11
+   BASEDIR:  /
+    VENDOR:  Oracle Corporation
+      DESC:  Sun InfiniBand layered Sockets Direct Protocol
+  INSTDATE:  Aug 16 2018 19:05
+   HOTLINE:  Please contact your local service provider
+    STATUS:  completely installed
+
+   PKGINST:  SUNWibsdpib
+      NAME:  Sun InfiniBand Sockets Direct Protocol
+  CATEGORY:  system
+      ARCH:  sparc
+   VERSION:  11.11,REV=2009.11.11
+   BASEDIR:  /
+    VENDOR:  Oracle Corporation
+      DESC:  Sun InfiniBand Sockets Direct Protocol
+  INSTDATE:  Aug 16 2018 19:05
+   HOTLINE:  Please contact your local service provider
+    STATUS:  completely installed
+
+   PKGINST:  SUNWigb
+      NAME:  Intel 82575 1Gb PCI Express NIC Driver
+  CATEGORY:  system
+      ARCH:  sparc
+   VERSION:  11.11,REV=2009.11.11
+   BASEDIR:  /
+    VENDOR:  Oracle Corporation
+      DESC:  Intel 82575 1Gb PCI Express NIC Driver
+  INSTDATE:  Aug 16 2018 19:05
+   HOTLINE:  Please contact your local service provider
+    STATUS:  completely installed
+
+   PKGINST:  SUNWilb
+      NAME:  Integrated IP layer 3/4 load balancer for Solaris (usr)
+  CATEGORY:  system
+      ARCH:  sparc
+   VERSION:  11.11,REV=2009.11.11
+   BASEDIR:  /
+    VENDOR:  Oracle Corporation
+      DESC:  Integrated IP layer 3/4 load balancer for Solaris (usr)
+  INSTDATE:  Aug 16 2018 19:05
+   HOTLINE:  Please contact your local service provider
+    STATUS:  completely installed
+
+   PKGINST:  SUNWilbr
+      NAME:  Integrated IP layer 3/4 load balancer for Solaris(root)
+  CATEGORY:  system
+      ARCH:  sparc
+   VERSION:  11.11,REV=2009.11.11
+   BASEDIR:  /
+    VENDOR:  Oracle Corporation
+      DESC:  Integrated IP layer 3/4 load balancer for Solaris(root)
+  INSTDATE:  Aug 16 2018 19:05
+   HOTLINE:  Please contact your local service provider
+    STATUS:  completely installed
+
+   PKGINST:  SUNWima
+      NAME:  Solaris IMA Software Initiator Plugin
+  CATEGORY:  system
+      ARCH:  sparc
+   VERSION:  11.11,REV=2009.11.11
+   BASEDIR:  /
+    VENDOR:  Oracle Corporation
+      DESC:  SNIA iSCSI Managment API plugin library for iSCSI adapters
+  INSTDATE:  Aug 16 2018 19:05
+   HOTLINE:  Please contact your local service provider
+    STATUS:  completely installed
+
+   PKGINST:  SUNWimac
+      NAME:  Solaris IMA Common Library
+  CATEGORY:  system
+      ARCH:  sparc
+   VERSION:  11.11,REV=2009.11.11
+   BASEDIR:  /
+    VENDOR:  Oracle Corporation
+      DESC:  SNIA iSCSI Managment API common library for iSCSI adapters
+  INSTDATE:  Aug 16 2018 19:05
+   HOTLINE:  Please contact your local service provider
+    STATUS:  completely installed
+
+   PKGINST:  SUNWimacr
+      NAME:  Solaris IMA Common Library (Root)
+  CATEGORY:  system
+      ARCH:  sparc
+   VERSION:  11.11,REV=2009.11.11
+   BASEDIR:  /
+    VENDOR:  Oracle Corporation
+      DESC:  SNIA iSCSI Managment API common library for iSCSI adapters (Root)
+  INSTDATE:  Aug 16 2018 19:05
+   HOTLINE:  Please contact your local service provider
+    STATUS:  completely installed
+
+   PKGINST:  SUNWimar
+      NAME:  Solaris IMA Software Initiator Plugin (Root)
+  CATEGORY:  system
+      ARCH:  sparc
+   VERSION:  11.11,REV=2009.11.11
+   BASEDIR:  /
+    VENDOR:  Oracle Corporation
+      DESC:  SNIA iSCSI Managment API plugin library for iSCSI adapters (Root)
+  INSTDATE:  Aug 16 2018 19:05
+   HOTLINE:  Please contact your local service provider
+    STATUS:  completely installed
+
+   PKGINST:  SUNWinstallint
+      NAME:  Solaris Install Internal Files
+  CATEGORY:  system
+      ARCH:  sparc
+   VERSION:  11.11,REV=2009.11.11
+   BASEDIR:  /
+    VENDOR:  Oracle Corporation
+      DESC:  Solaris Install internal files
+  INSTDATE:  Aug 16 2018 19:05
+   HOTLINE:  Please contact your local service provider
+    STATUS:  completely installed
+
+   PKGINST:  SUNWintgige
+      NAME:  Intel(R) PRO/1000 Server Adapter Driver
+  CATEGORY:  system
+      ARCH:  sparc
+   VERSION:  11.11,REV=2009.11.11
+   BASEDIR:  /
+    VENDOR:  Oracle Corporation
+      DESC:  Intel(R) PRO/1000 Server Adapter Driver
+  INSTDATE:  Aug 16 2018 19:05
+   HOTLINE:  Please contact your local service provider
+    STATUS:  completely installed
+
+   PKGINST:  SUNWiopc.v
+      NAME:  sun4v IO chip performance counter modules
+  CATEGORY:  system
+      ARCH:  sparc.sun4v
+   VERSION:  11.11,REV=2009.11.11
+   BASEDIR:  /
+    VENDOR:  Oracle Corporation
+      DESC:  Kernel support for IO chip performance counters
+  INSTDATE:  Aug 16 2018 19:05
+   HOTLINE:  Please contact your local service provider
+    STATUS:  completely installed
+
+   PKGINST:  SUNWipc
+      NAME:  Interprocess Communications
+  CATEGORY:  system
+      ARCH:  sparc
+   VERSION:  11.11,REV=2009.11.11
+   BASEDIR:  /
+    VENDOR:  Oracle Corporation
+      DESC:  utilities to monitor or remove messages, semaphores, or shared memory for interprocess communication
+  INSTDATE:  Aug 16 2018 19:05
+   HOTLINE:  Please contact your local service provider
+    STATUS:  completely installed
+
+   PKGINST:  SUNWipoib
+      NAME:  Sun IP over InfiniBand
+  CATEGORY:  system
+      ARCH:  sparc
+   VERSION:  11.11,REV=2009.11.11
+   BASEDIR:  /
+    VENDOR:  Oracle Corporation
+      DESC:  Sun IP over InfiniBand
+  INSTDATE:  Aug 16 2018 19:05
+   HOTLINE:  Please contact your local service provider
+    STATUS:  completely installed
+
+   PKGINST:  SUNWiscsidmr
+      NAME:  Sun iSCSI Data Mover (Root)
+  CATEGORY:  system
+      ARCH:  sparc
+   VERSION:  11.11,REV=2009.11.11
+   BASEDIR:  /
+    VENDOR:  Oracle Corporation
+      DESC:  Sun iSCSI Data Mover (Root)
+  INSTDATE:  Aug 16 2018 19:05
+   HOTLINE:  Please contact your local service provider
+    STATUS:  completely installed
+
+   PKGINST:  SUNWiscsidmu
+      NAME:  Sun iSCSI Data Mover (Usr)
+  CATEGORY:  system
+      ARCH:  sparc
+   VERSION:  11.11,REV=2009.11.11
+   BASEDIR:  /
+    VENDOR:  Oracle Corporation
+      DESC:  Sun iSCSI Data Mover (Usr)
+  INSTDATE:  Aug 16 2018 19:05
+   HOTLINE:  Please contact your local service provider
+    STATUS:  completely installed
+
+   PKGINST:  SUNWiscsir
+      NAME:  Sun iSCSI Device Driver (root)
+  CATEGORY:  system
+      ARCH:  sparc
+   VERSION:  11.11,REV=2009.11.11
+   BASEDIR:  /
+    VENDOR:  Oracle Corporation
+      DESC:  Sun iSCSI Device Driver
+  INSTDATE:  Aug 16 2018 19:05
+   HOTLINE:  Please contact your local service provider
+    STATUS:  completely installed
+
+   PKGINST:  SUNWiscsiu
+      NAME:  Sun iSCSI Management Utilities (usr)
+  CATEGORY:  system
+      ARCH:  sparc
+   VERSION:  11.11,REV=2009.11.11
+   BASEDIR:  /
+    VENDOR:  Oracle Corporation
+      DESC:  Sun iSCSI Management Utilities
+  INSTDATE:  Aug 16 2018 19:05
+   HOTLINE:  Please contact your local service provider
+    STATUS:  completely installed
+
+   PKGINST:  SUNWixgb
+      NAME:  Intel(R) PRO/10G Server Adapter Driver
+  CATEGORY:  system
+      ARCH:  sparc
+   VERSION:  11.11,REV=2009.11.11
+   BASEDIR:  /
+    VENDOR:  Oracle Corporation
+      DESC:  Intel(R) PRO/10G Server Adapter Driver
+  INSTDATE:  Aug 16 2018 19:05
+   HOTLINE:  Please contact your local service provider
+    STATUS:  completely installed
+
+   PKGINST:  SUNWixgbe
+      NAME:  Intel 10GbE PCIE NIC Driver
+  CATEGORY:  system
+      ARCH:  sparc
+   VERSION:  11.11,REV=2009.11.11
+   BASEDIR:  /
+    VENDOR:  Oracle Corporation
+      DESC:  Intel 10GbE PCIE NIC Driver
+  INSTDATE:  Aug 16 2018 19:05
+   HOTLINE:  Please contact your local service provider
+    STATUS:  completely installed
+
+   PKGINST:  SUNWj8rt
+      NAME:  JDK 8.0 64-bit Runtime Env. (1.8.0_291)
+  CATEGORY:  system
+      ARCH:  sparc
+   VERSION:  1.8.0,REV=2014.03.18.08.02
+   BASEDIR:  /
+    VENDOR:  Oracle America, Inc
+      DESC:  Java Platform virtual machine and core class libraries (64 bit)
+  INSTDATE:  Nov 08 2021 22:15
+   HOTLINE:  Please contact your local service provider
+    STATUS:  completely installed
+
+   PKGINST:  SUNWkdcr
+      NAME:  Kerberos V5 KDC (root)
+  CATEGORY:  system
+      ARCH:  sparc
+   VERSION:  11.11,REV=2009.11.11
+   BASEDIR:  /
+    VENDOR:  Oracle Corporation
+      DESC:  Kerberos V5 KDC (root)
+  INSTDATE:  Aug 16 2018 19:05
+   HOTLINE:  Please contact your local service provider
+    STATUS:  completely installed
+
+   PKGINST:  SUNWkdcu
+      NAME:  Kerberos V5 Master KDC (user)
+  CATEGORY:  system
+      ARCH:  sparc
+   VERSION:  11.11,REV=2009.11.11
+   BASEDIR:  /
+    VENDOR:  Oracle Corporation
+      DESC:  Kerberos V5 Master KDC (user)
+  INSTDATE:  Aug 16 2018 19:05
+   HOTLINE:  Please contact your local service provider
+    STATUS:  completely installed
+
+   PKGINST:  SUNWkey
+      NAME:  Keyboard configuration tables
+  CATEGORY:  system
+      ARCH:  sparc
+   VERSION:  11.11,REV=2009.11.11
+   BASEDIR:  /
+    VENDOR:  Oracle Corporation
+      DESC:  Configuration tables that specify keyboard attributes such as localized meanings for individual keys
+  INSTDATE:  Aug 16 2018 19:05
+   HOTLINE:  Please contact your local service provider
+    STATUS:  completely installed
+
+   PKGINST:  SUNWkrbr
+      NAME:  Kerberos version 5 support (Root)
+  CATEGORY:  system
+      ARCH:  sparc
+   VERSION:  11.11,REV=2009.11.11
+   BASEDIR:  /
+    VENDOR:  Oracle Corporation
+      DESC:  Kerberos version 5 support (Root)
+  INSTDATE:  Aug 16 2018 19:05
+   HOTLINE:  Please contact your local service provider
+    STATUS:  completely installed
+
+   PKGINST:  SUNWkrbu
+      NAME:  Kerberos version 5 support (Usr)
+  CATEGORY:  system
+      ARCH:  sparc
+   VERSION:  11.11,REV=2009.11.11
+   BASEDIR:  /
+    VENDOR:  Oracle Corporation
+      DESC:  Kerberos version 5 support (Usr)
+  INSTDATE:  Aug 16 2018 19:05
+   HOTLINE:  Please contact your local service provider
+    STATUS:  completely installed
+
+   PKGINST:  SUNWkvm.v
+      NAME:  Core Architecture, (Kvm)
+  CATEGORY:  system
+      ARCH:  sparc.sun4v
+   VERSION:  11.11,REV=2009.11.11
+   BASEDIR:  /
+    VENDOR:  Oracle Corporation
+      DESC:  core software for a specific hardware platform group
+  INSTDATE:  Aug 16 2018 19:05
+   HOTLINE:  Please contact your local service provider
+    STATUS:  completely installed
+
+   PKGINST:  SUNWkvmt200.v
+      NAME:  Core Architecture, sun4v-based platforms (Kvm)
+  CATEGORY:  system
+      ARCH:  sparc.sun4v
+   VERSION:  11.11,REV=2009.11.11
+   BASEDIR:  /
+    VENDOR:  Oracle Corporation
+      DESC:  core software for a specific hardware platform group
+  INSTDATE:  Aug 16 2018 19:05
+   HOTLINE:  Please contact your local service provider
+    STATUS:  completely installed
+
+   PKGINST:  SUNWlatencytop
+      NAME:  LatencyTOP tool
+  CATEGORY:  system
+      ARCH:  sparc
+   VERSION:  11.11,REV=2009.11.11
+   BASEDIR:  /
+    VENDOR:  Oracle Corporation
+      DESC:  LatencyTOP tool
+  INSTDATE:  Aug 16 2018 19:05
+   HOTLINE:  Please contact your local service provider
+    STATUS:  completely installed
+
+   PKGINST:  SUNWldomr.v
+      NAME:  Solaris Logical Domains (Root)
+  CATEGORY:  system
+      ARCH:  sparc.sun4v
+   VERSION:  11.11,REV=2009.11.11
+   BASEDIR:  /
+    VENDOR:  Oracle Corporation
+      DESC:  Solaris Logical Domains Configuration Files
+  INSTDATE:  Aug 16 2018 19:05
+   HOTLINE:  Please contact your local service provider
+    STATUS:  completely installed
+
+   PKGINST:  SUNWldomu.v
+      NAME:  Solaris Logical Domains (Usr)
+  CATEGORY:  system
+      ARCH:  sparc.sun4v
+   VERSION:  11.11,REV=2009.11.11
+   BASEDIR:  /
+    VENDOR:  Oracle Corporation
+      DESC:  Solaris Logical Domains Configuration and Administration
+  INSTDATE:  Aug 16 2018 19:05
+   HOTLINE:  Please contact your local service provider
+    STATUS:  completely installed
+
+   PKGINST:  SUNWldskint
+      NAME:  libdiskmgt private header file pkg
+  CATEGORY:  system
+      ARCH:  sparc
+   VERSION:  11.11,REV=2009.11.11
+   BASEDIR:  /
+    VENDOR:  Oracle Corporation
+      DESC:  libdiskmgt private header file pkg
+  INSTDATE:  Aug 16 2018 19:05
+   HOTLINE:  Please contact your local service provider
+    STATUS:  completely installed
+
+   PKGINST:  SUNWlibC
+      NAME:  Sun Workshop Compilers Bundled libC
+  CATEGORY:  system
+      ARCH:  sparc
+   VERSION:  5.11,REV=2011.04.11
+   BASEDIR:  /
+    VENDOR:  Sun Microsystems, Inc.
+      DESC:  Sun Workshop Compilers Bundled libC
+  INSTDATE:  Aug 16 2018 19:05
+   HOTLINE:  Please contact your local service provider
+    STATUS:  completely installed
+
+   PKGINST:  SUNWlibm
+      NAME:  Math & Microtasking Library Headers & Lint Files (Usr)
+  CATEGORY:  system
+      ARCH:  sparc
+   VERSION:  5.11,REV=2011.04.11
+   BASEDIR:  /
+    VENDOR:  Sun Microsystems, Inc.
+      DESC:  Math & Microtasking Library Headers & Lint Files (Usr)
+  INSTDATE:  Aug 16 2018 19:05
+   HOTLINE:  Please contact your local service provider
+    STATUS:  completely installed
+
+   PKGINST:  SUNWlibmr
+      NAME:  Math Library Lint Files (Root)
+  CATEGORY:  system
+      ARCH:  sparc
+   VERSION:  5.11,REV=2011.04.11
+   BASEDIR:  /
+    VENDOR:  Sun Microsystems, Inc.
+      DESC:  Math Library Lint Files (Root)
+  INSTDATE:  Aug 16 2018 19:05
+   HOTLINE:  Please contact your local service provider
+    STATUS:  completely installed
+
+   PKGINST:  SUNWlibms
+      NAME:  Math & Microtasking Libraries (Usr)
+  CATEGORY:  system
+      ARCH:  sparc
+   VERSION:  5.11,REV=2011.04.11
+   BASEDIR:  /
+    VENDOR:  Sun Microsystems, Inc.
+      DESC:  Math & Microtasking Libraries (Usr)
+  INSTDATE:  Aug 16 2018 19:05
+   HOTLINE:  Please contact your local service provider
+    STATUS:  completely installed
+
+   PKGINST:  SUNWlibmsr
+      NAME:  Math & Microtasking Libraries (Root)
+  CATEGORY:  system
+      ARCH:  sparc
+   VERSION:  5.11,REV=2011.04.11
+   BASEDIR:  /
+    VENDOR:  Sun Microsystems, Inc.
+      DESC:  Math & Microtasking Libraries (Root)
+  INSTDATE:  Aug 16 2018 19:05
+   HOTLINE:  Please contact your local service provider
+    STATUS:  completely installed
+
+   PKGINST:  SUNWluxop
+      NAME:  Sun Enterprise Network Array firmware and utilities
+  CATEGORY:  system
+      ARCH:  sparc
+   VERSION:  11.11,REV=2009.11.11
+   BASEDIR:  /
+    VENDOR:  Oracle Corporation
+      DESC:  Sun Enterprise Network Array firmware and utilities
+  INSTDATE:  Aug 16 2018 19:05
+   HOTLINE:  Please contact your local service provider
+    STATUS:  completely installed
+
+   PKGINST:  SUNWluxopr
+      NAME:  Sun Enterprise Network Array libraries
+  CATEGORY:  system
+      ARCH:  sparc
+   VERSION:  11.11,REV=2009.11.11
+   BASEDIR:  /
+    VENDOR:  Oracle Corporation
+      DESC:  Sun Enterprise Network Array libraries
+  INSTDATE:  Aug 16 2018 19:05
+   HOTLINE:  Please contact your local service provider
+    STATUS:  completely installed
+
+   PKGINST:  SUNWmdar
+      NAME:  Solaris Volume Manager Assistant (Root)
+  CATEGORY:  system
+      ARCH:  sparc
+   VERSION:  11.11,REV=2009.11.11
+   BASEDIR:  /
+    VENDOR:  Oracle Corporation
+      DESC:  Solaris Volume Manager Assistant (Root)
+  INSTDATE:  Jul 17 2021 21:14
+   HOTLINE:  Please contact your local service provider
+    STATUS:  completely installed
+
+   PKGINST:  SUNWmdau
+      NAME:  Solaris Volume Manager Assistant (Usr)
+  CATEGORY:  system
+      ARCH:  sparc
+   VERSION:  11.11,REV=2009.11.11
+   BASEDIR:  /
+    VENDOR:  Oracle Corporation
+      DESC:  Solaris Volume Manager Assistant (Usr)
+  INSTDATE:  Jul 17 2021 21:14
+   HOTLINE:  Please contact your local service provider
+    STATUS:  completely installed
+
+   PKGINST:  SUNWmdb
+      NAME:  Modular Debugger
+  CATEGORY:  system
+      ARCH:  sparc
+   VERSION:  11.11,REV=2009.11.11
+   BASEDIR:  /
+    VENDOR:  Oracle Corporation
+      DESC:  Modular Debugger (MDB)
+  INSTDATE:  Aug 16 2018 19:05
+   HOTLINE:  Please contact your local service provider
+    STATUS:  completely installed
+
+   PKGINST:  SUNWmdbr
+      NAME:  Modular Debugger (Root)
+  CATEGORY:  system
+      ARCH:  sparc
+   VERSION:  11.11,REV=2009.11.11
+   BASEDIR:  /
+    VENDOR:  Oracle Corporation
+      DESC:  Modular Debugger (MDB) (Root)
+  INSTDATE:  Aug 16 2018 19:05
+   HOTLINE:  Please contact your local service provider
+    STATUS:  completely installed
+
+   PKGINST:  SUNWmddr
+      NAME:  SVM RCM Module
+  CATEGORY:  system
+      ARCH:  sparc
+   VERSION:  11.11,REV=2009.11.11
+   BASEDIR:  /
+    VENDOR:  Oracle Corporation
+      DESC:  reconfiguration coordination manager module for SVM
+  INSTDATE:  Jul 17 2021 21:14
+   HOTLINE:  Please contact your local service provider
+    STATUS:  completely installed
+
+   PKGINST:  SUNWmdr
+      NAME:  Solaris Volume Manager, (Root)
+  CATEGORY:  system
+      ARCH:  sparc
+   VERSION:  11.11,REV=2009.11.11
+   BASEDIR:  /
+    VENDOR:  Oracle Corporation
+      DESC:  Solaris Volume Manager driver
+  INSTDATE:  Jul 17 2021 21:14
+   HOTLINE:  Please contact your local service provider
+    STATUS:  completely installed
+
+   PKGINST:  SUNWmdu
+      NAME:  Solaris Volume Manager, (Usr)
+  CATEGORY:  system
+      ARCH:  sparc
+   VERSION:  11.11,REV=2009.11.11
+   BASEDIR:  /
+    VENDOR:  Oracle Corporation
+      DESC:  Solaris Volume Manager commands
+  INSTDATE:  Jul 17 2021 21:14
+   HOTLINE:  Please contact your local service provider
+    STATUS:  completely installed
+
+   PKGINST:  SUNWmpapi
+      NAME:  SNIA Multipath Management API Common Library
+  CATEGORY:  system
+      ARCH:  sparc
+   VERSION:  11.11,REV=2009.11.11
+   BASEDIR:  /
+    VENDOR:  Oracle Corporation
+      DESC:  Common Library based on SNIA MP API specification
+  INSTDATE:  Aug 16 2018 19:05
+   HOTLINE:  Please contact your local service provider
+    STATUS:  completely installed
+
+   PKGINST:  SUNWmpapir
+      NAME:  SNIA Multipath Management API Common Library (Root)
+  CATEGORY:  system
+      ARCH:  sparc
+   VERSION:  11.11,REV=2009.11.11
+   BASEDIR:  /
+    VENDOR:  Oracle Corporation
+      DESC:  Common Library based on SNIA MP API specification (Root)
+  INSTDATE:  Aug 16 2018 19:05
+   HOTLINE:  Please contact your local service provider
+    STATUS:  completely installed
+
+   PKGINST:  SUNWmpathadm
+      NAME:  Solaris Multipathing CLI
+  CATEGORY:  system
+      ARCH:  sparc
+   VERSION:  11.11,REV=2009.11.11
+   BASEDIR:  /
+    VENDOR:  Oracle Corporation
+      DESC:  Path Administration Utility for a Solaris Multipathing device
+  INSTDATE:  Aug 16 2018 19:05
+   HOTLINE:  Please contact your local service provider
+    STATUS:  completely installed
+
+   PKGINST:  SUNWmpsvplr
+      NAME:  Sun MP API library for the scsi_vhci driver (Root)
+  CATEGORY:  system
+      ARCH:  sparc
+   VERSION:  11.11,REV=2009.11.11
+   BASEDIR:  /
+    VENDOR:  Oracle Corporation
+      DESC:  SNIA MP API plugin library for the scsi_vhci driver (Root)
+  INSTDATE:  Aug 16 2018 19:05
+   HOTLINE:  Please contact your local service provider
+    STATUS:  completely installed
+
+   PKGINST:  SUNWmptsas
+      NAME:  LSI MPT SAS 2.0 Controller HBA Driver
+  CATEGORY:  system
+      ARCH:  sparc
+   VERSION:  11.11,REV=2009.11.11
+   BASEDIR:  /
+    VENDOR:  Oracle Corporation
+      DESC:  LSI MPT SAS 2.0 Controller HBA Driver
+  INSTDATE:  Aug 16 2018 19:05
+   HOTLINE:  Please contact your local service provider
+    STATUS:  completely installed
+
+   PKGINST:  SUNWmrsas
+      NAME:  LSI MegaRAID SAS2.0 HBA Driver
+  CATEGORY:  system
+      ARCH:  sparc
+   VERSION:  11.11,REV=2009.11.11
+   BASEDIR:  /
+    VENDOR:  Oracle Corporation
+      DESC:  LSI MegaRAID SAS2.0 Controller HBA Driver
+  INSTDATE:  Aug 16 2018 19:05
+   HOTLINE:  Please contact your local service provider
+    STATUS:  completely installed
+
+   PKGINST:  SUNWnetcat
+      NAME:  Netcat Command
+  CATEGORY:  system
+      ARCH:  sparc
+   VERSION:  11.11,REV=2009.11.11
+   BASEDIR:  /
+    VENDOR:  Oracle Corporation
+      DESC:  Netcat Command
+  INSTDATE:  Aug 16 2018 19:05
+   HOTLINE:  Please contact your local service provider
+    STATUS:  completely installed
+
+   PKGINST:  SUNWnfsckr
+      NAME:  Network File System (NFS) client kernel support (Root)
+  CATEGORY:  system
+      ARCH:  sparc
+   VERSION:  11.11,REV=2009.11.11
+   BASEDIR:  /
+    VENDOR:  Oracle Corporation
+      DESC:  Network File System (NFS) client kernel support (Root)
+  INSTDATE:  Aug 16 2018 19:05
+   HOTLINE:  Please contact your local service provider
+    STATUS:  completely installed
+
+   PKGINST:  SUNWnfscr
+      NAME:  Network File System (NFS) client support (Root)
+  CATEGORY:  system
+      ARCH:  sparc
+   VERSION:  11.11,REV=2009.11.11
+   BASEDIR:  /
+    VENDOR:  Oracle Corporation
+      DESC:  Network File System (NFS) client support (Root)
+  INSTDATE:  Aug 16 2018 19:05
+   HOTLINE:  Please contact your local service provider
+    STATUS:  completely installed
+
+   PKGINST:  SUNWnfscu
+      NAME:  Network File System (NFS) client support (Usr)
+  CATEGORY:  system
+      ARCH:  sparc
+   VERSION:  11.11,REV=2009.11.11
+   BASEDIR:  /
+    VENDOR:  Oracle Corporation
+      DESC:  Network File System (NFS) client support (Usr)
+  INSTDATE:  Aug 16 2018 19:05
+   HOTLINE:  Please contact your local service provider
+    STATUS:  completely installed
+
+   PKGINST:  SUNWnfsskr
+      NAME:  Network File System (NFS) server kernel support (Root)
+  CATEGORY:  system
+      ARCH:  sparc
+   VERSION:  11.11,REV=2009.11.11
+   BASEDIR:  /
+    VENDOR:  Oracle Corporation
+      DESC:  Network File System (NFS) server kernel support (Root)
+  INSTDATE:  Aug 16 2018 19:05
+   HOTLINE:  Please contact your local service provider
+    STATUS:  completely installed
+
+   PKGINST:  SUNWnfssr
+      NAME:  Network File System (NFS) server support (Root)
+  CATEGORY:  system
+      ARCH:  sparc
+   VERSION:  11.11,REV=2009.11.11
+   BASEDIR:  /
+    VENDOR:  Oracle Corporation
+      DESC:  Network File System (NFS) server support (Root)
+  INSTDATE:  Aug 16 2018 19:05
+   HOTLINE:  Please contact your local service provider
+    STATUS:  completely installed
+
+   PKGINST:  SUNWnfssu
+      NAME:  Network File System (NFS) server support (Usr)
+  CATEGORY:  system
+      ARCH:  sparc
+   VERSION:  11.11,REV=2009.11.11
+   BASEDIR:  /
+    VENDOR:  Oracle Corporation
+      DESC:  Network File System (NFS) server support (Usr)
+  INSTDATE:  Aug 16 2018 19:05
+   HOTLINE:  Please contact your local service provider
+    STATUS:  completely installed
+
+   PKGINST:  SUNWnisr
+      NAME:  Network Information System, (Root)
+  CATEGORY:  system
+      ARCH:  sparc
+   VERSION:  11.11,REV=2009.11.11
+   BASEDIR:  /
+    VENDOR:  Oracle Corporation
+      DESC:  configuration files and directories for the Network Information System (NIS)
+  INSTDATE:  Aug 16 2018 19:05
+   HOTLINE:  Please contact your local service provider
+    STATUS:  completely installed
+
+   PKGINST:  SUNWnisu
+      NAME:  Network Information System, (Usr)
+  CATEGORY:  system
+      ARCH:  sparc
+   VERSION:  11.11,REV=2009.11.11
+   BASEDIR:  /
+    VENDOR:  Oracle Corporation
+      DESC:  utilities for the Network Information System (NIS)
+  INSTDATE:  Aug 16 2018 19:05
+   HOTLINE:  Please contact your local service provider
+    STATUS:  completely installed
+
+   PKGINST:  SUNWniumx.v
+      NAME:  UltraSPARC-T2 NIU nexus driver
+  CATEGORY:  system
+      ARCH:  sparc.sun4v
+   VERSION:  11.11,REV=2009.11.11
+   BASEDIR:  /
+    VENDOR:  Oracle Corporation
+      DESC:  UltraSPARC-T2 NIU nexus driver
+  INSTDATE:  Aug 16 2018 19:05
+   HOTLINE:  Please contact your local service provider
+    STATUS:  completely installed
+
+   PKGINST:  SUNWnxge.v
+      NAME:  Sun NIU leaf driver
+  CATEGORY:  system
+      ARCH:  sparc.sun4v
+   VERSION:  11.11,REV=2009.11.11
+   BASEDIR:  /
+    VENDOR:  Oracle Corporation
+      DESC:  Sun NIU leaf driver
+  INSTDATE:  Aug 16 2018 19:05
+   HOTLINE:  Please contact your local service provider
+    STATUS:  completely installed
+
+   PKGINST:  SUNWpacketh
+      NAME:  Solaris Packet header files
+  CATEGORY:  system
+      ARCH:  sparc
+   VERSION:  11.11,REV=2009.11.11
+   BASEDIR:  /
+    VENDOR:  Oracle Corporation
+      DESC:  C header files for BPF/PF_PACKET
+  INSTDATE:  Aug 16 2018 19:05
+   HOTLINE:  Please contact your local service provider
+    STATUS:  completely installed
+
+   PKGINST:  SUNWpacketu
+      NAME:  Solaris Kernel Packet (Usr)
+  CATEGORY:  system
+      ARCH:  sparc
+   VERSION:  11.11,REV=2009.11.11
+   BASEDIR:  /
+    VENDOR:  Oracle Corporation
+      DESC:  BPF/PF_PACKET kernel packet modules
+  INSTDATE:  Aug 16 2018 19:05
+   HOTLINE:  Please contact your local service provider
+    STATUS:  completely installed
+
+   PKGINST:  SUNWpiclh
+      NAME:  PICL Header Files (Usr)
+  CATEGORY:  system
+      ARCH:  sparc
+   VERSION:  11.11,REV=2009.11.11
+   BASEDIR:  /
+    VENDOR:  Oracle Corporation
+      DESC:  PICL Header Files
+  INSTDATE:  Aug 16 2018 19:05
+   HOTLINE:  Please contact your local service provider
+    STATUS:  completely installed
+
+   PKGINST:  SUNWpiclr
+      NAME:  PICL Framework (Root)
+  CATEGORY:  system
+      ARCH:  sparc
+   VERSION:  11.11,REV=2009.11.11
+   BASEDIR:  /
+    VENDOR:  Oracle Corporation
+      DESC:  PICL Framework init scripts
+  INSTDATE:  Aug 16 2018 19:05
+   HOTLINE:  Please contact your local service provider
+    STATUS:  completely installed
+
+   PKGINST:  SUNWpiclu
+      NAME:  PICL Libraries, and Plugin Modules (Usr)
+  CATEGORY:  system
+      ARCH:  sparc
+   VERSION:  11.11,REV=2009.11.11
+   BASEDIR:  /
+    VENDOR:  Oracle Corporation
+      DESC:  PICL Daemon, Libraries, prtpicl client and plug-in modules
+  INSTDATE:  Aug 16 2018 19:05
+   HOTLINE:  Please contact your local service provider
+    STATUS:  completely installed
+
+   PKGINST:  SUNWpkgcmdsr
+      NAME:  SVr4 package commands (root)
+  CATEGORY:  system
+      ARCH:  sparc
+   VERSION:  11.11.1,REV=2009.11.11
+   BASEDIR:  /
+    VENDOR:  Oracle Corporation
+      DESC:  Solaris System V release 4 Package Commands (root)
+  INSTDATE:  Aug 16 2018 19:05
+   HOTLINE:  Please contact your local service provider
+    STATUS:  completely installed
+
+   PKGINST:  SUNWpkgcmdsu
+      NAME:  SVr4 packaging commands (usr)
+  CATEGORY:  system
+      ARCH:  sparc
+   VERSION:  11.11.1,REV=2009.11.11
+   BASEDIR:  /
+    VENDOR:  Oracle Corporation
+      DESC:  Solaris System V Release 4 Packaging Commands (usr)
+  INSTDATE:  Aug 16 2018 19:05
+   HOTLINE:  Please contact your local service provider
+    STATUS:  completely installed
+
+   PKGINST:  SUNWpmcsr
+      NAME:  PMC-Sierra SAS-2 HBA driver (root)
+  CATEGORY:  system
+      ARCH:  sparc
+   VERSION:  11.11,REV=2009.11.11
+   BASEDIR:  /
+    VENDOR:  Oracle Corporation
+      DESC:  PMC-Sierra SAS-2 HBA Driver (root)
+  INSTDATE:  Aug 16 2018 19:05
+   HOTLINE:  Please contact your local service provider
+    STATUS:  completely installed
+
+   PKGINST:  SUNWpmcsu
+      NAME:  PMC-Sierra SAS-2 HBA driver (usr)
+  CATEGORY:  system
+      ARCH:  sparc
+   VERSION:  11.11,REV=2009.11.11
+   BASEDIR:  /
+    VENDOR:  Oracle Corporation
+      DESC:  PMC-Sierra SAS-2 HBA driver (usr)
+  INSTDATE:  Aug 16 2018 19:05
+   HOTLINE:  Please contact your local service provider
+    STATUS:  completely installed
+
+   PKGINST:  SUNWpmr
+      NAME:  Power Management config file and rc script
+  CATEGORY:  system
+      ARCH:  sparc
+   VERSION:  11.11,REV=2009.11.11
+   BASEDIR:  /
+    VENDOR:  Oracle Corporation
+      DESC:  Power Management config file and rc script
+  INSTDATE:  Aug 16 2018 19:05
+   HOTLINE:  Please contact your local service provider
+    STATUS:  completely installed
+
+   PKGINST:  SUNWpmu
+      NAME:  Power Management binaries
+  CATEGORY:  system
+      ARCH:  sparc
+   VERSION:  11.11,REV=2009.11.11
+   BASEDIR:  /
+    VENDOR:  Oracle Corporation
+      DESC:  Power Management binaries
+  INSTDATE:  Aug 16 2018 19:05
+   HOTLINE:  Please contact your local service provider
+    STATUS:  completely installed
+
+   PKGINST:  SUNWpolkit
+      NAME:  PolicyKit
+  CATEGORY:  system
+      ARCH:  sparc
+   VERSION:  11.11,REV=2009.11.11
+   BASEDIR:  /
+    VENDOR:  Oracle Corporation
+      DESC:  Toolkit for controlling privileges (freedesktop.org)
+  INSTDATE:  Aug 16 2018 19:05
+   HOTLINE:  Please contact your local service provider
+    STATUS:  completely installed
+
+   PKGINST:  SUNWpool
+      NAME:  Resource Pools
+  CATEGORY:  system
+      ARCH:  sparc
+   VERSION:  11.11,REV=2009.11.11
+   BASEDIR:  /
+    VENDOR:  Oracle Corporation
+      DESC:  core software for resource pools
+  INSTDATE:  Aug 16 2018 19:05
+   HOTLINE:  Please contact your local service provider
+    STATUS:  completely installed
+
+   PKGINST:  SUNWpoold
+      NAME:  Dynamic Resource Pools
+  CATEGORY:  system
+      ARCH:  sparc
+   VERSION:  11.11,REV=2009.11.11
+   BASEDIR:  /
+    VENDOR:  Oracle Corporation
+      DESC:  core software for dynamic resource pools
+  INSTDATE:  Aug 16 2018 19:05
+   HOTLINE:  Please contact your local service provider
+    STATUS:  completely installed
+
+   PKGINST:  SUNWpoolr
+      NAME:  Resource Pools (Root)
+  CATEGORY:  system
+      ARCH:  sparc
+   VERSION:  11.11,REV=2009.11.11
+   BASEDIR:  /
+    VENDOR:  Oracle Corporation
+      DESC:  core software for resource pools (Root)
+  INSTDATE:  Aug 16 2018 19:05
+   HOTLINE:  Please contact your local service provider
+    STATUS:  completely installed
+
+   PKGINST:  SUNWpowertop
+      NAME:  PowerTOP tool
+  CATEGORY:  system
+      ARCH:  sparc
+   VERSION:  11.11,REV=2009.11.11
+   BASEDIR:  /
+    VENDOR:  Oracle Corporation
+      DESC:  PowerTOP tool
+  INSTDATE:  Aug 16 2018 19:05
+   HOTLINE:  Please contact your local service provider
+    STATUS:  completely installed
+
+   PKGINST:  SUNWqede
+      NAME:  QLogic 579xx 25GbE NIC Driver
+  CATEGORY:  system
+      ARCH:  sparc
+   VERSION:  11.11,REV=2009.11.11
+   BASEDIR:  /
+    VENDOR:  QLogic Corporation, Inc.
+      DESC:  Qlogic FastLinQ 25 Gigabit Ethernet Controller Driver
+  INSTDATE:  Jul 17 2021 13:55
+   HOTLINE:  Please contact your local service provider
+    STATUS:  completely installed
+
+   PKGINST:  SUNWqlc
+      NAME:  Qlogic ISP Fibre Channel Device Driver and GLDv3 NIC driver
+  CATEGORY:  system
+      ARCH:  sparc
+   VERSION:  11.11,REV=2009.11.11
+   BASEDIR:  /
+    VENDOR:  Oracle Corporation
+      DESC:  Qlogic ISP Fibre Channel Device Driver and GLDv3 NIC driver
+  INSTDATE:  Aug 16 2018 19:05
+   HOTLINE:  Please contact your local service provider
+    STATUS:  completely installed
+
+   PKGINST:  SUNWqlcnic
+      NAME:  8214 10GE Controller Driver
+  CATEGORY:  system
+      ARCH:  sparc
+   VERSION:  11.11,REV=2009.11.11
+   BASEDIR:  /
+    VENDOR:  Oracle Corporation
+      DESC:  QLogic P3+ 10 Gigabit Ethernet Controller Driver
+  INSTDATE:  Aug 16 2018 19:05
+   HOTLINE:  Please contact your local service provider
+    STATUS:  completely installed
+
+   PKGINST:  SUNWqlcu
+      NAME:  Qlogic Fibre Channel Adapter Utilities (usr)
+  CATEGORY:  system
+      ARCH:  sparc
+   VERSION:  11.11,REV=2009.11.11
+   BASEDIR:  /
+    VENDOR:  Oracle Corporation
+      DESC:  Utilties associated with the Qlogic Fibre Channel Adapter
+  INSTDATE:  Aug 16 2018 19:05
+   HOTLINE:  Please contact your local service provider
+    STATUS:  completely installed
+
+   PKGINST:  SUNWrcapr
+      NAME:  Solaris Resource Capping Daemon (Root)
+  CATEGORY:  system
+      ARCH:  sparc
+   VERSION:  11.11,REV=2009.11.11
+   BASEDIR:  /
+    VENDOR:  Oracle Corporation
+      DESC:  Solaris Resource Capping Daemon (Root)
+  INSTDATE:  Aug 16 2018 19:05
+   HOTLINE:  Please contact your local service provider
+    STATUS:  completely installed
+
+   PKGINST:  SUNWrcapu
+      NAME:  Solaris Resource Capping Daemon (Usr)
+  CATEGORY:  system
+      ARCH:  sparc
+   VERSION:  11.11,REV=2009.11.11
+   BASEDIR:  /
+    VENDOR:  Oracle Corporation
+      DESC:  Solaris Resource Capping Daemon (Usr)
+  INSTDATE:  Aug 16 2018 19:05
+   HOTLINE:  Please contact your local service provider
+    STATUS:  completely installed
+
+   PKGINST:  SUNWrge
+      NAME:  Realtek Gigabit Ethernet Driver
+  CATEGORY:  system
+      ARCH:  sparc
+   VERSION:  11.11,REV=2009.11.11
+   BASEDIR:  /
+    VENDOR:  Oracle Corporation
+      DESC:  Realtek Gigabit Ethernet Network Adapter Driver
+  INSTDATE:  Aug 16 2018 19:05
+   HOTLINE:  Please contact your local service provider
+    STATUS:  completely installed
+
+   PKGINST:  SUNWrmvolmgr
+      NAME:  Removable volume manager
+  CATEGORY:  system
+      ARCH:  sparc
+   VERSION:  11.11,REV=2009.11.11
+   BASEDIR:  /
+    VENDOR:  Oracle Corporation
+      DESC:  Non-graphical removable volume manager
+  INSTDATE:  Aug 16 2018 19:05
+   HOTLINE:  Please contact your local service provider
+    STATUS:  completely installed
+
+   PKGINST:  SUNWrmvolmgrr
+      NAME:  Removable volume manager (Root)
+  CATEGORY:  system
+      ARCH:  sparc
+   VERSION:  11.11,REV=2009.11.11
+   BASEDIR:  /
+    VENDOR:  Oracle Corporation
+      DESC:  Non-graphical removable volume manager (Root)
+  INSTDATE:  Aug 16 2018 19:05
+   HOTLINE:  Please contact your local service provider
+    STATUS:  completely installed
+
+   PKGINST:  SUNWroute
+      NAME:  Network Routing daemons/commands (Usr)
+  CATEGORY:  system
+      ARCH:  sparc
+   VERSION:  11.11,REV=2009.11.11
+   BASEDIR:  /
+    VENDOR:  Oracle Corporation
+      DESC:  Network Routing daemons/commands (Usr)
+  INSTDATE:  Aug 16 2018 19:05
+   HOTLINE:  Please contact your local service provider
+    STATUS:  completely installed
+
+   PKGINST:  SUNWroutr
+      NAME:  Network Routing daemons/commands (Root)
+  CATEGORY:  system
+      ARCH:  sparc
+   VERSION:  11.11,REV=2009.11.11
+   BASEDIR:  /
+    VENDOR:  Oracle Corporation
+      DESC:  Network Routing daemons/commands (Root)
+  INSTDATE:  Aug 16 2018 19:05
+   HOTLINE:  Please contact your local service provider
+    STATUS:  completely installed
+
+   PKGINST:  SUNWrpcib
+      NAME:  InfiniBand plugin to RPC over RDMA
+  CATEGORY:  system
+      ARCH:  sparc
+   VERSION:  11.11,REV=2009.11.11
+   BASEDIR:  /
+    VENDOR:  Oracle Corporation
+      DESC:  InfiniBand plugin implementation of RPC over RDMA
+  INSTDATE:  Aug 16 2018 19:05
+   HOTLINE:  Please contact your local service provider
+    STATUS:  completely installed
+
+   PKGINST:  SUNWrsg
+      NAME:  RPCSEC_GSS
+  CATEGORY:  system
+      ARCH:  sparc
+   VERSION:  11.11,REV=2009.11.11
+   BASEDIR:  /
+    VENDOR:  Oracle Corporation
+      DESC:  GSS-API services for ONC RPC
+  INSTDATE:  Aug 16 2018 19:05
+   HOTLINE:  Please contact your local service provider
+    STATUS:  completely installed
+
+   PKGINST:  SUNWrsgk
+      NAME:  kernel RPCSEC_GSS
+  CATEGORY:  system
+      ARCH:  sparc
+   VERSION:  11.11,REV=2009.11.11
+   BASEDIR:  /
+    VENDOR:  Oracle Corporation
+      DESC:  kernel GSS-API services for ONC RPC
+  INSTDATE:  Aug 16 2018 19:05
+   HOTLINE:  Please contact your local service provider
+    STATUS:  completely installed
+
+   PKGINST:  SUNWs10brandr
+      NAME:  Solaris 10 Containers: solaris10 brand support (Root)
+  CATEGORY:  system
+      ARCH:  sparc
+   VERSION:  11.11,REV=2009.11.11
+   BASEDIR:  /
+    VENDOR:  Oracle Corporation
+      DESC:  Support for the 'Solaris10' Brand
+  INSTDATE:  Aug 16 2018 19:05
+   HOTLINE:  Please contact your local service provider
+    STATUS:  completely installed
+
+   PKGINST:  SUNWs10brandu
+      NAME:  Solaris 10 Containers: solaris10 brand support (Usr)
+  CATEGORY:  system
+      ARCH:  sparc
+   VERSION:  11.11,REV=2009.11.11
+   BASEDIR:  /
+    VENDOR:  Oracle Corporation
+      DESC:  Support for the 'solaris10' Brand
+  INSTDATE:  Aug 16 2018 19:05
+   HOTLINE:  Please contact your local service provider
+    STATUS:  completely installed
+
+   PKGINST:  SUNWscsip
+      NAME:  SCSI/SES plugins
+  CATEGORY:  system
+      ARCH:  sparc
+   VERSION:  11.11,REV=2009.11.11
+   BASEDIR:  /
+    VENDOR:  Oracle Corporation
+      DESC:  Vendor specific SCSI and SES plugins
+  INSTDATE:  Aug 16 2018 19:05
+   HOTLINE:  Please contact your local service provider
+    STATUS:  completely installed
+
+   PKGINST:  SUNWses
+      NAME:  SCSI Enclosure Services Device Driver
+  CATEGORY:  system
+      ARCH:  sparc
+   VERSION:  11.11,REV=2009.11.11
+   BASEDIR:  /
+    VENDOR:  Oracle Corporation
+      DESC:  SCSI Enclosure Services (ses) Device Driver
+  INSTDATE:  Aug 16 2018 19:05
+   HOTLINE:  Please contact your local service provider
+    STATUS:  completely installed
+
+   PKGINST:  SUNWsmapi
+      NAME:  Storage Management APIs
+  CATEGORY:  system
+      ARCH:  sparc
+   VERSION:  11.11,REV=2009.11.11
+   BASEDIR:  /
+    VENDOR:  Oracle Corporation
+      DESC:  Software libraries for storage management
+  INSTDATE:  Aug 16 2018 19:05
+   HOTLINE:  Please contact your local service provider
+    STATUS:  completely installed
+
+   PKGINST:  SUNWsmbfskr
+      NAME:  SMB/CIFS File System client support (Kernel)
+  CATEGORY:  system
+      ARCH:  sparc
+   VERSION:  11.11,REV=2009.11.11
+   BASEDIR:  /
+    VENDOR:  Oracle Corporation
+      DESC:  SMB/CIFS File System client support (Kernel)
+  INSTDATE:  Aug 16 2018 19:05
+   HOTLINE:  Please contact your local service provider
+    STATUS:  completely installed
+
+   PKGINST:  SUNWsmbfsr
+      NAME:  SMB/CIFS File System client support (Root)
+  CATEGORY:  system
+      ARCH:  sparc
+   VERSION:  11.11,REV=2009.11.11
+   BASEDIR:  /
+    VENDOR:  Oracle Corporation
+      DESC:  SMB/CIFS File System client support (Root)
+  INSTDATE:  Aug 16 2018 19:05
+   HOTLINE:  Please contact your local service provider
+    STATUS:  completely installed
+
+   PKGINST:  SUNWsmbfsu
+      NAME:  SMB/CIFS File System client support (Usr)
+  CATEGORY:  system
+      ARCH:  sparc
+   VERSION:  11.11,REV=2009.11.11
+   BASEDIR:  /
+    VENDOR:  Oracle Corporation
+      DESC:  SMB/CIFS File System client support (Usr)
+  INSTDATE:  Aug 16 2018 19:05
+   HOTLINE:  Please contact your local service provider
+    STATUS:  completely installed
+
+   PKGINST:  SUNWsmbskr
+      NAME:  SMB Server (Kernel)
+  CATEGORY:  system
+      ARCH:  sparc
+   VERSION:  11.11,REV=2009.11.11
+   BASEDIR:  /
+    VENDOR:  Oracle Corporation
+      DESC:  SMB Server kernel root components
+  INSTDATE:  Aug 16 2018 19:05
+   HOTLINE:  Please contact your local service provider
+    STATUS:  completely installed
+
+   PKGINST:  SUNWsmbsr
+      NAME:  SMB Server (Root)
+  CATEGORY:  system
+      ARCH:  sparc
+   VERSION:  11.11,REV=2009.11.11
+   BASEDIR:  /
+    VENDOR:  Oracle Corporation
+      DESC:  SMB Server root components
+  INSTDATE:  Aug 16 2018 19:05
+   HOTLINE:  Please contact your local service provider
+    STATUS:  completely installed
+
+   PKGINST:  SUNWsmbsu
+      NAME:  SMB Server (Usr)
+  CATEGORY:  system
+      ARCH:  sparc
+   VERSION:  11.11,REV=2009.11.11
+   BASEDIR:  /
+    VENDOR:  Oracle Corporation
+      DESC:  SMB Server libraries and commands
+  INSTDATE:  Aug 16 2018 19:05
+   HOTLINE:  Please contact your local service provider
+    STATUS:  completely installed
+
+   PKGINST:  SUNWsmedia
+      NAME:  Storage media management library
+  CATEGORY:  system
+      ARCH:  sparc
+   VERSION:  11.11,REV=2009.11.11
+   BASEDIR:  /
+    VENDOR:  Oracle Corporation
+      DESC:  Storage media management library
+  INSTDATE:  Aug 16 2018 19:05
+   HOTLINE:  Please contact your local service provider
+    STATUS:  completely installed
+
+   PKGINST:  SUNWsmediar
+      NAME:  Storage media management library (Root)
+  CATEGORY:  system
+      ARCH:  sparc
+   VERSION:  11.11,REV=2009.11.11
+   BASEDIR:  /
+    VENDOR:  Oracle Corporation
+      DESC:  Storage media management library (Root)
+  INSTDATE:  Aug 16 2018 19:05
+   HOTLINE:  Please contact your local service provider
+    STATUS:  completely installed
+
+   PKGINST:  SUNWsmhba
+      NAME:  SM-HBA Libraries and CLI
+  CATEGORY:  system
+      ARCH:  sparc
+   VERSION:  11.11,REV=2009.11.11
+   BASEDIR:  /
+    VENDOR:  Oracle Corporation
+      DESC:  T11 Storage Management HBA API Libraries and CLI
+  INSTDATE:  Aug 16 2018 19:05
+   HOTLINE:  Please contact your local service provider
+    STATUS:  completely installed
+
+   PKGINST:  SUNWsmhbar
+      NAME:  SM-HBA Libraries and CLI (root)
+  CATEGORY:  system
+      ARCH:  sparc
+   VERSION:  11.11,REV=2009.11.11
+   BASEDIR:  /
+    VENDOR:  Oracle Corporation
+      DESC:  T11 Storage Management HBA API Libraries and CLI (root)
+  INSTDATE:  Aug 16 2018 19:05
+   HOTLINE:  Please contact your local service provider
+    STATUS:  completely installed
+
+   PKGINST:  SUNWsmpd
+      NAME:  Target Driver for Serial SCSI Management Protocol (SMP) Compliant Devices
+  CATEGORY:  system
+      ARCH:  sparc
+   VERSION:  11.11,REV=2009.11.11
+   BASEDIR:  /
+    VENDOR:  Oracle Corporation
+      DESC:  Target Driver for Serial SCSI Management Protocol (SMP) Compliant Devices
+  INSTDATE:  Aug 16 2018 19:05
+   HOTLINE:  Please contact your local service provider
+    STATUS:  completely installed
+
+   PKGINST:  SUNWsprot
+      NAME:  Solaris Bundled tools
+  CATEGORY:  system
+      ARCH:  sparc
+   VERSION:  5.11,REV=2011.04.11
+   BASEDIR:  /
+    VENDOR:  Sun Microsystems, Inc.
+      DESC:  Solaris Bundled tools
+  INSTDATE:  Aug 16 2018 19:05
+   HOTLINE:  Please contact your local service provider
+    STATUS:  completely installed
+
+   PKGINST:  SUNWssad
+      NAME:  SPARCstorage Array Drivers
+  CATEGORY:  system
+      ARCH:  sparc
+   VERSION:  11.11,REV=2009.11.11
+   BASEDIR:  /
+    VENDOR:  Oracle Corporation
+      DESC:  ssd kernel device driver
+  INSTDATE:  Aug 16 2018 19:05
+   HOTLINE:  Please contact your local service provider
+    STATUS:  completely installed
+
+   PKGINST:  SUNWsxge
+      NAME:  SUN 10/40Gb sxge NIC Driver
+  CATEGORY:  system
+      ARCH:  sparc
+   VERSION:  11.11,REV=2009.11.11
+   BASEDIR:  /
+    VENDOR:  Oracle Corporation
+      DESC:  SUN 10/40Gb sxge Ethernet Network Driver
+  INSTDATE:  Aug 16 2018 19:05
+   HOTLINE:  Please contact your local service provider
+    STATUS:  completely installed
+
+   PKGINST:  SUNWtcpd
+      NAME:  tcpd - access control facility for internet services
+  CATEGORY:  system
+      ARCH:  sparc
+   VERSION:  11.11,REV=2009.11.11
+   BASEDIR:  /
+    VENDOR:  Oracle Corporation
+      DESC:  tcpd - access control facility for internet services
+  INSTDATE:  Aug 16 2018 19:05
+   HOTLINE:  Please contact your local service provider
+    STATUS:  completely installed
+
+   PKGINST:  SUNWter
+      NAME:  Terminal Information
+  CATEGORY:  system
+      ARCH:  sparc
+   VERSION:  11.11,REV=2009.11.11
+   BASEDIR:  /
+    VENDOR:  Oracle Corporation
+      DESC:  extensive terminfo database entries describing capabilities of terminals and pseudoterminals
+  INSTDATE:  Aug 16 2018 19:05
+   HOTLINE:  Please contact your local service provider
+    STATUS:  completely installed
+
+   PKGINST:  SUNWtftp
+      NAME:  Trivial File Transfer Server
+  CATEGORY:  system
+      ARCH:  sparc
+   VERSION:  11.11,REV=2009.11.11
+   BASEDIR:  /
+    VENDOR:  Oracle Corporation
+      DESC:  Trivial File Transfer Server
+  INSTDATE:  Aug 16 2018 19:05
+   HOTLINE:  Please contact your local service provider
+    STATUS:  completely installed
+
+   PKGINST:  SUNWtftpr
+      NAME:  Trivial File Transfer Server (Root)
+  CATEGORY:  system
+      ARCH:  sparc
+   VERSION:  11.11,REV=2009.11.11
+   BASEDIR:  /
+    VENDOR:  Oracle Corporation
+      DESC:  Trivial File Transfer Server (Root)
+  INSTDATE:  Aug 16 2018 19:05
+   HOTLINE:  Please contact your local service provider
+    STATUS:  completely installed
+
+   PKGINST:  SUNWtnetc
+      NAME:  Telnet Command (client)
+  CATEGORY:  system
+      ARCH:  sparc
+   VERSION:  11.11,REV=2009.11.11
+   BASEDIR:  /
+    VENDOR:  Oracle Corporation
+      DESC:  Telnet Command (client)
+  INSTDATE:  Aug 16 2018 19:05
+   HOTLINE:  Please contact your local service provider
+    STATUS:  completely installed
+
+   PKGINST:  SUNWtnetd
+      NAME:  Telnet Server Daemon (Usr)
+  CATEGORY:  system
+      ARCH:  sparc
+   VERSION:  11.11,REV=2009.11.11
+   BASEDIR:  /
+    VENDOR:  Oracle Corporation
+      DESC:  Telnet Server Daemon (Usr)
+  INSTDATE:  Aug 16 2018 19:05
+   HOTLINE:  Please contact your local service provider
+    STATUS:  completely installed
+
+   PKGINST:  SUNWtnetr
+      NAME:  Telnet Server Daemon (Root)
+  CATEGORY:  system
+      ARCH:  sparc
+   VERSION:  11.11,REV=2009.11.11
+   BASEDIR:  /
+    VENDOR:  Oracle Corporation
+      DESC:  Telnet Server Daemon (Root)
+  INSTDATE:  Aug 16 2018 19:05
+   HOTLINE:  Please contact your local service provider
+    STATUS:  completely installed
+
+   PKGINST:  SUNWtoo
+      NAME:  Programming Tools
+  CATEGORY:  system
+      ARCH:  sparc
+   VERSION:  11.11,REV=2009.11.11
+   BASEDIR:  /
+    VENDOR:  Oracle Corporation
+      DESC:  utilities for software development, including ld, ldd, od, and truss
+  INSTDATE:  Aug 16 2018 19:05
+   HOTLINE:  Please contact your local service provider
+    STATUS:  completely installed
+
+   PKGINST:  SUNWtpm
+      NAME:  Trusted Platform Module driver
+  CATEGORY:  system
+      ARCH:  sparc
+   VERSION:  11.11.0,REV=2009.11.11
+   BASEDIR:  /
+    VENDOR:  Oracle Corporation
+      DESC:  Trusted Platform Module driver
+  INSTDATE:  Aug 16 2018 19:05
+   HOTLINE:  Please contact your local service provider
+    STATUS:  completely installed
+
+   PKGINST:  SUNWuacm
+      NAME:  CDC ACM USB-to-serial driver
+  CATEGORY:  system
+      ARCH:  sparc
+   VERSION:  11.11,REV=2009.11.11
+   BASEDIR:  /
+    VENDOR:  Oracle Corporation
+      DESC:  CDC ACM USB-to-serial driver
+  INSTDATE:  Aug 16 2018 19:05
+   HOTLINE:  Please contact your local service provider
+    STATUS:  completely installed
+
+   PKGINST:  SUNWudf
+      NAME:  Universal Disk Format 1.50, (Usr)
+  CATEGORY:  system
+      ARCH:  sparc
+   VERSION:  11.11,REV=2009.11.11
+   BASEDIR:  /
+    VENDOR:  Oracle Corporation
+      DESC:  Universal Disk Format 1.50 File System, (Usr)
+  INSTDATE:  Aug 16 2018 19:05
+   HOTLINE:  Please contact your local service provider
+    STATUS:  completely installed
+
+   PKGINST:  SUNWudfr
+      NAME:  Universal Disk Format 1.50
+  CATEGORY:  system
+      ARCH:  sparc
+   VERSION:  11.11,REV=2009.11.11
+   BASEDIR:  /
+    VENDOR:  Oracle Corporation
+      DESC:  Universal Disk Format 1.50 File System
+  INSTDATE:  Aug 16 2018 19:05
+   HOTLINE:  Please contact your local service provider
+    STATUS:  completely installed
+
+   PKGINST:  SUNWuedg
+      NAME:  USB Digi Edgeport serial driver
+  CATEGORY:  system
+      ARCH:  sparc
+   VERSION:  11.11,REV=2009.11.11
+   BASEDIR:  /
+    VENDOR:  Oracle Corporation
+      DESC:  USB Digi Edgeport serial driver
+  INSTDATE:  Aug 16 2018 19:05
+   HOTLINE:  Please contact your local service provider
+    STATUS:  completely installed
+
+   PKGINST:  SUNWuftdi
+      NAME:  FT232R USB UART
+  CATEGORY:  system
+      ARCH:  sparc
+   VERSION:  11.11,REV=2009.11.11
+   BASEDIR:  /
+    VENDOR:  Oracle Corporation
+      DESC:  FTDI FT232R USB serial driver
+  INSTDATE:  Aug 16 2018 19:05
+   HOTLINE:  Please contact your local service provider
+    STATUS:  completely installed
+
+   PKGINST:  SUNWugen
+      NAME:  USB Generic Driver
+  CATEGORY:  system
+      ARCH:  sparc
+   VERSION:  11.11,REV=2009.11.11
+   BASEDIR:  /
+    VENDOR:  Oracle Corporation
+      DESC:  UGEN (USB Generic Driver)
+  INSTDATE:  Aug 16 2018 19:05
+   HOTLINE:  Please contact your local service provider
+    STATUS:  completely installed
+
+   PKGINST:  SUNWugenu
+      NAME:  UGEN Headers
+  CATEGORY:  system
+      ARCH:  sparc
+   VERSION:  11.11,REV=2009.11.11
+   BASEDIR:  /
+    VENDOR:  Oracle Corporation
+      DESC:  UGEN Headers
+  INSTDATE:  Aug 16 2018 19:05
+   HOTLINE:  Please contact your local service provider
+    STATUS:  completely installed
+
+   PKGINST:  SUNWuiu8
+      NAME:  Iconv modules for UTF-8 Locale
+  CATEGORY:  system
+      ARCH:  sparc
+   VERSION:  11.11,REV=2009.11.11
+   BASEDIR:  /
+    VENDOR:  Oracle Corporation
+      DESC:  Iconv modules for UTF-8 Locale
+  INSTDATE:  Jul 17 2021 13:55
+   HOTLINE:  Please contact your local service provider
+    STATUS:  completely installed
+
+   PKGINST:  SUNWuksp
+      NAME:  USB Keyspan serial driver
+  CATEGORY:  system
+      ARCH:  sparc
+   VERSION:  11.11,REV=2009.11.11
+   BASEDIR:  /
+    VENDOR:  Oracle Corporation
+      DESC:  USB Keyspan serial driver
+  INSTDATE:  Aug 16 2018 19:05
+   HOTLINE:  Please contact your local service provider
+    STATUS:  completely installed
+
+   PKGINST:  SUNWuprl
+      NAME:  Prolific PL2303 USB-to-serial driver
+  CATEGORY:  system
+      ARCH:  sparc
+   VERSION:  11.11,REV=2009.11.11
+   BASEDIR:  /
+    VENDOR:  Oracle Corporation
+      DESC:  Prolific PL2303 USB-to-serial driver
+  INSTDATE:  Aug 16 2018 19:05
+   HOTLINE:  Please contact your local service provider
+    STATUS:  completely installed
+
+   PKGINST:  SUNWusb
+      NAME:  USB Device Drivers
+  CATEGORY:  system
+      ARCH:  sparc
+   VERSION:  11.11,REV=2009.11.11
+   BASEDIR:  /
+    VENDOR:  Oracle Corporation
+      DESC:  USBA (USB framework) and USB Device Drivers
+  INSTDATE:  Aug 16 2018 19:05
+   HOTLINE:  Please contact your local service provider
+    STATUS:  completely installed
+
+   PKGINST:  SUNWusbs
+      NAME:  USB generic serial module
+  CATEGORY:  system
+      ARCH:  sparc
+   VERSION:  11.11,REV=2009.11.11
+   BASEDIR:  /
+    VENDOR:  Oracle Corporation
+      DESC:  USB generic serial module
+  INSTDATE:  Aug 16 2018 19:05
+   HOTLINE:  Please contact your local service provider
+    STATUS:  completely installed
+
+   PKGINST:  SUNWusbu
+      NAME:  USB Headers
+  CATEGORY:  system
+      ARCH:  sparc
+   VERSION:  11.11,REV=2009.11.11
+   BASEDIR:  /
+    VENDOR:  Oracle Corporation
+      DESC:  USB Headers
+  INSTDATE:  Aug 16 2018 19:05
+   HOTLINE:  Please contact your local service provider
+    STATUS:  completely installed
+
+   PKGINST:  SUNWuwb
+      NAME:  Ultra Wideband (UWB) support modules
+  CATEGORY:  system
+      ARCH:  sparc
+   VERSION:  11.11,REV=2009.11.11
+   BASEDIR:  /
+    VENDOR:  Oracle Corporation
+      DESC:  Common framework for UWB device drivers
+  INSTDATE:  Aug 16 2018 19:05
+   HOTLINE:  Please contact your local service provider
+    STATUS:  completely installed
+
+   PKGINST:  SUNWwbsup
+      NAME:  WAN boot support
+  CATEGORY:  system
+      ARCH:  sparc
+   VERSION:  11.11,REV=2009.11.11
+   BASEDIR:  /
+    VENDOR:  Oracle Corporation
+      DESC:  Solaris WAN boot support
+  INSTDATE:  Aug 16 2018 19:05
+   HOTLINE:  Please contact your local service provider
+    STATUS:  completely installed
+
+   PKGINST:  SUNWwpar
+      NAME:  Wireless WPA Supplicant, (Root)
+  CATEGORY:  system
+      ARCH:  sparc
+   VERSION:  11.11,REV=2009.11.11
+   BASEDIR:  /
+    VENDOR:  Oracle Corporation
+      DESC:  The service implements the IEEE802.11i (WPA/WPA2) specification.
+  INSTDATE:  Aug 16 2018 19:05
+   HOTLINE:  Please contact your local service provider
+    STATUS:  completely installed
+
+   PKGINST:  SUNWwpau
+      NAME:  Wireless WPA Supplicant, (Usr)
+  CATEGORY:  system
+      ARCH:  sparc
+   VERSION:  11.11,REV=2009.11.11
+   BASEDIR:  /
+    VENDOR:  Oracle Corporation
+      DESC:  The service implements the IEEE802.11i (WPA/WPA2) specification.
+  INSTDATE:  Aug 16 2018 19:05
+   HOTLINE:  Please contact your local service provider
+    STATUS:  completely installed
+
+   PKGINST:  SUNWxcu4
+      NAME:  XCU4 Utilities
+  CATEGORY:  system
+      ARCH:  sparc
+   VERSION:  11.11,REV=2009.11.11
+   BASEDIR:  /
+    VENDOR:  Oracle Corporation
+      DESC:  utilities providing conformance with XCU4 specifications
+  INSTDATE:  Aug 16 2018 19:05
+   HOTLINE:  Please contact your local service provider
+    STATUS:  completely installed
+
+   PKGINST:  SUNWxcu6
+      NAME:  XCU6 Utilities
+  CATEGORY:  system
+      ARCH:  sparc
+   VERSION:  11.11,REV=2009.11.11
+   BASEDIR:  /
+    VENDOR:  Oracle Corporation
+      DESC:  utilities providing conformance with XCU6 specifications
+  INSTDATE:  Aug 16 2018 19:05
+   HOTLINE:  Please contact your local service provider
+    STATUS:  completely installed
+
+   PKGINST:  SUNWzfskr
+      NAME:  ZFS kernel root components
+  CATEGORY:  system
+      ARCH:  sparc
+   VERSION:  11.11,REV=2009.11.11
+   BASEDIR:  /
+    VENDOR:  Oracle Corporation
+      DESC:  ZFS kernel root components
+  INSTDATE:  Aug 16 2018 19:05
+   HOTLINE:  Please contact your local service provider
+    STATUS:  completely installed
+
+   PKGINST:  SUNWzfsr
+      NAME:  ZFS root components
+  CATEGORY:  system
+      ARCH:  sparc
+   VERSION:  11.11,REV=2009.11.11
+   BASEDIR:  /
+    VENDOR:  Oracle Corporation
+      DESC:  ZFS root components
+  INSTDATE:  Aug 16 2018 19:05
+   HOTLINE:  Please contact your local service provider
+    STATUS:  completely installed
+
+   PKGINST:  SUNWzfsu
+      NAME:  ZFS libraries and commands
+  CATEGORY:  system
+      ARCH:  sparc
+   VERSION:  11.11,REV=2009.11.11
+   BASEDIR:  /
+    VENDOR:  Oracle Corporation
+      DESC:  ZFS libraries and commands
+  INSTDATE:  Aug 16 2018 19:05
+   HOTLINE:  Please contact your local service provider
+    STATUS:  completely installed
+
+   PKGINST:  SUNWzoner
+      NAME:  Solaris Zones (Root)
+  CATEGORY:  system
+      ARCH:  sparc
+   VERSION:  11.11,REV=2009.11.11
+   BASEDIR:  /
+    VENDOR:  Oracle Corporation
+      DESC:  Solaris Zones Configuration Files
+  INSTDATE:  Aug 16 2018 19:05
+   HOTLINE:  Please contact your local service provider
+    STATUS:  completely installed
+
+   PKGINST:  SUNWzoneu
+      NAME:  Solaris Zones (Usr)
+  CATEGORY:  system
+      ARCH:  sparc
+   VERSION:  11.11,REV=2009.11.11
+   BASEDIR:  /
+    VENDOR:  Oracle Corporation
+      DESC:  Solaris Zones Configuration and Administration
+  INSTDATE:  Aug 16 2018 19:05
+   HOTLINE:  Please contact your local service provider
+    STATUS:  completely installed
+
+   PKGINST:  VRTSnbcfg
+      NAME:  NetBackup Configuration
+  CATEGORY:  application,tools
+      ARCH:  sparc
+   VERSION:  8.1.1.0
+   BASEDIR:  /
+    VENDOR:  Veritas Technologies LLC
+      DESC:  The NetBackup configuration files.
+    PSTAMP:  20180204021028
+  INSTDATE:  Jul 22 2021 22:15
+   HOTLINE:  Please contact your local service provider.
+    STATUS:  completely installed
+     FILES:        7 installed pathnames
+                   3 shared pathnames
+                   3 directories
+                   1 executables
+                  64 blocks used (approx)
+
+   PKGINST:  VRTSnbclt
+      NAME:  NetBackup Client
+  CATEGORY:  application,tools
+      ARCH:  sparc
+   VERSION:  8.1.1.0
+   BASEDIR:  /
+    VENDOR:  Veritas Technologies LLC
+      DESC:  The NetBackup Client software resides on the system being backed up and is responsible for carrying out the backup process on that system.
+    PSTAMP:  20180204021140
+  INSTDATE:  Jul 22 2021 22:10
+   HOTLINE:  Please contact your local service provider.
+    STATUS:  completely installed
+     FILES:      735 installed pathnames
+                   4 shared pathnames
+                 138 directories
+                 440 executables
+              967098 blocks used (approx)
+
+   PKGINST:  VRTSnbjava
+      NAME:  NetBackup Java Console
+  CATEGORY:  application,tools
+      ARCH:  sparc
+   VERSION:  8.1.1.0
+   BASEDIR:  /
+    VENDOR:  Veritas Technologies LLC
+      DESC:  The NetBackup Java Console provides administration and backup/restore user interfaces.
+    PSTAMP:  20180204021051
+  INSTDATE:  Jul 22 2021 22:13
+   HOTLINE:  Please contact your local service provider.
+    STATUS:  completely installed
+     FILES:      148 installed pathnames
+                  23 directories
+                  47 executables
+              800941 blocks used (approx)
+
+   PKGINST:  VRTSnbjre
+      NAME:  NetBackup Java JRE
+  CATEGORY:  application,tools
+      ARCH:  sparc
+   VERSION:  8.1.1.0
+   BASEDIR:  /
+    VENDOR:  Veritas Technologies LLC
+      DESC:  The NetBackup Java runtime environment provides support for the NetBackup Java Console user interfaces.
+    PSTAMP:  20180204021029
+  INSTDATE:  Jul 22 2021 22:11
+   HOTLINE:  Please contact your local service provider.
+    STATUS:  completely installed
+     FILES:      176 installed pathnames
+                  20 directories
+                  73 executables
+              290180 blocks used (approx)
+
+   PKGINST:  VRTSnbpck
+      NAME:  NetBackup Pre-Check
+  CATEGORY:  application,tools
+      ARCH:  sparc
+   VERSION:  8.1.1.0
+   BASEDIR:  /
+    VENDOR:  Veritas Technologies LLC
+      DESC:  The NetBackup preinstall software verifies that the system supports the NetBackup Client Software.
+    PSTAMP:  20180204021254
+  INSTDATE:  Jul 22 2021 22:08
+   HOTLINE:  Please contact your local service provider.
+    STATUS:  completely installed
+     FILES:        6 installed pathnames
+                   3 shared pathnames
+                   3 directories
+                   1 executables
+               62818 blocks used (approx)
+
+   PKGINST:  VRTSpbx
+      NAME:  Veritas Private Branch Exchange
+  CATEGORY:  application
+      ARCH:  sparc
+   VERSION:  1.8.7.0
+   BASEDIR:  /
+    VENDOR:  Veritas Technologies LLC
+      DESC:  Veritas Private Branch Exchange
+    PSTAMP:  cmnetsecldm0120180117230254_1.8.7.0
+  INSTDATE:  Jul 22 2021 22:09
+    STATUS:  completely installed
+     FILES:       37 installed pathnames
+                  37 executables
+               55041 blocks used (approx)
+
+   PKGINST:  VRTSpddea
+      NAME:  Veritas Deduplication Agent
+  CATEGORY:  application
+      ARCH:  sparc
+   VERSION:  11.1.1.0
+   BASEDIR:  /
+    VENDOR:  Veritas Technologies LLC
+      DESC:  The Veritas Deduplication Agent resides on the system being backed up by the Veritas deduplication engine.
+    PSTAMP:  20180202104330
+  INSTDATE:  Jul 22 2021 22:14
+   HOTLINE:  Please contact your local service provider.
+    STATUS:  completely installed
+     FILES:      102 installed pathnames
+                  16 directories
+                  69 executables
+              203820 blocks used (approx)
+

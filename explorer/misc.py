@@ -1,14 +1,11 @@
-#!/usr/local/bin/python
 """
 # Script to understand misc details
 """
-# Written by Dougal Scott <dwagon@pobox.com>
-# $Id: misc.py 2398 2012-06-04 02:00:57Z dougals $
-# $HeadURL: http://svn/ops/unix/explorer/trunk/explorer/misc.py $
+# Written by Dougal Scott <dougal.scott@gmail.com>
 
 import re
 import time
-import explorer.explorerbase
+from explorer import explorerbase
 
 
 ##########################################################################
@@ -90,6 +87,7 @@ class miscDetails(explorerbase.ExplorerBase):
             if not line or "Name" in line or "UNINSTALLED" in line:
                 continue
             self["modules"].append(line.split()[2])
+        infh.close()
 
     ##########################################################################
     def get_printers(self):
@@ -124,6 +122,7 @@ class miscDetails(explorerbase.ExplorerBase):
         infh = self.open(fname)
         for line in infh:
             if line.startswith("No Adapters Found"):
+                infh.close()
                 return
             if line.startswith("HBA"):
                 self.parse_fc_info_stanza(data)
@@ -360,7 +359,7 @@ class miscDetails(explorerbase.ExplorerBase):
                 except ValueError:
                     # Add the year - for files newer than 6 months
                     year = time.localtime()[0]
-                    pdate = patchdatestr + " %s" % year
+                    pdate = patchdatestr + f" {year}"
                     d = time.strptime(pdate, "%b %d %H:%S %Y")
                     if time.mktime(d) > time.time():
                         year -= 1

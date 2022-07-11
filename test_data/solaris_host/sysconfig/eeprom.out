@@ -1,0 +1,33 @@
+ansi-terminal?=true
+auto-boot-on-error?=false
+auto-boot?=true
+boot-command=boot
+boot-device=disk0
+boot-device-index=0
+boot-device-timeout=0
+boot-file: data not available.
+diag-switch?=false
+fcode-debug?=false
+input-device=virtual-console
+keyboard-layout: data not available.
+load-base=16384
+local-mac-address?=true
+multipath-boot?=false
+network-boot-arguments: data not available.
+nvramrc: data not available.
+oem-banner: data not available.
+oem-banner?=false
+oem-logo: data not available.
+oem-logo?=false
+os-root-device: data not available.
+output-device=virtual-console
+pci-probe-policy=all
+reboot-command: data not available.
+screen-#columns=80
+screen-#rows=34
+scsi-initiator-id=7
+security-#badlogins=0
+security-mode=none
+security-password: data not available.
+use-nvramrc?=false
+verbosity=min
