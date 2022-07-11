@@ -7,9 +7,7 @@ Script to understand processor details
 
 import re
 import math
-import explorer.explorerbase
-
-verbflag = 0
+from explorer import explorerbase
 
 
 ##########################################################################
@@ -42,9 +40,9 @@ class Processors(explorerbase.ExplorerBase):
         """TODO"""
         try:
             if self.config["explorertype"] == "solaris":
-                self.parse_solaris_psrinfo()
+                self._parse_solaris_psrinfo()
             elif self.config["explorertype"] == "linux":
-                self.parse_linux_cpuinfo()
+                self._parse_linux_cpuinfo()
             else:
                 self.fatal(
                     f"Processors - unknown explorertype {self.config['explorertype']}"
@@ -55,12 +53,12 @@ class Processors(explorerbase.ExplorerBase):
     ##########################################################################
     def analyse(self):
         """TODO"""
-        for cpu in self.keys():
-            self[cpu].analyse()
-            self.inheritIssues(self[cpu])
+        for cpudets in self.values():
+            cpudets.analyse()
+            self.inheritIssues(cpudets)
 
     ##########################################################################
-    def parse_linux_cpuinfo(self):
+    def _parse_linux_cpuinfo(self):
         """TODO"""
         infh = self.open("proc/cpuinfo")
         for line in infh:
@@ -81,7 +79,7 @@ class Processors(explorerbase.ExplorerBase):
         infh.close()
 
     ##########################################################################
-    def parse_solaris_psrinfo(self):
+    def _parse_solaris_psrinfo(self):
         """
         Analyse psrinfo -v output which looks like:
         Status of processor 0 as of: 11/25/05 14:16:15

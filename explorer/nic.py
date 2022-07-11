@@ -80,14 +80,14 @@ class Nic(explorerbase.ExplorerBase):
         if "used" in self and not self["used"]:
             return
         if "half" in self["link_duplex"] and "normal" not in self["link_duplex"]:
-            self.addConcern("duplex", obj=self.objname, text="set to half-duplex")
+            self.add_concern("duplex", obj=self.objname, text="set to half-duplex")
         for iface in self["interfaces"]:
             if "flags" in self["interfaces"][iface]:
                 if "UP" not in self["interfaces"][iface]["flags"]:
                     if "IPv6" in self["interfaces"][iface]["flags"] and iface == "lo0":
                         pass
                     else:
-                        self.addConcern("down", obj=self.objname, text="interface down")
+                        self.add_concern("down", obj=self.objname, text="interface down")
 
     ##########################################################################
     def parse_ndd(self):
@@ -115,9 +115,9 @@ class Nic(explorerbase.ExplorerBase):
             self.get_link_speed()
             self.get_link_status()
             if self["used"] and "link_duplex" in self and self["link_duplex"] == "half":
-                self.addConcern("duplex", obj=self.objname, text="set to half-duplex")
+                self.add_concern("duplex", obj=self.objname, text="set to half-duplex")
             if self["used"] and "link_status" in self and self["link_duplex"] == "down":
-                self.addConcern("down", obj=self.objname, text="interface down")
+                self.add_concern("down", obj=self.objname, text="interface down")
 
     ##########################################################################
     def get_link_status(self):
@@ -302,9 +302,9 @@ class Nic(explorerbase.ExplorerBase):
     def get_cidr(self, dct):
         """From the netmask generate a CIDR"""
         if "netmask" not in dct:
-            return
+            return None
         if not dct["netmask"]:
-            return
+            return None
         if not _cidrmap:
             for i in range(33):
                 _cidrmap[pow(2, 32) - pow(2, i)] = 32 - i
@@ -318,7 +318,7 @@ class Nic(explorerbase.ExplorerBase):
             nmsk = int(dct["netmask"], 16)  # hex netmask
         if nmsk in _cidrmap:
             return _cidrmap[nmsk]
-        return
+        return None
 
 
 ##########################################################################
@@ -371,7 +371,7 @@ class Nics(explorerbase.ExplorerBase):
             "vsw",
         ]
         k = kstat.Kstat(self.config)
-        for link in k.classChains("net"):
+        for link in k.class_chains("net"):
             # Strip out the chains that aren't actually real NICs
             if link.name().endswith("stat"):
                 continue
@@ -491,9 +491,7 @@ class Nics(explorerbase.ExplorerBase):
                     self[slave]["master"] = bond
                     self[slave]["used"] = True
                     self[slave]["notes"] = f"Slave of {bond}"
-            self[bond]["notes"] = "Bond Master of %s" % (
-                ", ".join(self[bond]["slaves"])
-            )
+            self[bond]["notes"] = "Bond Master of {', '.join(self[bond]['slaves'])}"
             infh.close()
 
     ##########################################################################
