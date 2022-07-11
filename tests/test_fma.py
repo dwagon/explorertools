@@ -1,24 +1,23 @@
 #!/usr/bin/env python
-""" Test Storage code"""
+""" Test FMA code"""
 
 import unittest
-from explorer.swap import storageSwap
+from explorer.fma import Fma
 
 
 ##############################################################################
-class TestSolarisSwap(unittest.TestCase):
-    """ test storage class """
-    def test_swap(self):
-        """ Test solaris storage """
+class TestSolarisFma(unittest.TestCase):
+    """ test Fma class """
+    def test_fma(self):
+        """ Test solaris fma """
         config = {
                 "explorertype": "solaris",
                 "hostname": "testhost",
                 "datadir": "test_data",
                 "hostpath": "solaris_host",
                 }
-        swap = storageSwap(config)
-        self.assertEqual(swap['swap_devices'], {'swap_0', 'swap_1'})
-        self.assertEqual(swap['_swap']['contains'], {'swap_0', 'swap_1'})
+        fma = Fma(config)
+        print(fma)
 
 
 ##############################################################################

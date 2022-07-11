@@ -1,0 +1,37 @@
+System Configuration:  Oracle Corporation  sun4v SPARC T8-2
+Memory size: 49152 Megabytes
+
+================================ Virtual CPUs ================================
+
+
+CPU ID Frequency Implementation         Status
+------ --------- ---------------------- -------
+0      5067 MHz  SPARC-M8               on-line  
+1      5067 MHz  SPARC-M8               on-line  
+2      5067 MHz  SPARC-M8               on-line  
+3      5067 MHz  SPARC-M8               on-line  
+4      5067 MHz  SPARC-M8               on-line  
+5      5067 MHz  SPARC-M8               on-line  
+6      5067 MHz  SPARC-M8               on-line  
+7      5067 MHz  SPARC-M8               on-line  
+8      5067 MHz  SPARC-M8               on-line  
+9      5067 MHz  SPARC-M8               on-line  
+10     5067 MHz  SPARC-M8               on-line  
+11     5067 MHz  SPARC-M8               on-line  
+12     5067 MHz  SPARC-M8               on-line  
+13     5067 MHz  SPARC-M8               on-line  
+14     5067 MHz  SPARC-M8               on-line  
+15     5067 MHz  SPARC-M8               on-line  
+16     5067 MHz  SPARC-M8               on-line  
+17     5067 MHz  SPARC-M8               on-line  
+18     5067 MHz  SPARC-M8               on-line  
+19     5067 MHz  SPARC-M8               on-line  
+20     5067 MHz  SPARC-M8               on-line  
+21     5067 MHz  SPARC-M8               on-line  
+22     5067 MHz  SPARC-M8               on-line  
+23     5067 MHz  SPARC-M8               on-line  
+
+======================================== IO Devices =======================================
+Slot +            Bus   Name +                            Model      Max Speed  Cur Speed 
+Status            Type  Path                                         /Width     /Width    
+-------------------------------------------------------------------------------------------

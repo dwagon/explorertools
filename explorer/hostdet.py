@@ -7,8 +7,8 @@ Script to understand host details
 # $HeadURL: http://svn/ops/unix/explorer/trunk/explorer/hostdet.py $
 
 import re
-import explorer.explorerbase
-import explorer.hardware
+from explorer import explorerbase
+from explorer import hardware
 
 
 ##########################################################################
@@ -26,41 +26,41 @@ class Host(explorerbase.ExplorerBase):
     def parse(self):
         """TODO"""
         self["osrev"] = ""
-        self.parseUname()
-        self.parseRam()
-        self.parseHardware()
-        self.parseSolaris_sysdef()
-        self.parseUptime()
-        self.parseReboot()
-        self.parseRelease()
+        self._parse_uname()
+        self._parse_ram()
+        self._parse_hardware()
+        self._parse_solaris_sysdef()
+        self._parse_uptime()
+        self._parse_reboot()
+        self._parse_release()
 
     ##########################################################################
-    def parseRelease(self):
+    def _parse_release(self):
         """TODO"""
         if self.config["explorertype"] == "solaris":
             if not self.exists("etc/release"):
                 self["osrelease"] = ""
                 return
-            f = self.open("etc/release")
+            infh = self.open("etc/release")
         if self.config["explorertype"] == "linux":
             if self.exists("etc/redhat-release"):
-                f = self.open("etc/redhat-release")
+                infh = self.open("etc/redhat-release")
             else:
                 self.warning("No release details available")
                 return
-        data = f.readline()
-        f.close()
+        data = infh.readline()
+        infh.close()
         self["osrelease"] = data.strip().lower()
 
     ##########################################################################
-    def parseReboot(self):
+    def _parse_reboot(self):
         """TODO"""
         if self.config["explorertype"] != "solaris":
             return
         try:
-            f = self.open("sysconfig/last-20-reboot.out")
-            data = f.readline()
-            f.close()
+            infh = self.open("sysconfig/last-20-reboot.out")
+            data = infh.readline()
+            infh.close()
             self["reboot"] = " ".join(data.split()[3:])
         except UserWarning as err:
             self.warning(err)
@@ -68,46 +68,45 @@ class Host(explorerbase.ExplorerBase):
     ##########################################################################
     def analyse(self):
         """TODO"""
-        pass
 
     ##########################################################################
-    def parseUptime(self):
+    def _parse_uptime(self):
         """TODO"""
         self["uptime"] = "unknown"
         try:
             if self.config["explorertype"] == "solaris":
-                f = self.open("sysconfig/uptime.out")
+                infh = self.open("sysconfig/uptime.out")
             if self.config["explorertype"] == "linux":
-                f = self.open("uptime")
-            for line in f:
+                infh = self.open("uptime")
+            for line in infh:
                 line = line.strip()
-                m = re.search(r".* up (?P<uptime>.*),\s+\d+ user.*", line)
-                if m:
-                    self["uptime"] = m.group("uptime")
-            f.close()
+                matchobj = re.search(r".* up (?P<uptime>.*),\s+\d+ user.*", line)
+                if matchobj:
+                    self["uptime"] = matchobj.group("uptime")
+            infh.close()
         except UserWarning as err:
             self.warning(err)
 
     ##########################################################################
-    def parseSolaris_sysdef(self):
+    def _parse_solaris_sysdef(self):
         """TODO"""
         if self.config["explorertype"] != "solaris":
             return
         try:
-            f = self.open("sysconfig/sysdef.out")
+            infh = self.open("sysconfig/sysdef.out")
             mode = ""
-            for line in f:
+            for line in infh:
                 if "Hostid" in line:
                     mode = "hostid"
                 if mode == "hostid" and not line.startswith("*"):
                     self["hostid"] = line.strip()
                     mode = ""
-            f.close()
+            infh.close()
         except UserWarning as err:
             self.warning(err)
 
     ##########################################################################
-    def shortHwdesc(self, fulldesc):
+    def _short_hwdesc(self, fulldesc):
         """Convert the full, rather wordy, description to a more terse version"""
         if "(" in fulldesc:
             fulldesc = re.sub(r"(.*)\(.*?\)(.*)", r"\1\2", fulldesc)
@@ -121,32 +120,32 @@ class Host(explorerbase.ExplorerBase):
         return hwdesc
 
     ##########################################################################
-    def parseLinux_hardwarepy(self):
+    def _parse_linux_hardwarepy(self):
         """TODO"""
-        f = self.open("hardware.py")
-        for line in f:
+        infh = self.open("hardware.py")
+        for line in infh:
             line = line.strip()
             if line.startswith("'system'"):
                 hware = line.split(":")[-1].strip()[1:-1]
-                hwtype, hwname = self.getHardware(hware)
+                hwtype, hwname = self.get_hardware(hware)
                 self["hwtype"] = hwtype
                 self["hardware"] = hwname
             if line.startswith("'bios_version'"):
                 self["bios"] = line.split(":")[-1].strip()[1:-1].strip()
 
     ##########################################################################
-    def parseLinux_dmidecode(self):
+    def _parse_linux_dmidecode(self):
         """TODO"""
         data = []
-        f = self.open("dmidecode")
-        for line in f:
+        infh = self.open("dmidecode")
+        for line in infh:
             line = line.strip()
             if line.startswith("Handle"):
                 if "System Information" in data:
                     for d in data:
                         if "Product Name" in d:
                             hwdesc = d.split(":")[1].strip()
-                            hwtype, hwname = self.getHardware(hwdesc)
+                            hwtype, hwname = self.get_hardware(hwdesc)
                             self["hwdesc"] = hwdesc
                             self["hwtype"] = hwtype
                             self["hardware"] = hwname
@@ -157,22 +156,22 @@ class Host(explorerbase.ExplorerBase):
                 data = []
             else:
                 data.append(line)
-        f.close()
+        infh.close()
 
     ##########################################################################
-    def parseLinux(self):
+    def parse_linux(self):
         """TODO"""
         try:
-            self.parseLinux_dmidecode()
+            self._parse_linux_dmidecode()
         except UserWarning:
             pass
         try:
-            self.parseLinux_hardwarepy()
+            self._parse_linux_hardwarepy()
         except UserWarning:
             pass
 
     ##########################################################################
-    def parseHardware(self):
+    def _parse_hardware(self):
         """Try all the various methods to get the type of hardware that this
         box is
         """
@@ -181,26 +180,26 @@ class Host(explorerbase.ExplorerBase):
         self["hardware"] = ""
         try:
             if self.config["explorertype"] == "linux":
-                self.parseLinux()
+                self.parse_linux()
                 return
             if self.exists("sysconfig/prtdiag-v.out"):
-                self.parsePrtdiag()
+                self.parse_prtdiag()
             if self.exists("Tx000/showhost"):
-                self.parseShowhost()
+                self.parse_showhost()
             if self.exists("Tx000/showplatform_-v"):
-                self.parseShowplatform()
+                self.parse_showplatform()
             if self.exists("ipmi/ipmitool_fru.out"):
-                self.parseIpmitool()
+                self.parse_ipmitool()
             if self.exists("sysconfig/smbios.out"):
-                self.parseSmbios()
+                self.parse_smbios()
             if not self["hardware"]:
-                self.parseUnameHW()
-            self.checkForLdom()
+                self.parse_uname_hw()
+            self.check_for_ldom()
         except UserWarning as err:
-            self.warning("%s" % err)
+            self.warning(err)
 
     ##########################################################################
-    def checkForLdom(self):
+    def check_for_ldom(self):
         """An LDOM doesn't know it is an ldom - except that it does have
         some modules loadded into the kernel that phyicals don't. E.g.
         vdc - virtual disc controller
@@ -212,7 +211,8 @@ class Host(explorerbase.ExplorerBase):
         """
         if self.exists("sysconfig/virtinfo-a-p.out"):
             isldom = False
-            for line in self.open("sysconfig/virtinfo-a-p.out"):
+            infh = self.open("sysconfig/virtinfo-a-p.out")
+            for line in infh:
                 if line.startswith("DOMAINROLE"):
                     if "true" not in line:
                         isldom = True
@@ -222,87 +222,86 @@ class Host(explorerbase.ExplorerBase):
                     name = line.split("|")[1].split("=")[1]
                     if isldom:
                         self["virtualmaster"] = name.strip()
+            infh.close()
             return
 
         if not self.exists("sysconfig/modinfo-c.out"):
             return
-        f = self.open("sysconfig/modinfo-c.out")
-        for line in f:
+        infh = self.open("sysconfig/modinfo-c.out")
+        for line in infh:
             if "vdc" in line and "LOADED/INSTALLED" in line:
                 self["hwtype"] = "virtual"
                 break
+        infh.close()
 
     ##########################################################################
-    def parseSmbios(self):
+    def parse_smbios(self):
         """TODO"""
         if self["hardware"]:
             return
-        f = self.open("sysconfig/smbios.out")
-        for line in f:
+        infh = self.open("sysconfig/smbios.out")
+        for line in infh:
             if "Product:" in line:
                 hwname = line.split(":")[1].strip()
-                hwtype, hwname = self.getHardware(hwname)
+                hwtype, hwname = self.get_hardware(hwname)
                 self["hwtype"] = hwtype
                 self["hardware"] = hwname
-        f.close()
+        infh.close()
 
     ##########################################################################
-    def parseUnameHW(self):
+    def parse_uname_hw(self):
         """TODO"""
         if self["hardware"]:
             return
-        f = self.open("sysconfig/uname-a.out")
-        data = f.readline()
-        f.close()
+        infh = self.open("sysconfig/uname-a.out")
+        data = infh.readline()
+        infh.close()
         hwuname = data.strip().split()[-1]
-        hwtype, hwname = self.getHardware(hwuname)
+        hwtype, hwname = self.get_hardware(hwuname)
         self["hwtype"] = hwtype
         self["hardware"] = hwname
-        f.close()
+        infh.close()
 
     ##########################################################################
-    def parseIpmitool(self):
+    def parse_ipmitool(self):
         """TODO"""
         if self["hardware"]:
             return
-        f = self.open("ipmi/ipmitool_fru.out")
+        infh = self.open("ipmi/ipmitool_fru.out")
         mode = False
-        for line in f:
+        for line in infh:
             line = line.strip()
             if line.startswith("FRU Device Description"):
                 name = line.split(":", 1)[-1].split()[0].strip().replace(".fru", "")
-                if name in ("mb", "Builtin"):
-                    mode = True
-                else:
-                    mode = False
+                mode = name in ("mb", "Builtin")
             if mode and "Product Name" in line:
                 hwname = line.split(":")[-1].strip()
                 if hwname in ("ilom", "ILOM"):
                     continue
-                hwtype, hwname = self.getHardware(hwname)
+                hwtype, hwname = self.get_hardware(hwname)
                 self["hwtype"] = hwtype
                 self["hardware"] = hwname
-        f.close()
+        infh.close()
 
     ##########################################################################
-    def parseShowplatform(self):
+    def parse_showplatform(self):
         """TODO"""
         if self["hardware"]:
             return
-        f = self.open("Tx000/showplatform_-v")
-        for line in f:
+        infh = self.open("Tx000/showplatform_-v")
+        for line in infh:
             line = line.strip()
             if line.startswith("SUNW,"):
-                hwtype, hwname = self.getHardware(line)
+                hwtype, hwname = self.get_hardware(line)
                 self["hwtype"] = hwtype
                 self["hardware"] = hwname
-        f.close()
+        infh.close()
 
     ##########################################################################
-    def parseShowhost(self):
+    def parse_showhost(self):
         """TODO"""
-        f = self.open("Tx000/showhost")
-        for line in f:
+        infh = self.open("Tx000/showhost")
+        for line in infh:
             line = line.strip()
             if line.startswith("Hypervisor"):
                 self["hypervisor"] = " ".join(line.split()[:2])
@@ -310,14 +309,14 @@ class Host(explorerbase.ExplorerBase):
                 self["obp"] = " ".join(line.split()[:2])
             if line.startswith("POST"):
                 self["post"] = " ".join(line.split()[:2])
-        f.close()
+        infh.close()
 
     ##########################################################################
-    def parsePrtdiag(self):
+    def parse_prtdiag(self):
         """TODO"""
-        f = self.open("sysconfig/prtdiag-v.out")
+        infh = self.open("sysconfig/prtdiag-v.out")
         datestr = r"\d{4}/\d{2}/\d{2} \d{2}:\d{2}"
-        for line in f:
+        for line in infh:
             line = line.strip()
             if line.startswith("Memory Size"):
                 bits = line.split(":")
@@ -325,65 +324,64 @@ class Host(explorerbase.ExplorerBase):
                 self["ram"] = ram
                 continue
             if line.startswith("System Configuration"):
-                hwdesc = self.shortHwdesc(line.split(":")[-1])
-                hwtype, hwname = self.getHardware(hwdesc)
+                hwdesc = self._short_hwdesc(line.split(":")[-1])
+                hwtype, hwname = self.get_hardware(hwdesc)
                 self["hwtype"] = hwtype
                 self["hardware"] = hwname
                 self["hwdesc"] = hwdesc.replace(" ", "_")
             if "OBP" in line:
-                m = re.search(
-                    r"(?P<obp>OBP\s+\S+) %s\s+(?P<post>POST\s+\S+) %s"
-                    % (datestr, datestr),
-                    line,
+                matchobj = re.search(
+                    rf"(?P<obp>OBP\s+\S+) {datestr}\s+(?P<post>POST\s+\S+) {datestr}",
+                    line
                 )
-                if m:
-                    self["obp"] = m.group("obp")
-                    self["post"] = m.group("post")
+                if matchobj:
+                    self["obp"] = matchobj.group("obp")
+                    self["post"] = matchobj.group("post")
                 else:
-                    m = re.search(r"(?P<obp>OBP \S+) %s" % datestr, line)
-                    if m:
-                        self["obp"] = m.group("obp")
+                    matchobj = re.search(rf"(?P<obp>OBP \S+) {datestr}", line)
+                    if matchobj:
+                        self["obp"] = matchobj.group("obp")
             if line.startswith("BIOS Configuration"):
                 self["bios"] = line.split(":", 1)[-1].strip()
-        f.close()
+        infh.close()
 
     ##########################################################################
-    def parseRam(self):
+    def _parse_ram(self):
         """TODO"""
         try:
             if self.config["explorertype"] == "solaris":
                 self["os"] = "solaris"
-                f = self.open("sysconfig/prtconf-vp.out")
-                for line in f:
+                infh = self.open("sysconfig/prtconf-vp.out")
+                for line in infh:
                     if line.startswith("Memory size"):
                         ram = line.split()[-2]
                         self["ram"] = ram
-                f.close()
+                infh.close()
             elif self.config["explorertype"] == "linux":
                 self["os"] = "linux"
-                f = self.open("free")
-                for line in f:
+                infh = self.open("free")
+                for line in infh:
                     if line.startswith("Mem:"):
                         self["ram"] = int(line.split()[1]) / 1024
-                f.close()
+                infh.close()
         except UserWarning as err:
             self.warning(err)
             self["ram"] = 0
 
     ##########################################################################
-    def parseUname(self):
+    def _parse_uname(self):
         """
         Analyse uname output
         """
         self["arch"] = ""
         if self.config["explorertype"] == "solaris":
-            f = self.open("sysconfig/uname-a.out")
-            line = f.readline()
-            f.close()
+            infh = self.open("sysconfig/uname-a.out")
+            line = infh.readline()
+            infh.close()
             self["uname"] = line.strip()
             if self.exists("sysconfig/uname-X.out"):
-                f = self.open("sysconfig/uname-X.out")
-                for line in f:
+                infh = self.open("sysconfig/uname-X.out")
+                for line in infh:
                     line = line.rstrip()
                     if line.startswith("Release"):
                         self["osrev"] = line.split()[-1]
@@ -391,11 +389,11 @@ class Host(explorerbase.ExplorerBase):
                         self["kernelpatch"] = line.split()[-1]
                     if line.startswith("Machine"):
                         self["arch"] = line.split()[-1]
-                f.close()
+                infh.close()
             elif self.exists("sysconfig/uname-a.out"):
-                f = self.open("sysconfig/uname-a.out")
-                line = f.readline()
-                f.close()
+                infh = self.open("sysconfig/uname-a.out")
+                line = infh.readline()
+                infh.close()
                 bits = line.strip().split()
                 self["osrev"] = bits[2]
                 self["kernelpatch"] = bits[3]
@@ -408,8 +406,8 @@ class Host(explorerbase.ExplorerBase):
             if not self.exists("uname"):
                 self.warning("No linux uname output to analyse")
                 return
-            f = self.open("uname")
-            for line in f:
+            infh = self.open("uname")
+            for line in infh:
                 if "uname" in line:
                     continue
                 bits = line.strip().split()
@@ -417,10 +415,10 @@ class Host(explorerbase.ExplorerBase):
                 self["kernelpatch"] = ""
                 self["arch"] = bits[-2]
                 self["uname"] = line.strip()
-            f.close()
+            infh.close()
 
     ##########################################################################
-    def getHardware(self, hwdesc):
+    def get_hardware(self, hwdesc):
         """TODO"""
         hwdesc = hwdesc.replace("IBM IBM", "IBM")
         hwdesc = hwdesc.replace("sun4u", "")
@@ -430,9 +428,9 @@ class Host(explorerbase.ExplorerBase):
             hwdesc = hwdesc[:-1]
         hwdesc = hwdesc.strip()
         try:
-            hwtype, hwname = hardware.getHardware(hwdesc)
+            hwtype, hwname = hardware.get_hardware(hwdesc)
         except hardware.UnknownHardware:
-            self.warning("Unknown hardware: %s" % hwdesc)
+            self.warning(f"Unknown hardware: {hwdesc}")
             hwtype = "unknown"
             hwname = "unknown"
         return hwtype, hwname

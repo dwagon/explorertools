@@ -1,0 +1,841 @@
+*
+* Hostid
+*
+  5ce40c86
+*
+* sun4v Configuration
+*
+*
+* Devices
+*
+scsi_vhci, instance #0
+packages (driver not attached)
+	SUNW,builtin-drivers (driver not attached)
+	pci-prober (driver not attached)
+	deblocker (driver not attached)
+	disk-label (driver not attached)
+	terminal-emulator (driver not attached)
+	dropins (driver not attached)
+	SUNW,asr (driver not attached)
+	kbd-translator (driver not attached)
+	obp-tftp (driver not attached)
+	vdisk-helper-pkg (driver not attached)
+	vnet-helper-pkg (driver not attached)
+	zfs-file-system (driver not attached)
+	hsfs-file-system (driver not attached)
+chosen (driver not attached)
+openprom (driver not attached)
+	client-services (driver not attached)
+options, instance #0
+aliases (driver not attached)
+memory (driver not attached)
+virtual-memory (driver not attached)
+iscsi-hba (driver not attached)
+	disk (driver not attached)
+reboot-memory (driver not attached)
+cpu (driver not attached)
+cpu (driver not attached)
+cpu (driver not attached)
+cpu (driver not attached)
+cpu (driver not attached)
+cpu (driver not attached)
+cpu (driver not attached)
+cpu (driver not attached)
+cpu (driver not attached)
+cpu (driver not attached)
+cpu (driver not attached)
+cpu (driver not attached)
+cpu (driver not attached)
+cpu (driver not attached)
+cpu (driver not attached)
+cpu (driver not attached)
+cpu (driver not attached)
+cpu (driver not attached)
+cpu (driver not attached)
+cpu (driver not attached)
+cpu (driver not attached)
+cpu (driver not attached)
+cpu (driver not attached)
+cpu (driver not attached)
+virtual-devices, instance #0
+	flashprom (driver not attached)
+	random-number-generator, instance #0
+	dax, instance #0
+	console, instance #0
+	channel-devices, instance #0
+		network, instance #0
+		network, instance #1
+		disk, instance #0
+		disk, instance #2
+		disk, instance #4
+		disk, instance #11
+		disk, instance #12
+		disk, instance #13
+		disk, instance #14
+		disk, instance #15
+		disk, instance #3
+		disk, instance #5
+		disk, instance #7
+		disk, instance #6
+		disk, instance #8
+		disk, instance #9
+		disk, instance #1
+		pciv-communication, instance #0
+		virtual-domain-service, instance #0
+ramdisk-root, instance #0 (driver not attached)
+fcoe, instance #0
+iscsi, instance #0
+pseudo, instance #0
+	zconsnex, instance #1
+	cn, instance #0
+	clone, instance #0
+	aggr, instance #0
+	arp, instance #0
+	bl, instance #0
+	bridge, instance #0
+	cap, instance #0
+	conskbd, instance #0
+	consms, instance #0
+	cpc, instance #0
+	cpuid, instance #0
+	cryptoadm, instance #0
+	dcpc, instance #0
+	defdump, instance #0
+	dld, instance #0
+	dlpistub, instance #0
+	drctl, instance #0
+	ds_pri, instance #0
+	dtrace, instance #0
+	eib, instance #0
+	fasttrap, instance #0
+	fbt, instance #0
+	fcip, instance #0
+	fcode, instance #0
+	fcp, instance #0
+	fcsm, instance #0
+	fm, instance #0
+	hcad, instance #0
+	icmp, instance #0
+	icmp6, instance #0
+	md, instance #0
+	ip, instance #0
+	ip6, instance #0
+	devinfo, instance #0
+	ipmi, instance #0
+	ipnet, instance #0
+	ippctl, instance #0
+	ipsecah, instance #0
+	ipsecesp, instance #0
+	iptun, instance #0
+	iwscn, instance #0
+	keysock, instance #0
+	kmdb, instance #0
+	ksplice, instance #0
+	llc1, instance #0
+	lockstat, instance #0
+	lofi, instance #0
+	log, instance #0
+	mdesc, instance #0
+	mm, instance #0
+	ntwdt, instance #0
+	openeepr, instance #0
+	pf, instance #0
+	physmem, instance #0
+	poll, instance #0
+	profile, instance #0
+	ptc, instance #0
+	ptm, instance #0
+	pts, instance #0
+	ptsl, instance #0
+	ramdisk, instance #1024
+	random, instance #0
+	rts, instance #0
+	sad, instance #0
+	sbmc, instance #0
+	sdpib, instance #0
+	sdt, instance #0
+	simnet, instance #0
+	smbclnt2, instance #0
+	smbsrv, instance #0
+	softmac, instance #0
+	sol_ucma, instance #0
+	spdsock, instance #0
+	srn, instance #0
+	sy, instance #0
+	sysevent, instance #0
+	sysmsg, instance #0
+	systrace, instance #0
+	tcp, instance #0
+	tcp6, instance #0
+	tl, instance #0
+	trapstat, instance #0
+	ttrace, instance #0
+	udp, instance #0
+	udp6, instance #0
+	umac, instance #0
+	uvfs, instance #0
+	vnic, instance #0
+	vxlan, instance #0
+	wc, instance #0
+	zfs, instance #0
+	zvmm, instance #0
+	rgm, instance #0
+	bpf, instance #0
+	dump, instance #0
+	fssnap, instance #0
+	kstat, instance #0
+	ksyms, instance #0
+	logindmux, instance #0
+	nsmb, instance #0
+	pm, instance #0
+	pool, instance #0
+*
+* Loadable Objects
+*
+* Loadable Object Path = /platform/sun4v/kernel
+*
+unix
+brand/sparcv9/s10_brand
+drv/sparcv9/fpc
+drv/sparcv9/iospc
+drv/sparcv9/n2rng
+drv/sparcv9/nxge
+misc/sparcv9/dr_mem
+misc/sparcv9/dr_io
+misc/sparcv9/dr_cpu
+misc/sparcv9/ds
+misc/sparcv9/fault_iso
+drv/sparcv9/vcc
+drv/sparcv9/drctl
+drv/sparcv9/cnex
+drv/sparcv9/ds_snmp
+drv/sparcv9/ds_pri
+drv/sparcv9/vsan
+drv/sparcv9/vpci
+drv/sparcv9/vnet
+drv/sparcv9/vlds
+drv/sparcv9/vsw
+misc/sparcv9/platsvc
+misc/sparcv9/pm_rm
+misc/sparcv9/ldc
+misc/sparcv9/vio
+drv/sparcv9/vdc
+drv/sparcv9/vds
+drv/sparcv9/vldc
+drv/sparcv9/vhba
+kmdb/sparcv9/vdc
+kmdb/sparcv9/vldc
+kmdb/sparcv9/vds
+kmdb/sparcv9/unix
+kmdb/sparcv9/vhba
+kmdb/sparcv9/vsan
+kmdb/sparcv9/ds
+kmdb/sparcv9/px
+kmdb/sparcv9/errh
+kmdb/sparcv9/fjcmi
+kmdb/sparcv9/ldc
+kmdb/sparcv9/mdesc
+drv/sparcv9/tpm
+drv/sparcv9/sbmc
+drv/sparcv9/ipmi
+misc/sparcv9/obpsym
+drv/sparcv9/qcn
+drv/sparcv9/ntwdt
+drv/sparcv9/mdesc
+drv/sparcv9/rootnex
+drv/sparcv9/px
+drv/sparcv9/trapstat
+drv/sparcv9/su
+drv/sparcv9/niumx
+sparcv9/unix
+sparcv9/genunix
+drv/sparcv9/zvterm
+drv/sparcv9/zvnet
+drv/sparcv9/zventropy
+drv/sparcv9/zvpci
+drv/sparcv9/zvsdir
+drv/sparcv9/zvcntrl
+drv/sparcv9/vnex
+drv/sparcv9/zvblk
+drv/sparcv9/zvnex
+misc/sparcv9/zvmisc
+misc/sparcv9/pxvec
+misc/sparcv9/pxsoft
+misc/sparcv9/priq
+misc/sparcv9/vis
+cpu/sparcv9/sparc64-cpu
+drv/sparcv9/bge
+cpu/sparcv9/sun4v-cpu
+drv/sparcv9/ebus
+drv/sparcv9/dax
+cpu/sparcv9/generic
+misc/sparcv9/kmdbmod
+misc/sparcv9/bootdev
+misc/sparcv9/ioh_pc
+misc/sparcv9/bignum
+misc/sparcv9/ios_pc
+misc/sparcv9/pcie
+misc/sparcv9/iovcfg
+drv/sparcv9/glvc
+misc/sparcv9/platmod
+crypto/sparcv9/aes
+crypto/sparcv9/md5
+	hard link:  misc/sparcv9/md5
+crypto/sparcv9/camellia
+crypto/sparcv9/sha1
+	hard link:  misc/sparcv9/sha1
+crypto/sparcv9/arcfour
+crypto/sparcv9/des
+	hard link:  misc/sparcv9/des
+crypto/sparcv9/sha2
+	hard link:  misc/sparcv9/sha2
+cpu/sparcv9/SPARC-3e40
+cpu/sparcv9/SPARC-T4
+cpu/sparcv9/SPARC-3e50
+cpu/sparcv9/SPARC-T5
+cpu/sparcv9/SPARC-M4
+cpu/sparcv9/SPARC64-X
+cpu/sparcv9/SPARC64-XII
+pcbe/sparcv9/pcbe.SPARC-T4
+pcbe/sparcv9/pcbe.sun4v-cpu
+drv/sparcv9/fm
+drv/sparcv9/zvpci_stub
+drv/sparcv9/zvmm
+drv/sparcv9/dtrace
+drv/sparcv9/cpc
+	hard link:  sys/sparcv9/cpc
+cpu/sparcv9/sun4v
+cpu/sparcv9/SPARC64-X+
+kmdb/sparcv9/niumx
+pcbe/sparcv9/pcbe.SPARC-3e40
+pcbe/sparcv9/pcbe.SPARC-3e50
+pcbe/sparcv9/pcbe.SPARC64-X+
+pcbe/sparcv9/pcbe.SPARC64-X
+pcbe/sparcv9/pcbe.SPARC-M4
+pcbe/sparcv9/pcbe.SPARC-T5
+pcbe/sparcv9/pcbe.SPARC64-XII
+*
+* Loadable Object Path = /kernel
+*
+misc/sparcv9/des
+drv/sparcv9/ib
+drv/sparcv9/hcad
+misc/sparcv9/ibdm
+misc/sparcv9/ibcm
+misc/sparcv9/ibtl
+misc/sparcv9/ibmf
+drv/sparcv9/bnxe
+drv/sparcv9/ttrace
+drv/sparcv9/qede
+misc/sparcv9/fcpci
+misc/sparcv9/fcodem
+drv/sparcv9/fcode
+misc/sparcv9/pcicfg
+drv/sparcv9/fcp
+drv/sparcv9/pf
+socketmod/sparcv9/pf_divertf
+drv/sparcv9/usbsprl
+drv/sparcv9/sxge
+drv/sparcv9/e1000g
+drv/sparcv9/md
+misc/sparcv9/md_sp
+misc/sparcv9/md_stripe
+misc/sparcv9/md_mirror
+misc/sparcv9/md_notify
+misc/sparcv9/md_raid
+misc/sparcv9/md_hotspares
+misc/sparcv9/md_trans
+misc/sparcv9/smbcmn
+drv/sparcv9/smbclnt2
+misc/sparcv9/rpcsec_gss
+drv/sparcv9/qlcnic
+kmdb/sparcv9/ksplice
+drv/sparcv9/ksplice
+drv/sparcv9/eib
+drv/sparcv9/ssd
+drv/sparcv9/usbsacm
+drv/sparcv9/usbsksp
+drv/sparcv9/lmrc
+drv/sparcv9/cxge
+drv/sparcv9/cxgen
+drv/sparcv9/ast
+drv/sparcv9/fcsm
+drv/sparcv9/bnxt
+drv/sparcv9/smbsrv
+kmdb/sparcv9/smbsrv
+misc/sparcv9/uwba
+drv/sparcv9/emlxs
+kmdb/sparcv9/emlxs
+misc/emlxs/sparcv9/emlxs_fw
+drv/sparcv9/mga
+drv/sparcv9/fcip
+drv/sparcv9/pmcs
+misc/pmcs/sparcv9/pmcs8001fw
+kmdb/sparcv9/pmcs
+misc/pmcs/sparcv9/pmcs8018fw
+misc/pmcs/sparcv9/pmcs8072fw
+drv/sparcv9/ses
+drv/sparcv9/ecpp
+drv/sparcv9/uvfs
+	hard link:  fs/sparcv9/uvfs
+drv/sparcv9/nvme
+kmdb/sparcv9/nvme
+drv/sparcv9/fcoei
+drv/sparcv9/hermon
+drv/sparcv9/mcxe
+drv/sparcv9/mcxnex
+misc/sparcv9/ibdma
+drv/sparcv9/oce
+drv/sparcv9/ixgb
+fs/sparcv9/udfs
+drv/sparcv9/mlxne
+drv/sparcv9/mlxng
+drv/sparcv9/iscsi
+drv/sparcv9/sdpib
+	hard link:  strmod/sparcv9/sdpib
+socketmod/sparcv9/socksdp
+kmdb/sparcv9/arp
+kmdb/sparcv9/ipc
+kmdb/sparcv9/ip
+kmdb/sparcv9/hook
+kmdb/sparcv9/cpc
+kmdb/sparcv9/neti
+kmdb/sparcv9/kcf
+kmdb/sparcv9/nfs
+kmdb/sparcv9/ptm
+kmdb/sparcv9/mr_sas
+kmdb/sparcv9/lmrc
+kmdb/sparcv9/lsc
+kmdb/sparcv9/md
+kmdb/sparcv9/logindmux
+kmdb/sparcv9/mac
+kmdb/sparcv9/lofs
+kmdb/sparcv9/mpt
+kmdb/sparcv9/mdb_ds
+kmdb/sparcv9/ipp
+kmdb/sparcv9/mpt_sas
+kmdb/sparcv9/krtld
+kmdb/sparcv9/genunix
+kmdb/sparcv9/act
+kmdb/sparcv9/rpcmod
+kmdb/sparcv9/sas
+kmdb/sparcv9/scsi_vhci
+kmdb/sparcv9/sd
+kmdb/sparcv9/sockfs
+kmdb/sparcv9/specfs
+kmdb/sparcv9/tree
+kmdb/sparcv9/ufs
+kmdb/sparcv9/usba
+kmdb/sparcv9/zvblk
+kmdb/sparcv9/random
+kmdb/sparcv9/zvmisc
+kmdb/sparcv9/zvmm
+kmdb/sparcv9/ssd
+fs/sparcv9/autofs
+	hard link:  sys/sparcv9/autofs
+drv/sparcv9/i40evf
+drv/sparcv9/i40e
+drv/sparcv9/rpcib
+misc/sparcv9/fssnap_if
+fs/sparcv9/ufs
+drv/sparcv9/mr_sas
+drv/sparcv9/srn
+drv/sparcv9/ixgbe
+drv/sparcv9/ixgbevf
+misc/sparcv9/idm
+drv/sparcv9/iser
+kmdb/sparcv9/idm
+misc/sparcv9/klmops
+misc/sparcv9/klmmod
+misc/sparcv9/nfs_dlboot
+fs/sparcv9/nfs
+	hard link:  sys/sparcv9/nfs
+drv/sparcv9/bnx
+misc/sparcv9/kgssapi
+misc/kgss/sparcv9/kmech_krb5
+drv/sparcv9/lsc
+misc/lsc/sparcv9/lsc_estes
+misc/lsc/sparcv9/lsc_netra_estes
+drv/sparcv9/fcoe
+drv/sparcv9/smp
+misc/sparcv9/usbser
+misc/sparcv9/bignum
+misc/sparcv9/kcf
+crypto/sparcv9/fjentropy
+crypto/sparcv9/rsa
+crypto/sparcv9/camellia
+crypto/sparcv9/sha3
+	hard link:  misc/sparcv9/sha3
+crypto/sparcv9/swrand
+drv/sparcv9/cryptoadm
+crypto/sparcv9/blowfish
+crypto/sparcv9/aes
+crypto/sparcv9/ecc
+crypto/sparcv9/des
+crypto/sparcv9/sha1
+	hard link:  misc/sparcv9/sha1
+crypto/sparcv9/arcfour
+crypto/sparcv9/md5
+	hard link:  misc/sparcv9/md5
+crypto/sparcv9/sha2
+	hard link:  misc/sparcv9/sha2
+drv/sparcv9/usbser_edge
+drv/sparcv9/aac
+drv/sparcv9/hubd
+drv/sparcv9/xhci
+drv/sparcv9/hid
+drv/sparcv9/ehci
+drv/sparcv9/ugen
+misc/sparcv9/usba
+misc/sparcv9/hidparser
+strmod/sparcv9/usbkbm
+misc/sparcv9/usba10
+strmod/sparcv9/usbms
+drv/sparcv9/hwahc
+drv/sparcv9/scsa2usb
+drv/sparcv9/ohci
+drv/sparcv9/usb_ia
+drv/sparcv9/hwarc
+drv/sparcv9/usbprn
+drv/sparcv9/usb_mid
+drv/sparcv9/uhci
+drv/sparcv9/wusb_df
+drv/sparcv9/wusb_ca
+strmod/sparcv9/usbwcm
+misc/sparcv9/hwa1480_fw
+drv/sparcv9/sol_umad
+misc/sparcv9/sol_ofs
+drv/sparcv9/sol_ucma
+drv/sparcv9/sol_uverbs
+kmdb/sparcv9/zfs
+drv/sparcv9/zfs
+	hard link:  fs/sparcv9/zfs
+drv/sparcv9/rge
+misc/sparcv9/nfssrv
+fs/sparcv9/hsfs
+strmod/sparcv9/dedump
+misc/sparcv9/scsi
+misc/sparcv9/strplumb
+misc/sparcv9/tem
+misc/sparcv9/tlimod
+misc/scsi_vhci/sparcv9/scsi_vhci_f_asym_emc
+misc/scsi_vhci/sparcv9/scsi_vhci_f_asym_lsi
+misc/scsi_vhci/sparcv9/scsi_vhci_f_asym_sun
+sys/sparcv9/c2audit
+sys/sparcv9/doorfs
+sys/sparcv9/kaio
+sys/sparcv9/msgsys
+sys/sparcv9/pipe
+sys/sparcv9/portfs
+sys/sparcv9/pset
+sys/sparcv9/semsys
+sys/sparcv9/shmsys
+tcpcong/sparcv9/cubic
+tcpcong/sparcv9/dctcp
+tcpcong/sparcv9/highspeed
+tcpcong/sparcv9/vegas
+mac/sparcv9/mac_wifi
+misc/sparcv9/busra
+misc/sparcv9/cmlb
+misc/sparcv9/cmmhd
+misc/sparcv9/consconfig
+misc/sparcv9/ctf
+misc/sparcv9/dls
+misc/sparcv9/gld
+misc/sparcv9/hook
+misc/sparcv9/idmap
+misc/sparcv9/ipc
+misc/sparcv9/kbtrans
+misc/sparcv9/kcmi
+misc/sparcv9/ksocket
+misc/sparcv9/mac
+misc/sparcv9/mrp
+exec/sparcv9/aoutexec
+exec/sparcv9/elfexec
+exec/sparcv9/intpexec
+fs/sparcv9/ctfs
+fs/sparcv9/dcfs
+fs/sparcv9/dev
+fs/sparcv9/devfs
+fs/sparcv9/fdfs
+fs/sparcv9/fifofs
+fs/sparcv9/lofs
+fs/sparcv9/mntfs
+fs/sparcv9/namefs
+fs/sparcv9/objfs
+fs/sparcv9/procfs
+fs/sparcv9/sharefs
+fs/sparcv9/sockfs
+fs/sparcv9/specfs
+fs/sparcv9/tmpfs
+fs/sparcv9/zvsfs
+ipp/sparcv9/ipgpc
+mac/sparcv9/mac_6to4
+mac/sparcv9/mac_ether
+mac/sparcv9/mac_ib
+mac/sparcv9/mac_ipv4
+mac/sparcv9/mac_ipv6
+misc/scsi_vhci/sparcv9/scsi_vhci_f_tpgs
+sched/sparcv9/SDC
+sched/sparcv9/TS
+socketmod/sparcv9/socknetlink
+socketmod/sparcv9/socksctp
+socketmod/sparcv9/trill
+strmod/sparcv9/bufmod
+strmod/sparcv9/connld
+sched/sparcv9/TS_DPTBL
+strmod/sparcv9/ms
+strmod/sparcv9/pipemod
+strmod/sparcv9/drcompat
+strmod/sparcv9/ldterm
+strmod/sparcv9/pckt
+strmod/sparcv9/pfmod
+strmod/sparcv9/ptem
+strmod/sparcv9/redirmod
+strmod/sparcv9/rpcmod
+	hard link:  sys/sparcv9/rpcmod
+strmod/sparcv9/timod
+strmod/sparcv9/tirdwr
+strmod/sparcv9/ttcompat
+strmod/sparcv9/vuid3ps2
+strmod/sparcv9/xprobe
+drv/sparcv9/vnic
+drv/sparcv9/vxlan
+drv/sparcv9/wc
+drv/sparcv9/scsi_vhci
+drv/sparcv9/sd
+drv/sparcv9/sgen
+drv/sparcv9/simnet
+drv/sparcv9/softmac
+drv/sparcv9/spdsock
+drv/sparcv9/st
+drv/sparcv9/sy
+drv/sparcv9/sysevent
+drv/sparcv9/sysmsg
+drv/sparcv9/tcp
+	hard link:  socketmod/sparcv9/tcp
+	hard link:  strmod/sparcv9/tcp
+drv/sparcv9/tcp6
+drv/sparcv9/tl
+drv/sparcv9/ttymux
+drv/sparcv9/udp
+	hard link:  socketmod/sparcv9/udp
+	hard link:  strmod/sparcv9/udp
+drv/sparcv9/udp6
+drv/sparcv9/umac
+misc/sparcv9/neti
+misc/sparcv9/netlink
+misc/sparcv9/rpcsec
+misc/sparcv9/sas
+drv/sparcv9/mm
+drv/sparcv9/options
+drv/sparcv9/nulldriver
+dacf/sparcv9/net_dacf
+drv/sparcv9/bl
+drv/sparcv9/kmdb
+drv/sparcv9/random
+misc/scsi_vhci/sparcv9/scsi_vhci_f_sym_emc
+misc/scsi_vhci/sparcv9/scsi_vhci_f_tape
+misc/scsi_vhci/sparcv9/scsi_vhci_f_sym
+misc/scsi_vhci/sparcv9/scsi_vhci_f_tpgs_changer
+misc/scsi_vhci/sparcv9/scsi_vhci_f_sym_hds
+misc/scsi_vhci/sparcv9/scsi_vhci_f_sym_enc
+misc/scsi_vhci/sparcv9/scsi_vhci_f_tpgs_tape
+kiconv/sparcv9/kiconv_ja
+kiconv/sparcv9/kiconv_emea
+drv/sparcv9/icmp6
+drv/sparcv9/ip
+	hard link:  strmod/sparcv9/ip
+drv/sparcv9/ip6
+drv/sparcv9/ipnet
+drv/sparcv9/ippctl
+drv/sparcv9/ipsecah
+	hard link:  strmod/sparcv9/ipsecah
+drv/sparcv9/ipsecesp
+	hard link:  strmod/sparcv9/ipsecesp
+drv/sparcv9/iptun
+drv/sparcv9/iwscn
+drv/sparcv9/kb8042
+drv/sparcv9/keysock
+	hard link:  strmod/sparcv9/keysock
+drv/sparcv9/llc1
+drv/sparcv9/lofi
+drv/sparcv9/log
+drv/sparcv9/mouse8042
+drv/sparcv9/aggr
+drv/sparcv9/arp
+	hard link:  strmod/sparcv9/arp
+drv/sparcv9/bridge
+drv/sparcv9/cap
+drv/sparcv9/clone
+drv/sparcv9/cn
+drv/sparcv9/conskbd
+drv/sparcv9/consms
+drv/sparcv9/cpuid
+drv/sparcv9/defdump
+drv/sparcv9/devinfo
+drv/sparcv9/dld
+drv/sparcv9/dlpistub
+drv/sparcv9/i8042
+drv/sparcv9/icmp
+	hard link:  socketmod/sparcv9/icmp
+	hard link:  strmod/sparcv9/icmp
+drv/sparcv9/openeepr
+drv/sparcv9/pci_pci
+drv/sparcv9/pcieb
+drv/sparcv9/physmem
+drv/sparcv9/poll
+drv/sparcv9/pseudo
+drv/sparcv9/ptc
+drv/sparcv9/ptm
+drv/sparcv9/pts
+drv/sparcv9/ptsl
+drv/sparcv9/ramdisk
+drv/sparcv9/rts
+	hard link:  socketmod/sparcv9/rts
+drv/sparcv9/sad
+dacf/sparcv9/consconfig_dacf
+kiconv/sparcv9/kiconv_tc
+kiconv/sparcv9/kiconv_ko
+kiconv/sparcv9/kiconv_sc
+sys/sparcv9/inst_sync
+drv/sparcv9/usbftdi
+drv/sparcv9/mpt
+drv/sparcv9/usbecm
+drv/sparcv9/bge
+misc/qlc/sparcv9/qlc_fw_2400
+drv/sparcv9/qlc
+misc/qlc/sparcv9/qlc_fw_2700
+misc/qlc/sparcv9/qlc_fw_8300fce
+misc/qlc/sparcv9/qlc_fw_8301fc
+misc/qlc/sparcv9/qlc_fw_8100
+drv/sparcv9/qlge
+misc/qlc/sparcv9/qlc_fw_2500
+drv/sparcv9/blkdev
+drv/sparcv9/ibp
+drv/sparcv9/igb
+drv/sparcv9/igbvf
+drv/sparcv9/fp
+misc/sparcv9/fctl
+kmdb/sparcv9/dtrace
+drv/sparcv9/lockstat
+	hard link:  dtrace/sparcv9/lockstat
+drv/sparcv9/sdt
+	hard link:  dtrace/sparcv9/sdt
+drv/sparcv9/fasttrap
+	hard link:  dtrace/sparcv9/fasttrap
+drv/sparcv9/profile
+	hard link:  dtrace/sparcv9/profile
+drv/sparcv9/systrace
+	hard link:  dtrace/sparcv9/systrace
+drv/sparcv9/dcpc
+	hard link:  dtrace/sparcv9/dcpc
+drv/sparcv9/fbt
+	hard link:  dtrace/sparcv9/fbt
+drv/sparcv9/mpt_sas
+misc/mptsas/sparcv9/mptsas_erie
+drv/sparcv9/rgm
+drv/sparcv9/se
+drv/sparcv9/rdsv3
+socketmod/sparcv9/sockrds
+drv/README.driver
+*
+* Loadable Object Path = /usr/kernel
+*
+drv/sparcv9/snapctl
+fs/sparcv9/pcfs
+kmdb/sparcv9/nsmb
+kmdb/sparcv9/smbfs
+drv/sparcv9/nsmb
+fs/sparcv9/smbfs
+drv/sparcv9/zcons
+drv/sparcv9/pm
+drv/sparcv9/fssnap
+drv/sparcv9/bpf
+socketmod/sparcv9/sockpfp
+sched/sparcv9/RT_DPTBL
+sys/sparcv9/exacctsys
+strmod/sparcv9/cryptmod
+strmod/sparcv9/rlmod
+strmod/sparcv9/telmod
+sys/sparcv9/acctctl
+sys/sparcv9/sysacct
+exec/sparcv9/shbinexec
+drv/sparcv9/kstat
+drv/sparcv9/logindmux
+sched/sparcv9/RT
+sched/sparcv9/FX
+sched/sparcv9/FSS
+drv/sparcv9/ksyms
+drv/sparcv9/dump
+sched/sparcv9/IA
+sched/sparcv9/FX_DPTBL
+drv/sparcv9/pool
+*
+* System Configuration
+*
+  swap files
+swapfile                    dev            swaplo      blocks        free encrypted
+/dev/zvol/dsk/rpool/swap    248,5               0     8388608     6694128       yes
+/dev/zvol/dsk/swappool/swap 248,6               0    98566144    96843856       yes
+*
+* Tunable Parameters
+*
+1030791168	maximum memory allowed in buffer cache (bufhwm)
+   30000	maximum number of processes (v.v_proc)
+      99	maximum global priority in sys class (MAXCLSYSPRI)
+   29995	maximum processes per user id (v.v_maxup)
+      30	auto update time limit in seconds (NAUTOUP)
+      25	page stealing low water mark (GPGSLO)
+       1	fsflush run rate (FSFLUSHR)
+      25	minimum resident memory for avoiding deadlock (MINARMEM)
+      25	minimum swapable memory for avoiding deadlock (MINASMEM)
+*
+* Utsname Tunables
+*
+    5.11  release (REL)
+  unibis  node name (NODE)
+   SunOS  system name (SYS)
+11.4.35.94.4  version (VER)
+*
+* Process Resource Limit Tunables (Current:Maximum)
+*
+0x0000000000002000:0x0000000000010000	file descriptors
+*
+* Streams Tunables
+*
+     9	maximum number of pushes allowed (NSTRPUSH)
+ 65536	maximum stream message size (STRMSGSZ)
+  4992	max size of ctl part of message (STRCTLSZ)
+*
+* IPC Messages
+*
+* The IPC Messages module no longer has system-wide limits.
+* Please see the "Solaris Tunable Parameters Reference Manual" for
+* information on how the old limits map to resource controls and
+* the prctl(1) and getrctl(2) manual pages for information on
+* observing the new limits.
+*
+*
+* IPC Semaphores
+*
+* The IPC Semaphores module no longer has system-wide limits.
+* Please see the "Solaris Tunable Parameters Reference Manual" for
+* information on how the old limits map to resource controls and
+* the prctl(1) and getrctl(2) manual pages for information on
+* observing the new limits.
+*
+*
+* IPC Shared Memory
+*
+* The IPC Shared Memory module no longer has system-wide limits.
+* Please see the "Solaris Tunable Parameters Reference Manual" for
+* information on how the old limits map to resource controls and
+* the prctl(1) and getrctl(2) manual pages for information on
+* observing the new limits.
+*
+*
+* Time Sharing Scheduler Tunables
+*
+60	maximum time sharing user priority (TSMAXUPRI)
+SYS	system class name (SYS_NAME)

@@ -1,0 +1,554 @@
+System Configuration:  Oracle Corporation  sun4v
+Memory size: 49152 Megabytes
+System Peripherals (PROM Nodes):
+
+Node 0xf0229be8
+    #address-cells:  00000002
+    #priqs-per-cpu:  00000010
+    #priqs-per-pcibus:  00000010
+    #size-cells:  00000002
+    banner-name:  'SPARC T8-2'
+    breakpoint-trap:  0000007f
+    compatible: 'sun4v'
+    device_type:  'sun4v'
+    hv-api-groups:  00000000.00000001.00000100.00000003.00000101.00000105.00000108.0000011d.00000118.00000120
+    idprom:  015c0014.4ffa60d4.00000000.e40c8626.00000000.00000000.00000000.00000000
+    ios-perf-counters:  'ORCL,mr-ios-pr'
+    name:  'ORCL,SPARC-T8-2'
+    non-ios-perf-counters:  'ORCL,mr-non-ios-pr'
+    pcie-ari-supported:  
+    priq-eq-sizes:  00000003
+    product-name:  'SPARC T8-2'
+    scsi-initiator-id:  00000007
+    stick-frequency:  3b9aca00
+
+    Node 0xf022d248
+        name:  'packages'
+
+        Node 0xf023a068
+            builtin-drivers:  636c6173.73303130.38303200.6e766d65.00706369.31303030.2c373000.70636931.3030302c.37300070.63696578.31303030.2c373200.70636931.3030302c.37300070.63696578.31303030.2c37322e.31303030.2e373200.70636931.3030302c.37300070.63696578.31303030.2c38372e.31303030.2e383700.70636931.3030302c.37300070.63696578.31303030.2c37322e.31303865.2e363237.33007063.69313030.302c3730.00706369.65783130.30302c39.372e3130.30302e39.30007063.69313030.302c3730.00706369.65780073.756e3476.2d767063.6900636c.61737330.36303430.3000636c.61737330.36303430.30004f52.434c2c6d.34696f73.2d707200.73756e34.762d7065.72662d63.6e740070.63696578.38303836.2c313532.382e3130.38652e34.38343800.6f706869.72007063.69657838.3038362c.31353135.2e313038.652e3438.3438006f.70686972.00706369.65783830.38362c31.3532312e.31303865.2e376231.61006f70.68697200.70636965.78383038.362c3135.38362e31.3038652e.34383537.00666f72.7476696c.6c650070.63696578.38303836.2c313538.362e3130.38652e37.62316500.666f7274.76696c6c.65007063.69657838.3038362c.31353839.2e313038.652e3762.31650066.6f727476.696c6c65.00706369.65783830.38362c31.3538362e.31303865.2e300066.6f727476.696c6c65.00706369.65783830.38362c31.3538392e.31303865.2e300066.6f727476.696c6c65.00706369.65783830.38362c31.3534632e.31303865.2e343835.3700666f.72747669.6c6c652d.76660070.63696578.38303836.2c313534.632e3130.38652e37.62316500.666f7274.76696c6c.652d7666.00706369.65783830.38362c31.3534632e.31303865.2e300066.6f727476.696c6c65.2d766600.70636931.6130332c.32303030.2e316130.332e3230.30300061.73742d67.72617068.69637300.70636931.3032622c.3532322e.31396132.2e313032.006d6174.726f782d.67726170.68696373.00706369.65783130.32622c35.32322e31.3961322e.31303200.6d617472.6f782d67.72617068.69637300.70636965.78313032.622c3532.32006d61.74726f78.2d677261.70686963.7300
+            name:  'SUNW,builtin-drivers'
+
+        Node 0xf0243654
+            name:  'pci-prober'
+
+        Node 0xf02677a8
+            disk-write-fix:  
+            lba64:  
+            name:  'deblocker'
+
+        Node 0xf0267ea4
+            gpt:  
+            name:  'disk-label'
+            supported-labels:  67707400.73756e00.6d627200
+
+        Node 0xf026b36c
+            iso6429-1983-colors:  
+            name:  'terminal-emulator'
+
+        Node 0xf027ca70
+            name:  'dropins'
+            source:  '/flashprom:'
+
+        Node 0xf027d87c
+            name:  'SUNW,asr'
+
+        Node 0xf0281f2c
+            name:  'kbd-translator'
+
+        Node 0xf0283660
+            name:  'obp-tftp'
+
+        Node 0xf0294e4c
+            lba64:  
+            name:  'vdisk-helper-pkg'
+
+        Node 0xf029ae58
+            name:  'vnet-helper-pkg'
+
+        Node 0xf02a7e3c
+            name:  'zfs-file-system'
+
+        Node 0xf02add88
+            name:  'hsfs-file-system'
+
+    Node 0xf022d2c0
+        archfs:  fed759c8
+        archive-fstype:  'hsfs'
+        bootarchive:  '/ramdisk-root'
+        bootargs:  00
+        bootfs:  fefa9ed0
+        bootpath:  '/virtual-devices@100/channel-devices@200/disk@0'
+        elfheader-address:  50000000
+        elfheader-length:  00394000
+        fs-package:  'hsfs-file-system'
+        fstype:  'zfs'
+        impl-arch-name:  'sun4v'
+        memory:  fff04d48
+        mmu:  fff04b38
+        name:  'chosen'
+        openboot-reserved:  40000000
+        root-be-uuid:  'e2c1209f-1b9a-4e05-9651-7661f87c0cd3'
+        root-uuid-chk:  '1'
+        stdin:  fef15c70
+        stdout:  fef156c0
+        stdout-#lines:  ffffffff
+        whoami:  '/platform/sun4v/kernel/sparcv9/unix'
+        zfs-bootfs:  'rpool/370'
+
+    Node 0xf022d334
+        aligned-allocator:  
+        model:  'SUNW,4.43.5'
+        name:  'openprom'
+        relative-addressing:  
+        version: 'OBP 4.43.5 2020/12/03 02:17'
+
+        Node 0xf022d3c4
+            name:  'client-services'
+
+    Node 0xf022d47c
+        ansi-terminal?:  'true'
+        auto-boot-on-error?:  'false'
+        auto-boot?:  'true'
+        boot-command:  'boot'
+        boot-device:  'disk0'
+        boot-device-index:  '0'
+        boot-device-timeout:  '0'
+        boot-file:  
+        diag-switch?:  'false'
+        fcode-debug?:  'false'
+        input-device:  'virtual-console'
+        keyboard-layout:  
+        load-base:  '16384'
+        local-mac-address?:  'true'
+        multipath-boot?:  'false'
+        name:  'options'
+        network-boot-arguments:  
+        nvramrc:  
+        oem-banner:  
+        oem-banner?:  'false'
+        oem-logo:  
+        oem-logo?:  'false'
+        os-root-device:  
+        output-device:  'virtual-console'
+        pci-probe-policy:  'all'
+        reboot-command:  
+        screen-#columns:  '80'
+        screen-#rows:  '34'
+        scsi-initiator-id:  '7'
+        security-#badlogins:  '0'
+        security-mode:  'none'
+        security-password:  
+        use-nvramrc?:  'false'
+        verbosity:  'min'
+
+    Node 0xf022d4f4
+        disk:  '/virtual-devices@100/channel-devices@200/disk@0'
+        disk0:  '/virtual-devices@100/channel-devices@200/disk@0'
+        disk12:  '/virtual-devices@100/channel-devices@200/disk@c'
+        disk13:  '/virtual-devices@100/channel-devices@200/disk@d'
+        disk14:  '/virtual-devices@100/channel-devices@200/disk@e'
+        disk15:  '/virtual-devices@100/channel-devices@200/disk@f'
+        disk2:  '/virtual-devices@100/channel-devices@200/disk@2'
+        disk5:  '/virtual-devices@100/channel-devices@200/disk@5'
+        name:  'aliases'
+        net:  '/virtual-devices@100/channel-devices@200/network@0'
+        net0:  '/virtual-devices@100/channel-devices@200/network@0'
+        net1:  '/virtual-devices@100/channel-devices@200/network@1'
+        unibis-new-mirror1-vol:  '/virtual-devices@100/channel-devices@200/disk@1'
+        unibis-new-mirror2-vol:  '/virtual-devices@100/channel-devices@200/disk@3'
+        unibis-new-mirror3-vol:  '/virtual-devices@100/channel-devices@200/disk@4'
+        unibis-new-mirror4-vol:  '/virtual-devices@100/channel-devices@200/disk@6'
+        unibis-new-mirror5-vol:  '/virtual-devices@100/channel-devices@200/disk@7'
+        unibis-new-mirror6-vol:  '/virtual-devices@100/channel-devices@200/disk@8'
+        unibis-new-mirror7-vol:  '/virtual-devices@100/channel-devices@200/disk@9'
+        unibis-new-mirror8-vol:  '/virtual-devices@100/channel-devices@200/disk@a'
+        virtual-console:  '/virtual-devices/console@1'
+
+    Node 0xf024161c
+        available:  00000046.48b56000.00000000.00324000.00000046.40000000.00000000.089e6000.00000042.50000000.00000003.d0000000.00000020.50000000.00000006.00000000.00000000.90000000.00000001.c0000000.00000000.8ffe0000.00000000.00002000.00000000.50400000.00000000.3fba0000
+        name:  'memory'
+        reg:  00000000.50000000.00000002.00000000.00000020.50000000.00000006.00000000.00000042.50000000.00000004.00000000
+
+    Node 0xf0241c28
+        available:  fffff800.00000000.000007fc.00000000.00000001.00000000.000007ff.00000000.00000000.ffff0000.00000000.0000e000.00000000.5724a000.00000000.98db6000.00000000.30000000.00000000.21000000.00000000.0147e000.00000000.0eb82000.00000000.00f80000.00000000.00482000.00000000.00000000.00000000.00a00000.00000000.f2200000.00000000.0ca8c000
+        existing:  00000000.00000000.00000800.00000000.fffff800.00000000.00000800.00000000
+        name:  'virtual-memory'
+        page-size:  00002000
+        translations:  00000000.00002000.00000000.009fe000.80000000.50402540.00000000.00a00000.00000000.00580000.80000046.4f140540.00000000.01402000.00000000.0007c000.80000046.48ad8540.00000000.10000000.00000000.10000000.80000046.30000540.00000000.20000000.00000000.10000000.80000046.20000540.00000000.51000000.00000000.0624a000.80000046.48ef6540.00000000.f0000000.00000000.00400000.80000000.50000550.00000000.f0400000.00000000.006b0000.80000046.4f850550.00000000.fec8c000.00000000.00070000.80000046.48e7a550.00000000.fecfc000.00000000.00070000.80000046.489e6550.00000000.fed6c000.00000000.00008000.80000046.48eea550.00000000.fed74000.00000000.0000c000.80000046.4ff86550.00000000.fed80000.00000000.00080000.80000046.4f6c0550.00000000.fee00000.00000000.00006000.80000046.4ff92550.00000000.fee06000.00000000.00080000.80000046.4f740550.00000000.fee86000.00000000.00006000.80000046.4ff98550.00000000.fee8c000.00000000.00080000.80000046.4f7c0550.00000000.fef0c000.00000000.00006000.80000046.4ff9e550.00000000.fef12000.00000000.00010000.80000046.4ffaa550.00000000.fef22000.00000000.00080000.80000046.4ff00550.00000000.fefa2000.00000000.0000a000.80000046.4ffba550.00000000.fefb0000.00000000.0000c000.80000046.4fff4550.00000000.fefbc000.00000000.00030000.80000000.8ffa0550.00000000.fefec000.00000000.0000a000.80000000.8ffe2550.00000000.feff6000.00000000.0000a000.80000000.8ffee550.00000000.fff00000.00000000.00010000.80000000.501f0550
+
+    Node 0xf0273a20
+        compatible: 'SUNW,iscsi-hba'
+        name:  'iscsi-hba'
+
+        Node 0xf027b184
+            compatible: 'sd'
+            device_type:  'block'
+            lba64:  
+            name:  'disk'
+
+    Node 0xf027c49c
+        device_type:  'block'
+        name:  'reboot-memory'
+        reg:  c0000000.00000000.00000000.00000000
+
+    Node 0xf027fe2c
+        clock-frequency:  ffffffff
+        clock-frequency64:  00000001.2dfd43e0
+        compatible: 'SPARC-M8' + 'SPARC-3e50' + 'SUNW,sun4v-cpu' + 'sun4v'
+        device_type:  'cpu'
+        name:  'cpu'
+        reg:  c0000000.00000000.00000000.00000000
+
+    Node 0xf027ff8c
+        clock-frequency:  ffffffff
+        clock-frequency64:  00000001.2dfd43e0
+        compatible: 'SPARC-M8' + 'SPARC-3e50' + 'SUNW,sun4v-cpu' + 'sun4v'
+        device_type:  'cpu'
+        name:  'cpu'
+        reg:  c0000001.00000000.00000000.00000000
+
+    Node 0xf02800ec
+        clock-frequency:  ffffffff
+        clock-frequency64:  00000001.2dfd43e0
+        compatible: 'SPARC-M8' + 'SPARC-3e50' + 'SUNW,sun4v-cpu' + 'sun4v'
+        device_type:  'cpu'
+        name:  'cpu'
+        reg:  c0000002.00000000.00000000.00000000
+
+    Node 0xf028024c
+        clock-frequency:  ffffffff
+        clock-frequency64:  00000001.2dfd43e0
+        compatible: 'SPARC-M8' + 'SPARC-3e50' + 'SUNW,sun4v-cpu' + 'sun4v'
+        device_type:  'cpu'
+        name:  'cpu'
+        reg:  c0000003.00000000.00000000.00000000
+
+    Node 0xf02803ac
+        clock-frequency:  ffffffff
+        clock-frequency64:  00000001.2dfd43e0
+        compatible: 'SPARC-M8' + 'SPARC-3e50' + 'SUNW,sun4v-cpu' + 'sun4v'
+        device_type:  'cpu'
+        name:  'cpu'
+        reg:  c0000004.00000000.00000000.00000000
+
+    Node 0xf028050c
+        clock-frequency:  ffffffff
+        clock-frequency64:  00000001.2dfd43e0
+        compatible: 'SPARC-M8' + 'SPARC-3e50' + 'SUNW,sun4v-cpu' + 'sun4v'
+        device_type:  'cpu'
+        name:  'cpu'
+        reg:  c0000005.00000000.00000000.00000000
+
+    Node 0xf028066c
+        clock-frequency:  ffffffff
+        clock-frequency64:  00000001.2dfd43e0
+        compatible: 'SPARC-M8' + 'SPARC-3e50' + 'SUNW,sun4v-cpu' + 'sun4v'
+        device_type:  'cpu'
+        name:  'cpu'
+        reg:  c0000006.00000000.00000000.00000000
+
+    Node 0xf02807cc
+        clock-frequency:  ffffffff
+        clock-frequency64:  00000001.2dfd43e0
+        compatible: 'SPARC-M8' + 'SPARC-3e50' + 'SUNW,sun4v-cpu' + 'sun4v'
+        device_type:  'cpu'
+        name:  'cpu'
+        reg:  c0000007.00000000.00000000.00000000
+
+    Node 0xf028092c
+        clock-frequency:  ffffffff
+        clock-frequency64:  00000001.2dfd43e0
+        compatible: 'SPARC-M8' + 'SPARC-3e50' + 'SUNW,sun4v-cpu' + 'sun4v'
+        device_type:  'cpu'
+        name:  'cpu'
+        reg:  c0000008.00000000.00000000.00000000
+
+    Node 0xf0280a8c
+        clock-frequency:  ffffffff
+        clock-frequency64:  00000001.2dfd43e0
+        compatible: 'SPARC-M8' + 'SPARC-3e50' + 'SUNW,sun4v-cpu' + 'sun4v'
+        device_type:  'cpu'
+        name:  'cpu'
+        reg:  c0000009.00000000.00000000.00000000
+
+    Node 0xf0280bec
+        clock-frequency:  ffffffff
+        clock-frequency64:  00000001.2dfd43e0
+        compatible: 'SPARC-M8' + 'SPARC-3e50' + 'SUNW,sun4v-cpu' + 'sun4v'
+        device_type:  'cpu'
+        name:  'cpu'
+        reg:  c000000a.00000000.00000000.00000000
+
+    Node 0xf0280d4c
+        clock-frequency:  ffffffff
+        clock-frequency64:  00000001.2dfd43e0
+        compatible: 'SPARC-M8' + 'SPARC-3e50' + 'SUNW,sun4v-cpu' + 'sun4v'
+        device_type:  'cpu'
+        name:  'cpu'
+        reg:  c000000b.00000000.00000000.00000000
+
+    Node 0xf0280eac
+        clock-frequency:  ffffffff
+        clock-frequency64:  00000001.2dfd43e0
+        compatible: 'SPARC-M8' + 'SPARC-3e50' + 'SUNW,sun4v-cpu' + 'sun4v'
+        device_type:  'cpu'
+        name:  'cpu'
+        reg:  c000000c.00000000.00000000.00000000
+
+    Node 0xf028100c
+        clock-frequency:  ffffffff
+        clock-frequency64:  00000001.2dfd43e0
+        compatible: 'SPARC-M8' + 'SPARC-3e50' + 'SUNW,sun4v-cpu' + 'sun4v'
+        device_type:  'cpu'
+        name:  'cpu'
+        reg:  c000000d.00000000.00000000.00000000
+
+    Node 0xf028116c
+        clock-frequency:  ffffffff
+        clock-frequency64:  00000001.2dfd43e0
+        compatible: 'SPARC-M8' + 'SPARC-3e50' + 'SUNW,sun4v-cpu' + 'sun4v'
+        device_type:  'cpu'
+        name:  'cpu'
+        reg:  c000000e.00000000.00000000.00000000
+
+    Node 0xf02812cc
+        clock-frequency:  ffffffff
+        clock-frequency64:  00000001.2dfd43e0
+        compatible: 'SPARC-M8' + 'SPARC-3e50' + 'SUNW,sun4v-cpu' + 'sun4v'
+        device_type:  'cpu'
+        name:  'cpu'
+        reg:  c000000f.00000000.00000000.00000000
+
+    Node 0xf028142c
+        clock-frequency:  ffffffff
+        clock-frequency64:  00000001.2dfd43e0
+        compatible: 'SPARC-M8' + 'SPARC-3e50' + 'SUNW,sun4v-cpu' + 'sun4v'
+        device_type:  'cpu'
+        name:  'cpu'
+        reg:  c0000010.00000000.00000000.00000000
+
+    Node 0xf028158c
+        clock-frequency:  ffffffff
+        clock-frequency64:  00000001.2dfd43e0
+        compatible: 'SPARC-M8' + 'SPARC-3e50' + 'SUNW,sun4v-cpu' + 'sun4v'
+        device_type:  'cpu'
+        name:  'cpu'
+        reg:  c0000011.00000000.00000000.00000000
+
+    Node 0xf02816ec
+        clock-frequency:  ffffffff
+        clock-frequency64:  00000001.2dfd43e0
+        compatible: 'SPARC-M8' + 'SPARC-3e50' + 'SUNW,sun4v-cpu' + 'sun4v'
+        device_type:  'cpu'
+        name:  'cpu'
+        reg:  c0000012.00000000.00000000.00000000
+
+    Node 0xf028184c
+        clock-frequency:  ffffffff
+        clock-frequency64:  00000001.2dfd43e0
+        compatible: 'SPARC-M8' + 'SPARC-3e50' + 'SUNW,sun4v-cpu' + 'sun4v'
+        device_type:  'cpu'
+        name:  'cpu'
+        reg:  c0000013.00000000.00000000.00000000
+
+    Node 0xf02819ac
+        clock-frequency:  ffffffff
+        clock-frequency64:  00000001.2dfd43e0
+        compatible: 'SPARC-M8' + 'SPARC-3e50' + 'SUNW,sun4v-cpu' + 'sun4v'
+        device_type:  'cpu'
+        name:  'cpu'
+        reg:  c0000014.00000000.00000000.00000000
+
+    Node 0xf0281b0c
+        clock-frequency:  ffffffff
+        clock-frequency64:  00000001.2dfd43e0
+        compatible: 'SPARC-M8' + 'SPARC-3e50' + 'SUNW,sun4v-cpu' + 'sun4v'
+        device_type:  'cpu'
+        name:  'cpu'
+        reg:  c0000015.00000000.00000000.00000000
+
+    Node 0xf0281c6c
+        clock-frequency:  ffffffff
+        clock-frequency64:  00000001.2dfd43e0
+        compatible: 'SPARC-M8' + 'SPARC-3e50' + 'SUNW,sun4v-cpu' + 'sun4v'
+        device_type:  'cpu'
+        name:  'cpu'
+        reg:  c0000016.00000000.00000000.00000000
+
+    Node 0xf0281dcc
+        clock-frequency:  ffffffff
+        clock-frequency64:  00000001.2dfd43e0
+        compatible: 'SPARC-M8' + 'SPARC-3e50' + 'SUNW,sun4v-cpu' + 'sun4v'
+        device_type:  'cpu'
+        name:  'cpu'
+        reg:  c0000017.00000000.00000000.00000000
+
+    Node 0xf02a1238
+        #address-cells:  00000001
+        #interrupt-cells:  00000001
+        #size-cells:  00000000
+        compatible: 'SUNW,sun4v-virtual-devices' + 'SUNW,virtual-devices'
+        device_type:  'virtual-devices'
+        interrupt-map:  00000001.00000001.f02a1238.00000011
+        interrupt-map-mask:  0000001f.00ffffff.00000003
+        name:  'virtual-devices'
+        reg:  c0000100.00000000.00000000.00000000
+
+        Node 0xf02a2320
+            name:  'flashprom'
+            reg:  00000000
+
+        Node 0xf02a28f4
+            compatible: 'ORCL,m7-rng'
+            name:  'random-number-generator'
+            reg:  0000000e
+            rng-#units:  00000002
+
+        Node 0xf02a2f7c
+            #interrupts:  0000003f
+            compatible: 'ORCL,sun4v-dax2' + 'ORCL,sun4v-dax-fc' + 'ORCL,sun4v-dax'
+            name:  'dax'
+            reg:  0000000a
+
+        Node 0xf02a340c
+            compatible: 'SUNW,sun4v-console'
+            device_type:  'serial'
+            interrupts:  00000001
+            name:  'console'
+            reg:  00000001
+
+        Node 0xf02a3cbc
+            #address-cells:  00000001
+            #size-cells:  00000000
+            compatible: 'SUNW,sun4v-channel-devices'
+            device_type:  'channel-devices'
+            name:  'channel-devices'
+            reg:  00000200
+
+            Node 0xf02a4b9c
+                address-bits:  00000030
+                compatible: 'SUNW,sun4v-network'
+                device_type:  'network'
+                local-mac-address:  0021f679.89aa
+                max-frame-size:  00004000
+                name:  'network'
+                reg:  00000000
+
+            Node 0xf02a4ff4
+                address-bits:  00000030
+                compatible: 'SUNW,sun4v-network'
+                device_type:  'network'
+                local-mac-address:  0021f655.7a6a
+                max-frame-size:  00004000
+                name:  'network'
+                reg:  00000001
+
+            Node 0xf02a544c
+                compatible: 'SUNW,sun4v-disk'
+                device_type:  'block'
+                name:  'disk'
+                reg:  00000000
+
+            Node 0xf02a5644
+                compatible: 'SUNW,sun4v-disk'
+                device_type:  'block'
+                name:  'disk'
+                reg:  00000002
+
+            Node 0xf02a583c
+                compatible: 'SUNW,sun4v-disk'
+                device_type:  'block'
+                name:  'disk'
+                reg:  00000005
+
+            Node 0xf02a5a34
+                compatible: 'SUNW,sun4v-disk'
+                device_type:  'block'
+                name:  'disk'
+                reg:  0000000c
+
+            Node 0xf02a5c2c
+                compatible: 'SUNW,sun4v-disk'
+                device_type:  'block'
+                name:  'disk'
+                reg:  0000000d
+
+            Node 0xf02a5e24
+                compatible: 'SUNW,sun4v-disk'
+                device_type:  'block'
+                name:  'disk'
+                reg:  0000000e
+
+            Node 0xf02a601c
+                compatible: 'SUNW,sun4v-disk'
+                device_type:  'block'
+                name:  'disk'
+                reg:  0000000f
+
+            Node 0xf02a6214
+                compatible: 'SUNW,sun4v-disk'
+                device_type:  'block'
+                name:  'disk'
+                reg:  00000001
+
+            Node 0xf02a641c
+                compatible: 'SUNW,sun4v-disk'
+                device_type:  'block'
+                name:  'disk'
+                reg:  00000003
+
+            Node 0xf02a6624
+                compatible: 'SUNW,sun4v-disk'
+                device_type:  'block'
+                name:  'disk'
+                reg:  00000004
+
+            Node 0xf02a682c
+                compatible: 'SUNW,sun4v-disk'
+                device_type:  'block'
+                name:  'disk'
+                reg:  00000006
+
+            Node 0xf02a6a34
+                compatible: 'SUNW,sun4v-disk'
+                device_type:  'block'
+                name:  'disk'
+                reg:  00000007
+
+            Node 0xf02a6c3c
+                compatible: 'SUNW,sun4v-disk'
+                device_type:  'block'
+                name:  'disk'
+                reg:  00000008
+
+            Node 0xf02a6e44
+                compatible: 'SUNW,sun4v-disk'
+                device_type:  'block'
+                name:  'disk'
+                reg:  00000009
+
+            Node 0xf02a704c
+                compatible: 'SUNW,sun4v-disk'
+                device_type:  'block'
+                name:  'disk'
+                reg:  0000000a
+
+            Node 0xf02a7254
+                compatible: 'SUNW,sun4v-pciv-comm'
+                name:  'pciv-communication'
+                reg:  00000000
+
+            Node 0xf02a7328
+                compatible: 'SUNW,sun4v-domain-service'
+                name:  'virtual-domain-service'
+                reg:  00000000
+
+    Node 0xf02a74d4
+        address:  51000000
+        alloc-size:  00000000
+        compatible: 'SUNW,ramdisk'
+        device_type:  'block'
+        name:  'ramdisk-root'
+        size:  0624a000
+

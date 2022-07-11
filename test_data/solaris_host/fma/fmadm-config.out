@@ -1,0 +1,29 @@
+MODULE                   VERSION STATUS  DESCRIPTION
+bay-monitor              1.0     active  Bay Monitor
+cpumem-retire            1.1     active  CPU/Memory Retire Agent
+disk-diagnosis           0.1     active  Disk Diagnosis engine
+disk-transport           2.2     active  Disk Transport Agent
+eft                      1.16    active  eft diagnosis engine
+endurance-transport      1.0     active  Endurance Transport
+enum-monitor             1.0     active  Enumeration Error Monitor
+etm                      1.2     active  FMA Event Transport Module
+ext-event-transport      0.2     active  External FM event transport
+fabric-xlate             1.0     active  Fabric Ereport Translater
+fmd-self-diagnosis       1.0     active  Fault Manager Self-Diagnosis
+fru-monitor              2.0     active  FRU Monitor
+io-retire                2.0     active  I/O Retire Agent
+ip-transport             1.1     active  IP Transport Agent
+led-mgmt                 1.1     active  LED Manager
+network-monitor          1.1     active  Network monitor
+non-serviceable          1.0     active  Non-Serviceable Agent
+pri-monitor              1.0     active  PRI Update Monitor
+sas-cabling              0.1     active  SAS Cabling Diagnosis engine
+sensor-transport         1.2     active  Sensor Transport Agent
+ses-diagnosis            0.1     active  SES Diagnosis engine
+software-diagnosis       0.2     active  Software Diagnosis engine
+software-response        0.1     active  Software Response Agent
+sp-monitor               1.0     active  Service Processor Monitor
+sysevent-transport       1.0     active  SysEvent Transport Agent
+syslog-msgs              1.1     active  Syslog Messaging Agent
+zfs-diagnosis            1.0     active  ZFS Diagnosis Engine
+zfs-retire               1.0     active  ZFS Retire Agent

@@ -226,7 +226,7 @@ class storageVxvm(explorerbase.ExplorerBase):
             if line.startswith("v"):
                 volume = line.split()[1]
                 self[diskgroup]["volumes"].add(volume)
-                self[volume] = storage.Storage.initialDict(
+                self[volume] = storage.Storage.initial_dict(
                     {
                         "_type": "vxvm_volume",
                         "_origin": filename,
@@ -238,7 +238,7 @@ class storageVxvm(explorerbase.ExplorerBase):
                 self["vxvm_volumes"].add(volume)
                 # These are also referred to by diskgroup/volume
                 dgvolname = f"{diskgroup}/{volume}"
-                self[dgvolname] = storage.Storage.initialDict(
+                self[dgvolname] = storage.Storage.initial_dict(
                     {
                         "_type": "vxvm_dgvol",
                         "_origin": filename,
@@ -259,7 +259,7 @@ class storageVxvm(explorerbase.ExplorerBase):
         for line in infh:
             bits = line.split()
             name = bits[0]
-            self[name] = storage.Storage.initialDict(
+            self[name] = storage.Storage.initial_dict(
                 {
                     "_type": "vxvm_diskgroup",
                     "_origin": filename,
@@ -320,7 +320,7 @@ class storageVxvm(explorerbase.ExplorerBase):
             for dev in self[diskgroup]["devices"]:
                 if dev not in data:
                     self.warning("VXVM referring to unknown disk: %s" % dev)
-                    self[dev] = storage.Storage.initialDict(
+                    self[dev] = storage.Storage.initial_dict(
                         {
                             "_type": "missing",
                             "missedby": diskgroup,
@@ -354,7 +354,7 @@ class storageVxvm(explorerbase.ExplorerBase):
             if diskgroup.startswith("("):
                 diskgroup = diskgroup[1:-1]
                 if diskgroup not in self:
-                    self[diskgroup] = storage.Storage.initialDict(
+                    self[diskgroup] = storage.Storage.initial_dict(
                         {
                             "_type": "vxvm_diskgroup",
                             "volumes": set(),
@@ -375,7 +375,7 @@ class storageVxvm(explorerbase.ExplorerBase):
                 self[diskgroup]["contains"].add(device)
             if device not in self:
                 self.warning("VXVM refering to an unknown disk %s" % device)
-                self[device] = storage.Storage.initialDict(
+                self[device] = storage.Storage.initial_dict(
                     {
                         "_type": "missing",
                         "missedby": diskgroup,

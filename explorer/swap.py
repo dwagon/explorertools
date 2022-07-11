@@ -71,7 +71,7 @@ class storageSwap(explorerbase.ExplorerBase):
         explorerbase.ExplorerBase.__init__(self, config)
         self.data = data
         self.swapnum = 0
-        self["_swap"] = storage.Storage.initialDict(
+        self["_swap"] = storage.Storage.initial_dict(
             {
                 "_type": "allswap",
                 "use": set(["_swap"]),
@@ -85,7 +85,7 @@ class storageSwap(explorerbase.ExplorerBase):
         """ TODO """
         name = f"swap_{self.swapnum}"
         self.swapnum += 1
-        self[name] = storage.Storage.initialDict(
+        self[name] = storage.Storage.initial_dict(
             {"_type": "swap", "use": set(["_swap"]), "partof": set(["_swap"])}
         )
         self[name]["contains"].add(device)
@@ -124,7 +124,7 @@ class storageSwap(explorerbase.ExplorerBase):
                 self["swap_devices"].add(name)
                 self["_swap"]["contains"].add(name)
                 device = self.sanitiseDevice(bits[0])
-                self[name] = storage.Storage.initialDict(
+                self[name] = storage.Storage.initial_dict(
                     {
                         "_type": "swap",
                         "_origin": "disks/swap-l.out",

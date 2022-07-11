@@ -1,4 +1,3 @@
 #!/bin/bash
 
-pytest tests/*.py
-# pytest --cov-report term-missing --cov . tests/*.py
+pytest --cov-report term-missing --cov . tests/*.py

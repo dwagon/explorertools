@@ -153,7 +153,7 @@ class Disk(explorerbase.ExplorerBase):
                     text=f"Disk {self.name()} has {self['harderrors']} hard errors"
                 )
             elif int(self["harderrors"]) > 5:
-                self.addConcern(
+                self.add_concern(
                     "harderrors",
                     obj=self.name(),
                     text=f"Disk {self.name()} has {self['harderrors']} hard errors"
@@ -173,7 +173,7 @@ class Disk(explorerbase.ExplorerBase):
                     # Disks that have no slices have much more serious problems
                     pass
                 else:
-                    self.addConcern(
+                    self.add_concern(
                         "nobackup",
                         obj=self.name(),
                         text=f"Disk {self.name()} has no backup slice"
@@ -183,7 +183,7 @@ class Disk(explorerbase.ExplorerBase):
             # vxvm but not in format/prtvtoc
             if sl2 in self and "first_sector" in self[sl2]:
                 if self[sl2]["first_sector"] != 0:
-                    self.addConcern(
+                    self.add_concern(
                         "backupslice",
                         obj=self.name(),
                         text="%s is malformed for a backup slice (%s-%s not whole disk)"
@@ -191,15 +191,15 @@ class Disk(explorerbase.ExplorerBase):
                     )
 
         if self.unused_disk():
-            # self.Debug("%s=%s" % (self.name(), self.data))
+            # self.debug("%s=%s" % (self.name(), self.data))
             if "nickname" in self:
-                self.addConcern(
+                self.add_concern(
                     "unuseddisk",
                     obj=self.name(),
                     text=f"Disk {self.name()} ({self['nickname']}) appears not to be used"
                 )
             else:
-                self.addConcern(
+                self.add_concern(
                     "unuseddisk",
                     obj=self.name(),
                     text=f"Disk {self.name()} appears not to be used"
@@ -285,7 +285,7 @@ class Disks(explorerbase.ExplorerBase):
                 # If no volume, not in use
                 if line.startswith("Disk:") and volume:
                     if volume not in self:
-                        self[volume] = storage.Storage.initialDict(
+                        self[volume] = storage.Storage.initial_dict(
                             {
                                 "_type": "disk",
                                 "description": "Disk Drive",
@@ -484,7 +484,7 @@ class storageDisks(explorerbase.ExplorerBase):
         """TODO"""
         name = f"mpath_{buffer.splitlines()[0].split()[0]}"
         if name not in self:
-            self[name] = storage.Storage.initialDict(
+            self[name] = storage.Storage.initial_dict(
                 {
                     "_type": "mpath",
                     "description": "Multipath",
@@ -514,7 +514,7 @@ class storageDisks(explorerbase.ExplorerBase):
             model = buff.get("desc", "unknown desc")
             device = self.sanitiseDevice(buff.get("device", "unknown device"))
             if device not in self:
-                self[device] = storage.Storage.initialDict(
+                self[device] = storage.Storage.initial_dict(
                     {
                         "_type": "disk",
                         "description": "Disk Drive",
@@ -604,7 +604,7 @@ class storageDisks(explorerbase.ExplorerBase):
                 slicenum = bits[0]
                 slicename = "%ss%s" % (disk, slicenum)
                 self[disk]["slices"].add(slicename)
-                self[slicename] = storage.Storage.initialDict(
+                self[slicename] = storage.Storage.initial_dict(
                     {
                         "_type": "slice",
                         "description": "Disk Slice",
@@ -621,7 +621,7 @@ class storageDisks(explorerbase.ExplorerBase):
                 if slicenum == "8":
                     self[slicename]["use"].add("Boot Partition")
                     self[slicename]["partof"].add("Boot Partition")
-                    self["Boot Partition"] = storage.Storage.initialDict(
+                    self["Boot Partition"] = storage.Storage.initial_dict(
                         {"_type": "boot_partition"}
                     )
                 if self[disk]["have_cylinders"]:
@@ -706,7 +706,7 @@ class storageDisks(explorerbase.ExplorerBase):
                 # If no volume, not in use
                 if line.startswith("Disk:") and volume:
                     if volume not in self:
-                        self[volume] = storage.Storage.initialDict(
+                        self[volume] = storage.Storage.initial_dict(
                             {
                                 "_type": "disk",
                                 "description": "Disk Drive",
@@ -918,12 +918,12 @@ class storageDisks(explorerbase.ExplorerBase):
         """Something has gone wrong with the format analysis
         Try an alternative approach
         """
-        self.addConcern("format", text="Couldn't get format data")
+        self.add_concern("format", text="Couldn't get format data")
         disk_list = self.glob("disks/prtvtoc/*")
         for diskfile in disk_list:
             # Strip s2 off the end of the filename
             disk = os.path.split(diskfile)[-1][:-2]
-            self[disk] = storage.Storage.initialDict(
+            self[disk] = storage.Storage.initial_dict(
                 {
                     "_type": "disk",
                     "description": "Disk Drive",
@@ -973,7 +973,7 @@ class storageDisks(explorerbase.ExplorerBase):
                     diskname = rm.group("disk")
                     break
             if diskname:
-                self[diskname] = storage.Storage.initialDict(
+                self[diskname] = storage.Storage.initial_dict(
                     {
                         "_type": "disk",
                         "description": "Disk Drive",
@@ -1021,7 +1021,7 @@ class storageDisks(explorerbase.ExplorerBase):
         slice is just the slice component
         disk is the name of the disk
         """
-        self[slicehandle] = storage.Storage.initialDict(
+        self[slicehandle] = storage.Storage.initial_dict(
             {
                 "_type": "slice",
                 "description": "Disk Slice",
@@ -1053,7 +1053,7 @@ class storageDisks(explorerbase.ExplorerBase):
                 if matchobj:
                     disk = self.sanitiseDevice(matchobj.group("device"))
                     if disk not in self:
-                        self[disk] = storage.Storage.initialDict(
+                        self[disk] = storage.Storage.initial_dict(
                             {
                                 "_type": "disk",
                                 "description": "Disk Drive",
@@ -1122,7 +1122,7 @@ class storageDisks(explorerbase.ExplorerBase):
                 # Don't know why this happens (not in /proc/partitions) - disk
                 # not used?
                 if part not in self:
-                    self.addConcern(
+                    self.add_concern(
                         "unuseddisk",
                         obj=self.name(),
                         text="Disk %s potentially unused" % part,
@@ -1160,7 +1160,7 @@ class storageDisks(explorerbase.ExplorerBase):
                 disk = matchobj.group("disk")
                 if "emcpower" in disk:
                     continue
-                self[disk] = storage.Storage.initialDict(
+                self[disk] = storage.Storage.initial_dict(
                     {
                         "_type": "disk",
                         "description": "Disk Drive",
@@ -1205,15 +1205,17 @@ class storageDisks(explorerbase.ExplorerBase):
 
     ##########################################################################
     def cross_populate(self, data):
+        """ TODO """
         for disk in self.disk_list():
             try:
-                self.crossPopulateDisk(data, disk)
+                self.cross_populate_disk(data, disk)
             except Exception:
-                self.warning("Failed to crossPopulateDisk: %s" % disk)
+                self.warning(f"Failed to cross_populate_disk: {disk}")
                 raise
 
     ##########################################################################
-    def crossPopulateDisk(self, data, disk):
+    def cross_populate_disk(self, data, disk):
+        """ TODO """
         # Check to see if the slice is used as the backup slice
         for slic in data[disk]["slices"]:
             data[slic]["backup_slice"] = False
@@ -1503,7 +1505,7 @@ class storageDisks(explorerbase.ExplorerBase):
                     str += " %s" % (", ".join(mounts))
                 else:
                     str += " No apparent use"
-                    self.addConcern(
+                    self.add_concern(
                         "unused emcpower",
                         obj=po,
                         text=f"EMC PowerPath {po} has no obvious use",

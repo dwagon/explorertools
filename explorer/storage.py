@@ -47,14 +47,14 @@ class Storage(explorerbase.ExplorerBase):
     def parse(self):
         """ TODO """
         self.initial_parse()
-        self.clusterCheck()
+        self.cluster_check()
         self.boot_aliases()
         self.cross_populate()
 
     ##########################################################################
-    def fsList(self):
+    def fs_list(self):
         """ TODO """
-        return self.genericList("filesystem")
+        return self.generic_list("filesystem")
 
     ##########################################################################
     def boot_aliases(self):
@@ -64,7 +64,7 @@ class Storage(explorerbase.ExplorerBase):
         # 'disk1': '/pci@1c,600000/scsi@2/sd@1,0'
         prt = prtconf.Prtconf(self.config)
         bootaliases = prt["boot_aliases"]
-        for objname, obj in self.items():
+        for _, obj in self.items():
             aliases = set()
             if "path" in obj:
                 for alias, dev in bootaliases.items():
@@ -73,7 +73,7 @@ class Storage(explorerbase.ExplorerBase):
                     elif obj["path"] == dev.replace("disk", "sd"):
                         aliases.add(alias)
                 if aliases:
-                    self[objname]["bootaliases"] = list(aliases)
+                    obj["bootaliases"] = list(aliases)
 
     ##########################################################################
     def initial_parse(self):
@@ -108,7 +108,7 @@ class Storage(explorerbase.ExplorerBase):
 
     ##########################################################################
     @classmethod
-    def initialDict(class_=None, indict=None):
+    def initial_dict(cls=None, indict=None):
         """Setup an initial dictionary for most things"""
         if indict is None:
             indict = {}
@@ -124,27 +124,27 @@ class Storage(explorerbase.ExplorerBase):
         return initdict
 
     ##########################################################################
-    def clusterCheck(self):
+    def cluster_check(self):
         """Get the required details from the cluster module"""
-        c = cluster.Cluster(self.config)
-        if "clusterfs" in c:
-            self["clusterfs"] = c["clusterfs"]
-        if "quorum" in c and c["quorum"]:
-            quorumdev = c["quorum"].replace("/dev/did/rdsk/", "")
-            slice = quorumdev[-2:]
+        clus = cluster.Cluster(self.config)
+        if "clusterfs" in clus:
+            self["clusterfs"] = clus["clusterfs"]
+        if "quorum" in clus and clus["quorum"]:
+            quorumdev = clus["quorum"].replace("/dev/did/rdsk/", "")
+            slic = quorumdev[-2:]
             dev = quorumdev[:-2]
             if dev not in self["_didmap"]:
                 self.warning(f"Couldn't find quorum disk {dev} did details")
                 return
-            for d in self["_didmap"][dev]:
-                qslice = "%s%s" % (d, slice)
+            for dev in self["_didmap"][dev]:
+                qslice = f"{dev}{slic}"
                 if qslice not in self:
-                    self.warning("Quorum slice %s has no disk defined" % qslice)
+                    self.warning(f"Quorum slice {qslice} has no disk defined")
                 else:
-                    self[qslice]["use"] = set(["Cluster %s Quorum" % c["name"]])
+                    self[qslice]["use"] = set([f"Cluster {clus['name']} Quorum"])
 
     ##########################################################################
-    def genericList(self, types):
+    def generic_list(self, types):
         """ TODO """
         ans = []
         if not isinstance(types, list):
@@ -262,7 +262,7 @@ class Storage(explorerbase.ExplorerBase):
         for kid in self[objname]["contains"]:
             # self.debug("kid=%s" % kid)
             if kid not in self:
-                self[kid] = Storage.initialDict(
+                self[kid] = Storage.initial_dict(
                     {
                         "_type": "missing",
                         "missedby": objname,
@@ -318,7 +318,7 @@ class Storage(explorerbase.ExplorerBase):
         diff = 0
         for kid in self[objname]["contains"]:
             if kid not in self:
-                self[kid] = Storage.initialDict(
+                self[kid] = Storage.initial_dict(
                     {
                         "_type": "missing",
                         "missedby": objname,
@@ -375,12 +375,12 @@ class Storage(explorerbase.ExplorerBase):
         """Match all of the uses and partitions and set values accordingly"""
 
         self.relationship_munger()
-        for k in ("volmanager", "swap", "filesys", "zfs", "vxvm", "disks", "emc"):
-            self.cache[k].cross_populate(self.data)
+        for key in ("volmanager", "swap", "filesys", "zfs", "vxvm", "disks", "emc"):
+            self.cache[key].cross_populate(self.data)
         self.useMigrator()
         self.deviceCleaner()
-        for k in ("volmanager", "swap", "filesys", "zfs", "vxvm", "disks", "emc"):
-            self.cache[k].cross_populate(self.data)
+        for key in ("volmanager", "swap", "filesys", "zfs", "vxvm", "disks", "emc"):
+            self.cache[key].cross_populate(self.data)
         self.protectionCheck()
 
         # Check to see if the disks are in use - has to be done after all
@@ -430,28 +430,28 @@ class Storage(explorerbase.ExplorerBase):
                 self.debug("Unhandled describer %s - %s" % (obj, self[obj]["_type"]))
 
     ##########################################################################
-    def poolList(self):
+    def pool_list(self):
         """ TODO """
-        return self.genericList("zfs_pool")
+        return self.generic_list("zfs_pool")
 
     ##########################################################################
-    def diskList(self):
+    def disk_list(self):
         """Return the list of disks that are attached to this host"""
-        return self.genericList("disk")
+        return self.generic_list("disk")
 
     ##########################################################################
     def emcdiskList(self):
         """Return the list of disks that are attached to this host"""
-        return self.genericList("emcdisk")
+        return self.generic_list("emcdisk")
 
     ##########################################################################
-    def sliceList(self, disk):
+    def slice_list(self, disk):
         """Return the list of slice that the specified disk has"""
         return sorted(self[disk]["slices"])
 
     @classmethod
     ##########################################################################
-    def pluralDescription(class_, val, objlist):
+    def pluralDescription(cls, val, objlist):
         """ TODO """
         # Work out a count of the obj to see if it should be plural
         olist = []
@@ -467,12 +467,12 @@ class Storage(explorerbase.ExplorerBase):
         return plural, olist
 
     ##########################################################################
-    def get(self, o, key):
+    def get(self, obj, key):
         """ TODO """
-        if not o:
+        if not obj:
             return ""
-        if key in self[o]:
-            return self[o][key]
+        if key in self[obj]:
+            return self[obj][key]
         return ""
 
 # EOF

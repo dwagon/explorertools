@@ -1,24 +1,26 @@
 #!/usr/bin/env python
-""" Test Storage code"""
+""" Test hostdet code"""
 
 import unittest
-from explorer.swap import storageSwap
+from explorer.hostdet import Host
 
 
 ##############################################################################
-class TestSolarisSwap(unittest.TestCase):
-    """ test storage class """
-    def test_swap(self):
-        """ Test solaris storage """
+class TestSolarisHostdet(unittest.TestCase):
+    """ test hostdet class """
+    def test_hostdet(self):
+        """ Test solaris hostdet """
         config = {
                 "explorertype": "solaris",
                 "hostname": "testhost",
                 "datadir": "test_data",
                 "hostpath": "solaris_host",
                 }
-        swap = storageSwap(config)
-        self.assertEqual(swap['swap_devices'], {'swap_0', 'swap_1'})
-        self.assertEqual(swap['_swap']['contains'], {'swap_0', 'swap_1'})
+        hostdet = Host(config)
+        self.assertEqual(hostdet['arch'], 'sun4v')
+        self.assertEqual(hostdet['ram'], '49152')
+        self.assertEqual(hostdet['virtualmaster'], 'vhcvhaup004')
+        self.assertEqual(hostdet['hardware'], 'sun_t8_2')
 
 
 ##############################################################################

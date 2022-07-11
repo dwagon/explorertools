@@ -1,0 +1,40 @@
+#
+# This file is no longer used; it is a placeholder.
+#
+# ANY CHANGES MADE TO THIS FILE WILL HAVE NO EFFECT
+# AND WILL BE OVERWRITTEN.
+#
+# Refer to the sysobjadm(8) device commands if you
+# really need to make changes to saved device state.
+#
+"/virtual-devices@100/channel-devices@200/disk@8" 8 "vdc"
+"/iscsi" 0 "iscsi"
+"/virtual-devices@100/channel-devices@200/disk@5" 4 "vdc"
+"/virtual-devices@100/random-number-generator@e" 0 "n2rng"
+"/virtual-devices@100/channel-devices@200/disk@0" 0 "vdc"
+"/virtual-devices@100/dax@a" 0 "dax"
+"/virtual-devices@100/channel-devices@200" 0 "cnex"
+"/virtual-devices@100/channel-devices@200/network@1" 1 "vnet"
+"/scsi_vhci" 0 "scsi_vhci"
+"/virtual-devices@100/channel-devices@200/network@0" 0 "vnet"
+"/virtual-devices@100/channel-devices@200/disk@b" 10 "vdc"
+"/virtual-devices@100/channel-devices@200/disk@f" 14 "vdc"
+"/virtual-devices@100/channel-devices@200/disk@2" 2 "vdc"
+"/virtual-devices@100/channel-devices@200/disk@6" 7 "vdc"
+"/virtual-devices@100/channel-devices@200/disk@3" 3 "vdc"
+"/options" 0 "options"
+"/virtual-devices@100/channel-devices@200/disk@1" 15 "vdc"
+"/virtual-devices@100/channel-devices@200/disk@e" 13 "vdc"
+"/virtual-devices@100/channel-devices@200/disk@4" 5 "vdc"
+"/virtual-devices@100/channel-devices@200/disk@9" 9 "vdc"
+"/virtual-devices@100" 0 "vnex"
+"/virtual-devices@100/console@1" 0 "qcn"
+"/virtual-devices@100/channel-devices@200/disk@a" 1 "vdc"
+"/ramdisk-root" 0 "ramdisk"
+"/virtual-devices@100/channel-devices@200/disk@7" 6 "vdc"
+"/fcoe" 0 "fcoe"
+"/virtual-devices@100/channel-devices@200/disk@c" 11 "vdc"
+"/virtual-devices@100/channel-devices@200/virtual-domain-service@0" 0 "vlds"
+"/pseudo" 0 "pseudo"
+"/virtual-devices@100/channel-devices@200/disk@d" 12 "vdc"
+"/virtual-devices@100/channel-devices@200/pciv-communication@0" 0 "vpci"

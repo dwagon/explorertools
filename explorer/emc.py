@@ -23,17 +23,17 @@ class EmcSlice(explorerbase.ExplorerBase):
         self.alldata = alldata
 
     ##########################################################################
-    def isBackupSlice(self):
+    def is_backup_slice(self):
         """TODO"""
         return False
 
     ##########################################################################
-    def getSectors(self):
+    def get_sectors(self):
         """TODO"""
         return None, None, None
 
     ##########################################################################
-    def getNotes(self):
+    def get_notes(self):
         """TODO"""
         return " "
         # return self["describer"]
@@ -53,12 +53,12 @@ class EmcDisk(explorerbase.ExplorerBase):
         self.alldata = alldata
 
     ##########################################################################
-    def unusedDisk(self):
+    def unused_disk(self):
         """TODO"""
         return self["unused"]
 
     ##########################################################################
-    def sliceList(self):
+    def slice_list(self):
         """TODO"""
         slices = sorted(self["slices"])
         return [self[s] for s in slices]
@@ -73,18 +73,18 @@ class EmcDisks(explorerbase.ExplorerBase):
     def __init__(self, config):
         """TODO"""
         explorerbase.ExplorerBase.__init__(self, config)
-        self.st = storage.Storage(config)
-        for objname, obj in self.st.items():
+        self.strg = storage.Storage(config)
+        for objname, obj in self.strg.items():
             if "_type" in obj and obj["_type"] == "emcdisk":
                 emcdisk = objname
-                self[emcdisk] = EmcDisk(config, emcdisk, obj, self.st)
+                self[emcdisk] = EmcDisk(config, emcdisk, obj, self.strg)
                 for emcslice in self[emcdisk]["slices"]:
                     self[emcdisk][emcslice] = EmcSlice(
-                        config, emcslice, self.st[emcslice], self.st
+                        config, emcslice, self.strg[emcslice], self.strg
                     )
 
     ##########################################################################
-    def diskList(self):
+    def disk_list(self):
         """TODO"""
         disks = sorted(self.keys())
         return [self[d] for d in disks]
@@ -100,9 +100,11 @@ class storageEmc(explorerbase.ExplorerBase):
 
     ##########################################################################
 
-    def __init__(self, config, data={}):
+    def __init__(self, config, data=None):
         """TODO"""
         explorerbase.ExplorerBase.__init__(self, config)
+        if data is None:
+            data = {}
         self.data = data
         self.paths = {}
         self.parse()
@@ -113,19 +115,19 @@ class storageEmc(explorerbase.ExplorerBase):
         self["emcdisks"] = set()
         try:
             if self.config["explorertype"] == "solaris":
-                self.parse_Solaris()
+                self.parse_solaris()
             elif self.config["explorertype"] == "linux":
                 self.parse_linux()
         except UserWarning as err:
             self.warning(err)
-        self.protectionCheck()
+        self.protection_check()
 
     ##########################################################################
-    def calculateUsed(self, data):
+    def calculate_used(self, data):
         """
         Check to see if the disks are actually used
         """
-        for disk in self.diskList():
+        for disk in self.disk_list():
             # If the entire disk has a use then we don't need to check slices
             if data[disk]["use"]:
                 data[disk]["unused"] = False
@@ -153,44 +155,43 @@ class storageEmc(explorerbase.ExplorerBase):
     def parse_linux_partitions(self):
         """TODO"""
         filename = "proc/partitions"
-        f = self.open(filename)
-        for line in f:
+        infh = self.open(filename)
+        for line in infh:
             if "emcpower" in line:
                 emc = line.split()[3]
                 if emc[-1].isdigit():
-                    self.addEmcSlice(emc, origin=filename)
+                    self.add_emc_slice(emc, origin=filename)
                 else:
-                    self.addEmcDisk(emc, origin=filename)
-        f.close()
+                    self.add_emc_disk(emc, origin=filename)
+        infh.close()
 
     ##########################################################################
     def parse_linux_fdisk_chunk(self, lines):
         """TODO"""
-        pass
 
     ##########################################################################
-    def parse_Solaris(self):
+    def parse_solaris(self):
         """TODO"""
-        self.parse_Solaris_emc()
-        self.parse_Solaris_mnttab()
-        self.parse_Solaris_swap()
-        self.parse_Solaris_vxvm()
+        self.parse_solaris_emc()
+        self.parse_solaris_mnttab()
+        self.parse_solaris_swap()
+        self.parse_solaris_vxvm()
 
     ##########################################################################
-    def parse_Solaris_vxvm(self):
+    def parse_solaris_vxvm(self):
         """TODO"""
         filename = "disks/vxvm/vxdisk-list.out"
         if not self.exists(filename):
             return
-        f = self.open(filename)
-        for line in f:
+        infh = self.open(filename)
+        for line in infh:
             bits = line.strip().split()
             if "emcpower" in bits[-1]:
-                self.addEmcSlice(bits[-1], origin=filename)
-        f.close()
+                self.add_emc_slice(bits[-1], origin=filename)
+        infh.close()
 
     ##########################################################################
-    def parse_Solaris_swap(self):
+    def parse_solaris_swap(self):
         """The real details will be found by the swap checker,
         we just need to set up the emc slices that are in use for
         the relationship handling"""
@@ -198,14 +199,14 @@ class storageEmc(explorerbase.ExplorerBase):
         filename = "disks/swap-l.out"
         if not self.exists(filename):
             return
-        f = self.open(filename)
-        for line in f:
+        infh = self.open(filename)
+        for line in infh:
             if "emcpower" in line:
-                self.addEmcSlice(line.split()[0], origin=filename)
-        f.close()
+                self.add_emc_slice(line.split()[0], origin=filename)
+        infh.close()
 
     ##########################################################################
-    def parse_Solaris_mnttab(self):
+    def parse_solaris_mnttab(self):
         """The real details will be found by the filesystem checker,
         we just need to set up the emc slices that are in use for
         the relationship handling"""
@@ -213,25 +214,25 @@ class storageEmc(explorerbase.ExplorerBase):
         filename = "etc/mnttab"
         if not self.exists(filename):
             return
-        f = self.open(filename)
-        for line in f:
+        infh = self.open(filename)
+        for line in infh:
             if "emcpower" in line:
-                self.addEmcSlice(line.split()[0], origin=filename)
-        f.close()
+                self.add_emc_slice(line.split()[0], origin=filename)
+        infh.close()
 
     ##########################################################################
-    def addEmcSlice(self, device, origin=""):
+    def add_emc_slice(self, device, origin=""):
         """TODO"""
         emcslice = self.sanitiseDevice(device)
         if emcslice not in self or self[emcslice]["_type"] != "emcslice":
             emcdisk = emcslice[:-1]
             if emcdisk not in self:
-                self.addEmcDisk(emcdisk, origin)
+                self.add_emc_disk(emcdisk, origin)
             if emcslice[-1].isdigit():
                 slicenum = int(emcslice[-1])
             else:
                 slicenum = ord(emcslice[-1]) - ord("a")
-            self[emcslice] = storage.Storage.initialDict(
+            self[emcslice] = storage.Storage.initial_dict(
                 {
                     "_type": "emcslice",
                     "_origin": origin,
@@ -243,9 +244,9 @@ class storageEmc(explorerbase.ExplorerBase):
             self[emcdisk]["slices"].add(emcslice)
 
     ##########################################################################
-    def addEmcDisk(self, disk, origin=""):
+    def add_emc_disk(self, disk, origin=""):
         """TODO"""
-        self[disk] = storage.Storage.initialDict(
+        self[disk] = storage.Storage.initial_dict(
             {
                 "_type": "emcdisk",
                 "description": "EMC Drive",
@@ -259,7 +260,7 @@ class storageEmc(explorerbase.ExplorerBase):
         self["emcdisks"].add(disk)
 
     ##########################################################################
-    def parse_Solaris_emc(self):
+    def parse_solaris_emc(self):
         """Analyse EMC powerpath config file
         The looks like a series of:
 
@@ -286,15 +287,15 @@ class storageEmc(explorerbase.ExplorerBase):
         filename = "emc/powermt_display_dev=all.out"
         if not self.exists(filename):
             return
-        f = self.open(filename)
+        infh = self.open(filename)
         emcpower = None
 
-        for line in f:
+        for line in infh:
             line = line.strip()
             if not line:
                 continue
             if emcpower and emcpower not in self:
-                self.addEmcDisk(emcpower, origin=filename)
+                self.add_emc_disk(emcpower, origin=filename)
 
             if line.startswith("Pseudo name"):
                 emcpower = line.split("=")[-1][:-1]
@@ -302,7 +303,7 @@ class storageEmc(explorerbase.ExplorerBase):
 
             if line[0].isdigit():
                 if not emcpower:
-                    self.warning("No emcpower device discovered for %s" % line)
+                    self.warning(f"No emcpower device discovered for {line}")
                     continue
                 try:
                     dpath = line.split()[2][:-2]  # Strip off slice number
@@ -312,21 +313,20 @@ class storageEmc(explorerbase.ExplorerBase):
                     self[emcpower]["paths"].add(dpath)
                 self.paths[dpath] = emcpower
 
-        f.close()
+        infh.close()
 
     ##########################################################################
     def describer(self, obj, data):
         """TODO"""
-        pass
 
     ##########################################################################
-    def protectionCheck(self):
+    def protection_check(self):
         """If a disk from the drivemap is listed as protected, then
         mark it as such"""
-        # TODO
+        # TO DO
 
     ##########################################################################
-    def diskList(self):
+    def disk_list(self):
         """TODO"""
         return sorted(self["emcdisks"])
 
@@ -347,7 +347,7 @@ class storageEmc(explorerbase.ExplorerBase):
                 emcdisk = self.paths[disk]
                 emcslice = emcdisk + chr(int(slic) + ord("a"))
                 if emcslice not in self:
-                    self[emcslice] = storage.Storage.initialDict(
+                    self[emcslice] = storage.Storage.initial_dict(
                         {
                             "_type": "emcslice",
                             "description": "EMC Slice",
@@ -361,7 +361,7 @@ class storageEmc(explorerbase.ExplorerBase):
 
             if "emcpower" in obj:
                 if "emc" not in data[obj]["_type"]:
-                    self.Debug("Missed data[%s] %s" % (obj, data[obj]))
+                    self.debug(f"Missed data[{obj}] {data[obj]}")
 
 
 # EOF

@@ -1,10 +1,9 @@
-# $Id: drivemap.py 2382 2012-05-30 04:44:07Z dougals $
-# $HeadURL: http://svn/ops/unix/explorer/trunk/explorer/drivemap.py $
-#
+"""
+Drivemap for explorer analysis parts list
+"""
 # Written by Dougal Scott <dwagon@pobox.com>
-# Drivemap for explorer analysis parts list
-#
 # Used by prtdiag
+# pylint: disable=too-many-lines
 drivemap = {
     # Arrays that are actually separate devices
     "BladeCtlr B210": {

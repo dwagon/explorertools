@@ -269,7 +269,7 @@ class storageFilesystems(explorerbase.ExplorerBase):
             )
             mntpnt = matchobj.group("mp")
             dev = self.sanitiseDevice(matchobj.group("dev"))
-            self[mntpnt] = storage.Storage.initialDict(
+            self[mntpnt] = storage.Storage.initial_dict(
                 {"_type": "filesystem", "usepoint": "", "_origin": "mount"}
             )
             self["filesystems"].add(mntpnt)
@@ -296,7 +296,7 @@ class storageFilesystems(explorerbase.ExplorerBase):
             bits = line.split()
             mntpnt = bits[1]
             if mntpnt not in self:
-                self[mntpnt] = storage.Storage.initialDict(
+                self[mntpnt] = storage.Storage.initial_dict(
                     {"_type": "filesystem", "_origin": filename}
                 )
                 self["filesystems"].add(mntpnt)
@@ -328,7 +328,7 @@ class storageFilesystems(explorerbase.ExplorerBase):
             if "-v" in filename:
                 mntpnt = bits[2]
                 if mntpnt not in self:
-                    self[mntpnt] = storage.Storage.initialDict(
+                    self[mntpnt] = storage.Storage.initial_dict(
                         {"_type": "filesystem", "usepoint": "", "_origin": filename}
                     )
                     self["filesystems"].add(mntpnt)
@@ -340,7 +340,7 @@ class storageFilesystems(explorerbase.ExplorerBase):
             else:
                 mntpnt = bits[1]
                 if mntpnt not in self:
-                    self[mntpnt] = storage.Storage.initialDict(
+                    self[mntpnt] = storage.Storage.initial_dict(
                         {
                             "_type": "filesystem",
                             "usepoint": "",
@@ -418,10 +418,10 @@ class storageFilesystems(explorerbase.ExplorerBase):
                     "vfstab", obj=mntpnt, text=f"FSCK device misconfigured for {mntpnt}"
                 )
             if mntpnt not in self:
-                self.addConcern(
+                self.add_concern(
                     "vfstab", obj=mntpnt, text="Mounted filesystem is not in vfstab"
                 )
-                self[mntpnt] = storage.Storage.initialDict(
+                self[mntpnt] = storage.Storage.initial_dict(
                     {"_type": "filesystem", "_origin": "etc/vfstab"}
                 )
             flsys = self[mntpnt]
@@ -450,7 +450,7 @@ class storageFilesystems(explorerbase.ExplorerBase):
         for cfs in self["clusterfs"]:
             if cfs not in self:
                 self.debug(f"Thinking about adding cluster fs={cfs}")
-                # self[cfs]=storage.Storage.initialDict({'_type': 'filesystem', 'usepoint':'', 'cluster':True})
+                # self[cfs]=storage.Storage.initial_dict({'_type': 'filesystem', 'usepoint':'', 'cluster':True})
             else:
                 self[cfs]["cluster"] = True
         for flsys in self.fs_list():

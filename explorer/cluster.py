@@ -42,8 +42,8 @@ class Cluster(explorerbase.ExplorerBase):
         filename = "sysconfig/modinfo.out"
         if not self.exists(filename):
             return False
-        f = self.open(filename)
-        for line in f:
+        infh = self.open(filename)
+        for line in infh:
             if "GAB device" in line:
                 found = True
         return found
@@ -74,19 +74,19 @@ class Cluster(explorerbase.ExplorerBase):
         """Clusters mount filesystems from the cluster management as shared
         resources, not from vfstab
         """
-        f = self.open("cluster/config/scrgadm-pvv.out")
-        for line in f:
+        infh = self.open("cluster/config/scrgadm-pvv.out")
+        for line in infh:
             if "FilesystemMountPoints" in line and "property value" in line:
                 fslist = set(line.strip().split(":")[-1].split())
                 fslist.discard("<NULL>")
                 self["clusterfs"].update(fslist)
-        f.close()
+        infh.close()
 
     ##########################################################################
     def parse_infrastructure(self):
         """TODO"""
-        f = self.open("cluster/etc/cluster/ccr/infrastructure")
-        for line in f:
+        infh = self.open("cluster/etc/cluster/ccr/infrastructure")
+        for line in infh:
             if line.startswith("cluster.name"):
                 self["name"] = line.split()[-1]
 
@@ -101,19 +101,19 @@ class Cluster(explorerbase.ExplorerBase):
             )
             if matchobj:
                 self["quorum"] = matchobj.group("gdevname")
-        f.close()
+        infh.close()
 
     ##########################################################################
     def parse_ccd(self):
         """TODO"""
-        f = self.open("cluster/etc/opt/SUNWcluster/conf/ccd.database")
-        for line in f:
+        infh = self.open("cluster/etc/opt/SUNWcluster/conf/ccd.database")
+        for line in infh:
             if line.startswith("LOGHOST:"):
                 bits = line.split(":")
                 self["nodes"] = [
                     node for node in bits[2].split(",") if node != self.hostname
                 ]
-        f.close()
+        infh.close()
 
 
 # EOF

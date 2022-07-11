@@ -15,8 +15,6 @@ import sys
 from explorer import issue
 from explorer import reporter
 
-debugFlag = False
-
 
 ##########################################################################
 # ExplorerBase ###########################################################
@@ -38,7 +36,7 @@ class ExplorerBase:
     def analyse(self):
         """TODO"""
         if self.__class__.__name__ != "Explorer":
-            self.fatal("Class %s needs an analyse() method" % (self.__class__.__name__))
+            self.fatal(f"Class {self.__class__.__name__} needs an analyse() method")
 
     ##########################################################################
     def glob(self, globexpr):
@@ -57,15 +55,15 @@ class ExplorerBase:
         return pprint.pformat(self.data)
 
     ##########################################################################
-    def describer(self, filesys, data):
+    def describer(self, obj, data):
         """Calculate the description of a filesystem object
         based on what it contains"""
         from explorer import storage
 
         tmp = []
-        for obj in data[filesys]["contains"]:
-            if "partof" in data[obj]:
-                tmp.append((len(data[obj]["partof"]), obj))
+        for thing in data[obj]["contains"]:
+            if "partof" in data[thing]:
+                tmp.append((len(data[thing]["partof"]), thing))
         tmp.sort()
         desc = ""
         oldv = -1
@@ -82,9 +80,9 @@ class ExplorerBase:
                 # So strip out the slices as well
                 ostr = " ("
                 if data[o]["_type"] != "slice":
-                    for obj in olist:
-                        if data[obj]["_type"] != "slice":
-                            ostr += "%s," % obj
+                    for thing in olist:
+                        if data[thing]["_type"] != "slice":
+                            ostr += "%s," % thing
                     ostr = ostr[:-1]
                     ostr += ") "
                 else:
@@ -243,7 +241,7 @@ class ExplorerBase:
         self.issues.append(i)
 
     ##########################################################################
-    def addConcern(self, *args, **kwargs):
+    def add_concern(self, *args, **kwargs):
         """TODO"""
         kwargs["typ"] = "concern"
         if "category" not in kwargs:
@@ -254,7 +252,7 @@ class ExplorerBase:
         self.issues.append(i)
 
     ##########################################################################
-    def parseLinux_fdisk(self, func):
+    def parse_linux_fdisk(self, func):
         """This lives here because it is called in multiple places"""
         fdisklist = self.glob("sos_commands/filesys/fdisk*")
         for fdiskfile in fdisklist:
@@ -310,10 +308,9 @@ class ExplorerBase:
     ##########################################################################
     def debug(self, msg):
         """TODO"""
-        if debugFlag:
-            sys.stderr.write(
-                f"Debug {self.hostname}:{self.__class__.__name__}: {msg}\n"
-            )
+        sys.stderr.write(
+            f"Debug {self.hostname}:{self.__class__.__name__}: {msg}\n"
+        )
 
     ##########################################################################
     def fatal(self, msg):
@@ -364,7 +361,7 @@ class ExplorerBase:
             return kbytes
 
     ##########################################################################
-    def stripQuotes(self, strn):
+    def strip_quotes(self, strn):
         """Strip outside quotes no matter which type"""
         for _ in range(2):  # Occassionally lots of nested quotes
             if strn.startswith('"') and strn.endswith('"'):
@@ -380,24 +377,24 @@ class ExplorerBase:
         """
         try:
             bits = line.strip().split(":")
-            a = self.stripQuotes(bits[0].strip())
-            b = self.stripQuotes(bits[1].strip())
+            a = self.strip_quotes(bits[0].strip())
+            b = self.strip_quotes(bits[1].strip())
         except IndexError:
-            self.fatal("dequoteKV issue: line=%s" % line)
+            self.fatal(f"dequoteKV issue: line={line}")
         return a, b
 
     ##########################################################################
-    def parseLinux_hardwarepy(self, proc):
+    def parse_linux_hardwarepy(self, proc):
         """TODO"""
         if self.exists("hardware.py"):
-            f = self.open("hardware.py")
+            infh = self.open("hardware.py")
         elif self.exists("etc/sysconfig/hwconf"):
-            f = self.open("etc/sysconfig/hwconf")
+            infh = self.open("etc/sysconfig/hwconf")
         else:
             return
         buff = {}
         class_ = None
-        for line in f:
+        for line in infh:
             line = line.strip()
             if "hardware.py" in line or "Reading DMI info" in line:
                 continue
@@ -411,7 +408,7 @@ class ExplorerBase:
             if key == "class":
                 class_ = val
             buff[key] = val
-        f.close()
+        infh.close()
         if buff:
             proc(buff, class_)
 

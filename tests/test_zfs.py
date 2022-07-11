@@ -6,7 +6,7 @@ from explorer.zfs import storageZfs
 
 
 ##############################################################################
-class test_solaris_zfs(unittest.TestCase):
+class TestSolarisZfs(unittest.TestCase):
     """ test zfs class """
     def test_zfs(self):
         """ Test solaris zfs """
@@ -14,7 +14,7 @@ class test_solaris_zfs(unittest.TestCase):
                 "explorertype": "solaris",
                 "hostname": "testhost",
                 "datadir": "test_data",
-                "hostpath": "test_host",
+                "hostpath": "solaris_host",
                 }
         zfs = storageZfs(config, {})
         self.assertEqual(zfs['rpool/ROOT']['properties']['encryption'], 'off')

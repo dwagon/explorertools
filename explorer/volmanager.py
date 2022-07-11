@@ -288,8 +288,8 @@ class storageVolmanager(explorerbase.ExplorerBase):
         pass
 
     ##########################################################################
-    def crossPopulateMetadbs(self, data):
-        # Set the use of metadbs
+    def cross_populate_metadbs(self, data):
+        """ Set the use of metadbs"""
         if "metadb" not in self:
             return
         devcounts = {}
@@ -304,7 +304,7 @@ class storageVolmanager(explorerbase.ExplorerBase):
             data[dev]["name"] = "MetaDB (%d copies)" % count
 
     ##########################################################################
-    def crossPopulateDid(self, data):
+    def cross_populate_did(self, data):
         """Tell the disks which did they belong to if they do"""
         if "_didmap" not in self:
             return
@@ -313,12 +313,12 @@ class storageVolmanager(explorerbase.ExplorerBase):
                 if disk in data:
                     data[disk]["did"] = did
                 else:
-                    self.warning("DID %s disk %s doesn't exist" % (did, disk))
+                    self.warning(f"DID {did} disk {disk} doesn't exist")
 
     ##########################################################################
     def cross_populate(self, data):
-        self.crossPopulateDid(data)
-        self.crossPopulateMetadbs(data)
+        self.cross_populate_did(data)
+        self.cross_populate_metadbs(data)
 
         # Match metadev/metadbs to their disks
         # data['c0t0d0s0']['partof']='d10'
@@ -335,7 +335,7 @@ class storageVolmanager(explorerbase.ExplorerBase):
                     data[baseslice]["partof"].add(k)
                     continue
                 self.warning("Unmatched meta location %s" % slice)
-                data[slice] = storage.Storage.initialDict(
+                data[slice] = storage.Storage.initial_dict(
                     {
                         "_type": "missing",
                         "missedby": k,
@@ -413,7 +413,7 @@ class storageVolmanager(explorerbase.ExplorerBase):
                             "Diskset %s %s lives on unknown disk %s"
                             % (obj["diskset"], obj["_type"], dev)
                         )
-                        data[dev] = storage.Storage.initialDict(
+                        data[dev] = storage.Storage.initial_dict(
                             {
                                 "_type": "missing",
                                 "missedby": "diskset %s %s %s"
@@ -462,7 +462,7 @@ class storageVolmanager(explorerbase.ExplorerBase):
             path = path.split(":")[-1]  # Take off hostname
             name = fullname.replace("/dev/did/rdsk/", "")
             if name not in self:
-                self["did/%s" % name] = storage.Storage.initialDict(
+                self["did/%s" % name] = storage.Storage.initial_dict(
                     {
                         "_type": "did_disk",
                         "_origin": filename,
@@ -483,7 +483,7 @@ class storageVolmanager(explorerbase.ExplorerBase):
         for did in self["_didmap"]:
             for slice in [0, 2]:
                 didslice = "did/%ss%d" % (did, slice)
-                self[didslice] = storage.Storage.initialDict(
+                self[didslice] = storage.Storage.initial_dict(
                     {
                         "_type": "did_slice",
                         "_origin": filename,
@@ -518,7 +518,7 @@ class storageVolmanager(explorerbase.ExplorerBase):
                 bits = line.split()
                 metadev = bits[0]
                 if metadev not in self:
-                    self[metadev] = storage.Storage.initialDict(
+                    self[metadev] = storage.Storage.initial_dict(
                         {"_type": "metadev", "_origin": "mdstat"}
                     )
                 # A colon is bits[1]
@@ -599,7 +599,7 @@ class storageVolmanager(explorerbase.ExplorerBase):
                 vl = lv[1:-1]  # Strip []
                 if vl in volabels:
                     lv = volabels[vl]
-                    self[vl] = storage.Storage.initialDict(
+                    self[vl] = storage.Storage.initial_dict(
                         {
                             "_type": "logvol",
                             "description": "LVM Volume Label",
@@ -613,7 +613,7 @@ class storageVolmanager(explorerbase.ExplorerBase):
                             if vl in ln:
                                 lv = ln.split()[0]
                                 break
-                        self[vl] = storage.Storage.initialDict(
+                        self[vl] = storage.Storage.initial_dict(
                             {
                                 "_type": "logvol",
                                 "description": "LVM Mirror Log Volume",
@@ -622,7 +622,7 @@ class storageVolmanager(explorerbase.ExplorerBase):
                         )
                 self[vl]["partof"].add(vg)
             elif lvlabel not in self:
-                self[lvlabel] = storage.Storage.initialDict(
+                self[lvlabel] = storage.Storage.initial_dict(
                     {
                         "_type": "logvol",
                         "description": "LVM Logical Volume",
@@ -640,7 +640,7 @@ class storageVolmanager(explorerbase.ExplorerBase):
             self[lvlabel]["contains"].add(vglabel)
             self[lvlabel]["aliases"] = set(["%s-%s" % (vg, lv)])
             if vglabel not in self:
-                self[vglabel] = storage.Storage.initialDict(
+                self[vglabel] = storage.Storage.initial_dict(
                     {
                         "_type": "volgroup",
                         "description": "LVM Volume Group",
@@ -683,7 +683,7 @@ class storageVolmanager(explorerbase.ExplorerBase):
     ##########################################################################
     def parseAllMetaDb(self):
         self.metadbcopy = 0
-        self["metadb"] = storage.Storage.initialDict(
+        self["metadb"] = storage.Storage.initial_dict(
             {
                 "_type": "metadb",
                 "copies": set(),
@@ -824,7 +824,7 @@ class storageVolmanager(explorerbase.ExplorerBase):
         copyname = "metadb_%d" % self.metadbcopy
         self.metadbcopy += 1
 
-        self[copyname] = storage.Storage.initialDict(
+        self[copyname] = storage.Storage.initial_dict(
             {
                 "_type": "metadb_copy",
                 "type": "metadb",
@@ -969,7 +969,7 @@ class storageVolmanager(explorerbase.ExplorerBase):
                 oper = bits[1]
             except IndexError:  # Occassionally weird stuff exists
                 continue
-            self[metadevname] = storage.Storage.initialDict(
+            self[metadevname] = storage.Storage.initial_dict(
                 {"_type": "disksuite", "_origin": filename}
             )
             metadev = self[metadevname]

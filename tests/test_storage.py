@@ -2,13 +2,13 @@
 """ Test Storage code"""
 
 import unittest
-from explorer.swap import storageSwap
+from explorer.storage import Storage
 
 
 ##############################################################################
-class TestSolarisSwap(unittest.TestCase):
+class TestSolarisStorage(unittest.TestCase):
     """ test storage class """
-    def test_swap(self):
+    def test_storage(self):
         """ Test solaris storage """
         config = {
                 "explorertype": "solaris",
@@ -16,9 +16,11 @@ class TestSolarisSwap(unittest.TestCase):
                 "datadir": "test_data",
                 "hostpath": "solaris_host",
                 }
-        swap = storageSwap(config)
-        self.assertEqual(swap['swap_devices'], {'swap_0', 'swap_1'})
-        self.assertEqual(swap['_swap']['contains'], {'swap_0', 'swap_1'})
+        stor = Storage(config)
+        stor.prettyPrint()
+        self.assertEqual(
+                stor, ''
+        )
 
 
 ##############################################################################

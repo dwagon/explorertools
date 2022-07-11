@@ -6,7 +6,7 @@ from explorer.disks import storageDisks
 
 
 ##############################################################################
-class test_solaris_storage(unittest.TestCase):
+class TestSolarisDisks(unittest.TestCase):
     """ test storage class """
     def test_storage(self):
         """ Test solaris storage """
@@ -14,7 +14,7 @@ class test_solaris_storage(unittest.TestCase):
                 "explorertype": "solaris",
                 "hostname": "testhost",
                 "datadir": "test_data",
-                "hostpath": "test_host",
+                "hostpath": "solaris_host",
                 }
         stor = storageDisks(config)
         self.assertEqual(stor['c1d0s0']['disk'], 'c1d0')

@@ -109,7 +109,7 @@ class storageZfs(explorerbase.ExplorerBase):
                 self[pool]["properties"][bits[1]] = bits[2]
             else:
                 if subpool not in self:
-                    self[subpool] = storage.Storage.initialDict(
+                    self[subpool] = storage.Storage.initial_dict(
                         {
                             "_type": "zfs_subpool",
                             "description": "ZFS SubPool",
@@ -179,7 +179,7 @@ class storageZfs(explorerbase.ExplorerBase):
         infh.close()
 
     ##########################################################################
-    def crossPopulatePool(self, pool, data):
+    def cross_populate_pools(self, pool, data):
         """TODO"""
         self.parse_zpool()
         # For every mount point in the pool, tell the mount point about it
@@ -241,7 +241,7 @@ class storageZfs(explorerbase.ExplorerBase):
         if "zfspools" not in data:  # No ZFS here
             return
         for pool in self.pool_list():
-            self.crossPopulatePool(pool, data)
+            self.cross_populate_pools(pool, data)
             self.check_sub_pools(pool, data)
 
     ##########################################################################
@@ -260,7 +260,7 @@ class storageZfs(explorerbase.ExplorerBase):
             bits = line.split()
             poolname = bits[0]
             self["zfspools"].add(poolname)
-            pool = storage.Storage.initialDict(
+            pool = storage.Storage.initial_dict(
                 {"_type": "zfs_pool", "description": "ZFS Pool", "_origin": filename}
             )
             pool["size"] = bits[1]

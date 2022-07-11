@@ -1,12 +1,11 @@
 #!/usr/bin/env python3
-#
-# Python library to provide a consistent mapping of hardware names
-# There are millions of different ways of referring to the same hardware
-# This function provides a simplistic map of all those ways of calling hardware
-#
-# Written by Dougal Scott <ddougal.scott@gmail.com>
-# $Id: hardware.py 4580 2013-03-12 02:45:53Z dougals $
-# $HeadURL: http://svn/ops/unix/explorer/trunk/explorer/hardware.py $
+"""
+Python library to provide a consistent mapping of hardware names
+There are millions of different ways of referring to the same hardware
+This function provides a simplistic map of all those ways of calling hardware
+"""
+# pylint: disable=too-many-lines
+# Written by Dougal Scott <dougal.scott@gmail.com>
 
 import sys
 
@@ -884,6 +883,7 @@ hwmap = {
     ],
     "sun_t4_1": ["oracle corporation  sun4v sparc t4-1", "t4-1"],
     "sun_t4_4": ["oracle corporation  sun4v sparc t4-4", "t4-4"],
+    "sun_t8_2": ["oracle corporation  sun4v sparc t8-2", "t8-2"],
     "sun_t5220": [
         "sunfire t5220",
         "sparc-enterprise-t5220",
@@ -1638,34 +1638,29 @@ hwmap = {
     ],
 }
 
+
 ##########################################################################
-
-
 class UnknownHardware(Exception):
-    pass
+    """ TODO """
 
 
 ##########################################################################
-
-
-def getHardware(hwdesc):
+def get_hardware(hwdesc):
     """Return the type of hardware (server, tape, storage, etc) and the
     generic hardware name
     """
-    if type(hwdesc) == type(""):
-        hwdesc = hwdesc.encode("latin-1")
-    if type(hwdesc) != type(""):
-        sys.stderr.write("Bad hardware: '%s'\n" % str(hwdesc))
-        raise UnknownHardware("Bad hardware specification: %s" % type(hwdesc))
+    if not isinstance(hwdesc, str):
+        sys.stderr.write(f"Bad hardware: '{str(hwdesc)}'\n")
+        raise UnknownHardware(f"Bad hardware specification: {type(hwdesc)}")
     hwdesc = hwdesc.lower().strip()
-    for k in hwmap:
-        if hwdesc == k or hwdesc in hwmap[k] or hwdesc.replace("_", " ") in hwmap[k]:
-            if type(k) == type((0,)):
-                hwtype = k[1]
-                hwname = k[0]
+    for name, variants in hwmap.items():
+        if hwdesc == name or hwdesc in variants or hwdesc.replace("_", " ") in variants:
+            if isinstance(name, tuple):
+                hwtype = name[1]
+                hwname = name[0]
             else:
                 hwtype = "server"
-                hwname = k
+                hwname = name
             return hwtype, hwname
 
     raise UnknownHardware(hwdesc)
@@ -1673,12 +1668,12 @@ def getHardware(hwdesc):
 
 ##########################################################################
 if __name__ == "__main__":
-    hwdesc = " ".join(sys.argv[1:])
+    HWDESC = " ".join(sys.argv[1:])
     try:
-        t, n = getHardware(hwdesc)
+        typ, nam = get_hardware(HWDESC)
     except UnknownHardware:
-        print("No idea what '%s' is" % hwdesc)
+        print(f"No idea what '{HWDESC}' is")
     else:
-        print("%s, %s" % (t, n))
+        print(f"{typ}, {nam}")
 
 # EOF

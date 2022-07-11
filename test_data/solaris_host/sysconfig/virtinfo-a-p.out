@@ -1,0 +1,6 @@
+VERSION 1.0
+DOMAINROLE|impl=LDoms|control=false|io=false|service=false|root=false
+DOMAINNAME|name=0004fb0000060000a8f2b17b5ce40c86
+DOMAINUUID|uuid=0004fb00-0006-0000-a8f2-b17b5ce40c86
+DOMAINCONTROL|name=vhcvhaup004
+DOMAINCHASSIS|serialno=1818NN82ND

@@ -6,24 +6,22 @@ from explorer.nic import Nics
 
 
 ##############################################################################
-class Test_nics(unittest.TestCase):
-    """ test Nics class """
+class TestNics(unittest.TestCase):
+    """test Nics class"""
+
     def test_parse_solaris_ifconfig(self):
-        """ Test parse_solaris_ifconfig """
+        """Test parse_solaris_ifconfig"""
         config = {
-                "explorertype": "solaris",
-                "hostname": "testhost",
-                "datadir": "test_data",
-                "hostpath": "test_host",
-                }
+            "explorertype": "solaris",
+            "hostname": "testhost",
+            "datadir": "test_data",
+            "hostpath": "solaris_host",
+        }
         nics = Nics(config)
+        nics.prettyPrint()
+        self.assertEqual(nics.data["lo0"].data["interfaces"]["lo0"]["mtu"], "8252")
         self.assertEqual(
-            nics.data['vsw0'].data['interfaces']['vsw0']['ether'],
-            '0:14:4f:fb:4c:82'
-        )
-        self.assertEqual(
-            nics.data['aggr1'].data['interfaces']['aggr1']['ipaddr'],
-            '10.64.51.12'
+            nics.data["net0"].data["interfaces"]["net0"]["ether"], "0:21:f6:79:89:aa"
         )
 
 

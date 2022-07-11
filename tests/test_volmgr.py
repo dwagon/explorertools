@@ -6,7 +6,7 @@ from explorer.volmanager import storageVolmanager
 
 
 ##############################################################################
-class test_solaris_storage(unittest.TestCase):
+class TestSolarisStorage(unittest.TestCase):
     """ test storage class """
     def test_storage(self):
         """ Test solaris storage """
@@ -14,7 +14,7 @@ class test_solaris_storage(unittest.TestCase):
                 "explorertype": "solaris",
                 "hostname": "testhost",
                 "datadir": "test_data",
-                "hostpath": "test_host",
+                "hostpath": "solaris_host",
                 }
         stor = storageVolmanager(config)
         self.assertEqual(stor['d10']['_type'], 'disksuite')

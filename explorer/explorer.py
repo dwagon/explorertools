@@ -4,9 +4,7 @@ Class to make reading explorers easier
 This should encapulate all of the other explorer details
 """
 
-# Written by Dougal Scott <dwagon@pobox.com>
-# $Id: explorer.py 2393 2012-06-01 06:38:17Z dougals $
-# $HeadURL: http://svn/ops/unix/explorer/trunk/explorer/explorer.py $
+# Written by Dougal Scott <dougal.scott@gmail.com>
 
 import getopt
 import glob
@@ -73,11 +71,13 @@ class Explorer:
         self.rootpath = OPTIONS["datadir"]
         self.hostname = self.get_hostname(hostpath)
         self.hostpath = hostpath
-        self.picklepath = os.path.join(self.hostpath, ".pickle")
+        self.collectiondate = None
+        self.collectiontime = None
+        picklepath = os.path.join(self.hostpath, ".pickle")
         self.config = {
             "hostname": self.hostname,
             "hostpath": hostpath,
-            "picklepath": self.picklepath,
+            "picklepath": picklepath,
             "explorertype": self.explorertype,
             "datadir": OPTIONS["datadir"],
         }
@@ -147,7 +147,7 @@ class Explorer:
     def save_pickle(self):
         """TODO"""
         try:
-            with open(self.picklepath, "wb") as outfh:
+            with open(self.config['picklepath'], "wb") as outfh:
                 blob = (self.data, self.issues, self.parts)
                 pickle.dump(blob, outfh)
         except IOError:
@@ -156,10 +156,10 @@ class Explorer:
     ##########################################################################
     def load_pickle(self):
         """TODO"""
-        if not os.path.exists(self.picklepath):
+        if not os.path.exists(self.config['picklepath']):
             return False
         try:
-            with open(self.picklepath) as infh:
+            with open(self.config['picklepath'], encoding="utf-8") as infh:
                 blob = pickle.load(infh)
                 (self.data, self.issues, self.parts) = blob
         except Exception as err:
@@ -192,7 +192,7 @@ class Explorer:
                 self.issues.extend(self.data[type_].issues)
 
     ##########################################################################
-    def getCollectionDate(self):
+    def get_collection_date(self):
         """TODO"""
         matchobj = re.match(self.reg, os.path.basename(self.hostpath))
         if matchobj:
@@ -275,7 +275,7 @@ def all_explorers(reg=""):
     Only return the latest explorer per host
     """
     hostlist = {}
-    globstr = os.path.join(OPTIONS["datadir"], "*%s*" % reg)
+    globstr = os.path.join(OPTIONS["datadir"], f"*{reg}*")
     files = [
         f.replace("%s/" % OPTIONS["datadir"], "")
         for f in glob.glob(globstr)
@@ -283,7 +283,7 @@ def all_explorers(reg=""):
     ]
     for fname in files:
         fullfile = os.path.join(OPTIONS["datadir"], fname)
-        for reg, ostype in explorereg:
+        for reg, _ in explorereg:
             matchobj = re.match(reg, fname)
             if matchobj:
                 break

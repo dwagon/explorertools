@@ -1,0 +1,106 @@
+--------------- ------------------------------------  -------------- ---------
+TIME            EVENT-ID                              MSG-ID         SEVERITY
+--------------- ------------------------------------  -------------- ---------
+Apr 11 14:57:39 09ae5910-6aab-48a4-be1f-f7e67548ad4d  COREDIAG-8000-1V Major    
+
+Problem Status            : open
+Diag Engine               : software-diagnosis / 0.2
+System
+    Manufacturer          : unknown
+    Name                  : SPARC-T8-2
+    Part_Number           : unknown
+    Serial_Number         : unknown
+
+System Component
+    Firmware_Manufacturer : unknown
+    Firmware_Version      : unknown
+    Firmware_Release      : unknown
+    Host_ID               : 5ce40c86
+    Server_Name           : unibis
+    Virtualization_Type   : logical-domain
+    Virtualization_Roles  : none
+    Parent_Type           : logical-domain
+    OS_Version            : 11.4.35.94.4
+    OS_Architecture       : sparc
+    OS_Platform           : sun4v
+
+----------------------------------------
+Suspect 1 of 1 :
+   Problem class : alert.oracle.solaris.utility.corediag.dump_available
+   Certainty   : 100%
+
+   Resource
+     FMRI             : "sw:///:path=/usr/bin/sh#:token=af2694d41b194ff59ae41c36e43121584e09ec1163d0dfb9f2465ff4c9af68b9"
+     Status           : Active
+
+Description : A diagnostic core file was dumped in
+              /var/diag/3eb4a3f0-655d-4e8a-b84b-c99390813d58 for RESOURCE
+              /usr/bin/sh whose ASRU is . The ASRU is the Service FMRI for the
+              resource and will be NULL if the resource is not part of a
+              service. The following are potential bugs.
+              stack[0] - 18046990 18478504 26773587 
+              stackdb diagnostic database is out of date,
+              please update it by running
+              	# pkg update diagnostic/stackdb
+
+Response    : The diagnostic core file may be removed depending on policy set
+              in coreadm(8) and a summary file will be generated in
+              /var/diag/3eb4a3f0-655d-4e8a-b84b-c99390813d58.
+
+Impact      : The program may not be working properly.
+
+Action      : Please refer to the associated reference document at
+              http://support.oracle.com/msg/COREDIAG-8000-1V for the latest
+              service procedures and policies regarding this diagnosis.
+
+--------------- ------------------------------------  -------------- ---------
+TIME            EVENT-ID                              MSG-ID         SEVERITY
+--------------- ------------------------------------  -------------- ---------
+Apr 10 05:40:22 ab6aad12-b541-4100-9f1f-9f1dd9c99e14  SMF-8000-YX    Major    
+
+Problem Status            : isolated
+Diag Engine               : software-diagnosis / 0.2
+System
+    Manufacturer          : unknown
+    Name                  : SPARC-T8-2
+    Part_Number           : unknown
+    Serial_Number         : unknown
+
+System Component
+    Firmware_Manufacturer : unknown
+    Firmware_Version      : unknown
+    Firmware_Release      : unknown
+    Host_ID               : 5ce40c86
+    Server_Name           : unibis
+    Virtualization_Type   : logical-domain
+    Virtualization_Roles  : none
+    Parent_Type           : logical-domain
+    OS_Version            : 11.4.35.94.4
+    OS_Architecture       : sparc
+    OS_Platform           : sun4v
+
+----------------------------------------
+Suspect 1 of 1 :
+   Problem class : defect.sunos.smf.svc.maintenance
+   Certainty   : 100%
+   Affects     : svc:///application/pkg/server:default
+   Status      : faulted and taken out of service
+
+   Resource
+     FMRI             : "svc:///application/pkg/server:default"
+     Status           : faulted and taken out of service
+
+Description : Service svc:/application/pkg/server:default failed - a method is
+              failing in a retryable manner but too often.
+
+Response    : The service has been placed into the maintenance state.
+
+Impact      : svc:/application/pkg/server:default is unavailable.
+
+Action      : Run 'svcs -xv svc:/application/pkg/server:default' to determine
+              the generic reason why the service failed, the location of any
+              logfiles, and a list of other services impacted. Please refer to
+              the associated reference document at
+              http://support.oracle.com/msg/SMF-8000-YX for the latest service
+              procedures and policies regarding this diagnosis.
+
