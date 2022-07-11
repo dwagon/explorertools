@@ -1,0 +1,1622 @@
+System Configuration:  Oracle Corporation  sun4v
+Memory size: 49152 Megabytes
+System Peripherals (Software Nodes):
+
+ORCL,SPARC-T8-2 (driver name: rootnex)
+    Device Hold:
+        mod='genunix' id=1
+            value='root nexus.'
+        mod='devinfo' id=205
+            value='Device snapshot.'
+    Driver properties:
+        name='fm-ereport-capable' type=boolean dev=none
+        name='fm-errcb-capable' type=boolean dev=none
+        name='pm-hardware-state' type=string items=1 dev=none
+            value='no-suspend-resume'
+    System properties:
+        name='MMU_PAGEOFFSET' type=int items=1
+            value=00001fff
+        name='MMU_PAGESIZE' type=int items=1
+            value=00002000
+        name='PAGESIZE' type=int items=1
+            value=00002000
+        name='archfs' type=int items=1
+            value=fed759c8
+        name='archive-fstype' type=string items=1
+            value='hsfs'
+        name='bootarchive' type=string items=1
+            value='/ramdisk-root'
+        name='bootargs' type=string items=1
+            value=''
+        name='bootfs' type=int items=1
+            value=fefa9ed0
+        name='bootpath' type=string items=1
+            value='/virtual-devices@100/channel-devices@200/disk@0'
+        name='elfheader-address' type=int items=1
+            value=50000000
+        name='elfheader-length' type=int items=1
+            value=00394000
+        name='fm-capable' type=int items=1
+            value=00000009
+        name='fs-package' type=string items=1
+            value='hsfs-file-system'
+        name='impl-arch-name' type=string items=1
+            value='sun4v'
+        name='memory' type=int items=1
+            value=fff04d48
+        name='mmu' type=int items=1
+            value=fff04b38
+        name='openboot-reserved' type=string items=3
+            value='@' + '' + ''
+        name='relative-addressing' type=int items=1
+            value=00000001
+        name='root-be-uuid' type=string items=1
+            value='e2c1209f-1b9a-4e05-9651-7661f87c0cd3'
+        name='root-uuid-chk' type=string items=1
+            value='1'
+        name='stdin' type=int items=1
+            value=fef15c70
+        name='stdout' type=int items=1
+            value=fef156c0
+        name='stdout-#lines' type=int items=1
+            value=ffffffff
+        name='whoami' type=string items=1
+            value='/platform/sun4v/kernel/sparcv9/unix'
+        name='zfs-bootfs' type=string items=1
+            value='rpool/370'
+    Hardware properties:
+        name='compatible' type=string items=4
+            value='chassis,Sun-Microsystems.SPARC-T8-2.unknown.unknown' + 'chassis,Sun-Microsystems.SPARC-T8-2' + 'chassis.SPARC-T8-2' + 'sun4v'
+    scsi_vhci, instance #0 (driver name: scsi_vhci)
+        Device Hold:
+            mod='genunix' id=1
+                value='Internal kernel hold.'
+            mod='devfs' id=8
+                value='Device lookup.'
+        Driver properties:
+            name='fm-ereport-capable' type=boolean dev=none
+            name='pm-want-child-notification?' type=boolean dev=none
+        System properties:
+            name='class' type=string items=1
+                value='root'
+            name='afp-options' type=string items=1
+                value='load-balance=shortest-path,logical-block'
+            name='auto-failback' type=string items=1
+                value='enable'
+            name='ddi-child-instance-transient' type=string items=1
+                value='yes'
+            name='ddi-forceload' type=string items=7
+                value='misc/scsi_vhci/scsi_vhci_f_asym_sun' + 'misc/scsi_vhci/scsi_vhci_f_asym_lsi' + 'misc/scsi_vhci/scsi_vhci_f_asym_emc' + 'misc/scsi_vhci/scsi_vhci_f_sym_emc' + 'misc/scsi_vhci/scsi_vhci_f_sym_hds' + 'misc/scsi_vhci/scsi_vhci_f_sym' + 'misc/scsi_vhci/scsi_vhci_f_tpgs'
+            name='device-type-mpxio-options-list' type=string items=28
+                value='device-type=HGST    HSCAC2DA2SUN1.6T' + 'load-balance-options=afp-options' + 'device-type=HGST    HSCAC2DA4SUN400G' + 'load-balance-options=afp-options' + 'device-type=HGST    HBCAC2DH4SUN800G' + 'load-balance-options=afp-options' + 'device-type=HGST    HBCAC2DH2SUN3.2T' + 'load-balance-options=afp-options' + 'device-type=HGST    HBSAC2DH2SUN3.2T' + 'load-balance-options=afp-options' + 'device-type=SAMSUNG MS9AC2DD2SUN7.6T' + 'load-balance-options=afp-options' + 'device-type=SAMSUNG MS9AC2DD6SUN200G' + 'load-balance-options=log-options' + 'device-type=WDC     HPCAC2DH2ORA7.6T' + 'load-balance-options=afp-options' + 'device-type=WDC     HPSAC2DH2ORA7.6T' + 'load-balance-options=afp-options' + 'device-type=HGST    HBCAC2DH6SUN200G' + 'load-balance-options=log-options' + 'device-type=HGST    HBSAC2DH6SUN200G' + 'load-balance-options=log-options' + 'device-type=HGST    HSCAC2DA6SUN200G' + 'load-balance-options=log-options' + 'device-type=WDC     HPCAC2DH6ORA200G' + 'load-balance-options=log-options' + 'device-type=WDC     HPSAC2DH6ORA200G' + 'load-balance-options=log-options'
+            name='iport-rlentime-snapshot-interval' type=int items=1
+                value=0000001e
+            name='load-balance' type=string items=1
+                value='round-robin'
+            name='load-balance-sas' type=string items=1
+                value='shortest-path,same-path'
+            name='log-options' type=string items=1
+                value='load-balance=shortest-path,round-robin'
+            name='scsi-vhci-reset-broadcast' type=string items=1
+                value='no'
+            name='scsi-vhci-reset-broadcast-sas' type=string items=1
+                value='yes'
+            name='scsi-vhci-update-pathstate-on-reset' type=string items=4
+                value='Pillar  Axiom' + 'yes' + 'Oracle  Oracle FS' + 'yes'
+            name='spread-iport-reservation' type=string items=1
+                value='no'
+        Hardware properties:
+            name='initiator-interconnect-type' type=string items=1
+                value='MPXIO'
+            name='scsi-command-timeout-threshold' type=int items=1
+                value=ffffffff
+            name='scsi-enumeration' type=int items=1
+                value=00000000
+            name='scsi-fence-timeout' type=int items=1
+                value=0000012c
+            name='scsi-initiator-id' type=int items=1
+                value=00000007
+            name='scsi-options' type=int items=1
+                value=00107ff8
+            name='scsi-poll-timeout' type=int items=1
+                value=0000000a
+            name='scsi-reset-delay' type=int items=1
+                value=00000bb8
+            name='scsi-selection-timeout' type=int items=1
+                value=000000fa
+            name='scsi-tag-age-limit' type=int items=1
+                value=00000002
+            name='scsi-transport-timeout' type=int items=1
+                value=0000003c
+            name='scsi-watchdog-tick' type=int items=1
+                value=0000000a
+            name='vhci-enable-iophci-kstats' type=int items=1
+                value=00000000
+        Device Minor Nodes:
+            dev=(169,0)
+                dev_path=/scsi_vhci:devctl
+                    spectype=chr type=minor nodetype=ddi_ctl:devctl:scsi
+    packages
+        SUNW,builtin-drivers
+        pci-prober
+        deblocker
+        disk-label
+        terminal-emulator
+        dropins
+        SUNW,asr
+        kbd-translator
+        obp-tftp
+        vdisk-helper-pkg
+        vnet-helper-pkg
+        zfs-file-system
+        hsfs-file-system
+    chosen
+    openprom
+        client-services
+    options, instance #0 (driver name: options)
+        Device Hold:
+            mod='genunix' id=1
+                value='Internal kernel hold.'
+            mod='devfs' id=8
+                value='Device lookup.'
+        System properties:
+            name='class' type=string items=1
+                value='root'
+            name='ttymodes' type=byte items=36
+                value=00.00.25.02.00.00.18.05.00.00.00.bd.00.00.8a.3b.03.1c.7f.15.04.00.00.00.11.13.1a.19.12.0f.17.16.00.00.00.00
+    aliases
+    memory
+    virtual-memory
+    iscsi-hba
+        Hardware properties:
+            name='compatible' type=string items=1
+                value='SUNW,iscsi-hba'
+        disk (driver name: sd)
+            Hardware properties:
+                name='compatible' type=string items=1
+                    value='sd'
+    reboot-memory
+    cpu
+        Hardware properties:
+            name='compatible' type=string items=4
+                value='SPARC-M8' + 'SPARC-3e50' + 'SUNW,sun4v-cpu' + 'sun4v'
+    cpu
+        Hardware properties:
+            name='compatible' type=string items=4
+                value='SPARC-M8' + 'SPARC-3e50' + 'SUNW,sun4v-cpu' + 'sun4v'
+    cpu
+        Hardware properties:
+            name='compatible' type=string items=4
+                value='SPARC-M8' + 'SPARC-3e50' + 'SUNW,sun4v-cpu' + 'sun4v'
+    cpu
+        Hardware properties:
+            name='compatible' type=string items=4
+                value='SPARC-M8' + 'SPARC-3e50' + 'SUNW,sun4v-cpu' + 'sun4v'
+    cpu
+        Hardware properties:
+            name='compatible' type=string items=4
+                value='SPARC-M8' + 'SPARC-3e50' + 'SUNW,sun4v-cpu' + 'sun4v'
+    cpu
+        Hardware properties:
+            name='compatible' type=string items=4
+                value='SPARC-M8' + 'SPARC-3e50' + 'SUNW,sun4v-cpu' + 'sun4v'
+    cpu
+        Hardware properties:
+            name='compatible' type=string items=4
+                value='SPARC-M8' + 'SPARC-3e50' + 'SUNW,sun4v-cpu' + 'sun4v'
+    cpu
+        Hardware properties:
+            name='compatible' type=string items=4
+                value='SPARC-M8' + 'SPARC-3e50' + 'SUNW,sun4v-cpu' + 'sun4v'
+    cpu
+        Hardware properties:
+            name='compatible' type=string items=4
+                value='SPARC-M8' + 'SPARC-3e50' + 'SUNW,sun4v-cpu' + 'sun4v'
+    cpu
+        Hardware properties:
+            name='compatible' type=string items=4
+                value='SPARC-M8' + 'SPARC-3e50' + 'SUNW,sun4v-cpu' + 'sun4v'
+    cpu
+        Hardware properties:
+            name='compatible' type=string items=4
+                value='SPARC-M8' + 'SPARC-3e50' + 'SUNW,sun4v-cpu' + 'sun4v'
+    cpu
+        Hardware properties:
+            name='compatible' type=string items=4
+                value='SPARC-M8' + 'SPARC-3e50' + 'SUNW,sun4v-cpu' + 'sun4v'
+    cpu
+        Hardware properties:
+            name='compatible' type=string items=4
+                value='SPARC-M8' + 'SPARC-3e50' + 'SUNW,sun4v-cpu' + 'sun4v'
+    cpu
+        Hardware properties:
+            name='compatible' type=string items=4
+                value='SPARC-M8' + 'SPARC-3e50' + 'SUNW,sun4v-cpu' + 'sun4v'
+    cpu
+        Hardware properties:
+            name='compatible' type=string items=4
+                value='SPARC-M8' + 'SPARC-3e50' + 'SUNW,sun4v-cpu' + 'sun4v'
+    cpu
+        Hardware properties:
+            name='compatible' type=string items=4
+                value='SPARC-M8' + 'SPARC-3e50' + 'SUNW,sun4v-cpu' + 'sun4v'
+    cpu
+        Hardware properties:
+            name='compatible' type=string items=4
+                value='SPARC-M8' + 'SPARC-3e50' + 'SUNW,sun4v-cpu' + 'sun4v'
+    cpu
+        Hardware properties:
+            name='compatible' type=string items=4
+                value='SPARC-M8' + 'SPARC-3e50' + 'SUNW,sun4v-cpu' + 'sun4v'
+    cpu
+        Hardware properties:
+            name='compatible' type=string items=4
+                value='SPARC-M8' + 'SPARC-3e50' + 'SUNW,sun4v-cpu' + 'sun4v'
+    cpu
+        Hardware properties:
+            name='compatible' type=string items=4
+                value='SPARC-M8' + 'SPARC-3e50' + 'SUNW,sun4v-cpu' + 'sun4v'
+    cpu
+        Hardware properties:
+            name='compatible' type=string items=4
+                value='SPARC-M8' + 'SPARC-3e50' + 'SUNW,sun4v-cpu' + 'sun4v'
+    cpu
+        Hardware properties:
+            name='compatible' type=string items=4
+                value='SPARC-M8' + 'SPARC-3e50' + 'SUNW,sun4v-cpu' + 'sun4v'
+    cpu
+        Hardware properties:
+            name='compatible' type=string items=4
+                value='SPARC-M8' + 'SPARC-3e50' + 'SUNW,sun4v-cpu' + 'sun4v'
+    cpu
+        Hardware properties:
+            name='compatible' type=string items=4
+                value='SPARC-M8' + 'SPARC-3e50' + 'SUNW,sun4v-cpu' + 'sun4v'
+    virtual-devices, instance #0 (driver name: vnex)
+        Device Hold:
+            mod='devfs' id=8
+                value='Device lookup.'
+        Hardware properties:
+            name='compatible' type=string items=2
+                value='SUNW,sun4v-virtual-devices' + 'SUNW,virtual-devices'
+        Register Specifications:
+            Bus Type=0xc0000100, Address=0x0, Size=0x0
+        flashprom
+        random-number-generator, instance #0 (driver name: n2rng)
+            Device Hold:
+                mod='devfs' id=8
+                    value='Device lookup.'
+                name='ddi-forceattach' type=int items=1
+                    value=00000001
+                name='ddi-no-autodetach' type=int items=1
+                    value=00000001
+            Hardware properties:
+                name='compatible' type=string items=1
+                    value='ORCL,m7-rng'
+        dax, instance #0 (driver name: dax)
+            Device Hold:
+                mod='devfs' id=8
+                    value='Device lookup.'
+            Hardware properties:
+                name='compatible' type=string items=3
+                    value='ORCL,sun4v-dax2' + 'ORCL,sun4v-dax-fc' + 'ORCL,sun4v-dax'
+            Device Minor Nodes:
+                dev=(28,0)
+                    dev_path=/virtual-devices@100/dax@a:dax
+                        spectype=chr type=minor nodetype=ddi_pseudo
+                        dev_link=/dev/dax
+        console, instance #0 (driver name: qcn)
+            Device Hold:
+                mod='devfs' id=8
+                    value='Device lookup.'
+                mod='specfs' id=5
+                    value='Device opened.'
+            Driver properties:
+                name='ddi-no-autodetach' type=int items=1 dev=none
+                    value=00000001
+            Hardware properties:
+                name='compatible' type=string items=1
+                    value='SUNW,sun4v-console'
+            Device Minor Nodes:
+                dev=(154,0)
+                    dev_path=/virtual-devices@100/console@1:qcn
+                        spectype=chr type=minor nodetype=ddi_serial
+                        dev_link=/dev/term/0
+        channel-devices, instance #0 (driver name: cnex)
+            Device Hold:
+                mod='devfs' id=8
+                    value='Device lookup.'
+            Hardware properties:
+                name='compatible' type=string items=1
+                    value='SUNW,sun4v-channel-devices'
+            Device Minor Nodes:
+                dev=(19,252)
+                    dev_path=/virtual-devices@100/channel-devices@200:intr
+                        spectype=chr type=minor nodetype=ddi_tool_intr
+                dev=(19,255)
+                    dev_path=/virtual-devices@100/channel-devices@200:devctl
+                        spectype=chr type=minor nodetype=ddi_ctl:devctl
+            network, instance #0 (driver name: vnet)
+                Device Hold:
+                    mod='specfs' id=5
+                        value='Device opened.'
+                    mod='devfs' id=8
+                        value='Device lookup.'
+                Hardware properties:
+                    name='ddi-intr-weight' type=int items=1
+                        value=00000023
+                    name='compatible' type=string items=1
+                        value='SUNW,sun4v-network'
+                Device Minor Nodes:
+                    dev=(233,1)
+                        dev_path=/virtual-devices@100/channel-devices@200/network@0:vnet0
+                            spectype=chr type=minor nodetype=ddi_network
+                            dev_link=/dev/vnet0
+                    dev=(233,1001)
+                        dev_path=<clone>
+                        Device Minor Layered Under:
+                            mod=udp accesstype=chr
+                                dev_path=/pseudo/udp@0
+                    dev=(233,1005)
+                        dev_path=<clone>
+                        Device Minor Layered Under:
+                            mod=udp accesstype=chr
+                                dev_path=/pseudo/udp@0
+                    dev=(233,1006)
+                        dev_path=<clone>
+                        Device Minor Layered Under:
+                            mod=udp6 accesstype=chr
+                                dev_path=/pseudo/udp6@0
+            network, instance #1 (driver name: vnet)
+                Device Hold:
+                    mod='specfs' id=5
+                        value='Device opened.'
+                    mod='devfs' id=8
+                        value='Device lookup.'
+                Hardware properties:
+                    name='ddi-intr-weight' type=int items=1
+                        value=00000023
+                    name='compatible' type=string items=1
+                        value='SUNW,sun4v-network'
+                Device Minor Nodes:
+                    dev=(233,2)
+                        dev_path=/virtual-devices@100/channel-devices@200/network@1:vnet1
+                            spectype=chr type=minor nodetype=ddi_network
+                            dev_link=/dev/vnet1
+                    dev=(233,1002)
+                        dev_path=<clone>
+                        Device Minor Layered Under:
+                            mod=udp accesstype=chr
+                                dev_path=/pseudo/udp@0
+                    dev=(233,1003)
+                        dev_path=<clone>
+                        Device Minor Layered Under:
+                            mod=udp accesstype=chr
+                                dev_path=/pseudo/udp@0
+                    dev=(233,1004)
+                        dev_path=<clone>
+                        Device Minor Layered Under:
+                            mod=udp6 accesstype=chr
+                                dev_path=/pseudo/udp6@0
+            disk, instance #0 (driver name: vdc)
+                Device Hold:
+                    mod='specfs' id=5
+                        value='Device opened.'
+                    mod='devfs' id=8
+                        value='Device lookup.'
+                    name='ddi-devid-registrant' type=int items=1
+                        value=00000001
+                Hardware properties:
+                    name='ddi-intr-weight' type=int items=1
+                        value=0000000a
+                    name='devid' type=string items=1
+                        value='id1,vdc@n60002ac000000000000025e800020a95'
+                    name='compatible' type=string items=1
+                        value='SUNW,sun4v-disk'
+                Device Minor Nodes:
+                    dev=(227,0)
+                        dev_path=/virtual-devices@100/channel-devices@200/disk@0:a
+                            spectype=blk type=minor nodetype=ddi_block
+                            dev_link=/dev/dsk/c1d0s0
+                        dev_path=/virtual-devices@100/channel-devices@200/disk@0:a,raw
+                            spectype=chr type=minor nodetype=ddi_block
+                            dev_link=/dev/rdsk/c1d0s0
+                        Device Minor Layered Under:
+                            mod=zfs accesstype=blk
+                                dev_path=/pseudo/zfs@0
+                    dev=(227,1)
+                        dev_path=/virtual-devices@100/channel-devices@200/disk@0:b
+                            spectype=blk type=minor nodetype=ddi_block
+                            dev_link=/dev/dsk/c1d0s1
+                        dev_path=/virtual-devices@100/channel-devices@200/disk@0:b,raw
+                            spectype=chr type=minor nodetype=ddi_block
+                            dev_link=/dev/rdsk/c1d0s1
+                    dev=(227,2)
+                        dev_path=/virtual-devices@100/channel-devices@200/disk@0:c
+                            spectype=blk type=minor nodetype=ddi_block
+                            dev_link=/dev/dsk/c1d0s2
+                        dev_path=/virtual-devices@100/channel-devices@200/disk@0:c,raw
+                            spectype=chr type=minor nodetype=ddi_block
+                            dev_link=/dev/rdsk/c1d0s2
+                    dev=(227,3)
+                        dev_path=/virtual-devices@100/channel-devices@200/disk@0:d
+                            spectype=blk type=minor nodetype=ddi_block
+                            dev_link=/dev/dsk/c1d0s3
+                        dev_path=/virtual-devices@100/channel-devices@200/disk@0:d,raw
+                            spectype=chr type=minor nodetype=ddi_block
+                            dev_link=/dev/rdsk/c1d0s3
+                    dev=(227,4)
+                        dev_path=/virtual-devices@100/channel-devices@200/disk@0:e
+                            spectype=blk type=minor nodetype=ddi_block
+                            dev_link=/dev/dsk/c1d0s4
+                        dev_path=/virtual-devices@100/channel-devices@200/disk@0:e,raw
+                            spectype=chr type=minor nodetype=ddi_block
+                            dev_link=/dev/rdsk/c1d0s4
+                    dev=(227,5)
+                        dev_path=/virtual-devices@100/channel-devices@200/disk@0:f
+                            spectype=blk type=minor nodetype=ddi_block
+                            dev_link=/dev/dsk/c1d0s5
+                        dev_path=/virtual-devices@100/channel-devices@200/disk@0:f,raw
+                            spectype=chr type=minor nodetype=ddi_block
+                            dev_link=/dev/rdsk/c1d0s5
+                    dev=(227,6)
+                        dev_path=/virtual-devices@100/channel-devices@200/disk@0:g
+                            spectype=blk type=minor nodetype=ddi_block
+                            dev_link=/dev/dsk/c1d0s6
+                        dev_path=/virtual-devices@100/channel-devices@200/disk@0:g,raw
+                            spectype=chr type=minor nodetype=ddi_block
+                            dev_link=/dev/rdsk/c1d0s6
+                    dev=(227,7)
+                        dev_path=/virtual-devices@100/channel-devices@200/disk@0:wd
+                            spectype=blk type=minor nodetype=ddi_block
+                            dev_link=/dev/dsk/c1d0
+                        dev_path=/virtual-devices@100/channel-devices@200/disk@0:wd,raw
+                            spectype=chr type=minor nodetype=ddi_block
+                            dev_link=/dev/rdsk/c1d0
+            disk, instance #2 (driver name: vdc)
+                Device Hold:
+                    mod='specfs' id=5
+                        value='Device opened.'
+                    mod='devfs' id=8
+                        value='Device lookup.'
+                    name='ddi-devid-registrant' type=int items=1
+                        value=00000001
+                Hardware properties:
+                    name='ddi-intr-weight' type=int items=1
+                        value=0000000a
+                    name='devid' type=string items=1
+                        value='id1,vdc@n60002ac0000000000000260400020a95'
+                    name='compatible' type=string items=1
+                        value='SUNW,sun4v-disk'
+                Device Minor Nodes:
+                    dev=(227,16)
+                        dev_path=/virtual-devices@100/channel-devices@200/disk@2:a
+                            spectype=blk type=minor nodetype=ddi_block
+                            dev_link=/dev/dsk/c1d2s0
+                        dev_path=/virtual-devices@100/channel-devices@200/disk@2:a,raw
+                            spectype=chr type=minor nodetype=ddi_block
+                            dev_link=/dev/rdsk/c1d2s0
+                    dev=(227,17)
+                        dev_path=/virtual-devices@100/channel-devices@200/disk@2:b
+                            spectype=blk type=minor nodetype=ddi_block
+                            dev_link=/dev/dsk/c1d2s1
+                        dev_path=/virtual-devices@100/channel-devices@200/disk@2:b,raw
+                            spectype=chr type=minor nodetype=ddi_block
+                            dev_link=/dev/rdsk/c1d2s1
+                    dev=(227,18)
+                        dev_path=/virtual-devices@100/channel-devices@200/disk@2:c
+                            spectype=blk type=minor nodetype=ddi_block
+                            dev_link=/dev/dsk/c1d2s2
+                        dev_path=/virtual-devices@100/channel-devices@200/disk@2:c,raw
+                            spectype=chr type=minor nodetype=ddi_block
+                            dev_link=/dev/rdsk/c1d2s2
+                    dev=(227,19)
+                        dev_path=/virtual-devices@100/channel-devices@200/disk@2:d
+                            spectype=blk type=minor nodetype=ddi_block
+                            dev_link=/dev/dsk/c1d2s3
+                        dev_path=/virtual-devices@100/channel-devices@200/disk@2:d,raw
+                            spectype=chr type=minor nodetype=ddi_block
+                            dev_link=/dev/rdsk/c1d2s3
+                    dev=(227,20)
+                        dev_path=/virtual-devices@100/channel-devices@200/disk@2:e
+                            spectype=blk type=minor nodetype=ddi_block
+                            dev_link=/dev/dsk/c1d2s4
+                        dev_path=/virtual-devices@100/channel-devices@200/disk@2:e,raw
+                            spectype=chr type=minor nodetype=ddi_block
+                            dev_link=/dev/rdsk/c1d2s4
+                    dev=(227,21)
+                        dev_path=/virtual-devices@100/channel-devices@200/disk@2:f
+                            spectype=blk type=minor nodetype=ddi_block
+                            dev_link=/dev/dsk/c1d2s5
+                        dev_path=/virtual-devices@100/channel-devices@200/disk@2:f,raw
+                            spectype=chr type=minor nodetype=ddi_block
+                            dev_link=/dev/rdsk/c1d2s5
+                    dev=(227,22)
+                        dev_path=/virtual-devices@100/channel-devices@200/disk@2:g
+                            spectype=blk type=minor nodetype=ddi_block
+                            dev_link=/dev/dsk/c1d2s6
+                        dev_path=/virtual-devices@100/channel-devices@200/disk@2:g,raw
+                            spectype=chr type=minor nodetype=ddi_block
+                            dev_link=/dev/rdsk/c1d2s6
+                    dev=(227,23)
+                        dev_path=/virtual-devices@100/channel-devices@200/disk@2:h
+                            spectype=blk type=minor nodetype=ddi_block
+                            dev_link=/dev/dsk/c1d2s7
+                        dev_path=/virtual-devices@100/channel-devices@200/disk@2:h,raw
+                            spectype=chr type=minor nodetype=ddi_block
+                            dev_link=/dev/rdsk/c1d2s7
+            disk, instance #4 (driver name: vdc)
+                Device Hold:
+                    mod='specfs' id=5
+                        value='Device opened.'
+                    mod='devfs' id=8
+                        value='Device lookup.'
+                    name='ddi-devid-registrant' type=int items=1
+                        value=00000001
+                Hardware properties:
+                    name='ddi-intr-weight' type=int items=1
+                        value=0000000a
+                    name='devid' type=string items=1
+                        value='id1,vdc@n60002ac0000000000000260700020a95'
+                    name='compatible' type=string items=1
+                        value='SUNW,sun4v-disk'
+                Device Minor Nodes:
+                    dev=(227,32)
+                        dev_path=/virtual-devices@100/channel-devices@200/disk@5:a
+                            spectype=blk type=minor nodetype=ddi_block
+                            dev_link=/dev/dsk/c1d5s0
+                        dev_path=/virtual-devices@100/channel-devices@200/disk@5:a,raw
+                            spectype=chr type=minor nodetype=ddi_block
+                            dev_link=/dev/rdsk/c1d5s0
+                    dev=(227,33)
+                        dev_path=/virtual-devices@100/channel-devices@200/disk@5:b
+                            spectype=blk type=minor nodetype=ddi_block
+                            dev_link=/dev/dsk/c1d5s1
+                        dev_path=/virtual-devices@100/channel-devices@200/disk@5:b,raw
+                            spectype=chr type=minor nodetype=ddi_block
+                            dev_link=/dev/rdsk/c1d5s1
+                    dev=(227,34)
+                        dev_path=/virtual-devices@100/channel-devices@200/disk@5:c
+                            spectype=blk type=minor nodetype=ddi_block
+                            dev_link=/dev/dsk/c1d5s2
+                        dev_path=/virtual-devices@100/channel-devices@200/disk@5:c,raw
+                            spectype=chr type=minor nodetype=ddi_block
+                            dev_link=/dev/rdsk/c1d5s2
+                    dev=(227,35)
+                        dev_path=/virtual-devices@100/channel-devices@200/disk@5:d
+                            spectype=blk type=minor nodetype=ddi_block
+                            dev_link=/dev/dsk/c1d5s3
+                        dev_path=/virtual-devices@100/channel-devices@200/disk@5:d,raw
+                            spectype=chr type=minor nodetype=ddi_block
+                            dev_link=/dev/rdsk/c1d5s3
+                    dev=(227,36)
+                        dev_path=/virtual-devices@100/channel-devices@200/disk@5:e
+                            spectype=blk type=minor nodetype=ddi_block
+                            dev_link=/dev/dsk/c1d5s4
+                        dev_path=/virtual-devices@100/channel-devices@200/disk@5:e,raw
+                            spectype=chr type=minor nodetype=ddi_block
+                            dev_link=/dev/rdsk/c1d5s4
+                    dev=(227,37)
+                        dev_path=/virtual-devices@100/channel-devices@200/disk@5:f
+                            spectype=blk type=minor nodetype=ddi_block
+                            dev_link=/dev/dsk/c1d5s5
+                        dev_path=/virtual-devices@100/channel-devices@200/disk@5:f,raw
+                            spectype=chr type=minor nodetype=ddi_block
+                            dev_link=/dev/rdsk/c1d5s5
+                    dev=(227,38)
+                        dev_path=/virtual-devices@100/channel-devices@200/disk@5:g
+                            spectype=blk type=minor nodetype=ddi_block
+                            dev_link=/dev/dsk/c1d5s6
+                        dev_path=/virtual-devices@100/channel-devices@200/disk@5:g,raw
+                            spectype=chr type=minor nodetype=ddi_block
+                            dev_link=/dev/rdsk/c1d5s6
+                    dev=(227,39)
+                        dev_path=/virtual-devices@100/channel-devices@200/disk@5:h
+                            spectype=blk type=minor nodetype=ddi_block
+                            dev_link=/dev/dsk/c1d5s7
+                        dev_path=/virtual-devices@100/channel-devices@200/disk@5:h,raw
+                            spectype=chr type=minor nodetype=ddi_block
+                            dev_link=/dev/rdsk/c1d5s7
+            disk, instance #11 (driver name: vdc)
+                Device Hold:
+                    mod='devfs' id=8
+                        value='Device lookup.'
+                    name='ddi-devid-registrant' type=int items=1
+                        value=00000001
+                Hardware properties:
+                    name='ddi-intr-weight' type=int items=1
+                        value=0000000a
+                    name='devid' type=string items=1
+                        value='id1,vdc@n60002ac0000000000000260e00020a95'
+                    name='compatible' type=string items=1
+                        value='SUNW,sun4v-disk'
+                Device Minor Nodes:
+                    dev=(227,88)
+                        dev_path=/virtual-devices@100/channel-devices@200/disk@c:a
+                            spectype=blk type=minor nodetype=ddi_block
+                            dev_link=/dev/dsk/c1d12s0
+                        dev_path=/virtual-devices@100/channel-devices@200/disk@c:a,raw
+                            spectype=chr type=minor nodetype=ddi_block
+                            dev_link=/dev/rdsk/c1d12s0
+                    dev=(227,89)
+                        dev_path=/virtual-devices@100/channel-devices@200/disk@c:b
+                            spectype=blk type=minor nodetype=ddi_block
+                            dev_link=/dev/dsk/c1d12s1
+                        dev_path=/virtual-devices@100/channel-devices@200/disk@c:b,raw
+                            spectype=chr type=minor nodetype=ddi_block
+                            dev_link=/dev/rdsk/c1d12s1
+                    dev=(227,90)
+                        dev_path=/virtual-devices@100/channel-devices@200/disk@c:c
+                            spectype=blk type=minor nodetype=ddi_block
+                            dev_link=/dev/dsk/c1d12s2
+                        dev_path=/virtual-devices@100/channel-devices@200/disk@c:c,raw
+                            spectype=chr type=minor nodetype=ddi_block
+                            dev_link=/dev/rdsk/c1d12s2
+                    dev=(227,91)
+                        dev_path=/virtual-devices@100/channel-devices@200/disk@c:d
+                            spectype=blk type=minor nodetype=ddi_block
+                            dev_link=/dev/dsk/c1d12s3
+                        dev_path=/virtual-devices@100/channel-devices@200/disk@c:d,raw
+                            spectype=chr type=minor nodetype=ddi_block
+                            dev_link=/dev/rdsk/c1d12s3
+                    dev=(227,92)
+                        dev_path=/virtual-devices@100/channel-devices@200/disk@c:e
+                            spectype=blk type=minor nodetype=ddi_block
+                            dev_link=/dev/dsk/c1d12s4
+                        dev_path=/virtual-devices@100/channel-devices@200/disk@c:e,raw
+                            spectype=chr type=minor nodetype=ddi_block
+                            dev_link=/dev/rdsk/c1d12s4
+                    dev=(227,93)
+                        dev_path=/virtual-devices@100/channel-devices@200/disk@c:f
+                            spectype=blk type=minor nodetype=ddi_block
+                            dev_link=/dev/dsk/c1d12s5
+                        dev_path=/virtual-devices@100/channel-devices@200/disk@c:f,raw
+                            spectype=chr type=minor nodetype=ddi_block
+                            dev_link=/dev/rdsk/c1d12s5
+                    dev=(227,94)
+                        dev_path=/virtual-devices@100/channel-devices@200/disk@c:g
+                            spectype=blk type=minor nodetype=ddi_block
+                            dev_link=/dev/dsk/c1d12s6
+                        dev_path=/virtual-devices@100/channel-devices@200/disk@c:g,raw
+                            spectype=chr type=minor nodetype=ddi_block
+                            dev_link=/dev/rdsk/c1d12s6
+                    dev=(227,95)
+                        dev_path=/virtual-devices@100/channel-devices@200/disk@c:h
+                            spectype=blk type=minor nodetype=ddi_block
+                            dev_link=/dev/dsk/c1d12s7
+                        dev_path=/virtual-devices@100/channel-devices@200/disk@c:h,raw
+                            spectype=chr type=minor nodetype=ddi_block
+                            dev_link=/dev/rdsk/c1d12s7
+            disk, instance #12 (driver name: vdc)
+                Device Hold:
+                    mod='devfs' id=8
+                        value='Device lookup.'
+                    mod='specfs' id=5
+                        value='Device opened.'
+                    name='ddi-devid-registrant' type=int items=1
+                        value=00000001
+                Hardware properties:
+                    name='ddi-intr-weight' type=int items=1
+                        value=0000000a
+                    name='devid' type=string items=1
+                        value='id1,vdc@n60002ac0000000000000260f00020a95'
+                    name='compatible' type=string items=1
+                        value='SUNW,sun4v-disk'
+                Device Minor Nodes:
+                    dev=(227,96)
+                        dev_path=/virtual-devices@100/channel-devices@200/disk@d:a
+                            spectype=blk type=minor nodetype=ddi_block
+                            dev_link=/dev/dsk/c1d13s0
+                        dev_path=/virtual-devices@100/channel-devices@200/disk@d:a,raw
+                            spectype=chr type=minor nodetype=ddi_block
+                            dev_link=/dev/rdsk/c1d13s0
+                        Device Minor Layered Under:
+                            mod=zfs accesstype=blk
+                                dev_path=/pseudo/zfs@0
+                    dev=(227,97)
+                        dev_path=/virtual-devices@100/channel-devices@200/disk@d:b
+                            spectype=blk type=minor nodetype=ddi_block
+                            dev_link=/dev/dsk/c1d13s1
+                        dev_path=/virtual-devices@100/channel-devices@200/disk@d:b,raw
+                            spectype=chr type=minor nodetype=ddi_block
+                            dev_link=/dev/rdsk/c1d13s1
+                    dev=(227,98)
+                        dev_path=/virtual-devices@100/channel-devices@200/disk@d:c
+                            spectype=blk type=minor nodetype=ddi_block
+                            dev_link=/dev/dsk/c1d13s2
+                        dev_path=/virtual-devices@100/channel-devices@200/disk@d:c,raw
+                            spectype=chr type=minor nodetype=ddi_block
+                            dev_link=/dev/rdsk/c1d13s2
+                    dev=(227,99)
+                        dev_path=/virtual-devices@100/channel-devices@200/disk@d:d
+                            spectype=blk type=minor nodetype=ddi_block
+                            dev_link=/dev/dsk/c1d13s3
+                        dev_path=/virtual-devices@100/channel-devices@200/disk@d:d,raw
+                            spectype=chr type=minor nodetype=ddi_block
+                            dev_link=/dev/rdsk/c1d13s3
+                    dev=(227,100)
+                        dev_path=/virtual-devices@100/channel-devices@200/disk@d:e
+                            spectype=blk type=minor nodetype=ddi_block
+                            dev_link=/dev/dsk/c1d13s4
+                        dev_path=/virtual-devices@100/channel-devices@200/disk@d:e,raw
+                            spectype=chr type=minor nodetype=ddi_block
+                            dev_link=/dev/rdsk/c1d13s4
+                    dev=(227,101)
+                        dev_path=/virtual-devices@100/channel-devices@200/disk@d:f
+                            spectype=blk type=minor nodetype=ddi_block
+                            dev_link=/dev/dsk/c1d13s5
+                        dev_path=/virtual-devices@100/channel-devices@200/disk@d:f,raw
+                            spectype=chr type=minor nodetype=ddi_block
+                            dev_link=/dev/rdsk/c1d13s5
+                    dev=(227,102)
+                        dev_path=/virtual-devices@100/channel-devices@200/disk@d:g
+                            spectype=blk type=minor nodetype=ddi_block
+                            dev_link=/dev/dsk/c1d13s6
+                        dev_path=/virtual-devices@100/channel-devices@200/disk@d:g,raw
+                            spectype=chr type=minor nodetype=ddi_block
+                            dev_link=/dev/rdsk/c1d13s6
+                    dev=(227,103)
+                        dev_path=/virtual-devices@100/channel-devices@200/disk@d:h
+                            spectype=blk type=minor nodetype=ddi_block
+                            dev_link=/dev/dsk/c1d13s7
+                        dev_path=/virtual-devices@100/channel-devices@200/disk@d:h,raw
+                            spectype=chr type=minor nodetype=ddi_block
+                            dev_link=/dev/rdsk/c1d13s7
+            disk, instance #13 (driver name: vdc)
+                Device Hold:
+                    mod='specfs' id=5
+                        value='Device opened.'
+                    mod='devfs' id=8
+                        value='Device lookup.'
+                    name='ddi-devid-registrant' type=int items=1
+                        value=00000001
+                Hardware properties:
+                    name='ddi-intr-weight' type=int items=1
+                        value=0000000a
+                    name='devid' type=string items=1
+                        value='id1,vdc@n60002ac0000000000000264600020a95'
+                    name='compatible' type=string items=1
+                        value='SUNW,sun4v-disk'
+                Device Minor Nodes:
+                    dev=(227,104)
+                        dev_path=/virtual-devices@100/channel-devices@200/disk@e:a
+                            spectype=blk type=minor nodetype=ddi_block
+                            dev_link=/dev/dsk/c1d14s0
+                        dev_path=/virtual-devices@100/channel-devices@200/disk@e:a,raw
+                            spectype=chr type=minor nodetype=ddi_block
+                            dev_link=/dev/rdsk/c1d14s0
+                    dev=(227,105)
+                        dev_path=/virtual-devices@100/channel-devices@200/disk@e:b
+                            spectype=blk type=minor nodetype=ddi_block
+                            dev_link=/dev/dsk/c1d14s1
+                        dev_path=/virtual-devices@100/channel-devices@200/disk@e:b,raw
+                            spectype=chr type=minor nodetype=ddi_block
+                            dev_link=/dev/rdsk/c1d14s1
+                    dev=(227,106)
+                        dev_path=/virtual-devices@100/channel-devices@200/disk@e:c
+                            spectype=blk type=minor nodetype=ddi_block
+                            dev_link=/dev/dsk/c1d14s2
+                        dev_path=/virtual-devices@100/channel-devices@200/disk@e:c,raw
+                            spectype=chr type=minor nodetype=ddi_block
+                            dev_link=/dev/rdsk/c1d14s2
+                    dev=(227,107)
+                        dev_path=/virtual-devices@100/channel-devices@200/disk@e:d
+                            spectype=blk type=minor nodetype=ddi_block
+                            dev_link=/dev/dsk/c1d14s3
+                        dev_path=/virtual-devices@100/channel-devices@200/disk@e:d,raw
+                            spectype=chr type=minor nodetype=ddi_block
+                            dev_link=/dev/rdsk/c1d14s3
+                    dev=(227,108)
+                        dev_path=/virtual-devices@100/channel-devices@200/disk@e:e
+                            spectype=blk type=minor nodetype=ddi_block
+                            dev_link=/dev/dsk/c1d14s4
+                        dev_path=/virtual-devices@100/channel-devices@200/disk@e:e,raw
+                            spectype=chr type=minor nodetype=ddi_block
+                            dev_link=/dev/rdsk/c1d14s4
+                    dev=(227,109)
+                        dev_path=/virtual-devices@100/channel-devices@200/disk@e:f
+                            spectype=blk type=minor nodetype=ddi_block
+                            dev_link=/dev/dsk/c1d14s5
+                        dev_path=/virtual-devices@100/channel-devices@200/disk@e:f,raw
+                            spectype=chr type=minor nodetype=ddi_block
+                            dev_link=/dev/rdsk/c1d14s5
+                    dev=(227,110)
+                        dev_path=/virtual-devices@100/channel-devices@200/disk@e:g
+                            spectype=blk type=minor nodetype=ddi_block
+                            dev_link=/dev/dsk/c1d14s6
+                        dev_path=/virtual-devices@100/channel-devices@200/disk@e:g,raw
+                            spectype=chr type=minor nodetype=ddi_block
+                            dev_link=/dev/rdsk/c1d14s6
+                    dev=(227,111)
+                        dev_path=/virtual-devices@100/channel-devices@200/disk@e:h
+                            spectype=blk type=minor nodetype=ddi_block
+                            dev_link=/dev/dsk/c1d14s7
+                        dev_path=/virtual-devices@100/channel-devices@200/disk@e:h,raw
+                            spectype=chr type=minor nodetype=ddi_block
+                            dev_link=/dev/rdsk/c1d14s7
+            disk, instance #14 (driver name: vdc)
+                Device Hold:
+                    mod='devfs' id=8
+                        value='Device lookup.'
+                    mod='specfs' id=5
+                        value='Device opened.'
+                    name='ddi-devid-registrant' type=int items=1
+                        value=00000001
+                Hardware properties:
+                    name='ddi-intr-weight' type=int items=1
+                        value=0000000a
+                    name='devid' type=string items=1
+                        value='id1,vdc@n60002ac0000000000000264800020a95'
+                    name='compatible' type=string items=1
+                        value='SUNW,sun4v-disk'
+                Device Minor Nodes:
+                    dev=(227,112)
+                        dev_path=/virtual-devices@100/channel-devices@200/disk@f:a
+                            spectype=blk type=minor nodetype=ddi_block
+                            dev_link=/dev/dsk/c1d15s0
+                        dev_path=/virtual-devices@100/channel-devices@200/disk@f:a,raw
+                            spectype=chr type=minor nodetype=ddi_block
+                            dev_link=/dev/rdsk/c1d15s0
+                        Device Minor Layered Under:
+                            mod=zfs accesstype=blk
+                                dev_path=/pseudo/zfs@0
+                    dev=(227,113)
+                        dev_path=/virtual-devices@100/channel-devices@200/disk@f:b
+                            spectype=blk type=minor nodetype=ddi_block
+                            dev_link=/dev/dsk/c1d15s1
+                        dev_path=/virtual-devices@100/channel-devices@200/disk@f:b,raw
+                            spectype=chr type=minor nodetype=ddi_block
+                            dev_link=/dev/rdsk/c1d15s1
+                    dev=(227,114)
+                        dev_path=/virtual-devices@100/channel-devices@200/disk@f:c
+                            spectype=blk type=minor nodetype=ddi_block
+                            dev_link=/dev/dsk/c1d15s2
+                        dev_path=/virtual-devices@100/channel-devices@200/disk@f:c,raw
+                            spectype=chr type=minor nodetype=ddi_block
+                            dev_link=/dev/rdsk/c1d15s2
+                    dev=(227,115)
+                        dev_path=/virtual-devices@100/channel-devices@200/disk@f:d
+                            spectype=blk type=minor nodetype=ddi_block
+                            dev_link=/dev/dsk/c1d15s3
+                        dev_path=/virtual-devices@100/channel-devices@200/disk@f:d,raw
+                            spectype=chr type=minor nodetype=ddi_block
+                            dev_link=/dev/rdsk/c1d15s3
+                    dev=(227,116)
+                        dev_path=/virtual-devices@100/channel-devices@200/disk@f:e
+                            spectype=blk type=minor nodetype=ddi_block
+                            dev_link=/dev/dsk/c1d15s4
+                        dev_path=/virtual-devices@100/channel-devices@200/disk@f:e,raw
+                            spectype=chr type=minor nodetype=ddi_block
+                            dev_link=/dev/rdsk/c1d15s4
+                    dev=(227,117)
+                        dev_path=/virtual-devices@100/channel-devices@200/disk@f:f
+                            spectype=blk type=minor nodetype=ddi_block
+                            dev_link=/dev/dsk/c1d15s5
+                        dev_path=/virtual-devices@100/channel-devices@200/disk@f:f,raw
+                            spectype=chr type=minor nodetype=ddi_block
+                            dev_link=/dev/rdsk/c1d15s5
+                    dev=(227,118)
+                        dev_path=/virtual-devices@100/channel-devices@200/disk@f:g
+                            spectype=blk type=minor nodetype=ddi_block
+                            dev_link=/dev/dsk/c1d15s6
+                        dev_path=/virtual-devices@100/channel-devices@200/disk@f:g,raw
+                            spectype=chr type=minor nodetype=ddi_block
+                            dev_link=/dev/rdsk/c1d15s6
+                    dev=(227,119)
+                        dev_path=/virtual-devices@100/channel-devices@200/disk@f:h
+                            spectype=blk type=minor nodetype=ddi_block
+                            dev_link=/dev/dsk/c1d15s7
+                        dev_path=/virtual-devices@100/channel-devices@200/disk@f:h,raw
+                            spectype=chr type=minor nodetype=ddi_block
+                            dev_link=/dev/rdsk/c1d15s7
+            disk, instance #15 (driver name: vdc)
+                Device Hold:
+                    mod='specfs' id=5
+                        value='Device opened.'
+                    mod='devfs' id=8
+                        value='Device lookup.'
+                    name='ddi-devid-registrant' type=int items=1
+                        value=00000001
+                Hardware properties:
+                    name='ddi-intr-weight' type=int items=1
+                        value=0000000a
+                    name='devid' type=string items=1
+                        value='id1,vdc@n60002ac0000000000000260a00020a95'
+                    name='compatible' type=string items=1
+                        value='SUNW,sun4v-disk'
+                Device Minor Nodes:
+                    dev=(227,120)
+                        dev_path=/virtual-devices@100/channel-devices@200/disk@1:a
+                            spectype=blk type=minor nodetype=ddi_block
+                            dev_link=/dev/dsk/c1d1s0
+                        dev_path=/virtual-devices@100/channel-devices@200/disk@1:a,raw
+                            spectype=chr type=minor nodetype=ddi_block
+                            dev_link=/dev/rdsk/c1d1s0
+                    dev=(227,121)
+                        dev_path=/virtual-devices@100/channel-devices@200/disk@1:b
+                            spectype=blk type=minor nodetype=ddi_block
+                            dev_link=/dev/dsk/c1d1s1
+                        dev_path=/virtual-devices@100/channel-devices@200/disk@1:b,raw
+                            spectype=chr type=minor nodetype=ddi_block
+                            dev_link=/dev/rdsk/c1d1s1
+                    dev=(227,122)
+                        dev_path=/virtual-devices@100/channel-devices@200/disk@1:c
+                            spectype=blk type=minor nodetype=ddi_block
+                            dev_link=/dev/dsk/c1d1s2
+                        dev_path=/virtual-devices@100/channel-devices@200/disk@1:c,raw
+                            spectype=chr type=minor nodetype=ddi_block
+                            dev_link=/dev/rdsk/c1d1s2
+                    dev=(227,123)
+                        dev_path=/virtual-devices@100/channel-devices@200/disk@1:d
+                            spectype=blk type=minor nodetype=ddi_block
+                            dev_link=/dev/dsk/c1d1s3
+                        dev_path=/virtual-devices@100/channel-devices@200/disk@1:d,raw
+                            spectype=chr type=minor nodetype=ddi_block
+                            dev_link=/dev/rdsk/c1d1s3
+                    dev=(227,124)
+                        dev_path=/virtual-devices@100/channel-devices@200/disk@1:e
+                            spectype=blk type=minor nodetype=ddi_block
+                            dev_link=/dev/dsk/c1d1s4
+                        dev_path=/virtual-devices@100/channel-devices@200/disk@1:e,raw
+                            spectype=chr type=minor nodetype=ddi_block
+                            dev_link=/dev/rdsk/c1d1s4
+                    dev=(227,125)
+                        dev_path=/virtual-devices@100/channel-devices@200/disk@1:f
+                            spectype=blk type=minor nodetype=ddi_block
+                            dev_link=/dev/dsk/c1d1s5
+                        dev_path=/virtual-devices@100/channel-devices@200/disk@1:f,raw
+                            spectype=chr type=minor nodetype=ddi_block
+                            dev_link=/dev/rdsk/c1d1s5
+                    dev=(227,126)
+                        dev_path=/virtual-devices@100/channel-devices@200/disk@1:g
+                            spectype=blk type=minor nodetype=ddi_block
+                            dev_link=/dev/dsk/c1d1s6
+                        dev_path=/virtual-devices@100/channel-devices@200/disk@1:g,raw
+                            spectype=chr type=minor nodetype=ddi_block
+                            dev_link=/dev/rdsk/c1d1s6
+                    dev=(227,127)
+                        dev_path=/virtual-devices@100/channel-devices@200/disk@1:h
+                            spectype=blk type=minor nodetype=ddi_block
+                            dev_link=/dev/dsk/c1d1s7
+                        dev_path=/virtual-devices@100/channel-devices@200/disk@1:h,raw
+                            spectype=chr type=minor nodetype=ddi_block
+                            dev_link=/dev/rdsk/c1d1s7
+            disk, instance #3 (driver name: vdc)
+                Device Hold:
+                    mod='specfs' id=5
+                        value='Device opened.'
+                    mod='devfs' id=8
+                        value='Device lookup.'
+                    name='ddi-devid-registrant' type=int items=1
+                        value=00000001
+                Hardware properties:
+                    name='ddi-intr-weight' type=int items=1
+                        value=0000000a
+                    name='devid' type=string items=1
+                        value='id1,vdc@n60002ac0000000000000260800020a95'
+                    name='compatible' type=string items=1
+                        value='SUNW,sun4v-disk'
+                Device Minor Nodes:
+                    dev=(227,24)
+                        dev_path=/virtual-devices@100/channel-devices@200/disk@3:a
+                            spectype=blk type=minor nodetype=ddi_block
+                            dev_link=/dev/dsk/c1d3s0
+                        dev_path=/virtual-devices@100/channel-devices@200/disk@3:a,raw
+                            spectype=chr type=minor nodetype=ddi_block
+                            dev_link=/dev/rdsk/c1d3s0
+                    dev=(227,25)
+                        dev_path=/virtual-devices@100/channel-devices@200/disk@3:b
+                            spectype=blk type=minor nodetype=ddi_block
+                            dev_link=/dev/dsk/c1d3s1
+                        dev_path=/virtual-devices@100/channel-devices@200/disk@3:b,raw
+                            spectype=chr type=minor nodetype=ddi_block
+                            dev_link=/dev/rdsk/c1d3s1
+                    dev=(227,26)
+                        dev_path=/virtual-devices@100/channel-devices@200/disk@3:c
+                            spectype=blk type=minor nodetype=ddi_block
+                            dev_link=/dev/dsk/c1d3s2
+                        dev_path=/virtual-devices@100/channel-devices@200/disk@3:c,raw
+                            spectype=chr type=minor nodetype=ddi_block
+                            dev_link=/dev/rdsk/c1d3s2
+                    dev=(227,27)
+                        dev_path=/virtual-devices@100/channel-devices@200/disk@3:d
+                            spectype=blk type=minor nodetype=ddi_block
+                            dev_link=/dev/dsk/c1d3s3
+                        dev_path=/virtual-devices@100/channel-devices@200/disk@3:d,raw
+                            spectype=chr type=minor nodetype=ddi_block
+                            dev_link=/dev/rdsk/c1d3s3
+                    dev=(227,28)
+                        dev_path=/virtual-devices@100/channel-devices@200/disk@3:e
+                            spectype=blk type=minor nodetype=ddi_block
+                            dev_link=/dev/dsk/c1d3s4
+                        dev_path=/virtual-devices@100/channel-devices@200/disk@3:e,raw
+                            spectype=chr type=minor nodetype=ddi_block
+                            dev_link=/dev/rdsk/c1d3s4
+                    dev=(227,29)
+                        dev_path=/virtual-devices@100/channel-devices@200/disk@3:f
+                            spectype=blk type=minor nodetype=ddi_block
+                            dev_link=/dev/dsk/c1d3s5
+                        dev_path=/virtual-devices@100/channel-devices@200/disk@3:f,raw
+                            spectype=chr type=minor nodetype=ddi_block
+                            dev_link=/dev/rdsk/c1d3s5
+                    dev=(227,30)
+                        dev_path=/virtual-devices@100/channel-devices@200/disk@3:g
+                            spectype=blk type=minor nodetype=ddi_block
+                            dev_link=/dev/dsk/c1d3s6
+                        dev_path=/virtual-devices@100/channel-devices@200/disk@3:g,raw
+                            spectype=chr type=minor nodetype=ddi_block
+                            dev_link=/dev/rdsk/c1d3s6
+                    dev=(227,31)
+                        dev_path=/virtual-devices@100/channel-devices@200/disk@3:h
+                            spectype=blk type=minor nodetype=ddi_block
+                            dev_link=/dev/dsk/c1d3s7
+                        dev_path=/virtual-devices@100/channel-devices@200/disk@3:h,raw
+                            spectype=chr type=minor nodetype=ddi_block
+                            dev_link=/dev/rdsk/c1d3s7
+            disk, instance #5 (driver name: vdc)
+                Device Hold:
+                    mod='specfs' id=5
+                        value='Device opened.'
+                    mod='devfs' id=8
+                        value='Device lookup.'
+                    name='ddi-devid-registrant' type=int items=1
+                        value=00000001
+                Hardware properties:
+                    name='ddi-intr-weight' type=int items=1
+                        value=0000000a
+                    name='devid' type=string items=1
+                        value='id1,vdc@n60002ac0000000000000260900020a95'
+                    name='compatible' type=string items=1
+                        value='SUNW,sun4v-disk'
+                Device Minor Nodes:
+                    dev=(227,40)
+                        dev_path=/virtual-devices@100/channel-devices@200/disk@4:a
+                            spectype=blk type=minor nodetype=ddi_block
+                            dev_link=/dev/dsk/c1d4s0
+                        dev_path=/virtual-devices@100/channel-devices@200/disk@4:a,raw
+                            spectype=chr type=minor nodetype=ddi_block
+                            dev_link=/dev/rdsk/c1d4s0
+                    dev=(227,41)
+                        dev_path=/virtual-devices@100/channel-devices@200/disk@4:b
+                            spectype=blk type=minor nodetype=ddi_block
+                            dev_link=/dev/dsk/c1d4s1
+                        dev_path=/virtual-devices@100/channel-devices@200/disk@4:b,raw
+                            spectype=chr type=minor nodetype=ddi_block
+                            dev_link=/dev/rdsk/c1d4s1
+                    dev=(227,42)
+                        dev_path=/virtual-devices@100/channel-devices@200/disk@4:c
+                            spectype=blk type=minor nodetype=ddi_block
+                            dev_link=/dev/dsk/c1d4s2
+                        dev_path=/virtual-devices@100/channel-devices@200/disk@4:c,raw
+                            spectype=chr type=minor nodetype=ddi_block
+                            dev_link=/dev/rdsk/c1d4s2
+                    dev=(227,43)
+                        dev_path=/virtual-devices@100/channel-devices@200/disk@4:d
+                            spectype=blk type=minor nodetype=ddi_block
+                            dev_link=/dev/dsk/c1d4s3
+                        dev_path=/virtual-devices@100/channel-devices@200/disk@4:d,raw
+                            spectype=chr type=minor nodetype=ddi_block
+                            dev_link=/dev/rdsk/c1d4s3
+                    dev=(227,44)
+                        dev_path=/virtual-devices@100/channel-devices@200/disk@4:e
+                            spectype=blk type=minor nodetype=ddi_block
+                            dev_link=/dev/dsk/c1d4s4
+                        dev_path=/virtual-devices@100/channel-devices@200/disk@4:e,raw
+                            spectype=chr type=minor nodetype=ddi_block
+                            dev_link=/dev/rdsk/c1d4s4
+                    dev=(227,45)
+                        dev_path=/virtual-devices@100/channel-devices@200/disk@4:f
+                            spectype=blk type=minor nodetype=ddi_block
+                            dev_link=/dev/dsk/c1d4s5
+                        dev_path=/virtual-devices@100/channel-devices@200/disk@4:f,raw
+                            spectype=chr type=minor nodetype=ddi_block
+                            dev_link=/dev/rdsk/c1d4s5
+                    dev=(227,46)
+                        dev_path=/virtual-devices@100/channel-devices@200/disk@4:g
+                            spectype=blk type=minor nodetype=ddi_block
+                            dev_link=/dev/dsk/c1d4s6
+                        dev_path=/virtual-devices@100/channel-devices@200/disk@4:g,raw
+                            spectype=chr type=minor nodetype=ddi_block
+                            dev_link=/dev/rdsk/c1d4s6
+                    dev=(227,47)
+                        dev_path=/virtual-devices@100/channel-devices@200/disk@4:h
+                            spectype=blk type=minor nodetype=ddi_block
+                            dev_link=/dev/dsk/c1d4s7
+                        dev_path=/virtual-devices@100/channel-devices@200/disk@4:h,raw
+                            spectype=chr type=minor nodetype=ddi_block
+                            dev_link=/dev/rdsk/c1d4s7
+            disk, instance #7 (driver name: vdc)
+                Device Hold:
+                    mod='specfs' id=5
+                        value='Device opened.'
+                    mod='devfs' id=8
+                        value='Device lookup.'
+                    name='ddi-devid-registrant' type=int items=1
+                        value=00000001
+                Hardware properties:
+                    name='ddi-intr-weight' type=int items=1
+                        value=0000000a
+                    name='devid' type=string items=1
+                        value='id1,vdc@n60002ac0000000000000260c00020a95'
+                    name='compatible' type=string items=1
+                        value='SUNW,sun4v-disk'
+                Device Minor Nodes:
+                    dev=(227,56)
+                        dev_path=/virtual-devices@100/channel-devices@200/disk@6:a
+                            spectype=blk type=minor nodetype=ddi_block
+                            dev_link=/dev/dsk/c1d6s0
+                        dev_path=/virtual-devices@100/channel-devices@200/disk@6:a,raw
+                            spectype=chr type=minor nodetype=ddi_block
+                            dev_link=/dev/rdsk/c1d6s0
+                    dev=(227,57)
+                        dev_path=/virtual-devices@100/channel-devices@200/disk@6:b
+                            spectype=blk type=minor nodetype=ddi_block
+                            dev_link=/dev/dsk/c1d6s1
+                        dev_path=/virtual-devices@100/channel-devices@200/disk@6:b,raw
+                            spectype=chr type=minor nodetype=ddi_block
+                            dev_link=/dev/rdsk/c1d6s1
+                    dev=(227,58)
+                        dev_path=/virtual-devices@100/channel-devices@200/disk@6:c
+                            spectype=blk type=minor nodetype=ddi_block
+                            dev_link=/dev/dsk/c1d6s2
+                        dev_path=/virtual-devices@100/channel-devices@200/disk@6:c,raw
+                            spectype=chr type=minor nodetype=ddi_block
+                            dev_link=/dev/rdsk/c1d6s2
+                    dev=(227,59)
+                        dev_path=/virtual-devices@100/channel-devices@200/disk@6:d
+                            spectype=blk type=minor nodetype=ddi_block
+                            dev_link=/dev/dsk/c1d6s3
+                        dev_path=/virtual-devices@100/channel-devices@200/disk@6:d,raw
+                            spectype=chr type=minor nodetype=ddi_block
+                            dev_link=/dev/rdsk/c1d6s3
+                    dev=(227,60)
+                        dev_path=/virtual-devices@100/channel-devices@200/disk@6:e
+                            spectype=blk type=minor nodetype=ddi_block
+                            dev_link=/dev/dsk/c1d6s4
+                        dev_path=/virtual-devices@100/channel-devices@200/disk@6:e,raw
+                            spectype=chr type=minor nodetype=ddi_block
+                            dev_link=/dev/rdsk/c1d6s4
+                    dev=(227,61)
+                        dev_path=/virtual-devices@100/channel-devices@200/disk@6:f
+                            spectype=blk type=minor nodetype=ddi_block
+                            dev_link=/dev/dsk/c1d6s5
+                        dev_path=/virtual-devices@100/channel-devices@200/disk@6:f,raw
+                            spectype=chr type=minor nodetype=ddi_block
+                            dev_link=/dev/rdsk/c1d6s5
+                    dev=(227,62)
+                        dev_path=/virtual-devices@100/channel-devices@200/disk@6:g
+                            spectype=blk type=minor nodetype=ddi_block
+                            dev_link=/dev/dsk/c1d6s6
+                        dev_path=/virtual-devices@100/channel-devices@200/disk@6:g,raw
+                            spectype=chr type=minor nodetype=ddi_block
+                            dev_link=/dev/rdsk/c1d6s6
+                    dev=(227,63)
+                        dev_path=/virtual-devices@100/channel-devices@200/disk@6:h
+                            spectype=blk type=minor nodetype=ddi_block
+                            dev_link=/dev/dsk/c1d6s7
+                        dev_path=/virtual-devices@100/channel-devices@200/disk@6:h,raw
+                            spectype=chr type=minor nodetype=ddi_block
+                            dev_link=/dev/rdsk/c1d6s7
+            disk, instance #6 (driver name: vdc)
+                Device Hold:
+                    mod='specfs' id=5
+                        value='Device opened.'
+                    mod='devfs' id=8
+                        value='Device lookup.'
+                    name='ddi-devid-registrant' type=int items=1
+                        value=00000001
+                Hardware properties:
+                    name='ddi-intr-weight' type=int items=1
+                        value=0000000a
+                    name='devid' type=string items=1
+                        value='id1,vdc@n60002ac0000000000000260b00020a95'
+                    name='compatible' type=string items=1
+                        value='SUNW,sun4v-disk'
+                Device Minor Nodes:
+                    dev=(227,48)
+                        dev_path=/virtual-devices@100/channel-devices@200/disk@7:a
+                            spectype=blk type=minor nodetype=ddi_block
+                            dev_link=/dev/dsk/c1d7s0
+                        dev_path=/virtual-devices@100/channel-devices@200/disk@7:a,raw
+                            spectype=chr type=minor nodetype=ddi_block
+                            dev_link=/dev/rdsk/c1d7s0
+                    dev=(227,49)
+                        dev_path=/virtual-devices@100/channel-devices@200/disk@7:b
+                            spectype=blk type=minor nodetype=ddi_block
+                            dev_link=/dev/dsk/c1d7s1
+                        dev_path=/virtual-devices@100/channel-devices@200/disk@7:b,raw
+                            spectype=chr type=minor nodetype=ddi_block
+                            dev_link=/dev/rdsk/c1d7s1
+                    dev=(227,50)
+                        dev_path=/virtual-devices@100/channel-devices@200/disk@7:c
+                            spectype=blk type=minor nodetype=ddi_block
+                            dev_link=/dev/dsk/c1d7s2
+                        dev_path=/virtual-devices@100/channel-devices@200/disk@7:c,raw
+                            spectype=chr type=minor nodetype=ddi_block
+                            dev_link=/dev/rdsk/c1d7s2
+                    dev=(227,51)
+                        dev_path=/virtual-devices@100/channel-devices@200/disk@7:d
+                            spectype=blk type=minor nodetype=ddi_block
+                            dev_link=/dev/dsk/c1d7s3
+                        dev_path=/virtual-devices@100/channel-devices@200/disk@7:d,raw
+                            spectype=chr type=minor nodetype=ddi_block
+                            dev_link=/dev/rdsk/c1d7s3
+                    dev=(227,52)
+                        dev_path=/virtual-devices@100/channel-devices@200/disk@7:e
+                            spectype=blk type=minor nodetype=ddi_block
+                            dev_link=/dev/dsk/c1d7s4
+                        dev_path=/virtual-devices@100/channel-devices@200/disk@7:e,raw
+                            spectype=chr type=minor nodetype=ddi_block
+                            dev_link=/dev/rdsk/c1d7s4
+                    dev=(227,53)
+                        dev_path=/virtual-devices@100/channel-devices@200/disk@7:f
+                            spectype=blk type=minor nodetype=ddi_block
+                            dev_link=/dev/dsk/c1d7s5
+                        dev_path=/virtual-devices@100/channel-devices@200/disk@7:f,raw
+                            spectype=chr type=minor nodetype=ddi_block
+                            dev_link=/dev/rdsk/c1d7s5
+                    dev=(227,54)
+                        dev_path=/virtual-devices@100/channel-devices@200/disk@7:g
+                            spectype=blk type=minor nodetype=ddi_block
+                            dev_link=/dev/dsk/c1d7s6
+                        dev_path=/virtual-devices@100/channel-devices@200/disk@7:g,raw
+                            spectype=chr type=minor nodetype=ddi_block
+                            dev_link=/dev/rdsk/c1d7s6
+                    dev=(227,55)
+                        dev_path=/virtual-devices@100/channel-devices@200/disk@7:h
+                            spectype=blk type=minor nodetype=ddi_block
+                            dev_link=/dev/dsk/c1d7s7
+                        dev_path=/virtual-devices@100/channel-devices@200/disk@7:h,raw
+                            spectype=chr type=minor nodetype=ddi_block
+                            dev_link=/dev/rdsk/c1d7s7
+            disk, instance #8 (driver name: vdc)
+                Device Hold:
+                    mod='specfs' id=5
+                        value='Device opened.'
+                    mod='devfs' id=8
+                        value='Device lookup.'
+                    name='ddi-devid-registrant' type=int items=1
+                        value=00000001
+                Hardware properties:
+                    name='ddi-intr-weight' type=int items=1
+                        value=0000000a
+                    name='devid' type=string items=1
+                        value='id1,vdc@n60002ac0000000000000260d00020a95'
+                    name='compatible' type=string items=1
+                        value='SUNW,sun4v-disk'
+                Device Minor Nodes:
+                    dev=(227,64)
+                        dev_path=/virtual-devices@100/channel-devices@200/disk@8:a
+                            spectype=blk type=minor nodetype=ddi_block
+                            dev_link=/dev/dsk/c1d8s0
+                        dev_path=/virtual-devices@100/channel-devices@200/disk@8:a,raw
+                            spectype=chr type=minor nodetype=ddi_block
+                            dev_link=/dev/rdsk/c1d8s0
+                    dev=(227,65)
+                        dev_path=/virtual-devices@100/channel-devices@200/disk@8:b
+                            spectype=blk type=minor nodetype=ddi_block
+                            dev_link=/dev/dsk/c1d8s1
+                        dev_path=/virtual-devices@100/channel-devices@200/disk@8:b,raw
+                            spectype=chr type=minor nodetype=ddi_block
+                            dev_link=/dev/rdsk/c1d8s1
+                    dev=(227,66)
+                        dev_path=/virtual-devices@100/channel-devices@200/disk@8:c
+                            spectype=blk type=minor nodetype=ddi_block
+                            dev_link=/dev/dsk/c1d8s2
+                        dev_path=/virtual-devices@100/channel-devices@200/disk@8:c,raw
+                            spectype=chr type=minor nodetype=ddi_block
+                            dev_link=/dev/rdsk/c1d8s2
+                    dev=(227,67)
+                        dev_path=/virtual-devices@100/channel-devices@200/disk@8:d
+                            spectype=blk type=minor nodetype=ddi_block
+                            dev_link=/dev/dsk/c1d8s3
+                        dev_path=/virtual-devices@100/channel-devices@200/disk@8:d,raw
+                            spectype=chr type=minor nodetype=ddi_block
+                            dev_link=/dev/rdsk/c1d8s3
+                    dev=(227,68)
+                        dev_path=/virtual-devices@100/channel-devices@200/disk@8:e
+                            spectype=blk type=minor nodetype=ddi_block
+                            dev_link=/dev/dsk/c1d8s4
+                        dev_path=/virtual-devices@100/channel-devices@200/disk@8:e,raw
+                            spectype=chr type=minor nodetype=ddi_block
+                            dev_link=/dev/rdsk/c1d8s4
+                    dev=(227,69)
+                        dev_path=/virtual-devices@100/channel-devices@200/disk@8:f
+                            spectype=blk type=minor nodetype=ddi_block
+                            dev_link=/dev/dsk/c1d8s5
+                        dev_path=/virtual-devices@100/channel-devices@200/disk@8:f,raw
+                            spectype=chr type=minor nodetype=ddi_block
+                            dev_link=/dev/rdsk/c1d8s5
+                    dev=(227,70)
+                        dev_path=/virtual-devices@100/channel-devices@200/disk@8:g
+                            spectype=blk type=minor nodetype=ddi_block
+                            dev_link=/dev/dsk/c1d8s6
+                        dev_path=/virtual-devices@100/channel-devices@200/disk@8:g,raw
+                            spectype=chr type=minor nodetype=ddi_block
+                            dev_link=/dev/rdsk/c1d8s6
+                    dev=(227,71)
+                        dev_path=/virtual-devices@100/channel-devices@200/disk@8:h
+                            spectype=blk type=minor nodetype=ddi_block
+                            dev_link=/dev/dsk/c1d8s7
+                        dev_path=/virtual-devices@100/channel-devices@200/disk@8:h,raw
+                            spectype=chr type=minor nodetype=ddi_block
+                            dev_link=/dev/rdsk/c1d8s7
+            disk, instance #9 (driver name: vdc)
+                Device Hold:
+                    mod='specfs' id=5
+                        value='Device opened.'
+                    mod='devfs' id=8
+                        value='Device lookup.'
+                    name='ddi-devid-registrant' type=int items=1
+                        value=00000001
+                Hardware properties:
+                    name='ddi-intr-weight' type=int items=1
+                        value=0000000a
+                    name='devid' type=string items=1
+                        value='id1,vdc@n60002ac0000000000000260500020a95'
+                    name='compatible' type=string items=1
+                        value='SUNW,sun4v-disk'
+                Device Minor Nodes:
+                    dev=(227,72)
+                        dev_path=/virtual-devices@100/channel-devices@200/disk@9:a
+                            spectype=blk type=minor nodetype=ddi_block
+                            dev_link=/dev/dsk/c1d9s0
+                        dev_path=/virtual-devices@100/channel-devices@200/disk@9:a,raw
+                            spectype=chr type=minor nodetype=ddi_block
+                            dev_link=/dev/rdsk/c1d9s0
+                    dev=(227,73)
+                        dev_path=/virtual-devices@100/channel-devices@200/disk@9:b
+                            spectype=blk type=minor nodetype=ddi_block
+                            dev_link=/dev/dsk/c1d9s1
+                        dev_path=/virtual-devices@100/channel-devices@200/disk@9:b,raw
+                            spectype=chr type=minor nodetype=ddi_block
+                            dev_link=/dev/rdsk/c1d9s1
+                    dev=(227,74)
+                        dev_path=/virtual-devices@100/channel-devices@200/disk@9:c
+                            spectype=blk type=minor nodetype=ddi_block
+                            dev_link=/dev/dsk/c1d9s2
+                        dev_path=/virtual-devices@100/channel-devices@200/disk@9:c,raw
+                            spectype=chr type=minor nodetype=ddi_block
+                            dev_link=/dev/rdsk/c1d9s2
+                    dev=(227,75)
+                        dev_path=/virtual-devices@100/channel-devices@200/disk@9:d
+                            spectype=blk type=minor nodetype=ddi_block
+                            dev_link=/dev/dsk/c1d9s3
+                        dev_path=/virtual-devices@100/channel-devices@200/disk@9:d,raw
+                            spectype=chr type=minor nodetype=ddi_block
+                            dev_link=/dev/rdsk/c1d9s3
+                    dev=(227,76)
+                        dev_path=/virtual-devices@100/channel-devices@200/disk@9:e
+                            spectype=blk type=minor nodetype=ddi_block
+                            dev_link=/dev/dsk/c1d9s4
+                        dev_path=/virtual-devices@100/channel-devices@200/disk@9:e,raw
+                            spectype=chr type=minor nodetype=ddi_block
+                            dev_link=/dev/rdsk/c1d9s4
+                    dev=(227,77)
+                        dev_path=/virtual-devices@100/channel-devices@200/disk@9:f
+                            spectype=blk type=minor nodetype=ddi_block
+                            dev_link=/dev/dsk/c1d9s5
+                        dev_path=/virtual-devices@100/channel-devices@200/disk@9:f,raw
+                            spectype=chr type=minor nodetype=ddi_block
+                            dev_link=/dev/rdsk/c1d9s5
+                    dev=(227,78)
+                        dev_path=/virtual-devices@100/channel-devices@200/disk@9:g
+                            spectype=blk type=minor nodetype=ddi_block
+                            dev_link=/dev/dsk/c1d9s6
+                        dev_path=/virtual-devices@100/channel-devices@200/disk@9:g,raw
+                            spectype=chr type=minor nodetype=ddi_block
+                            dev_link=/dev/rdsk/c1d9s6
+                    dev=(227,79)
+                        dev_path=/virtual-devices@100/channel-devices@200/disk@9:h
+                            spectype=blk type=minor nodetype=ddi_block
+                            dev_link=/dev/dsk/c1d9s7
+                        dev_path=/virtual-devices@100/channel-devices@200/disk@9:h,raw
+                            spectype=chr type=minor nodetype=ddi_block
+                            dev_link=/dev/rdsk/c1d9s7
+            disk, instance #1 (driver name: vdc)
+                Device Hold:
+                    mod='specfs' id=5
+                        value='Device opened.'
+                    mod='devfs' id=8
+                        value='Device lookup.'
+                    name='ddi-devid-registrant' type=int items=1
+                        value=00000001
+                Hardware properties:
+                    name='ddi-intr-weight' type=int items=1
+                        value=0000000a
+                    name='devid' type=string items=1
+                        value='id1,vdc@n60002ac0000000000000260600020a95'
+                    name='compatible' type=string items=1
+                        value='SUNW,sun4v-disk'
+                Device Minor Nodes:
+                    dev=(227,8)
+                        dev_path=/virtual-devices@100/channel-devices@200/disk@a:a
+                            spectype=blk type=minor nodetype=ddi_block
+                            dev_link=/dev/dsk/c1d10s0
+                        dev_path=/virtual-devices@100/channel-devices@200/disk@a:a,raw
+                            spectype=chr type=minor nodetype=ddi_block
+                            dev_link=/dev/rdsk/c1d10s0
+                    dev=(227,9)
+                        dev_path=/virtual-devices@100/channel-devices@200/disk@a:b
+                            spectype=blk type=minor nodetype=ddi_block
+                            dev_link=/dev/dsk/c1d10s1
+                        dev_path=/virtual-devices@100/channel-devices@200/disk@a:b,raw
+                            spectype=chr type=minor nodetype=ddi_block
+                            dev_link=/dev/rdsk/c1d10s1
+                    dev=(227,10)
+                        dev_path=/virtual-devices@100/channel-devices@200/disk@a:c
+                            spectype=blk type=minor nodetype=ddi_block
+                            dev_link=/dev/dsk/c1d10s2
+                        dev_path=/virtual-devices@100/channel-devices@200/disk@a:c,raw
+                            spectype=chr type=minor nodetype=ddi_block
+                            dev_link=/dev/rdsk/c1d10s2
+                    dev=(227,11)
+                        dev_path=/virtual-devices@100/channel-devices@200/disk@a:d
+                            spectype=blk type=minor nodetype=ddi_block
+                            dev_link=/dev/dsk/c1d10s3
+                        dev_path=/virtual-devices@100/channel-devices@200/disk@a:d,raw
+                            spectype=chr type=minor nodetype=ddi_block
+                            dev_link=/dev/rdsk/c1d10s3
+                    dev=(227,12)
+                        dev_path=/virtual-devices@100/channel-devices@200/disk@a:e
+                            spectype=blk type=minor nodetype=ddi_block
+                            dev_link=/dev/dsk/c1d10s4
+                        dev_path=/virtual-devices@100/channel-devices@200/disk@a:e,raw
+                            spectype=chr type=minor nodetype=ddi_block
+                            dev_link=/dev/rdsk/c1d10s4
+                    dev=(227,13)
+                        dev_path=/virtual-devices@100/channel-devices@200/disk@a:f
+                            spectype=blk type=minor nodetype=ddi_block
+                            dev_link=/dev/dsk/c1d10s5
+                        dev_path=/virtual-devices@100/channel-devices@200/disk@a:f,raw
+                            spectype=chr type=minor nodetype=ddi_block
+                            dev_link=/dev/rdsk/c1d10s5
+                    dev=(227,14)
+                        dev_path=/virtual-devices@100/channel-devices@200/disk@a:g
+                            spectype=blk type=minor nodetype=ddi_block
+                            dev_link=/dev/dsk/c1d10s6
+                        dev_path=/virtual-devices@100/channel-devices@200/disk@a:g,raw
+                            spectype=chr type=minor nodetype=ddi_block
+                            dev_link=/dev/rdsk/c1d10s6
+                    dev=(227,15)
+                        dev_path=/virtual-devices@100/channel-devices@200/disk@a:h
+                            spectype=blk type=minor nodetype=ddi_block
+                            dev_link=/dev/dsk/c1d10s7
+                        dev_path=/virtual-devices@100/channel-devices@200/disk@a:h,raw
+                            spectype=chr type=minor nodetype=ddi_block
+                            dev_link=/dev/rdsk/c1d10s7
+            pciv-communication, instance #0 (driver name: vpci)
+                Device Hold:
+                    mod='devfs' id=8
+                        value='Device lookup.'
+                    name='ddi-forceattach' type=int items=1
+                        value=00000001
+                Hardware properties:
+                    name='compatible' type=string items=1
+                        value='SUNW,sun4v-pciv-comm'
+            virtual-domain-service, instance #0 (driver name: vlds)
+                Device Hold:
+                    mod='specfs' id=5
+                        value='Device opened.'
+                    mod='devfs' id=8
+                        value='Device lookup.'
+                Hardware properties:
+                    name='compatible' type=string items=1
+                        value='SUNW,sun4v-domain-service'
+                Device Minor Nodes:
+                    dev=(232,0)
+                        dev_path=/virtual-devices@100/channel-devices@200/virtual-domain-service@0:vlds
+                            spectype=chr type=minor nodetype=ddi_pseudo
+                    dev=(232,1)
+                        dev_path=<clone>
+                        Device Minor Opened By:
+                            proc='ldmad' pid=345
+                                cmd='/usr/lib/ldoms/ldmad'
+                                user='root[0]'
+                    dev=(232,2)
+                        dev_path=<clone>
+                        Device Minor Opened By:
+                            proc='fmd' pid=956
+                                cmd='/usr/lib/fm/fmd/fmd'
+                                user='root[0]'
+                    dev=(232,3)
+                        dev_path=<clone>
+                        Device Minor Opened By:
+                            proc='hwmgmtd' pid=1824
+                                cmd='/usr/lib/ssm/hwmgmtd'
+                                user='root[0]'
+    ramdisk-root, instance #0 (driver name: ramdisk)
+        Hardware properties:
+            name='compatible' type=string items=1
+                value='SUNW,ramdisk'
+    fcoe, instance #0 (driver name: fcoe)
+        Device Hold:
+            mod='devfs' id=8
+                value='Device lookup.'
+        Device Minor Nodes:
+            dev=(55,0)
+                dev_path=/fcoe:admin
+                    spectype=chr type=minor nodetype=ddi_pseudo
+    iscsi, instance #0 (driver name: iscsi)
+        Device Hold:
+            mod='devfs' id=8
+                value='Device lookup.'
+            mod='specfs' id=5
+                value='Device opened.'
+        Driver properties:
+            name='config-storm-delay' type=int items=1 dev=none
+                value=00000005
+            name='fm-ereport-capable' type=boolean dev=none
+            name='initiator-port' type=string items=1 dev=none
+                value='iqn.1986-03.com.sun:01:78fc6a6d419f.60e9ab99,4000002a00ff'
+            name='so-rcvbuf' type=int items=1 dev=none
+                value=00040000
+            name='so-sndbuf' type=int items=1 dev=none
+                value=00040000
+            name='tcp-abort-threshold' type=int items=1 dev=none
+                value=00007530
+            name='tcp-conn-abort-threshold' type=int items=1 dev=none
+                value=00002710
+            name='tcp-conn-notify-threshold' type=int items=1 dev=none
+                value=000007d0
+            name='tcp-nodelay' type=int items=1 dev=none
+                value=00000000
+        System properties:
+            name='instance' type=int items=1
+                value=00000000
+            name='ddi-child-instance-transient' type=string items=1
+                value='yes'
+            name='load-balance' type=string items=1
+                value='round-robin'
+            name='mpxio-disable' type=string items=1
+                value='no'
+        Hardware properties:
+            name='ddi-retire-parent-prevents' type=string items=1
+                value='open'
+            name='initiator-interconnect-type' type=string items=1
+                value='ISCSI'
+            name='scsi-command-timeout-threshold' type=int items=1
+                value=ffffffff
+            name='scsi-enumeration' type=int items=1
+                value=00000000
+            name='scsi-fence-timeout' type=int items=1
+                value=0000012c
+            name='scsi-initiator-id' type=int items=1
+                value=00000007
+            name='scsi-options' type=int items=1
+                value=00107ff8
+            name='scsi-poll-timeout' type=int items=1
+                value=0000000a
+            name='scsi-reset-delay' type=int items=1
+                value=00000bb8
+            name='scsi-selection-timeout' type=int items=1
+                value=000000fa
+            name='scsi-tag-age-limit' type=int items=1
+                value=00000002
+            name='scsi-transport-timeout' type=int items=1
+                value=0000003c
+            name='scsi-watchdog-tick' type=int items=1
+                value=0000000a
+        Device Minor Nodes:
+            dev=(95,0)
+                dev_path=/iscsi:devctl
+                    spectype=chr type=minor nodetype=ddi_pseudo
+                Device Minor Opened By:
+                    proc='iscsid' pid=706
+                        cmd='/lib/svc/method/iscsid'
+                        user='root[0]'
+    pseudo, instance #0 (driver name: pseudo)
+        Device Hold:
+            mod='genunix' id=1
+                value='Internal kernel hold.'
+            mod='devfs' id=8
+                value='Device lookup.'
+        System properties:
+            name='class' type=string items=1
+                value='root'
+            name='instance' type=int items=1
+                value=00000000
+        Device Minor Nodes:
+            dev=(147,0)
+                dev_path=/pseudo:devctl
+                    spectype=chr type=minor nodetype=ddi_ctl:devctl

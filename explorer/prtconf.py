@@ -209,9 +209,9 @@ class Prtconf(explorerbase.ExplorerBase):
     def get_kstats(self):
         """TODO"""
         k = kstat.Kstat(self.config)
-        for link in k.classChains("disk"):
+        for link in k.class_chains("disk"):
             self["_kstat_disks"].append(link.name())
-        for link in k.classChains("tape"):
+        for link in k.class_chains("tape"):
             self["_kstat_tapes"].append(link.name())
 
     ##########################################################################
@@ -274,7 +274,7 @@ class Prtconf(explorerbase.ExplorerBase):
                 indent = len(matchobj.group("indent")) / 4
 
                 currblob = self.add_driver(
-                    "{matchobj.group('module')}{matchobj.group('instance')}"
+                    f"{matchobj.group('module')}{matchobj.group('instance')}"
                 )
                 indentblob[indent - 1].add_child(currblob)
                 indentblob[indent] = currblob
