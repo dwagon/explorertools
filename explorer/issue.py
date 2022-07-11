@@ -39,14 +39,14 @@ class Issue:
             self.type = "issue"
 
     ##########################################################################
-    def isIssue(self):
+    def is_issue(self):
         """TODO"""
         if self.typ == "issue":
             return True
         return False
 
     ##########################################################################
-    def isConcern(self):
+    def is_concern(self):
         """TODO"""
         if self.typ == "concern":
             return True
@@ -55,7 +55,7 @@ class Issue:
     ##########################################################################
     def __repr__(self):
         """TODO"""
-        return "Issue %s:%s %s" % (self.category, self.subcategory, self.obj)
+        return f"Issue {self.category}:{self.subcategory} {self.obj}"
 
 
 # EOF

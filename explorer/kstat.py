@@ -2,11 +2,9 @@
 """
 Script to understand kstat output
 """
-# Written by Dougal Scott <dwagon@pobox.com>
-# $Id: kstat.py 2393 2012-06-01 06:38:17Z dougals $
-# $HeadURL: http://svn/ops/unix/explorer/trunk/explorer/kstat.py $
+# Written by Dougal Scott <dougal.scott@gmail.com>
 
-import explorer.explorerbase as explorerbase
+from explorer import explorerbase
 
 
 ##########################################################################
@@ -26,7 +24,7 @@ class Chain(explorerbase.ExplorerBase):
         self.snaptime = None
 
     ##########################################################################
-    def addVal(self, stat, val):
+    def add_val(self, stat, val):
         """TODO"""
         if stat == "class":
             self.class_ = val
@@ -37,19 +35,14 @@ class Chain(explorerbase.ExplorerBase):
 
     ##########################################################################
     def __repr__(self):
-        return "<Chain: module=%s name=%s instance=%s class_=%s>" % (
-            self.module,
-            self.objname,
-            self.instance,
-            self.class_,
-        )
+        return f"<Chain: module={self.module} name={self.objname} instance={self.instance} class_={self.class_}>"
 
     ##########################################################################
-    def printLink(self):
+    def print_link(self):
         """TODO"""
         strg = ""
         for k in sorted(self.data.keys()):
-            strg += "%s=%s\n" % (k, self[k])
+            strg += f"{k}={self[k]}\n"
         return strg
 
 
@@ -63,21 +56,21 @@ class Kstat(explorerbase.ExplorerBase):
     def __init__(self, config):
         """TODO"""
         explorerbase.ExplorerBase.__init__(self, config)
-        self.parseKstat()
+        self._parse_kstat()
 
     ##########################################################################
-    def parseKstat(self):
+    def _parse_kstat(self):
         """TODO"""
         if not self.exists("netinfo/kstat-p.out"):
             return
-        f = self.open("netinfo/kstat-p.out")
-        for line in f:
+        infh = self.open("netinfo/kstat-p.out")
+        for line in infh:
             line = line.strip()
             try:  # Start of new instances don't have data
-                id, val = line.split("\t")
+                idn, val = line.split("\t")
             except ValueError:
                 continue
-            bits = id.split(":")
+            bits = idn.split(":")
             module = bits[0]
             instance = bits[1]
             statistic = bits[-1]
@@ -90,21 +83,21 @@ class Kstat(explorerbase.ExplorerBase):
                 self[module][name][instance] = Chain(
                     self.config, module, name, instance
                 )
-            self[module][name][instance].addVal(statistic, val)
+            self[module][name][instance].add_val(statistic, val)
 
-        f.close()
+        infh.close()
 
     ##########################################################################
-    def moduleList(self):
+    def _module_list(self):
         """TODO"""
         return sorted(self.keys())
 
     ##########################################################################
-    def nameList(self, module=None):
+    def _name_list(self, module=None):
         """TODO"""
         names = []
         if module is None:
-            modlist = self.moduleList()
+            modlist = self._module_list()
         else:
             modlist = [module]
         for mod in modlist:
@@ -112,32 +105,32 @@ class Kstat(explorerbase.ExplorerBase):
         return sorted(names)
 
     ##########################################################################
-    def instanceList(self, module, name):
+    def instance_list(self, module, name):
         """Return the instances that belong to the"""
         return self[module][name].keys()
 
     ##########################################################################
-    def classChains(self, class_, module=None):
+    def class_chains(self, class_, module=None):
         """Return all the chains that belong to the specified class_
         module can legitimately be '' - so can't check for Falsehood
         """
         if module is None:
-            modlist = self.moduleList()
+            modlist = self._module_list()
         else:
             modlist = [module]
         classlist = []
-        for m in modlist:
-            for n in self.nameList(m):
-                for i in self[m][n]:
-                    if self[m][n][i].class_ == class_:
-                        classlist.append(self[m][n][i])
+        for mod in modlist:
+            for nam in self._name_list(mod):
+                for i in self[mod][nam]:
+                    if self[mod][nam][i].class_ == class_:
+                        classlist.append(self[mod][nam][i])
         return classlist
 
     ##########################################################################
     def chain(self, module, name, instance):
         """TODO"""
-        c = self[module][name][instance]
-        return c
+        chn = self[module][name][instance]
+        return chn
 
 
 # EOF
