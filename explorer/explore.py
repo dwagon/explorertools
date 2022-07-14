@@ -6,14 +6,15 @@ This should encapulate all of the other explorer details
 
 # Written by Dougal Scott <dougal.scott@gmail.com>
 
+import configparser
 import getopt
 import glob
 import os
 import os.path
+import pickle
 import re
 import sys
 import time
-import pickle
 
 from explorer import cluster
 from explorer import disks
@@ -212,7 +213,6 @@ def read_config(cfg=None):
      * Using the EXPLORERTOOLS environment variable
      * /app/explorer/etc/explorertools.cfg
     """
-    import configparser
 
     options = {}
     defaults = {
@@ -277,7 +277,7 @@ def all_explorers(reg=""):
     hostlist = {}
     globstr = os.path.join(OPTIONS["datadir"], f"*{reg}*")
     files = [
-        f.replace("%s/" % OPTIONS["datadir"], "")
+        f.replace(f"{OPTIONS['datadir']}/", "")
         for f in glob.glob(globstr)
         if os.path.splitext(f)[1] not in (".gz", ".bz2", ".md5")
     ]

@@ -1,9 +1,7 @@
 """
 Script to understand fma output for explorer analysis
 """
-# Written by Dougal Scott <dwagon@pobox.com>
-# $Id: fma.py 2393 2012-06-01 06:38:17Z dougals $
-# $HeadURL: http://svn/ops/unix/explorer/trunk/explorer/fma.py $
+# Written by Dougal Scott <dougal.scott@gmail.com>
 
 from explorer import explorerbase
 

@@ -122,7 +122,7 @@ class Vxvm(explorerbase.ExplorerBase):
 ##########################################################################
 # storageVxvm ############################################################
 ##########################################################################
-class storageVxvm(explorerbase.ExplorerBase):
+class StorageVxvm(explorerbase.ExplorerBase):
     """Understand explorer output with respect to vxvm"""
 
     def __init__(self, config, data=None):

@@ -93,7 +93,7 @@ class EmcDisks(explorerbase.ExplorerBase):
 ##########################################################################
 # storageEmc #############################################################
 ##########################################################################
-class storageEmc(explorerbase.ExplorerBase):
+class StorageEmc(explorerbase.ExplorerBase):
     """Class to represent all EMC arrays within a system based on data from
     Explorers
     """

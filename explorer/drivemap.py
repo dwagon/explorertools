@@ -246,6 +246,7 @@ drivemap = {
     "Ami Virtual CDROM": {"fake": True},
     "AMI Virtual CDROM": {"fake": True},
     "VMware Virtual IDE CDROM Drive": {"fake": True},
+    "VMware IDE CDR10": {"fake": True},
     "VMware Virtual disk": {"fake": True},
     "HP Virtual CD-ROM": {"fake": True},
     "HP Virtual DVD-ROM": {"fake": True},

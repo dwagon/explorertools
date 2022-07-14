@@ -61,7 +61,7 @@ class Swap(explorerbase.ExplorerBase):
 ##########################################################################
 # storageSwap ############################################################
 ##########################################################################
-class storageSwap(explorerbase.ExplorerBase):
+class StorageSwap(explorerbase.ExplorerBase):
     """Understand explorer output with respect to swap"""
 
     ##########################################################################

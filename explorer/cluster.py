@@ -1,8 +1,5 @@
-#!/usr/bin/env python
 """ Script to understand cluster details"""
-# Written by Dougal Scott <dwagon@pobox.com>
-# $Id: cluster.py 2393 2012-06-01 06:38:17Z dougals $
-# $HeadURL: http://svn/ops/unix/explorer/trunk/explorer/cluster.py $
+# Written by Dougal Scott <dougal.scott@gmail.com>
 
 import re
 from explorer import explorerbase

@@ -1,10 +1,7 @@
-#!/usr/bin/env python3
 """
 Script to understand filesystem details
 """
-# Written by Dougal Scott <dwagon@pobox.com>
-# $Id: filesys.py 4431 2013-02-27 07:38:45Z dougals $
-# $HeadURL: http://svn/ops/unix/explorer/trunk/explorer/filesys.py $
+# Written by Dougal Scott <dougal.scott@gmail.com>
 
 import re
 from explorer import explorerbase
@@ -45,10 +42,10 @@ class Filesystems(explorerbase.ExplorerBase):
     def __init__(self, config):
         """ TODO """
         explorerbase.ExplorerBase.__init__(self, config)
-        self.st = storage.Storage(config)
-        for flsys in self.st.keys():
-            if "_type" in self.st[flsys] and self.st[flsys]["_type"] == "filesystem":
-                self[flsys] = Filesystem(config, flsys, self.st[flsys], self.st)
+        self.strg = storage.Storage(config)
+        for flsys in self.strg.keys():
+            if "_type" in self.strg[flsys] and self.strg[flsys]["_type"] == "filesystem":
+                self[flsys] = Filesystem(config, flsys, self.strg[flsys], self.strg)
         self.analyse()
 
     ##########################################################################
@@ -81,7 +78,7 @@ class Filesystems(explorerbase.ExplorerBase):
 ##########################################################################
 # storageFilesystems #####################################################
 ##########################################################################
-class storageFilesystems(explorerbase.ExplorerBase):
+class StorageFilesystems(explorerbase.ExplorerBase):
     """Understand explorer output with respect to all filesystems and their ilk"""
 
     ##########################################################################

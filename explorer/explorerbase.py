@@ -9,6 +9,7 @@ Class to make reading explorers easier
 import glob
 import math
 import os
+import pprint
 import re
 import sys
 
@@ -50,7 +51,6 @@ class ExplorerBase:
     ##########################################################################
     def pprint(self):
         """TODO"""
-        import pprint
 
         return pprint.pformat(self.data)
 
@@ -162,17 +162,16 @@ class ExplorerBase:
         """Return the filename stripped of everything including the .out
         which generally returns the command name
         """
-        fn = os.path.basename(filename)
-        fn = fn.replace(".out", "")
-        return fn
+        fname = os.path.basename(filename)
+        fname = fname.replace(".out", "")
+        return fname
 
     ##########################################################################
     def name(self):
         """TODO"""
         if hasattr(self, "objname"):
             return self.objname
-        else:
-            return self.hostname
+        return self.hostname
 
     ##########################################################################
     def add_cpu(self, *args, **kwargs):
@@ -180,7 +179,7 @@ class ExplorerBase:
         if args:
             kwargs["desc"] = args[0]
         kwargs["component"] = "cpu"
-        self.addPart(**kwargs)
+        self.add_part(**kwargs)
 
     ##########################################################################
     def add_mem(self, *args, **kwargs):
@@ -188,7 +187,7 @@ class ExplorerBase:
         if args:
             kwargs["desc"] = args[0]
         kwargs["component"] = "memory"
-        self.addPart(**kwargs)
+        self.add_part(**kwargs)
 
     ##########################################################################
     def add_part(self, **kwargs):
@@ -223,7 +222,7 @@ class ExplorerBase:
         from the things that it collects (e.g. Disk)
         """
         for iss in obj.issues:
-            self.addIssue(iss)
+            self.add_issue(iss)
 
     ##########################################################################
     def add_issue(self, *args, **kwargs):
@@ -273,12 +272,8 @@ class ExplorerBase:
     def __repr__(self):
         """TODO"""
         if hasattr(self, "name"):
-            return "<%s %s %s>" % (
-                self.__class__.__name__,
-                self.name(),
-                repr(self.data),
-            )
-        return "<%s %s>" % (self.__class__.__name__, self.data)
+            return f"<{self.__class__.__name__} {self.name()} {repr(self.data)}>"
+        return f"<{self.__class__.__name__} {self.data}>"
 
     ##########################################################################
     def open(self, filename, mode="r"):
@@ -371,17 +366,17 @@ class ExplorerBase:
         return strn
 
     ##########################################################################
-    def dequoteKV(self, line):
-        """Give a line "'a' : 'b'" return a,b
+    def dequote_keyval(self, line):
+        """Give a line "'key' : 'val'" return key,val
         This occurs quite often in hardware.py
         """
         try:
             bits = line.strip().split(":")
-            a = self.strip_quotes(bits[0].strip())
-            b = self.strip_quotes(bits[1].strip())
+            key = self.strip_quotes(bits[0].strip())
+            val = self.strip_quotes(bits[1].strip())
         except IndexError:
-            self.fatal(f"dequoteKV issue: line={line}")
-        return a, b
+            self.fatal(f"dequote_keyval issue: line={line}")
+        return key, val
 
     ##########################################################################
     def parse_linux_hardwarepy(self, proc):
@@ -404,7 +399,7 @@ class ExplorerBase:
                     buff = {}
                     class_ = None
                 continue
-            key, val = self.dequoteKV(line)
+            key, val = self.dequote_keyval(line)
             if key == "class":
                 class_ = val
             buff[key] = val

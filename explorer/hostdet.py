@@ -1,10 +1,7 @@
-#!/usr/bin/env python3
 """
 Script to understand host details
 """
-# Written by Dougal Scott <dwagon@pobox.com>
-# $Id: hostdet.py 3035 2012-10-01 07:19:27Z dougals $
-# $HeadURL: http://svn/ops/unix/explorer/trunk/explorer/hostdet.py $
+# Written by Dougal Scott <dougal.scott@gmail.com>
 
 import re
 from explorer import explorerbase
@@ -122,6 +119,8 @@ class Host(explorerbase.ExplorerBase):
     ##########################################################################
     def _parse_linux_hardwarepy(self):
         """TODO"""
+        if not self.exists("hardware.py"):
+            return
         infh = self.open("hardware.py")
         for line in infh:
             line = line.strip()

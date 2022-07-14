@@ -212,7 +212,7 @@ class Volmanager(explorerbase.ExplorerBase):
 ##########################################################################
 # storageVolmanager ######################################################
 ##########################################################################
-class storageVolmanager(explorerbase.ExplorerBase):
+class StorageVolmanager(explorerbase.ExplorerBase):
     """Representation of everything disksuite volume manager based on data
     from explorers
     """

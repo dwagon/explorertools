@@ -114,23 +114,23 @@ class Prtdiag(explorerbase.ExplorerBase):
     def parse_linux(self, hardware):
         """TODO"""
         try:
-            self.parseLinux_dmidecode()
+            self.parse_linux_dmidecode()
         except UserWarning:
             pass
         try:
-            self.parseLinux_hardwarepy(self.parseLinux_hardwarepy_chunk)
+            self.parse_linux_hardwarepy(self.parse_linux_hardwarepy_chunk)
         except UserWarning:
             pass
         try:
-            self.parseLinux_scsi()
+            self.parse_linux_scsi()
         except UserWarning:
             pass
         try:
-            self.parseLinux_ide()
+            self.parse_linux_ide()
         except UserWarning:
             pass
         try:
-            self.parseLinux_lspci()
+            self.parse_linux_lspci()
         except UserWarning:
             pass
 
@@ -394,7 +394,7 @@ class Prtdiag(explorerbase.ExplorerBase):
     }
 
     ##########################################################################
-    def parseLinux_lspci(self):
+    def parse_linux_lspci(self):
         """We need the stuff between the 'lspci -n' and the 'lspci -nv' lines"""
         filename = "lspci"
         """ 00:00.0 Class 0600: 1166:0014 (rev 33)"""
@@ -419,7 +419,7 @@ class Prtdiag(explorerbase.ExplorerBase):
         infh.close()
 
     ##########################################################################
-    def parseLinux_hardwarepy_chunk(self, buff, class_):
+    def parse_linux_hardwarepy_chunk(self, buff, class_):
         """TODO"""
         if class_ == "HD":
             if buff.get("bus", "none") == "USB":
@@ -436,7 +436,7 @@ class Prtdiag(explorerbase.ExplorerBase):
         elif class_ == "AUDIO":
             pass
         elif class_ == "CPU":
-            self.addCpu(desc=buff["model"])
+            self.add_cpu(desc=buff["model"])
             self.foundCpu = True
         elif class_ == "USB":
             pass
@@ -476,7 +476,7 @@ class Prtdiag(explorerbase.ExplorerBase):
             self.fatal("Unhandled hardware class_=%s" % class_)
 
     ##########################################################################
-    def parseLinux_ide(self):
+    def parse_linux_ide(self):
         """TODO"""
         files = self.glob("proc/ide/*/*/model")
         for fname in files:
@@ -485,18 +485,18 @@ class Prtdiag(explorerbase.ExplorerBase):
             mf.close()
 
     ##########################################################################
-    def parseLinux_scsi(self):
+    def parse_linux_scsi(self):
         """TODO"""
         buff = []
         infh = self.open("proc/scsi/scsi")
         for line in infh:
             if "Host" in line:
-                self.parseLinux_scsi_chunk(buff)
+                self.parse_linux_scsi_chunk(buff)
                 buff = [line]
             else:
                 buff.append(line)
         infh.close()
-        self.parseLinux_scsi_chunk(buff)
+        self.parse_linux_scsi_chunk(buff)
 
     ##########################################################################
     def add_drive(self, model):
@@ -514,7 +514,7 @@ class Prtdiag(explorerbase.ExplorerBase):
             self.warning("Couldn't find disk %s in drive partslist" % model)
 
     ##########################################################################
-    def parseLinux_scsi_chunk(self, buff):
+    def parse_linux_scsi_chunk(self, buff):
         """TODO"""
         # First check to see if we are talking about a real disk
         for line in buff:
@@ -532,7 +532,7 @@ class Prtdiag(explorerbase.ExplorerBase):
                 self.add_drive(model)
 
     ##########################################################################
-    def parseLinux_dmidecode(self):
+    def parse_linux_dmidecode(self):
         """TODO"""
         infh = self.open("dmidecode")
         data = []
@@ -575,7 +575,7 @@ class Prtdiag(explorerbase.ExplorerBase):
             if status != "Unpopulated":
                 self.foundCpu = True
                 if not self.handleXcpu(version):
-                    self.addCpu(desc="%s %s" % (cpuspeed, version))
+                    self.add_cpu(desc="%s %s" % (cpuspeed, version))
 
         # IO Cards
         if "System Slot Information" in data:
@@ -599,7 +599,7 @@ class Prtdiag(explorerbase.ExplorerBase):
                     formfactor = self.dmiline(line)
             if "No Module Installed" not in memsize:
                 self.foundMem = True
-                self.addMem(desc="%s %s" % (memsize, formfactor), size=memsize)
+                self.add_mem(desc="%s %s" % (memsize, formfactor), size=memsize)
 
     ##########################################################################
     def handleXcpu(self, line):
@@ -721,14 +721,14 @@ class Prtdiag(explorerbase.ExplorerBase):
         for map in (longmap, shortmap):
             for key, value in map.items():
                 if " %s " % key in line:
-                    self.addCpu(
+                    self.add_cpu(
                         desc=value["desc"], option=value["option"], part=value["part"]
                     )
                     return True
         for map in (longmap, shortmap):
             for key, value in map.items():
                 if key in line:
-                    self.addCpu(
+                    self.add_cpu(
                         desc=value["desc"], option=value["option"], part=value["part"]
                     )
                     return True
@@ -982,7 +982,7 @@ class Prtdiag(explorerbase.ExplorerBase):
                     size = "1GB"
                 else:
                     self.warning("Unhandled Mem on V20Z: %s" % desc)
-                self.addMem(desc=desc, option=option, part=part, size=size)
+                self.add_mem(desc=desc, option=option, part=part, size=size)
 
         if self.exists("sysconfig/prtpicl-v.out"):
             infh = self.open("sysconfig/prtpicl-v.out")
@@ -991,13 +991,13 @@ class Prtdiag(explorerbase.ExplorerBase):
                     cpu = line.replace(":brand-string", "").strip()
                     self.foundCpu = True
                     if cpu == "AMD Opteron(tm) Processor 244":
-                        self.addCpu(
+                        self.add_cpu(
                             desc="1.8GHz AMD Opteron (Unknown stepping)",
                             part="370-6783",
                             option="X9835A",
                         )
                     elif cpu == "AMD Opteron(tm) Processor 248":
-                        self.addCpu(
+                        self.add_cpu(
                             desc="2.2GHz AMD Opteron (Unknown stepping)",
                             part="370-7711",
                             option="X9856A",
@@ -1055,7 +1055,7 @@ class Prtdiag(explorerbase.ExplorerBase):
                         option = memMap[m]["option"]
                         part = memMap[m]["part"]
                         size = memMap[m]["size"]
-                        self.addMem(desc=desc, option=option, part=part, size=size)
+                        self.add_mem(desc=desc, option=option, part=part, size=size)
                         self.foundMem = True
                 if not size:
                     self.warning("Unhandled Mem on V40Z: %s" % desc)
@@ -1067,7 +1067,7 @@ class Prtdiag(explorerbase.ExplorerBase):
                     cpu = line.replace(":brand-string", "").strip()
                     if cpu in cpuMap:
                         self.foundCpu = True
-                        self.addCpu(
+                        self.add_cpu(
                             desc=cpuMap[cpu]["desc"],
                             part=cpuMap[cpu]["part"],
                             option=cpuMap[cpu]["option"],
@@ -1381,7 +1381,7 @@ class Prtdiag(explorerbase.ExplorerBase):
                     desc = line.split(":")[-1].strip()
                     if desc in memMap:
                         if numdimm % 2 == 0:
-                            self.addMem(**memMap[desc])
+                            self.add_mem(**memMap[desc])
                             self.foundMem = True
                         numdimm += 1
                     else:
@@ -2069,15 +2069,15 @@ class Prtdiag(explorerbase.ExplorerBase):
 
         if speed == "1000":
             if numcore == 16:
-                self.addCpu(desc="4 Core 1.0GHz System Board", part="541-2409")
+                self.add_cpu(desc="4 Core 1.0GHz System Board", part="541-2409")
             elif numcore == 24:
-                self.addCpu(desc="6 Core 1.0GHz System Board", part="541-2405")
+                self.add_cpu(desc="6 Core 1.0GHz System Board", part="541-2405")
             elif numcore == 32:
-                self.addCpu(desc="8 Core 1.0GHz System Board", part="541-2408")
+                self.add_cpu(desc="8 Core 1.0GHz System Board", part="541-2408")
             else:
                 self.warning("Unhandled number of cores: %d on T2000" % numcore)
         elif speed == "1400":
-            self.addCpu(desc="8 Core 1.4GHz System Board", part="541-2436")
+            self.add_cpu(desc="8 Core 1.4GHz System Board", part="541-2436")
         elif not speed:
             pass  # Didn't get CPU data
         else:
@@ -2112,15 +2112,15 @@ class Prtdiag(explorerbase.ExplorerBase):
                     continue
                 self.foundCpu = True
                 if "3.06GHz" in line:
-                    self.addCpu(
+                    self.add_cpu(
                         desc="3.06GHz Xeon CPU", option="5121A", part="370-6045"
                     )
                 elif "2.8GHz" in line:
-                    self.addCpu(
+                    self.add_cpu(
                         desc="2.86GHz Xeon CPU", option="5120A", part="370-6044"
                     )
                 elif "3.2GHz" in line:
-                    self.addCpu(
+                    self.add_cpu(
                         desc="3.26GHz Xeon CPU", option="5138A", part="370-6458"
                     )
                 else:
@@ -2130,7 +2130,7 @@ class Prtdiag(explorerbase.ExplorerBase):
                     numdimms += 1
         fh.close()
 
-        self.addMem(
+        self.add_mem(
             desc="Unknown dimm",
             qty=numdimms,
             option=["5122A (256MB DIMM)", "5123A (512MB DIMM)", "5124A (1GB DIMM)"],
@@ -2274,7 +2274,7 @@ class Prtdiag(explorerbase.ExplorerBase):
         self.addPart(
             desc="Lucent 380 Watt Power Supply", option="X9684A", part="300-1449"
         )
-        self.addMem(
+        self.add_mem(
             desc="Unknown dimm size (%s)" % data["memsize"],
             option=["X7002A (32MB DIMM)", "X7003A (64MB DIMM)", "X7004A (128MB DIMM)"],
             part=["501-2622 (32MB)", "501-2480 (64MB)", "501-3136 (128MB)"],
@@ -2623,7 +2623,7 @@ class Prtdiag(explorerbase.ExplorerBase):
                     if desc not in memMap:
                         self.warning("Unhandled x4500 memory configuration %s" % desc)
                     else:
-                        self.addMem(**memMap[desc])
+                        self.add_mem(**memMap[desc])
                     if True:
                         pass
                     elif "1024MB DDR 400" in desc:
@@ -2632,7 +2632,7 @@ class Prtdiag(explorerbase.ExplorerBase):
                         size = "1GB"
                     else:
                         self.warning("Unhandled Mem on X4500: %s" % desc)
-                        self.addMem(desc=desc, option=option, part=part, size=size)
+                        self.add_mem(desc=desc, option=option, part=part, size=size)
 
         fh = self.open("sysconfig/prtdiag-v.out")
         for line in fh:
@@ -2714,7 +2714,7 @@ class Prtdiag(explorerbase.ExplorerBase):
                     if desc not in memMap:
                         self.warning("Unhandled x4600 memory configuration %s" % desc)
                     else:
-                        self.addMem(**memMap[desc])
+                        self.add_mem(**memMap[desc])
                     if True:
                         pass
                     elif "1024MB DDR 400" in desc:
@@ -2723,7 +2723,7 @@ class Prtdiag(explorerbase.ExplorerBase):
                         size = "1GB"
                     else:
                         self.warning("Unhandled Mem on X4600: %s" % desc)
-                        self.addMem(desc=desc, option=option, part=part, size=size)
+                        self.add_mem(desc=desc, option=option, part=part, size=size)
 
         fh = self.open("sysconfig/prtdiag-v.out")
         for line in fh:
@@ -2792,7 +2792,7 @@ class Prtdiag(explorerbase.ExplorerBase):
                 if desc not in memMap:
                     self.warning("Unhandled x4200 memory configuration %s" % desc)
                 else:
-                    self.addMem(**memMap[desc])
+                    self.add_mem(**memMap[desc])
         #               if '1024MB DDR 400' in desc:
         #                   option='X8022A'
         #                   part='371-0072'
@@ -2858,14 +2858,14 @@ class Prtdiag(explorerbase.ExplorerBase):
                     if desc not in memMap:
                         self.warning("Unhandled x4140 memory configuration %s" % desc)
                     else:
-                        self.addMem(**memMap[desc])
+                        self.add_mem(**memMap[desc])
         #                   elif '4096MB DDR-II 666' in desc:
         #                       option='X6322A'
         #                       part='540-7600'
         #                       size='4GB'
         #                   else:
         #                       self.warning("Unhandled Mem on X4140: %s" % desc)
-        #                   self.addMem(desc=desc, option=option, part=part, size=size)
+        #                   self.add_mem(desc=desc, option=option, part=part, size=size)
 
         fh = self.open("sysconfig/prtdiag-v.out")
         for line in fh:
@@ -2975,7 +2975,7 @@ class Prtdiag(explorerbase.ExplorerBase):
                 if desc not in memMap:
                     self.warning("Unhandled x6220 memory configuration %s" % desc)
                 else:
-                    self.addMem(**memMap[desc])
+                    self.add_mem(**memMap[desc])
                 self.foundMem = True
 
         if self.exists("sysconfig/prtdiag-v.out"):
@@ -3022,7 +3022,7 @@ class Prtdiag(explorerbase.ExplorerBase):
                 if desc not in memMap:
                     self.warning("Unhandled x2100 memory configuration %s" % desc)
                 else:
-                    self.addMem(**memMap[desc])
+                    self.add_mem(**memMap[desc])
                 self.foundMem = True
                 if "2048MB DDR 400" in desc:
                     option = "X8023A"
@@ -3050,7 +3050,7 @@ class Prtdiag(explorerbase.ExplorerBase):
                     size = "4GB"
                 else:
                     self.warning("Unhandled Mem on X2100: %s" % desc)
-                self.addMem(desc=desc, option=option, part=part, size=size)
+                self.add_mem(desc=desc, option=option, part=part, size=size)
 
         if self.exists("sysconfig/prtdiag-v.out"):
             fh = self.open("sysconfig/prtdiag-v.out")
@@ -3096,7 +3096,7 @@ class Prtdiag(explorerbase.ExplorerBase):
                 if desc not in memMap:
                     self.warning("Unhandled x2200 memory configuration %s" % desc)
                 else:
-                    self.addMem(**memMap[desc])
+                    self.add_mem(**memMap[desc])
                 self.foundMem = True
                 if "2048MB DDR 400" in desc:
                     option = "X8023A"
@@ -3124,7 +3124,7 @@ class Prtdiag(explorerbase.ExplorerBase):
                     size = "4GB"
                 else:
                     self.warning("Unhandled Mem on X2200: %s" % desc)
-                self.addMem(desc=desc, option=option, part=part, size=size)
+                self.add_mem(desc=desc, option=option, part=part, size=size)
 
         if self.exists("sysconfig/prtdiag-v.out"):
             fh = self.open("sysconfig/prtdiag-v.out")
@@ -3215,7 +3215,7 @@ class Prtdiag(explorerbase.ExplorerBase):
                 if desc not in memMap:
                     self.warning("Unhandled x4100 memory configuration %s" % desc)
                 else:
-                    self.addMem(**memMap[desc])
+                    self.add_mem(**memMap[desc])
 
         if self.exists("sysconfig/prtdiag-v.out"):
             fh = self.open("sysconfig/prtdiag-v.out")
@@ -4151,7 +4151,7 @@ class Prtdiag(explorerbase.ExplorerBase):
                 if dimm["dimmsize"] in memMap:
                     warning("dimm=%s" % dimm)
                     for i in range(dimm.get("qty", 1)):
-                        self.addMem(**memMap[dimm["dimmsize"]])
+                        self.add_mem(**memMap[dimm["dimmsize"]])
                         self.foundMem = True
                 else:
                     self.warning(
@@ -4161,13 +4161,13 @@ class Prtdiag(explorerbase.ExplorerBase):
             dimmsize = data["memsize"] / data["memmodule"]
             if dimmsize in memMap:
                 memMap[dimmsize]["qty"] = data["memmodule"] / modulo
-                self.addMem(**memMap[dimmsize])
+                self.add_mem(**memMap[dimmsize])
                 self.foundMem = True
             else:
                 self.warning("Unhandled %s memory size %d" % (label, dimmsize))
         elif "memsize" in data:
             if data["memsize"] in memMap:
-                self.addMem(**memMap[data["memsize"]])
+                self.add_mem(**memMap[data["memsize"]])
                 self.foundMem = True
         else:
             self.warning("data=%s" % data)
@@ -4210,12 +4210,12 @@ class Prtdiag(explorerbase.ExplorerBase):
             # Look for  'num x impl @ speed'
             cpukey = "%d x %s" % (cpus[key] / modulo, key)
             if cpukey in cpuMap:
-                self.addCpu(**cpuMap[cpukey])
+                self.add_cpu(**cpuMap[cpukey])
                 self.foundCpu = True
             # Look for  'impl @ speed'
             elif key in cpuMap:
                 for i in range(cpus[key] / modulo):
-                    self.addCpu(**cpuMap[key])
+                    self.add_cpu(**cpuMap[key])
                 self.foundCpu = True
             else:
                 self.warning("Unhandled %s CPU '%s'" % (label, key))
@@ -4447,7 +4447,7 @@ class Prtdiag(explorerbase.ExplorerBase):
         #       dimmsize=data['memsize']/data['memmodule']
         #       if dimmsize in memMap:
         #           memMap[dimmsize]['qty']=data['memmodule']/4
-        #           self.addMem(**memMap[dimmsize])
+        #           self.add_mem(**memMap[dimmsize])
         #       else:
         #           self.warning("Unhandled V1280 memory size %d" % dimmsize)
 
@@ -4546,7 +4546,7 @@ class Prtdiag(explorerbase.ExplorerBase):
         self.genericCpu(data, cpuMap, "e250")
         #       for cpu in data['cpu']:
         #           if cpu['speed'] in cpuMap:
-        #               self.addCpu(**cpuMap[cpu['speed']])
+        #               self.add_cpu(**cpuMap[cpu['speed']])
         #           else:
         #               self.warning("Unhandled E250 CPU speed %s" % cpu['speed'])
 
@@ -4558,7 +4558,7 @@ class Prtdiag(explorerbase.ExplorerBase):
         self.genericMem(data, memMap, "e250")
         #       for mem in data['mem']:
         #           if mem['dimmsize'] in memMap:
-        #               self.addMem(**memMap[mem['dimmsize']])
+        #               self.add_mem(**memMap[mem['dimmsize']])
         #           else:
         #               self.warning("Unhandled E250 Memory size %s" % mem['dimmsize'])
 
@@ -5712,7 +5712,7 @@ class Prtdiag(explorerbase.ExplorerBase):
         self.genericCpu(data, cpuMap, "e450")
         #       for cpu in data['cpu']:
         #           if cpu['speed'] in cpuMap:
-        #               self.addCpu(**cpuMap[cpu['speed']])
+        #               self.add_cpu(**cpuMap[cpu['speed']])
         #           else:
         #               self.warning("Unhandled E450 CPU speed %s" % cpu['speed'])
 
@@ -5724,7 +5724,7 @@ class Prtdiag(explorerbase.ExplorerBase):
         self.genericMem(data, memMap, "e450")
         #       for mem in data['mem']:
         #           if mem['dimmsize'] in memMap:
-        #               self.addMem(**memMap[mem['dimmsize']])
+        #               self.add_mem(**memMap[mem['dimmsize']])
         #           else:
         #               self.warning("Unhandled E450 Memory size %s" % mem['dimmsize'])
 
@@ -5858,21 +5858,21 @@ class Prtdiag(explorerbase.ExplorerBase):
                     continue
                 if "CPU" in line:
                     if ecache == "8.0":
-                        self.addCpu(
+                        self.add_cpu(
                             desc="CPU/Memory Board (8MB Cache)",
                             part="501-4312",
                             option="X2601A",
                             cache="8MB",
                         )
                     elif ecache == "2.0":
-                        self.addCpu(
+                        self.add_cpu(
                             desc="CPU/Memory Board (2MB Cache)",
                             part="501-2976",
                             option="X2600A",
                             cache="2MB",
                         )
                     else:
-                        self.addCpu(
+                        self.add_cpu(
                             desc="CPU/Memory Board (??? Cache)",
                             part="501-4882",
                             option="X2602A",

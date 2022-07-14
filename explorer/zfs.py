@@ -63,7 +63,7 @@ class Zfs(explorerbase.ExplorerBase):
 ##########################################################################
 # storageZfs #############################################################
 ##########################################################################
-class storageZfs(explorerbase.ExplorerBase):
+class StorageZfs(explorerbase.ExplorerBase):
     """Understand explorer output with respect to zfs"""
 
     ##########################################################################

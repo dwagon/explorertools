@@ -1,9 +1,7 @@
 """
 Script to understand disk details
 """
-# Written by Dougal Scott <dwagon@pobox.com>
-# $Id: disks.py 3034 2012-10-01 07:15:12Z dougals $
-# $HeadURL: http://svn/ops/unix/explorer/trunk/explorer/disks.py $
+# Written by Dougal Scott <dougal.scott@gmail.com>
 
 import os
 import re
@@ -235,11 +233,11 @@ class Disks(explorerbase.ExplorerBase):
         for dsk in self.disk_list():
             dsk.analyse()
             self.inherit_issues(dsk)
-        self.analyseRaidctl()
-        self.analyseLuxadm()
+        self.analyse_raidctl()
+        self.analyse_luxadm()
 
     ##########################################################################
-    def analyseRaidctl(self):
+    def analyse_raidctl(self):
         """This is really irritating, the internal raid controller
         hides all the useful details about the physical hardware
         (well it can tell you what they are, but explorer doesn't
@@ -339,7 +337,7 @@ class Disks(explorerbase.ExplorerBase):
         return ""
 
     ##########################################################################
-    def analyseLuxadm(self):
+    def analyse_luxadm(self):
         """Parse the luxadm inq output to work out what arrays are plugged into
         the host; and hopefully what disks are then on which arrays
         """
@@ -372,7 +370,7 @@ class Disks(explorerbase.ExplorerBase):
 ##########################################################################
 # storageDisks ###########################################################
 ##########################################################################
-class storageDisks(explorerbase.ExplorerBase):
+class StorageDisks(explorerbase.ExplorerBase):
     """Class to represent all disks within a system based on data from
     Explorers
     """
@@ -384,38 +382,38 @@ class storageDisks(explorerbase.ExplorerBase):
             data = {}
         self.data = data
         self.channelmap = {}
-        self.parse()
+        self._parse()
         self.self_populate()
 
     ##########################################################################
-    def parse(self):
+    def _parse(self):
         """TODO"""
         self["disks"] = set()
         try:
             if self.config["explorertype"] == "solaris":
-                self.parse_solaris_disks()
+                self._parse_solaris_disks()
             elif self.config["explorertype"] == "linux":
-                self.parse_linux()
+                self._parse_linux()
         except UserWarning as err:
             self.warning(err)
-        self.protectionCheck()
+        self._protection_check()
 
     ##########################################################################
-    def parse_linux(self):
+    def _parse_linux(self):
         """TODO"""
         self["_uuidmap"] = {}
         self["_labelmap"] = {}
-        self.parse_linux_blkid()
+        self._parse_linux_blkid()
         self.parse_linux_partitions()
         self.parse_linux_fdisk(self.parse_linux_fdisk_chunk)
-        self.parse_linux_multipath()
-        self.parse_linux_pvs()
+        self._parse_linux_multipath()
+        self._parse_linux_pvs()
         self.parse_linux_hardwarepy(self.parse_linux_hardwarepy_chunk)
         for disk in self.disk_list():
-            self.postProcess(disk)
+            self._post_process(disk)
 
     ##########################################################################
-    def parse_linux_pvs(self):
+    def _parse_linux_pvs(self):
         """
         PV                  VG    Fmt  Attr PSize   PFree   DevSize PV UUID
         /dev/cciss/c0d0p1              --        0       0    2.00G
@@ -444,7 +442,7 @@ class storageDisks(explorerbase.ExplorerBase):
         infh.close()
 
     ##########################################################################
-    def parse_linux_multipath(self):
+    def _parse_linux_multipath(self):
         """TODO"""
         # This looks like it was explicitly designed to be unparseable by a computer
         # databases (360a9800057396d4e4a5a623454317175) dm-5 NETAPP,LUN
@@ -472,15 +470,15 @@ class storageDisks(explorerbase.ExplorerBase):
                 data += line
             if mode and line[0] not in r"\ ":
                 mode = False
-                self.parse_linux_multipath_stanza(data)
+                self._parse_linux_multipath_stanza(data)
                 data = ""
             oldline = line
         infh.close()
         if data:
-            self.parse_linux_multipath_stanza(data)
+            self._parse_linux_multipath_stanza(data)
 
     ##########################################################################
-    def parse_linux_multipath_stanza(self, buffer):
+    def _parse_linux_multipath_stanza(self, buffer):
         """TODO"""
         name = f"mpath_{buffer.splitlines()[0].split()[0]}"
         if name not in self:
@@ -527,7 +525,7 @@ class storageDisks(explorerbase.ExplorerBase):
             self[device]["product"] = model
 
     ##########################################################################
-    def parse_linux_blkid(self):
+    def _parse_linux_blkid(self):
         """Parse the linux dump outputs"""
         if not self.exists("sos_commands/filesys/blkid"):
             return
@@ -545,29 +543,29 @@ class storageDisks(explorerbase.ExplorerBase):
         infh.close()
 
     ##########################################################################
-    def parse_solaris_disks(self):
+    def _parse_solaris_disks(self):
         """TODO"""
         self.parseSolaris_format()
         if not self["disks"]:
             self.alternativeParseFormat()
-        self.parsePathToInst()
-        self.parseLuxadm()
+        self._parse_path_to_inst()
+        self._parse_luxadm()
         for disk in self["disks"]:
-            self.parse_disk(disk)
+            self._parse_disk(disk)
         datadev = self.parseIostatE()
         for _, val in datadev.items():
             self.matchDiskToPath(val)
         for disk in self.disk_list():
-            self.postProcess(disk)
-        self.parseRaidctl()
+            self._post_process(disk)
+        self._parse_raidctl()
 
     ##########################################################################
-    def parse_disk(self, disk):
+    def _parse_disk(self, disk):
         """TODO"""
-        self.parse_prtvtoc(disk)
+        self._parse_prtvtoc(disk)
 
     ##########################################################################
-    def parse_prtvtoc(self, disk):
+    def _parse_prtvtoc(self, disk):
         """Examine the prtvtoc output for each disk
         You can't guarantee which slice will be used to generate the
         prtvtoc - so try them all
@@ -602,7 +600,7 @@ class storageDisks(explorerbase.ExplorerBase):
             else:
                 bits = line.strip().split()
                 slicenum = bits[0]
-                slicename = "%ss%s" % (disk, slicenum)
+                slicename = f"{disk}s{slicenum}"
                 self[disk]["slices"].add(slicename)
                 self[slicename] = storage.Storage.initial_dict(
                     {
@@ -625,15 +623,15 @@ class storageDisks(explorerbase.ExplorerBase):
                         {"_type": "boot_partition"}
                     )
                 if self[disk]["have_cylinders"]:
-                    sl = self[slicename]
-                    sl["first_cylinder"] = (
-                        sl["first_sector"] / self[disk]["sectors/cylinder"]
+                    slic = self[slicename]
+                    slic["first_cylinder"] = (
+                        slic["first_sector"] / self[disk]["sectors/cylinder"]
                     )
-                    sl["last_cylinder"] = (
-                        sl["last_sector"] / self[disk]["sectors/cylinder"]
+                    slic["last_cylinder"] = (
+                        slic["last_sector"] / self[disk]["sectors/cylinder"]
                     )
-                    sl["cylinder_count"] = (
-                        sl["sector_count"] / self[disk]["sectors/cylinder"]
+                    slic["cylinder_count"] = (
+                        slic["sector_count"] / self[disk]["sectors/cylinder"]
                     )
                 try:
                     self[slicename]["mountpoint"] = bits[6]
@@ -642,7 +640,7 @@ class storageDisks(explorerbase.ExplorerBase):
         infh.close()
 
     ##########################################################################
-    def mergeDrivemap(self, disk):
+    def _merge_drivemap(self, disk):
         """Take the options listed in drivemap for this device and merge them in"""
         dsk = self[disk]
         if "product" in dsk and dsk["product"] in drivemap.drivemap:
@@ -651,7 +649,7 @@ class storageDisks(explorerbase.ExplorerBase):
                 dsk[k] = v
 
     ##########################################################################
-    def protectionCheck(self):
+    def _protection_check(self):
         """If a disk from the drivemap is listed as protected, then
         mark it as such"""
 
@@ -662,7 +660,7 @@ class storageDisks(explorerbase.ExplorerBase):
                     dsk["protected"] = drivemap.drivemap[dsk["product"]]["protected"]
 
     ##########################################################################
-    def parseRaidctl(self):
+    def _parse_raidctl(self):
         """This is really irritating, the internal raid controller
         hides all the useful details about the physical hardware
         (well it can tell you what they are, but explorer doesn't
@@ -732,7 +730,7 @@ class storageDisks(explorerbase.ExplorerBase):
                         self[disk]["protected"] = "Internal HW Raid"
                         self[disk]["description"] = "Hardware Raid"
                     else:
-                        self.warning("Disk %s found in raidctl not format" % disk)
+                        self.warning(f"Disk {disk} found in raidctl not format")
                 elif len(bits) == 4:
                     volume = bits[0]
                     disk = bits[2]
@@ -742,15 +740,15 @@ class storageDisks(explorerbase.ExplorerBase):
                         self[disk]["product"] = "Part of hw raid"
                         self[disk]["description"] = "Hardware Raid"
                     else:
-                        self.warning("Disk %s found in raidctl not format" % disk)
+                        self.warning(f"Disk {disk} found in raidctl not format")
                 elif len(bits) == 2:
                     disk = bits[0]
                 else:
-                    self.warning("Unhandled output of raidctl.out: %s" % line)
+                    self.warning(f"Unhandled output of raidctl.out: {line}")
         infh.close()
 
     ##########################################################################
-    def postProcess(self, disk):
+    def _post_process(self, disk):
         """Do the little clean up tasks"""
         if (
             "product" not in self[disk] or self[disk]["product"] == "unknown"
@@ -758,8 +756,8 @@ class storageDisks(explorerbase.ExplorerBase):
             self[disk]["product"] = self[disk]["model"]
 
         # Remove not 'real' disks
-        self.mergeDrivemap(disk)
-        if self.isRemovable(disk):
+        self._merge_drivemap(disk)
+        if self._is_removable(disk):
             self["disks"].remove(disk)
             del self.data[disk]
             return
@@ -769,7 +767,7 @@ class storageDisks(explorerbase.ExplorerBase):
             self[disk]["aliases"] = set([_ for _ in self.channelmap[disk] if _ != disk])
 
     ##########################################################################
-    def isRemovable(self, disk):
+    def _is_removable(self, disk):
         removables = (
             "CD-224E",
             "SUN32XCD",
@@ -793,18 +791,19 @@ class storageDisks(explorerbase.ExplorerBase):
         return False
 
     ##########################################################################
-    def parseLuxadm(self):
+    def _parse_luxadm(self):
         """Parse the luxadm inq output to work out what arrays are plugged into
         the host; and hopefully what disks are then on which arrays
         """
         self.arrays = {}
         for luxf in self.glob("disks/luxadm_inq_*"):
-            self.parseLuxInq(luxf)
+            self._parse_lux_inq(luxf)
         for luxf in self.glob("disks/luxadm_display_*"):
-            self.parseLuxDisplay(luxf)
+            self._parse_lux_display(luxf)
 
     ##########################################################################
-    def parseLuxDisplay(self, luxf):
+    def _parse_lux_display(self, luxf):
+        """ TODO """
         infh = self.open(luxf)
         paths = []
         buff = []
@@ -812,7 +811,7 @@ class storageDisks(explorerbase.ExplorerBase):
             line = line.strip()
             if line.startswith("DEVICE PROPERTIES"):
                 if buff:
-                    self.parseLuxStanza(buff)
+                    self._parse_lux_stanza(buff)
                 buff = [line]
                 for disk in paths:
                     self.channelmap[disk] = paths[:]
@@ -826,12 +825,13 @@ class storageDisks(explorerbase.ExplorerBase):
             self.channelmap[disk] = paths[:]
         infh.close()
         if buff:
-            self.parseLuxStanza(buff)
+            self._parse_lux_stanza(buff)
 
     ##########################################################################
-    def parseLuxStanza(self, input):
+    def _parse_lux_stanza(self, inp):
+        """ TODO """
         serial = "Unknown"
-        for line in input:
+        for line in inp:
             if line.startswith("Serial Num:"):
                 serial = line.split(":")[1].strip()
             if line.startswith("/dev/rdsk"):
@@ -839,10 +839,11 @@ class storageDisks(explorerbase.ExplorerBase):
                 try:
                     self[drive]["serial"] = serial
                 except KeyError:
-                    self.warning("Unknown disk %s in luxadm display" % drive)
+                    self.warning(f"Unknown disk {drive} in luxadm display")
 
     ##########################################################################
-    def parseLuxInq(self, luxf):
+    def _parse_lux_inq(self, luxf):
+        """ TODO"""
         path = ""
         product = "lux-unknown"
         vendor = ""
@@ -868,7 +869,7 @@ class storageDisks(explorerbase.ExplorerBase):
         }
 
     ##########################################################################
-    def parsePathToInst(self):
+    def _parse_path_to_inst(self):
         infh = self.open("etc/path_to_inst")
         self.devlist = {}
         for line in infh:
@@ -968,9 +969,9 @@ class storageDisks(explorerbase.ExplorerBase):
                 r"cciss/(?P<disk>c\dd\d)$",
                 r"ida/(?P<disk>c\dd\d)$",
             ]:
-                rm = re.match(diskfmt, part)
-                if rm:
-                    diskname = rm.group("disk")
+                rmo = re.match(diskfmt, part)
+                if rmo:
+                    diskname = rmo.group("disk")
                     break
             if diskname:
                 self[diskname] = storage.Storage.initial_dict(
@@ -986,9 +987,9 @@ class storageDisks(explorerbase.ExplorerBase):
                 self["disks"].add(diskname)
                 continue
 
-            # Check to see if it matches known virtual disks
+            # Check to see if it matches known virtual disks or other things we can ignore
             is_virt = False
-            for virtfmt in [r"md\d", r"dm-\d", "lvm.", r"loop\d"]:
+            for virtfmt in [r"md\d", r"dm-\d", "lvm.", r"loop\d", r"fd\d", r"sr\d"]:
                 if re.match(virtfmt, part):
                     is_virt = True
                     break
@@ -1181,10 +1182,10 @@ class storageDisks(explorerbase.ExplorerBase):
         for d in self.disk_list():
             # If a disk is raid protected then its slices are also
             if "protected" in self[d]:
-                for s in self[d]["slices"]:
+                for slic_ in self[d]["slices"]:
                     if self[d]["protected"]:
-                        self[s]["protected"] = self[d]["protected"]
-                        self[s]["description"] = "Hardware Raid Slice"
+                        self[slic_]["protected"] = self[d]["protected"]
+                        self[slic_]["description"] = "Hardware Raid Slice"
 
     ##########################################################################
     def isBackupSliceCriteria(self, slic):
@@ -1224,11 +1225,11 @@ class storageDisks(explorerbase.ExplorerBase):
                     data[slic]["backup_slice"] = True
 
         # Remove unused slices that overlap used backup slice
-        bs = "%ss2" % disk  # Backup slice
-        if bs in data and data[bs]["use"]:
+        bkpslice = f"{disk}s2"  # Backup slice
+        if bkpslice in data and data[bkpslice]["use"]:
             for ns in list(data[disk]["slices"]):
                 # Skip the backup slice itself
-                if ns == bs:
+                if ns == bkpslice:
                     continue
                 if (
                     "use" in self[ns]
@@ -1237,7 +1238,7 @@ class storageDisks(explorerbase.ExplorerBase):
                 ):
                     self.warning(
                         "Overlap problem between %s %s and %s %s"
-                        % (ns, list(data[ns]["use"]), bs, list(data[bs]["use"]))
+                        % (ns, list(data[ns]["use"]), bkpslice, list(data[bkpslice]["use"]))
                     )
                 else:
                     if ns in data:
@@ -1270,15 +1271,15 @@ class storageDisks(explorerbase.ExplorerBase):
                 if protect:
                     if use in data:
                         data[use]["protected"] = protect
-                    elif "Quorum" not in "use":
+                    elif "Quorum" not in use:
                         # Quorums aren't part of the whole 'storage family' but
                         # they still use a disk
                         pass
                     else:
-                        self.Debug("Protected with no device use=%s" % use)
+                        self.debug(f"Protected with no device use={use}")
 
     ##########################################################################
-    def calculateUsed(self, data):
+    def calculate_used(self, data):
         """
         Check to see if the disks are actually used
         """
@@ -1305,8 +1306,8 @@ class storageDisks(explorerbase.ExplorerBase):
         # the other disks are used
         for disk in self.disk_list():
             if not data[disk]["unused"] and "aliases" in data[disk]:
-                for d in data[disk]["aliases"]:
-                    data[d]["unused"] = False
+                for dsk in data[disk]["aliases"]:
+                    data[dsk]["unused"] = False
 
     ##########################################################################
     def parseIostatE(self, filename="disks/iostat-iE.out"):
@@ -1318,65 +1319,56 @@ class storageDisks(explorerbase.ExplorerBase):
             line = line.strip()
             if not line:
                 continue
-            matchobj = re.match(
+            if matchobj := re.match(
                 r"(?P<device>\S+)\s*Soft Errors: (?P<softerrors>\d+) Hard Errors: (?P<harderrors>\d+) Transport Errors: (?P<transerrors>\d+)",
                 line,
-            )
-            if matchobj:
+            ):
                 dev = matchobj.group("device")
                 datadev[dev] = {}
                 datadev[dev].update(matchobj.groupdict())
                 continue
-            matchobj = re.match(
+            if matchobj := re.match(
                 r"Vendor: (?P<vendor>.*?)\s+Product: (?P<product>.*?)\s+Revision: (?P<revision>.*) Serial No:\s*(?P<serial>.+?)",
                 line,
-            )
-            if matchobj:
+            ):
                 datadev[dev].update(matchobj.groupdict())
                 continue
             # Same as above but with no serial to prevent overwriting a serial
             # from elserwhere
-            matchobj = re.match(
+            if matchobj := re.match(
                 r"Vendor: (?P<vendor>.*?)\s+Product: (?P<product>.*?)\s+Revision: (?P<revision>.*) Serial No:\s*",
                 line,
-            )
-            if matchobj:
+            ):
                 datadev[dev].update(matchobj.groupdict())
                 continue
-            matchobj = re.match(
+            if matchobj := re.match(
                 r"Model: (?P<model>.*) Revision: (?P<revision>.*) Serial No: (?P<serial>.*)",
                 line,
-            )
-            if matchobj:
+            ):
                 datadev[dev].update(matchobj.groupdict())
                 continue
-            matchobj = re.match(r"Size: (?P<size>\S+) <(?P<bytes>-?\d+) bytes>", line)
-            if matchobj:
+            if matchobj := re.match(r"Size: (?P<size>\S+) <(?P<bytes>-?\d+) bytes>", line):
                 datadev[dev].update(matchobj.groupdict())
                 continue
-            matchobj = re.match(
+            if matchobj := re.match(
                 r"Media Error: (?P<mediaerror>\d+) Device Not Ready: (?P<devnotready>\d+)\s+No Device: (?P<nodev>\d+) Recoverable: (?P<recoverable>\d+)",
                 line,
-            )
-            if matchobj:
+            ):
                 datadev[dev].update(matchobj.groupdict())
                 continue
-            matchobj = re.match(
+            if matchobj := re.match(
                 r"Illegal Request: (?P<illreq>\d+) Predictive Failure Analysis: (?P<predfail>\d+)",
                 line,
-            )
-            if matchobj:
+            ):
                 datadev[dev].update(matchobj.groupdict())
                 continue
-            matchobj = re.match(r"Illegal Request: (?P<illreq>\d+)", line)
-            if matchobj:
+            if matchobj := re.match(r"Illegal Request: (?P<illreq>\d+)", line):
                 datadev[dev].update(matchobj.groupdict())
                 continue
-            matchobj = re.match(
+            if matchobj := re.match(
                 r"RPM: (?P<rpm>\d+) Heads: (?P<heads>\d+) Size: (?P<size>\S+) <(?P<bytes>-?\d+) bytes>",
                 line,
-            )
-            if matchobj:
+            ):
                 datadev[dev].update(matchobj.groupdict())
                 continue
         infh.close()
@@ -1386,14 +1378,13 @@ class storageDisks(explorerbase.ExplorerBase):
     def describer(self, obj, data):
         """ TODO """
         if data[obj]["_type"] == "slice":
-            return self.sliceDescriber(obj, data)
-        elif data[obj]["_type"] == "disk":
-            return self.diskDescriber(obj, data)
-        else:
-            self.fatal("describer passed object of type %s" % data[obj]["_type"])
+            return self._slice_describer(obj, data)
+        if data[obj]["_type"] == "disk":
+            return self._disk_describer(obj, data)
+        self.fatal("describer passed object of type %s" % data[obj]["_type"])
 
     ##########################################################################
-    def sliceDescriber(self, slic, data):
+    def _slice_describer(self, slic, data):
         # Work out from the partof which is the next level up
         tmp = []
         if "partof" not in data[slic]:
@@ -1406,10 +1397,10 @@ class storageDisks(explorerbase.ExplorerBase):
         tmp.sort()
         tmp.reverse()
 
-        str = ""
+        strn = ""
         debugstr = ""
         if "emcpowerpath" in data[slic]:
-            str += f"EMC PowerPath {data[slic]['emcpowerpath']}"
+            strn += f"EMC PowerPath {data[slic]['emcpowerpath']}"
         metadbcount = 0
         softparcount = 0
         for lev, partof in tmp:
@@ -1419,14 +1410,14 @@ class storageDisks(explorerbase.ExplorerBase):
                     continue
                 if data[partof]["_type"] == "metadb":
                     if "diskset" in data[partof]:
-                        str += "Diskset %s " % data[partof]["diskset"]
+                        strn += "Diskset %s " % data[partof]["diskset"]
                     if metadbcount == 1:
-                        str += "MetaDB (1 copy)"
+                        strn += "MetaDB (1 copy)"
                     else:
-                        str += "MetaDB (%d copies)" % metadbcount
+                        strn += "MetaDB (%d copies)" % metadbcount
                     continue
                 if data[partof]["_type"] == "zfs_pool":
-                    str += f"ZFS Pool: {partof}"
+                    strn += f"ZFS Pool: {partof}"
                     break
                 if data[partof]["_type"] == "allswap":
                     continue
@@ -1438,7 +1429,7 @@ class storageDisks(explorerbase.ExplorerBase):
                     if data[partof]["type"] == "softpar":
                         softparcount += 1
                         continue
-                    str += "%s (%s) of " % (data[partof]["description"], partof)
+                    strn += "%s (%s) of " % (data[partof]["description"], partof)
                     continue
                 if data[partof]["_type"] == "boot_partition":
                     break
@@ -1456,27 +1447,27 @@ class storageDisks(explorerbase.ExplorerBase):
                         partof,
                         data[partof]["description"],
                     )
-                    str += "%s %s of " % (partof, data[partof]["description"])
+                    strn += "%s %s of " % (partof, data[partof]["description"])
                 else:
-                    str += "%s (?)" % partof
+                    strn += f"{partof} (?)"
             else:
-                str += f"(unknown {partof})"
+                strn += f"(unknown {partof})"
         # You can get hundreds of these which makes it unreadable
         if softparcount:
-            str += f" {softparcount} soft partitions"
-        if str.endswith(" of "):  # Trim last ' of ' off
-            str = str[:-4]
+            strn += f" {softparcount} soft partitions"
+        if strn.endswith(" of "):  # Trim last ' of ' off
+            strn = strn[:-4]
         debugstr += "%s" % tmp
-        return str
+        return strn
 
     ##########################################################################
-    def diskDescriber(self, disk, data):
+    def _disk_describer(self, disk, data):
         """Generate the description used if the entire disk is used as
         a single unit
         """
         if "use" not in data[disk] or not data[disk]["use"]:
             return "%s.describer(%s)" % (self.__class__.__name__, disk)
-        str = ""
+        strn = ""
         mounts = []
         for su in data[disk]["use"]:
             if su not in data:
@@ -1492,19 +1483,19 @@ class storageDisks(explorerbase.ExplorerBase):
                 continue
             # ZFS pools
             if data[po]["_type"] == "zfs_pool":
-                str = "ZFS Pool %s: %s" % (po, ", ".join(mounts))
+                strn = "ZFS Pool %s: %s" % (po, ", ".join(mounts))
                 break
             # Linux metadevices
             if data[po]["_type"] == "metadev":
-                str = "Metadev %s: %s" % (po, ", ".join(mounts))
+                strn = "Metadev %s: %s" % (po, ", ".join(mounts))
                 break
             # EMC PowerPath
             if data[po]["_type"] == "emcpower":
-                str = f"EMC PowerPath {po}:"
+                strn = f"EMC PowerPath {po}:"
                 if mounts:
-                    str += " %s" % (", ".join(mounts))
+                    strn += " %s" % (", ".join(mounts))
                 else:
-                    str += " No apparent use"
+                    strn += " No apparent use"
                     self.add_concern(
                         "unused emcpower",
                         obj=po,
@@ -1512,8 +1503,8 @@ class storageDisks(explorerbase.ExplorerBase):
                     )
                 break
 
-            str += "[%s %s]" % (data[po]["_type"], po)
-        return str
+            strn += "[%s %s]" % (data[po]["_type"], po)
+        return strn
 
     ##########################################################################
     def disk_list(self):

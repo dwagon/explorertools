@@ -78,31 +78,31 @@ class Storage(explorerbase.ExplorerBase):
     ##########################################################################
     def initial_parse(self):
         """Parse the raw sources of data"""
-        strg_disk = disks.storageDisks(self.config, {})
+        strg_disk = disks.StorageDisks(self.config, {})
         self.data.update(strg_disk.data)
         self.cache["disks"] = strg_disk
 
-        strg_fs = filesys.storageFilesystems(self.config, self.data)
+        strg_fs = filesys.StorageFilesystems(self.config, self.data)
         self.data.update(strg_fs.data)
         self.cache["filesys"] = strg_fs
 
-        strg_zfs = zfs.storageZfs(self.config, self.data)
+        strg_zfs = zfs.StorageZfs(self.config, self.data)
         self.data.update(strg_zfs.data)
         self.cache["zfs"] = strg_zfs
 
-        strg_swap = swap.storageSwap(self.config, self.data)
+        strg_swap = swap.StorageSwap(self.config, self.data)
         self.data.update(strg_swap.data)
         self.cache["swap"] = strg_swap
 
-        strg_volmg = volmanager.storageVolmanager(self.config, self.data)
+        strg_volmg = volmanager.StorageVolmanager(self.config, self.data)
         self.data.update(strg_volmg.data)
         self.cache["volmanager"] = strg_volmg
 
-        strg_vxvm = vxvm.storageVxvm(self.config, self.data)
+        strg_vxvm = vxvm.StorageVxvm(self.config, self.data)
         self.data.update(strg_vxvm.data)
         self.cache["vxvm"] = strg_vxvm
 
-        strg_emc = emc.storageEmc(self.config, self.data)
+        strg_emc = emc.StorageEmc(self.config, self.data)
         self.data.update(strg_emc.data)
         self.cache["emc"] = strg_emc
 
@@ -385,8 +385,8 @@ class Storage(explorerbase.ExplorerBase):
 
         # Check to see if the disks are in use - has to be done after all
         # the use calculations
-        self.cache["disks"].calculateUsed(self.data)
-        self.cache["emc"].calculateUsed(self.data)
+        self.cache["disks"].calculate_used(self.data)
+        self.cache["emc"].calculate_used(self.data)
 
         self.allDescriber()
 
